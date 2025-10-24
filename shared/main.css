@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+
+/*footer*/
+.footer .footer-container {
+    display: grid;
+    grid-template-rows: 0.7fr 0.3fr;
+    padding: 20px;
+    background-color: rgb(4, 107, 210);
+    color: white;
+}
+
+.footer .footer-container .footer-grid {
+    display: grid;
+    grid-template-columns: 0.5fr 0.3fr 0.3fr 0.3fr;
+}
+
+.footer .footer-container .footer-grid .footer-column {
+    margin: 20px;
+}
+
+.footer .footer-container .footer-grid .footer-column.logo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.footer .footer-container .footer-grid .footer-column.logo {
+    padding-bottom: 60px;
+    padding-right: 60px;
+    margin: 0;
+}
+
+.footer .footer-container .footer-grid .footer-column ul li {
+    padding: 10px;
+}
+
+.footer .footer-container .footer-grid .footer-column ul li a.text-hover {
+    text-decoration: none;
+    color: white;
+}
+
+.footer .footer-container .footer-grid .footer-column ul li a.text-hover:hover {
+    text-decoration: none;
+    color: #FFD700;
+}
+
+.footer .footer-container .footer-grid .fa-solid {
+    color: #FFD700;
+}
+
+.footer .footer-container .footer-grid .fa-brands {
+    color: #FFD700;
+}
+
+.footer .footer-container .site-below {
+    padding-top: 40px;
+    text-align: center;
+}
