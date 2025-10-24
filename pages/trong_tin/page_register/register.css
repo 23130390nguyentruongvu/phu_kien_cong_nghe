@@ -1,0 +1,87 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #F0F0F0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: arial, sans-serif;
+}
+.page-header{
+    width: 100%;
+    height: 200px;
+}
+.breadcrumb{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    list-style: none;
+    gap: 10px;
+
+}
+.account_text,
+.home_text{
+    text-decoration: none;
+}
+
+.page-title{
+    text-align: center;
+    padding-top: 115px;
+    padding-bottom: 25px;
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0;
+}
+.content-register{
+    width: 100%;
+    height: 545px;
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+.container{
+    padding-left: 0;
+    padding-right: 0;
+    width: 970px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.form-register{
+    width: 500px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+}
+.title-register{
+    text-align: center;
+    font-weight: 600;
+    font-size: 28px;
+    padding: 20px;
+}
+.register{
+    padding-left: 70px;
+}
+input{
+    width: 80%;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-register{
+    width: 83.5%;
+    margin-top: 70px;
+    margin-bottom: 50px;
+    background-color: #FFD700;
+    border: none;
+}
+.btn-register:hover{
+    background-color: #FFD700;
+    cursor: pointer;
+}
+.have-account{
+    padding-left: 129px;
+    text-decoration: none;
+
+}
