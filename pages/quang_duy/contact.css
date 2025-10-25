@@ -1,0 +1,172 @@
+body {
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.sidebar-main {
+  border-right: 1px solid #e0e0e0;
+  padding: 20px;
+  width: 260px;
+}
+
+.sidebar-main h3 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-bottom: 2px solid rgb(4, 107, 210);
+  padding-bottom: 5px;
+}
+
+.sidebar-main ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-main li {
+  margin-bottom: 4px;
+}
+
+.sidebar-main a {
+  display: block;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 8px 0px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  color:#024c9a;
+}
+
+.sidebar-main a:hover {
+  padding-left: 12px;
+  background-color: rgb(4, 107, 210);
+  color: #fff;
+  transform: translateX(4px);
+}
+
+
+.content {
+  width: 75%;
+  padding-left: 30px;
+}
+
+.content h2 {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.content h3 {
+  font-size: 26px;
+  padding: 0px;
+  margin: 0px;
+  color: rgb(4, 107, 210);
+}
+
+/* THÔNG TIN LIÊN HỆ */
+.contact-info {
+  justify-items: center;
+  margin-bottom: 40px;
+}
+
+.contact-info h3 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.contact-info h4 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.contact-info p {
+  font-size: 16px;
+}
+
+/* BẢN ĐỒ */
+.map-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.map-section h3 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: rgb(4, 107, 210);
+}
+
+.map-container {
+  width: 100%;
+  border: 2px solid rgb(4, 107, 210);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.map-container:hover {
+  box-shadow: 0 0 15px rgba(4, 107, 210, 0.3);
+}
+
+/* FORM LIÊN HỆ */
+.contact-form {
+  margin-top: 40px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #dce8f9;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(219, 219, 219, 0.1);
+}
+
+.contact-form h3 {
+  justify-self: center;
+  font-size: 22px;
+  color: rgb(4, 107, 210);
+  margin-bottom: 10px;
+}
+
+.contact-form p {
+  justify-self: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.contact-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 15px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.contact-form button {
+  justify-self: center;
+  display: flex;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: rgb(4, 107, 210);
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #024c9a;
+}
