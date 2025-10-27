@@ -107,6 +107,12 @@ ul li {
 }
 
 /*header => center*/
+.header .header-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+}
 .header .header-container .header-center {
     display: grid;
     grid-template-columns: 0.4fr 1fr 0.4fr;
@@ -227,4 +233,18 @@ ul li {
 #menuProducts .products .sub-menu-products .sub-menu-item {
     font-size: 20px;
     padding: 8px;
+}
+
+/*edit contain of header, main and footer*/
+.container-header-main-footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    margin-top: 152px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
