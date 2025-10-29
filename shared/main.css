@@ -135,13 +135,15 @@ ul li {
     height: 100%;
     border-radius: 10px;
     padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
     border: #FFFFFF solid 1px;
 }
 
 .header .header-container .header-center .form-search .search-button {
     border-radius: 10px;
     margin-right: 10px;
-
+    font-size: 20px;
     color: rgb(4, 107, 210);
     background-color: #FFD700;
 }
