@@ -91,7 +91,7 @@ const pkmts = [
     {
         nameProduct: 'Webcam',
         price: '110.000đ',
-        image: '../assets/image/fake_products/item_pkdt_5.webp'
+        image: '../assets/image/fake_products/item_pkmt_5.webp'
     },
     {
         nameProduct: 'Túi chống sốc cho laptop',
@@ -162,7 +162,7 @@ const spmns = [
     {
         nameProduct: 'Webcam',
         price: '110.000đ',
-        image: '../assets/image/fake_products/item_pkdt_5.webp'
+        image: '../assets/image/fake_products/item_pkmt_5.webp'
     }
 ]
 //Fake sản phẩm nổi bật
@@ -195,7 +195,7 @@ const spnbs = [
     {
         nameProduct: 'Webcam',
         price: '110.000đ',
-        image: '../assets/image/fake_products/item_pkdt_5.webp'
+        image: '../assets/image/fake_products/item_pkmt_5.webp'
     }
 ]
 
