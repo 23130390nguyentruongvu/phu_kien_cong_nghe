@@ -45,6 +45,7 @@ section {
     display: flex;
     flex-direction: column;
 }
+
 section .title-section {
     display: flex;
     justify-content: center;
@@ -56,7 +57,9 @@ section .title-section {
     border-start-start-radius: 10px;
     border-end-end-radius: 10px;
     margin-bottom: 10px;
+
 }
+
 section .title-section span {
     color: white;
     font-size: 18px;
@@ -77,10 +80,75 @@ section .showMoreSection {
     color: white;
     border: 1px solid rgb(4, 107, 210);
     border-radius: 4px;
+    margin-top: 25px;
 }
 
 section .list-product-by-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/*feedback customer*/
+.customer-feedback .title {
+    text-align: center;
+    padding-top: 20px;
+    color: rgb(4, 107, 210);
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.customer-feedback .container-feedback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+}
+
+.customer-feedback .container-feedback span {
+    width: 315px;
+    height: 369px;
+    padding: 20px 60px;
+}
+
+.customer-feedback .container-feedback .customer-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.customer-feedback .container-feedback .customer-name {
+    color: rgb(4, 107, 210);
+    font-weight: bolder;
+    padding: 10px;
+}
+
+.customer-feedback .container-feedback .customer-review {
+    color: rgb(0, 0, 0, 0.5);
+}
+
+/*commit from shop*/
+.commit {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+}
+
+.commit .content-commit {
+    padding-right: 120px;
+    padding-left: 20px;
+    padding-top: 40px;
+}
+
+.commit .img-shop img {
+    height: 400px;
+    width: 560px;
+    padding-left: 120px;
+}
+
+.commit .content-commit ol li {
+    list-style: none;
+    padding: 12px;
+}
