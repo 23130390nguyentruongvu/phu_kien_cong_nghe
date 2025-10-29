@@ -1,5 +1,5 @@
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "arial", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -11,7 +11,7 @@ body {
 }
 
 .sidebar-main {
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid rgb(4, 107, 210);
   padding: 20px;
   width: 260px;
 }
