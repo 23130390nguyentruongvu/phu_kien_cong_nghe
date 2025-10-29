@@ -242,6 +242,14 @@ const renderDataIntoSections = () => {
                     divContain.querySelector('.title-product-item').textContent = sectionsData[i][j].nameProduct
                     divContain.querySelector('.price-product-item').textContent = sectionsData[i][j].price
 
+                    //Lấy ra button thêm giỏ hàng để thiết lập sự kiện, vì tại đây ta mới có item để đổ vào sự kiện bên
+                    //itemProduct.js
+                    const buttonAddCart =
+                        divContain.querySelector('.container-product-item .add-item-to-cart #addItemToCart')
+                    buttonAddCart.addEventListener('click', () => {
+                        addItemToCart(sectionsData[i][j])
+                    })
+
                     //sau đó gắn nó vào list quản lí sản phẩm tương ứng
                     listOfSections[i].appendChild(divContain)
                 }

@@ -1,14 +1,10 @@
 #product-item {
     padding: 10px 14px;
-    stroke: white;
     width: 190px;
     height: 332px;
-    transition: all 0.3s ease;
 }
 
-#product-item:hover {
-    /*x y blurRadius color*/
-    box-shadow: 4px 4px 10px rgb(0, 0, 0, 0.4);
+.container-item:hover #product-item:hover {
     width: 190px;
     height: 332px;
 }
@@ -50,4 +46,22 @@
     width: 174px;
     height: 230px;
     border-radius: 4px;
+}
+
+.container-product-item   .add-item-to-cart {
+    display: none;
+}
+.container-product-item:hover  .add-item-to-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-product-item  .add-item-to-cart #addItemToCart {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgb(4, 107, 210);
+    color: white;
+    border: rgb(4, 107, 210) 1px solid;
 }
