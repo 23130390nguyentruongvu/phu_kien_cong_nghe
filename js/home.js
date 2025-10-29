@@ -1,4 +1,4 @@
-//Carousel start
+//Carousel: start
 //Lay ra danh sach cac item carousel kha dung
 const carousel = document.querySelector('.carousel-items')
 const carouselButtons = document.querySelector('.carousel-buttons')
@@ -30,4 +30,6 @@ for (let i = 0; i < listItemCarousel.length; i++) {
     listItemCarousel[0].classList.add('carousel-item-show')
     listButtonsCarousel[0].classList.add('carousel-button-show')
 }
-//Carousel end
+//Carousel: end
+
+//Fake data: start
