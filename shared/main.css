@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: arial, sans-serif;
 }
 
 ul li {
@@ -62,4 +63,190 @@ ul li {
 .footer .footer-container .site-below {
     padding-top: 40px;
     text-align: center;
+}
+
+/*header*/
+.header-container {
+    background-color: rgb(4, 107, 210);
+    color: white;
+}
+/*header => above*/
+.header .header-container .header-above .grid-column-above {
+    display: grid;
+    grid-template-columns: 1.2fr 0.7fr 0.5fr;
+}
+
+.header .header-container .header-above .grid-column-above .information ul li {
+    float: left;
+    padding-left: 80px;
+    padding-top: 12px;
+    font-size: 20px;
+}
+
+.header .header-container .header-above .grid-column-above .information ul li .text-hover {
+    color: white;
+}
+
+.header .header-container .header-above .grid-column-above .information ul li .text-hover:hover {
+    color: #FFD700;
+}
+
+.header #stateUser {
+    text-align: center;
+    padding: 4px;
+}
+
+.header #stateUser .state-user-hover {
+    text-decoration: none;
+    color: white;
+}
+
+.header #stateUser .state-user-hover:hover {
+    text-decoration: none;
+    color: #FFD700;
+}
+
+/*header => center*/
+.header .header-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+}
+.header .header-container .header-center {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr 0.4fr;
+    text-align: center;
+    height: 60px;
+}
+
+.header .header-container .header-center .form-search {
+    padding-top: 10px;
+}
+
+.header .header-container .header-center .form-search form {
+    display: grid;
+    grid-template-columns: 3fr 0.3fr;
+    height: 80%;
+}
+
+.header .header-container .header-center .form-search .search-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+    border: #FFFFFF solid 1px;
+}
+
+.header .header-container .header-center .form-search .search-button {
+    border-radius: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    color: rgb(4, 107, 210);
+    background-color: #FFD700;
+}
+
+.header .header-container .header-center .logo img {
+    background-color: white;
+    border-radius: 50%;
+}
+
+.header .header-container .header-center .shopping-cart {
+    padding-top: 12px;
+    font-size: 40px;
+}
+
+.header .header-container .header-center .shopping-cart .fa-cart-shopping {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: white;
+}
+
+.header .header-container .header-center .shopping-cart .fa-cart-shopping:hover {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: #FFD700;
+}
+
+#badgeNumItemCart {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px;
+    border-radius: 50%;
+    min-width: 18px;
+    text-align: center;
+}
+
+/*header => below*/
+.header .header-container .header-below {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 0.3fr;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.header .header-container .header-below .main-menu a {
+    text-decoration: none;
+    color: white;
+}
+
+.header .header-container .header-below .main-menu a:hover {
+    text-decoration: none;
+    color: #FFD700;
+}
+
+.header .header-container .header-below .main-menu li.menu-item.active a {
+    text-decoration: none;
+    color: #FFD700;
+}
+
+.header .header-container .header-below .main-menu .grid-column-below ul  li{
+    float: left;
+    align-content: center;
+    padding-left: 45px
+}
+
+#menuProducts {
+    display: inline-block;
+    position: relative;
+}
+
+#menuProducts .products {
+    display: none;
+}#menuProducts:hover .products {
+     display: grid;
+     position: absolute;
+    width: 100%;
+ }
+#menuProducts .products .sub-menu-products {
+    background-color: rgb(4, 107, 210);
+    border-radius: 10px;
+    text-align: start;
+}
+#menuProducts .products .sub-menu-products .sub-menu-item {
+    font-size: 20px;
+    padding: 8px;
+}
+
+/*edit contain of header, main and footer*/
+.container-header-main-footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    margin-top: 152px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
