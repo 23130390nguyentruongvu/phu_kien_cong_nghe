@@ -1,9 +1,8 @@
 body {
-  font-family: "arial", sans-serif;
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: arial, sans-serif;
 }
-
 .container {
   display: flex;
   max-width: 1200px;
@@ -62,13 +61,11 @@ body {
 
 .content h3 {
   padding: 0px;
-  margin: 10px;
-  margin-left: 0px;
+    margin: 10px 10px 10px 0px;
 }
 
 .content p {
-  margin: 10px;
-  margin-left: 0px;
+    margin: 10px 10px 10px 0px;
 }
 
 .slogan {
