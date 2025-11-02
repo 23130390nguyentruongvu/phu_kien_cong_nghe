@@ -1,43 +1,88 @@
-/*carousel*/
-.carousel {
-
+/*slider show*/
+.slider-show-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.carousel .carousel-item {
-    display: none;
+.slider-show {
+    width: 1500px;
+    height: 500px;
+    overflow: hidden;
 }
 
-.carousel .carousel-item.carousel-item-show {
-    display: unset;
+.slider-show .slider-show-items {
+    width: 100%;
+    display: flex;
+    transition: transform 0.6s ease;
 }
 
-.carousel .carousel-item img {
-    min-width: 100%;
+.slider-show .slider-show-items img {
+    width: 1500px;
     height: 500px;
 }
 
-.carousel .carousel-buttons {
+.button {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+}
+
+.buttons .left-nav {
+    padding-left: 30px;
+    left: 0;
+    color: #b7b2b2;
+    cursor: pointer;
+}
+.buttons .right-nav {
+    padding-right: 30px;
+    right: 0;
+    color: #b7b2b2;
+    cursor: pointer;
+}
+.buttons .left-nav:hover {
+    padding-left: 30px;
+    left: 0;
+    color: black;
+    cursor: pointer;
+}
+.buttons .right-nav:hover {
+    padding-right: 30px;
+    right: 0;
+    color: black;
+    cursor: pointer;
+}
+
+.index-dots {
+    left: 45%;
+    position: absolute;
+    bottom: 15%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-.carousel .carousel-button {
-    /*cho phep phan tu nam trong 1 dong nhung van set duoc size*/
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(0, 0, 0, 0.2);
+.index-dots .dot {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    margin: 5px;
+    background-color: #b7b2b2;
+    cursor: pointer;
 }
 
-.carousel .carousel-button.carousel-button-show {
-    /*cho phep phan tu nam trong 1 dong nhung van set duoc size*/
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(0, 0, 0, 0.8);
+.index-dots .dot.active {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
 }
 
 /*section product*/
