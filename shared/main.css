@@ -112,6 +112,7 @@ ul li {
     right: 0;
     top: 0;
     left: 0;
+    z-index: 100;
 }
 .header .header-container .header-center {
     display: grid;

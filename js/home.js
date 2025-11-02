@@ -1,36 +1,48 @@
-//Carousel: start
-//Lay ra danh sach cac item carousel kha dung
-const carousel = document.querySelector('.carousel-items')
-const carouselButtons = document.querySelector('.carousel-buttons')
-const listButtonsCarousel = []
-const listItemCarousel = carousel.getElementsByClassName('carousel-item')
+//Slider show: start
+//Thiết lập thời gian cập nhật image
+const containerSliderShowItem =
+    document.querySelector('.slider-show-items')
+const items =
+    containerSliderShowItem.getElementsByClassName('slider-show-item')
 
-for (let i = 0; i < listItemCarousel.length; i++) {
-    //Tao ra the span dai dien cho button dieu huong carousel
-    let carouselButton = document.createElement('span')
-    carouselButton.classList.add('carousel-button')
+let width = items[0].offsetWidth
+let indexCur = 0
 
-    //Xử lí sự kiện carousel button được click
-    carouselButton.addEventListener('click', (evt) => {
-        //Đưa về trạng thái không show
-        listButtonsCarousel.forEach((item, index) => {
-            listItemCarousel[index].classList.remove('carousel-item-show')
-            item.classList.remove('carousel-button-show')
-        })
-        //Thiết lập lại show cho button được click với image hiện tương ứng
-        const btnClicked = evt.currentTarget //Lay ra button vua duoc click
-        evt.target.classList.add('carousel-button-show')
-        let indexAt = listButtonsCarousel.indexOf(btnClicked)
-        listItemCarousel[indexAt].classList.add('carousel-item-show')
-    })
-
-    listButtonsCarousel.push(carouselButton)
-    carouselButtons.appendChild(carouselButton)
-    //Mặc định button và image đầu tiên sẽ được hiển thị khi load vào trang
-    listItemCarousel[0].classList.add('carousel-item-show')
-    listButtonsCarousel[0].classList.add('carousel-button-show')
+const setupIntervalSlider = () => {
+    return setInterval(() => {
+        if (indexCur < 0) {
+            containerSliderShowItem.style.transform = `translateX(${width * -1 * (items.length - 1)}px)`
+        } else if (indexCur >= items.length - 1) {
+            containerSliderShowItem.style.transform = `translateX(${0}px)`
+            indexCur = 0
+        } else {
+            containerSliderShowItem.style.transform = `translateX(${width * -1 * ++indexCur}px)`
+        }
+    }, 3000)
 }
-//Carousel: end
+
+let currentInterval = setupIntervalSlider()
+
+const navLeft = () => {
+    clearInterval(currentInterval)
+    if (indexCur - 1 < 0)
+        indexCur = items.length - 1
+    else
+        indexCur--
+    containerSliderShowItem.style.transform = `translateX(${-width * indexCur}px)`
+    currentInterval = setupIntervalSlider()
+}
+const rightNav = () => {
+    clearInterval(currentInterval)
+    if (indexCur + 1 > items.length - 1)
+        indexCur = 0
+    else
+        indexCur++
+    containerSliderShowItem.style.transform = `translateX(${-width * indexCur}px)`
+    currentInterval = setupIntervalSlider()
+}
+
+//Slider show: end
 
 //Fake data: start
 //Fake phụ kiện điện thoại
