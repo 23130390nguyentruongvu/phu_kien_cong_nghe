@@ -1,0 +1,13 @@
+.container-shopping-cart {
+
+}
+
+.container-shopping-cart .info-grid-column {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+tbody img {
+    width: 70px;
+    height: 70px;
+}
