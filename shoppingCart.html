@@ -16,7 +16,7 @@
         <div class="container-shopping-cart">
             <div class="content-center">
                 <div class="title-shopping-cart"><h2>Bạn chưa có sản phẩm trong giỏ hàng</h2></div>
-                <div class="info-grid-column">
+                <div class="info-flex hidden">
                     <div class="info-items">
                         <form class="items-form">
                             <table class="items-table">
@@ -47,16 +47,18 @@
                                         </div>
                                     </td>
                                     <td class="product-price">
-                                        <div class="price-amount">100đ</div>
+                                        <div class="price-amount">100000000đ</div>
                                     </td>
                                     <td class="product-quantity">
                                         <div class="quantity-wrap">
                                             <div class="quantity-input">
-                                                <button id="quantityDecItemCart" class="btn-dec-item-quantity">
+                                                <button id="quantityDecItemCart" class="btn-dec-item-quantity btn"
+                                                        type="button">
                                                     -
                                                 </button>
-                                                <span class="num-quantity-item">1</span>
-                                                <button id="quantityIncItemCart" class="btn-inc-item-quantity">
+                                                <span class="num-quantity-item">100</span>
+                                                <button id="quantityIncItemCart" class="btn-inc-item-quantity btn"
+                                                        type="button">
                                                     +
                                                 </button>
                                             </div>
@@ -66,6 +68,8 @@
                                         <div class="subtotal-price-amount">100đ</div>
                                     </td>
                                 </tr>
+
+
                                 </tbody>
                                 <!--close body table-->
                             </table>
@@ -73,15 +77,22 @@
                     </div>
                     <!--open bill-->
                     <div class="bill-products">
-                        <h2>Tổng cộng phải thanh </h2>
+                        <h2>Tổng cộng phải thanh toán</h2>
                         <table>
                             <tbody>
                             <tr class="bill-subtotal">
-                                <th>Tạm tính</th>
+                                <th><h4>Tạm tính</h4></th>
                                 <td><span class="bill-subtoal-amount">100đ</span></td>
                             </tr>
+                            <tr class="bill-shipping">
+                                <th><h4>Vận chuyển</h4></th>
+                                <td><span class="bill-subtoal-amount">Hố Bom</span>
+                                    <br>
+                                    <a href="">Đổi địa chỉ</a>
+                                </td>
+                            </tr>
                             <tr class="bill-total">
-                                <th>Tổng cộng</th>
+                                <th><h4>Tổng cộng</h4></th>
                                 <td><span class="bill-toal-amount">100đ</span></td>
                             </tr>
                             </tbody>
@@ -90,8 +101,8 @@
                             <div class="bill-voucher">
                                 <span>
                                     <form>
-                                        <input id="inputVouncherAtCart" class="input" placeholder="Nhập mã voucher">
-                                        <button id="btnApplyVouncherAtCart" class="btn-submit-voucher"
+                                        <input id="inputVoucherAtCart" class="input" placeholder="Nhập mã voucher">
+                                        <button id="btnApplyVoucherAtCart" class="btn-submit-voucher"
                                                 type="submit">Áp dụng</button>
                                     </form>
                                 </span>
