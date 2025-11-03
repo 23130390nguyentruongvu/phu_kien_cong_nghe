@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/login.js"></script>
+</head>
+<body>
+<div class="header">
+
+</div>
+
+<main id="main">
+    <div class="page-header">
+        <div class="page-breadcrumbs">
+            <div class="container">
+                <ul class="breadcrumb">
+                    <li class="home">
+                        <a href="#" class="home_text">Trang Chủ</a>
+                    </li>
+                    <li class="step">/</li>
+                    <li class="account">
+                        Đăng Nhập
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h1 class="page-title">Tài Khoản</h1>
+    </div>
+    <div class="content-register">
+        <div class="container">
+            <div class="form-login">
+                <p class="title_login">Đăng Nhập</p>
+                <form class="login" action="#" method="post">
+                    <input type="email" name="email" required="required" placeholder="Tên đăng nhập hoặc email">
+                    <br>
+                    <input type="password" name="password" required="required" placeholder="Mật khẩu">
+                    <br>
+                    <a class="forgot-pass" href="#" id="forgot-password-link">Quên mật khẩu?</a>
+                    <input class="submit" name="submit" type="submit" value="Đăng Nhập">
+                    <br>
+                    <a class="new-account" href="/phu_kien_cong_nghe/pages/trong_tin/page_register/register.html">Đăng
+                        ký</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="footer">
+
+</div>
+
+<div id="forgot-password-modal" class="modal hidden">
+
+    <div class="modal-backdrop"></div>
+
+    <div class="modal-content">
+
+        <span class="close-btn">&times;</span>
+
+        <h2>Khôi phục Mật khẩu</h2>
+        <p>Vui lòng nhập email hoặc số điện thoại của bạn:</p>
+
+        <form id="recovery-form" action="#" method="post">
+            <input type="text" id="recovery-input" name="recovery_info" placeholder="Email hoặc SĐT" required>
+            <button type="submit">Gửi Mã Xác Minh</button>
+        </form>
+
+    </div>
+</div>
+
+<div id="verify-code-modal" class="modal hidden">
+
+    <div class="modal-backdrop"></div>
+
+    <div class="modal-content">
+
+        <span class="close-btn" data-modal-target="verify">&times;</span>
+
+        <h2>Nhập Mã Xác Minh</h2>
+        <p>Mã xác minh đã được gửi đến Email/SĐT của bạn. Vui lòng kiểm tra và nhập mã:</p>
+
+        <form id="verify-form" action="#" method="post">
+            <input type="text" id="verification-code" name="code" placeholder="Nhập mã xác minh (6 chữ số)" required>
+
+            <button type="submit">Xác Minh</button>
+            <p class="resend-link">
+                <a href="#" id="resend-code">Gửi lại mã</a>
+            </p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
