@@ -1,0 +1,28 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    background: #F0F0F0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#main{
+    display: flex;
+    flex-direction: row;
+}
+.content-area{
+    width: 100%;
+}
+.entry-content{
+    padding: 10px;
+}
+table{
+  border-collapse: separate;
+    border-spacing: 0;
+    border-width: 1px 0 0 1px;
+    margin: 0 0 1.5em;
+    width: 100%;
+}
+table, td, th{
+    border: 1px solid #046bd2 ;
+}
