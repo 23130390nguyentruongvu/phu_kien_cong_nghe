@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Đăng Ký</title>
     <link rel="stylesheet" href="css/register.css">
+
 </head>
 <body>
     <header id="header-shared">
@@ -28,14 +29,14 @@
             <div class="container">
                 <div class="form-register">
                 <p class="title-register">Đăng Ký</p>
-                <form class="register">
+                <form class="register" id="registrationForm">
                     <input type="text" required = "required" placeholder="Họ và tên">
                     <br>
                     <input type="email" required = "required" placeholder="Email">
                     <br>
-                    <input type="password" required = "required" placeholder="Mật khẩu">
+                    <input type="password" required = "required" placeholder="Mật khẩu" id="password1">
                     <br>
-                    <input type="password" required = "required" placeholder="Nhập lại mật khẩu">
+                    <input type="password" required = "required" placeholder="Nhập lại mật khẩu" id="password2">
                     <br>
                     <input type="tel" required = "required" placeholder="Số điện thoại">
                     <br>
@@ -50,6 +51,6 @@
     <footer id="footer-shared">
 
     </footer>
-
+    <script src="js/register.js"></script>
 </body>
 </html>
