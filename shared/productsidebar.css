@@ -2,7 +2,6 @@
   border-right: 1px solid #046bd2;
   padding: 20px;
   width: 280px;
-  font-family: 'Nunito', sans-serif;
 }
 
 .sidebar-product h3 {
@@ -46,7 +45,6 @@
 
 .category-title {
   display: block;
-  font-weight: 600;
   color: #024c9a;
   padding: 6px 8px;
   border-radius: 4px;
@@ -61,14 +59,15 @@
 }
 
 .sub-category {
-  display: none; 
-  padding-left: 15px;
-  margin-top: 4px;
+  display: block;
+  padding-left: 25px; 
+  margin-top: 6px;
 }
 
 .sub-category li a {
   display: block;
   padding: 4px 8px;
+  margin-left: 10px;
   font-size: 14px;
   color: #024c9a;
   border-radius: 4px;
@@ -79,9 +78,5 @@
 .sub-category li a:hover {
   background-color: #046bd2;
   color: #fff;
-  padding-left: 12px;
-}
-
-.category:hover > .sub-category {
-  display: block;
+  padding-left: 14px;
 }

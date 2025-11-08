@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: arial, sans-serif;
 }
+
 .news-detail-container {
   max-width: 90%;
   margin: 50px auto;
@@ -21,13 +22,14 @@ body {
 }
 
 .news-content p,
-u,
-li {
+.news-content u,
+.news-content li {
   font-size: 17px;
   line-height: 1.7;
   margin-bottom: 8px;
   color: #444;
 }
+
 
 .news-content h3 {
   font-size: 24px;
