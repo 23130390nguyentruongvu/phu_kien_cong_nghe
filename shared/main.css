@@ -70,6 +70,7 @@ ul li {
     background-color: rgb(4, 107, 210);
     color: white;
 }
+
 /*header => above*/
 .header .header-container .header-above .grid-column-above {
     display: grid;
@@ -114,6 +115,7 @@ ul li {
     left: 0;
     z-index: 100;
 }
+
 .header .header-container .header-center {
     display: grid;
     grid-template-columns: 0.4fr 1fr 0.4fr;
@@ -189,18 +191,22 @@ ul li {
 
 /*header => below*/
 .header .header-container .header-below {
-    display: grid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-template-columns: 0.3fr 1fr 0.3fr;
     padding-bottom: 8px;
     padding-top: 8px;
 }
 
 .header .header-container .header-below .main-menu a {
+    width: 100%;
     text-decoration: none;
     color: white;
 }
 
 .header .header-container .header-below .main-menu a:hover {
+    width: 100%;
     text-decoration: none;
     color: #FFD700;
 }
@@ -210,10 +216,26 @@ ul li {
     color: #FFD700;
 }
 
-.header .header-container .header-below .main-menu .grid-column-below ul  li{
-    float: left;
+.header .header-container .header-below .main-menu .grid-column-below {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .header-container .header-below .main-menu .grid-column-below > ul {
+    text-align: center;
+    display: flex;
     align-content: center;
-    padding-left: 45px
+    justify-content: center;
+    flex-direction: row;
+
+}
+
+.header .header-container .header-below .main-menu .grid-column-below > ul li a {
+    margin-left: 25px;
+    margin-right: 25px;
+    width: 100%;
+    text-align: center;
 }
 
 #menuProducts {
@@ -223,19 +245,43 @@ ul li {
 
 #menuProducts .products {
     display: none;
-}#menuProducts:hover .products {
-     display: grid;
-     position: absolute;
+}
+
+#menuProducts:hover .products {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
     width: 100%;
- }
+}
+
 #menuProducts .products .sub-menu-products {
     background-color: rgb(4, 107, 210);
     border-radius: 10px;
     text-align: start;
+    cursor: pointer;
 }
+
 #menuProducts .products .sub-menu-products .sub-menu-item {
-    font-size: 20px;
-    padding: 8px;
+    width: 100%;
+    height: 30px;
+    padding-top: 10px;
+    font-size: 18px;
+    border-top: 1px solid white;
+}
+
+#menuProducts .products .sub-menu-products .sub-menu-item:hover {
+    width: 100%;
+    height: 30px;
+    padding-top: 10px;
+    font-size: 18px;
+    border-top: 1px solid white;
+    background: #024b9b;
+}
+
+#menuProducts .products .sub-menu-products .sub-menu-item a:hover {
+    color: white;
 }
 
 /*edit contain of header, main and footer*/
