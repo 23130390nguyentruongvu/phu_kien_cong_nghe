@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phương thức giao hàng</title>
+    <link rel="stylesheet" href="css/shippingmethod.css" />
+    <link rel="stylesheet" href="shared/main.css" />
+    <link rel="stylesheet" href="shared/sidebar.html" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-container">
+        <!--     open header-above-->
+        <div class="header-above">
+          <div class="grid-column-above">
+            <div class="information">
+              <ul>
+                <li><strong>Phụ Kiện Công Nghệ</strong></li>
+                <li>
+                  Kết nối với chúng tôi:
+                  <a href="" class="text-hover"
+                    ><i class="fa-brands fa-facebook"></i
+                  ></a>
+                  <a href="" class="text-hover"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+            <div class="empty"></div>
+            <div id="stateUser">
+              <div class="wrap-state-user">
+                <a href="" class="state-user-hover"
+                  ><i class="fa-solid fa-circle-user"></i>
+                  <p id="stateUserLogin">Chưa đăng nhập</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        close header-above-->
+        <!--        open header-center-->
+        <div class="header-center">
+          <div class="center logo">
+            <a href="../index.html"
+              ><img
+                src="../assets/image/logo.webp"
+                style="width: 60px; height: 60px"
+            /></a>
+          </div>
+          <div class="center form-search">
+            <form action="" method="get">
+              <input
+                type="search"
+                name="search-product"
+                placeholder="Tìm kiếm sản phẩm..."
+                class="search-input"
+              />
+              <button class="search-button" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+          </div>
+          <div class="center shopping-cart">
+            <a href=""
+              ><i class="fa-solid fa-cart-shopping"
+                ><span id="badgeNumItemCart" class="badge">0</span></i
+              ></a
+            >
+          </div>
+        </div>
+        <!--        close header-center-->
+        <!--        open header-below-->
+        <div class="header-below">
+          <div class="empty-left"></div>
+          <div class="main-menu below-center">
+            <div class="grid-column-below">
+              <ul>
+                <li id="menuHome" class="menu-item active">
+                  <a href="">TRANG CHỦ</a>
+                </li>
+                <li id="menuIntroduce" class="menu-item">
+                  <a href="">GIỚI THIỆU</a>
+                </li>
+                <li id="menuProducts" class="menu-item">
+                  <a href=""
+                    >DANH MỤC SẢN PHẨM<i class="fa-solid fa-chevron-down"></i
+                  ></a>
+                  <div class="show-when-hover products below-center">
+                    <div class="grid-column sub-menu-products">
+                      <ul>
+                        <li
+                          id="menuItem1"
+                          class="sub-menu-item"
+                          style="border-bottom: #ffd700 solid 1px; width: 93.5%"
+                        >
+                          <a href="">Phụ Kiện Máy Tính</a>
+                        </li>
+                        <li
+                          id="menuItem2"
+                          class="sub-menu-item"
+                          style="border-bottom: #ffd700 solid 1px; width: 93.5%"
+                        >
+                          <a href="">Phụ Kiện Điện Thoại</a>
+                        </li>
+                        <li
+                          id="menuItem3"
+                          class="sub-menu-item"
+                          style="border-bottom: #ffd700 solid 1px; width: 93.5%"
+                        >
+                          <a href="">Dây Cáp Tín Hiệu</a>
+                        </li>
+                        <li
+                          id="menuItem4"
+                          class="sub-menu-item"
+                          style="border-bottom: #ffd700 solid 1px; width: 93.5%"
+                        >
+                          <a href="">Bộ Chia Tín Hiệu</a>
+                        </li>
+                        <li id="menuItem5" class="sub-menu-item">
+                          <a href="">Bộ Chuyển Đổi Tín Hiệu</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+                <li id="menuNews" class="menu-item"><a href="">TIN TỨC</a></li>
+                <li id="menuContact" class="menu-item">
+                  <a href="">LIÊN HỆ VỚI CHÚNG TÔI</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="empty-right"></div>
+        </div>
+        <!--        close header-below-->
+      </div>
+    </div>
+
+    <main>
+      <div class="container">
+        <div class="sidebar-main">
+          <aside id="block-31" class="widget widget_block">
+            <h3 class="wp-block-heading">DANH MỤC TRANG</h3>
+          </aside>
+          <aside id="nav_menu-9" class="widget widget_nav_menu">
+            <nav class="menu-danh-muc-trang-container" aria-label="Menu">
+              <ul id="menu-danh-muc-trang" class="menu">
+                <li><a href="#">Trang Chủ</a></li>
+                <li><a href="#">Giới Thiệu</a></li>
+                <li><a href="#">Liên Hệ</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Tài Khoản Của Tôi</a></li>
+                <li><a href="#">Hướng Dẫn Mua Hàng</a></li>
+                <li><a href="#">Phương Thức Giao Hàng</a></li>
+                <li><a href="#">Phương Thức Thanh Toán</a></li>
+                <li><a href="#">Chính Sách Bảo Hành</a></li>
+                <li><a href="#">Chính Sách Bảo Mật</a></li>
+                <li><a href="#">Điều Khoản Dịch Vụ</a></li>
+              </ul>
+            </nav>
+          </aside>
+        </div>
+
+        <div class="content">
+          <h2>PHƯƠNG THỨC GIAO HÀNG</h2>
+
+          <p>
+            Phương Thức Giao Hàng của Phụ Kiện Công Nghệ là hỗ trợ giao hàng tận
+            nơi trên toàn quốc, áp dụng cho mọi khách hàng đặt mua sản phẩm tại
+            website
+            <a href="#">phukiencongnghe.com</a>. Đơn hàng được vận chuyển bởi
+            các công ty giao nhận hoặc trực tiếp bởi đội ngũ của Phụ Kiện Công
+            Nghệ.
+          </p>
+
+          <h3>1. Quy cách đóng gói sản phẩm:</h3>
+          <ul>
+            <li>
+              Các sản phẩm luôn được đóng gói cẩn thận, đạt tiêu chuẩn phù hợp
+              cho các hình thức vận chuyển nhằm đảm bảo thẩm mỹ và chất lượng
+              sản phẩm.
+            </li>
+          </ul>
+
+          <h3>2. Chính sách Phương thức giao hàng:</h3>
+          <ul>
+            <li>
+              Đơn hàng sẽ được giao tối đa 3 lần (trong trường hợp khách không
+              thể nhận trong thời gian đã đặt hẹn). Với những trường hợp khách
+              hàng cung cấp sai thông tin, đơn hàng sẽ hết hiệu lực và được hoàn
+              Shop.
+            </li>
+            <li>
+              Đơn hàng sẽ linh động thay đổi thời gian giao hàng trong các
+              trường hợp thiên tai hoặc các sự kiện đặc biệt khác.
+            </li>
+            <li>
+              Để kiểm tra thông tin hoặc tình trạng đơn hàng, quý khách có thể
+              liên hệ hotline hoặc chat trên website.
+            </li>
+            <li>
+              Khi sản phẩm được giao đến, quý khách vui lòng kiểm tra số lượng,
+              tên, loại sản phẩm… đúng với đơn đặt hàng trước khi ký xác nhận.
+            </li>
+            <li>
+              Xin quý khách giữ lại biên lai vận chuyển và hóa đơn mua hàng để
+              đối chiếu kiểm tra. Khi có bất cứ khiếu nại nào xảy ra, chúng tôi
+              sẽ căn cứ vào biên lai vận chuyển và hoá đơn mua hàng để giải
+              quyết khiếu nại cho quý khách hàng.
+            </li>
+          </ul>
+          <h3>3. Thời gian giao hàng:</h3>
+          <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Khu vực giao hàng</th>
+                <th>Thời gian vận chuyển</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nội thành Hồ Chí Minh</td>
+                <td>Giao ngay trong 30 – 60 phút</td>
+              </tr>
+              <tr>
+                <td>Toàn TP. Hồ Chí Minh</td>
+                <td>1 đến 1,5 ngày</td>
+              </tr>
+              <tr>
+                <td>Các thành phố khác (Hải Phòng, Đà Nẵng, Hà Nội, …)</td>
+                <td>2 đến 3 ngày</td>
+              </tr>
+              <tr>
+                <td>Tỉnh, thành khác</td>
+                <td>3 đến 5 ngày</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4>Ghi chú về thời gian giao hàng</h4>
+          <p>
+            <strong>Lưu ý:</strong> Thời gian giao hàng không tính ngày Chủ
+            Nhật, Lễ, Tết… (tùy thuộc chính sách Nhà vận chuyển).
+          </p>
+          <p>
+            Thời gian xử lý đơn hàng được tính từ khi khách hàng đặt thành công
+            trên website.
+          </p>
+
+          <h3>4. Chi phí vận chuyển</h3>
+          <ul>
+            <li>Với đơn hàng dưới 500.000đ:</li>
+          </ul>
+          <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Khu vực giao hàng</th>
+                <th>Phí vận chuyển</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nội thành Hồ Chí Minh (giao ngay trong 30 – 60p)</td>
+                <td>
+                  Tính theo cước ship thực tế (20.000đ – 50.000đ/đơn hàng)
+                </td>
+              </tr>
+              <tr>
+                <td>Toàn TP. Hồ Chí Minh (giao hôm sau)</td>
+                <td>20.000đ/đơn hàng</td>
+              </tr>
+              <tr>
+                <td>Các thành phố khác (Hải Phòng, Đà Nẵng, Hà Nội, …)</td>
+                <td>20.000đ – 40.000đ/đơn hàng</td>
+              </tr>
+              <tr>
+                <td>Tỉnh, thành khác</td>
+                <td>30.000đ – 40.000đ/đơn hàng</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Chi phí vận chuyển cho đơn hàng từ 500.000đ trở lên</h3>
+
+          <ul>
+            <li>
+              Sẽ được áp dụng chương trình miễn phí hoặc hỗ trợ một phần cước
+              vận chuyển tùy điều kiện thực tế (như vị trí khách hàng, trọng
+              lượng đơn hàng, phương thức thanh toán).
+            </li>
+          </ul>
+
+          <p>
+            Biểu phí Phương Thức Giao Hàng được áp dụng kể từ ngày
+            <strong>01/07/2025</strong>.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div class="footer">
+      <div class="footer-container">
+        <div class="footer-grid center">
+          <div class="footer-column first info">
+            <ul>
+              <li><i class="fa-solid fa-phone"></i>Gọi: 0677xxxx</li>
+              <li>
+                <i class="fa-solid fa-location-dot"></i>Địa chỉ: Kios 8 giang,
+                phường Linh Trung, Thủ Đức
+              </li>
+              <li><i class="fa-solid fa-envelope"></i>Email: pkcn@sp.love</li>
+              <li>
+                <i class="fa-solid fa-clock"></i>Thời gian làm việc: 8h-21h, thứ
+                2 đến thứ 7 hàng tuần
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column second nav">
+            <ul>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-solid fa-person-chalkboard"></i>Hướng dẫn mua
+                  hàng</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-solid fa-money-bill"></i>Hình thức thanh toán</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-solid fa-award"></i>Chính sách bảo hành</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-solid fa-lock"></i>Chính sách bảo mật</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column third social-media">
+            <ul>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-brands fa-facebook"></i>Facebook</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-brands fa-tiktok"></i>Tiktok</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"
+                  ><i class="fa-brands fa-instagram"></i>Instagram</a
+                >
+              </li>
+              <li>
+                <a href="" class="text-hover"><i class="fa-solid fa-x"></i>X</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column 4th logo">
+            <img src="../assets/image/logo.webp" alt="" />
+          </div>
+        </div>
+        <div class="site-below">
+          <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
