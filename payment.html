@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Thanh Toán</title>
@@ -92,35 +92,11 @@
         <!--        close header-below-->
     </div>
 </div>
-    <main id="main" class="thanh-toan">
-        <div class="header-page">
-            <h1 class="entry-title">Thanh Toán</h1>
-        </div>
-        <div id="content" class="site-content">
-            <div class="container">
-                <div class="row">
-                    <form name="checkout" method="post" class="checkout">
-                        <div id="customer_details">
-                            <h3>Thông Tin Thanh Toán</h3>
-                            <div class="checkout-billing">
-                                <label>Họ và tên *</label>
-                                <input type="text" name="ho_ten" value="" placeholder=" Nhập họ và tên">
-                                <label>Số điện thoại *</label>
-                                <input type="tel" name="sdt" value="" placeholder=" Nhập số điện thoại">
-                                <label>Địa chỉ email *</label>
-                                <input type="email" name="email" value="" placeholder=" Nhập địa chỉ email">
-                                <label>Tỉnh/thành phố *</label>
-                                <select id="tinh-thanh" name="tinh">
-</head>
-<body>
-    <header>
-
-    </header>
-    <main id="main" class="thanh-toan">
+<main id="main" class="thanh-toan">
     <div class="header-page">
         <h1 class="entry-title">Thanh Toán</h1>
     </div>
-     <div id="content" class="site-content">
+    <div id="content" class="site-content">
         <div class="container">
             <div class="row">
                 <form name="checkout" method="post" class="checkout">
@@ -128,13 +104,13 @@
                         <h3>Thông Tin Thanh Toán</h3>
                         <div class="checkout-billing">
                             <label>Họ và tên *</label>
-                            <input type="text" name="ho_ten"  value="" placeholder="Nhập họ và tên">
+                            <input type="text" name="ho_ten" value="" placeholder=" Nhập họ và tên">
                             <label>Số điện thoại *</label>
-                            <input type="tel" name="sdt"  value="" placeholder="Nhập số điện thoại">
+                            <input type="tel" name="sdt" value="" placeholder=" Nhập số điện thoại">
                             <label>Địa chỉ email *</label>
-                            <input type="email" name="email"  value="" placeholder="Nhập địa chỉ email">
+                            <input type="email" name="email" value="" placeholder=" Nhập địa chỉ email">
                             <label>Tỉnh/thành phố *</label>
-                            <select id="tinh-thanh" name="tinh" >
+                            <select id="tinh-thanh" name="tinh">
 
                             </select>
                             <label>Quận/Huyện *</label>
@@ -144,198 +120,110 @@
                             <label>Xã/Phường/Thị Trấn *</label>
                             <select id="xa-phuong-thitran" name="xa">
 
-                                </select>
-                                <label>Địa chỉ *</label>
-                                <input type="text" name="diachi" value=""
-                                       placeholder=" Nhập địa chỉ cụ thể: số nhà,tên đường..">
                             </select>
                             <label>Địa chỉ *</label>
-                            <input type="text" name="diachi"  value="" placeholder="Nhập địa chỉ cụ thể: số nhà,tên đường..">
+                            <input type="text" name="diachi" value=""
+                                   placeholder=" Nhập địa chỉ cụ thể: số nhà,tên đường..">
 
                             <label>Ghi chú đơn hàng (tùy chọn)</label>
                             <textarea name="ghi-chu" class="ghi-chu" rows="5" placeholder="Ghi chú về đơn hàng">
 
                             </textarea>
                         </div>
-
-                        <div class="products">
-                            <h3 id="heading-product">Đơn hàng của bạn</h3>
-                            <div id="order-review" class="checkout-order-review">
-                                <table class="shop-table">
-                                    <thead>
-                                    <tr class="product-and-price">
-                                        <th class="product-name">
-                                            Sản phẩm
-                                        </th>
-                                        <th class="product-total">
-                                            Tạm tính
-                                        </th>
-                                    </tr>
-
-                                    </thead>
-                                    <tbody>
-                                    <tr class="cart-item">
-                                        <td class="product-name">
-                                            <div class="product-image">
-                                                <div class="ast-product-name">
-                                                    Cáp sạc Xiaomi 90W chính hãng
-                                                </div>
-                                            </div>
-                                            &nbsp;
-                                            <strong class="product-quantity">&nbsp;x1</strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="price-amount">
-                                                <bdi>100.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <th>Tạm tính</th>
-                                        <td>
-                                            <span class="price-amount">
-                                                <bdi>100.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr class="shipping-totals">
-                                        <th>Vận chuyển</th>
-                                        <td>
-                                            <p>Giao tại cửa hàng</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="voucher">
-                                        <th>Mã giảm giá</th>
-                                        <td><input type="text" placeholder="&nbsp;Nhập mã giảm giá" class="text-voucher"></td>
-                                    </tr>
-                                    <tr class="order-total">
-                                        <th>Tổng</th>
-                                        <td>
-                                            <strong>
-                                                <span class="price-amount">
-                                                <bdi>100.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
-                                            </span>
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                                <div id="payment" class="checkout-payment">
-                                    <ul class="payment-methods">
-                                        <li class="method-cod">
-                                            <input id="payment-method-cod" type="radio" class="input-radio" name="payment_method" checked="checked">
-                                            <label for="payment-method-cod">Thanh toán khi nhận hàng</label>
-                                                <div class="cod-sub">
-                                                <p>Trả tiền mặt khi giao hàng</p>
-                                            </div>
-                                        </li>
-                                        <li class="method-bank">
-                                            <input id="payment-method-bank" type="radio" class="input-radio" name="payment_method">
-                                            <label for="payment-method-bank">Chuyển khoản ngân hàng trực tiếp</label>
-                                                <div class="bank-sub">
-                                                <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="place-order">
-                                        <div class="term-and-conditions">
-                                            <p>Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong
-                                            <a href="#">chính sách riêng tư</a> của chúng tôi.</p>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="button_order" name="checkout-place-order" id="place-order" value="Đặt hàng">Đặt hàng</button>
                     </div>
+
                     <div class="products">
-                        <h3>Đơn hàng của bạn</h3>
-                        <div id="order_review" class="checkout-order">
+                        <h3 id="heading-product">Đơn hàng của bạn</h3>
+                        <div id="order-review" class="checkout-order-review">
                             <table class="shop-table">
                                 <thead>
-                                <tr>
-                                    <th class="product-name">Sản Phẩm</th>
-                                    <th class="product-quantity">Quantity</th>
+                                <tr class="product-and-price">
+                                    <th class="product-name">
+                                        Sản phẩm
+                                    </th>
+                                    <th class="product-total">
+                                        Tạm tính
+                                    </th>
                                 </tr>
+
                                 </thead>
                                 <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            <a href="#">
-                                                <img width="70" height="70" src="" class="img-product" alt="Cáp sạc điện thoại Xiaomi chính hãng" loading="lazy">
-                                            </a>
-                                            "Cáp sạc điện thoại Xiaomi chính hãng"
-                                            <strong class="product-quantity">x&nbsp;1</strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="price-amount">
-                                                <bdi>"720.000"
-                                                <span class="price-current">₫</span></bdi>
+                                <tr class="cart-item">
+                                    <td class="product-name">
+                                        <div class="product-image">
+                                            <div class="ast-product-name">
+                                                Cáp sạc Xiaomi 90W chính hãng
+                                            </div>
+                                        </div>
+                                        &nbsp;
+                                        <strong class="product-quantity">&nbsp;x1</strong>
+                                    </td>
+                                    <td class="product-total">
+                                <span class="price-amount">
+                                                <bdi>100.000&nbsp;
+                                                <span class="current-price">
+                                                </span>₫</bdi>
                                             </span>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr class="cart-subtotal">
                                     <th>Tạm tính</th>
-                                    <td><span class="price-amount">
-                                        <bdi>720.000
-                                        <span class="price-current">₫</span></bdi>
-                                    </span></td>
-                                </tr>
-                                <tr class="ship-total">
-                                    <td colspan="2" data-title="Giao hàng">
-                                        <h4 class="ship-title">Giao hàng</h4>
-                                        <ul class="ship-method" id="shipping-method">
-                                            <li>
-                                                <input type="radio" name="ship-method[0]" id="ship-method-0" class="shipping-method" checked="checked">
-                                                <label for="ship-method-0">Đồng giá :
-                                                <span class="price-amount">
-                                                    <bdi>
-                                                    25.000
-                                                        <span class="price-current">₫</span>
-                                                </bdi>
-                                                </span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" name="ship-method[0]" id="ship-method-1" class="shipping-method">
-                                                <label for="ship-method-1">Giao tại cửa hàng</label>
-                                            </li>
-                                        </ul>
+                                    <td>
+                                            <span class="price-amount">
+                                                <bdi>100.000&nbsp;
+                                                <span class="current-price">
+                                                </span>₫</bdi>
+                                            </span>
                                     </td>
+                                </tr>
+                                <tr class="shipping-totals">
+                                    <th>Vận chuyển</th>
+                                    <td>
+                                        <p>Giao tại cửa hàng</p>
+                                    </td>
+                                </tr>
+                                <tr class="voucher">
+                                    <th>Mã giảm giá</th>
+                                    <td><input type="text" placeholder="&nbsp;Nhập mã giảm giá" class="text-voucher"></td>
                                 </tr>
                                 <tr class="order-total">
                                     <th>Tổng</th>
-                                    <td><strong>
-                                        <span class="price-amount">
-                                            <bdi>745.000
-                                            <span class="price-current">₫</span>
-                                            </bdi>
-                                        </span>
-                                    </strong></td>
+                                    <td>
+                                        <strong>
+                                                <span class="price-amount">
+                                                <bdi>100.000&nbsp;
+                                                <span class="current-price">
+                                                </span>₫</bdi>
+                                            </span>
+                                        </strong>
+                                    </td>
                                 </tr>
                                 </tfoot>
                             </table>
-                            <div class="form-row place-order">
-                                <div class="conditions-wrapper">
-                                    <div class="privacy-policy-text">
-                                        <p>Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn đặt hàng của bạn, hỗ trợ trải nghiệm của bạn trên trang web này và cho các mục đích khác được mô tả trong phần của chúng tôi.
-                                        <a href="#" class="privacy-policy-link">Chính sách bảo mật</a>
-                                        </p>
+                            <div id="payment" class="checkout-payment">
+                                <ul class="payment-methods">
+                                    <li class="method-cod">
+                                        <input id="payment-method-cod" type="radio" class="input-radio" name="payment_method" checked="checked">
+                                        <label for="payment-method-cod">Thanh toán khi nhận hàng</label>
+                                        <div class="cod-sub">
+                                            <p>Trả tiền mặt khi giao hàng</p>
+                                        </div>
+                                    </li>
+                                    <li class="method-bank">
+                                        <input id="payment-method-bank" type="radio" class="input-radio" name="payment_method">
+                                        <label for="payment-method-bank">Chuyển khoản ngân hàng trực tiếp</label>
+                                        <div class="bank-sub">
+                                            <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="place-order">
+                                    <div class="term-and-conditions">
+                                        <p>Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong
+                                            <a href="#">chính sách riêng tư</a> của chúng tôi.</p>
                                     </div>
-                                    <p class="form-row validate-required">
-                                        <label class="label-for-checkbox">
-                                            <input type="checkbox" class="input-checkbox" id="terms" name="terms">
-                                            <span class="checkbox-text">Tôi đồng ý với trang web
-                                            <a href="#" class="term-and-condition-link">điều khoản và điều kiện</a></span>
-                                        </label>
-                                    </p>
                                 </div>
                                 <button type="submit" class="button_order" name="checkout-place-order" id="place-order" value="Đặt hàng">Đặt hàng</button>
                             </div>
@@ -344,8 +232,8 @@
                 </form>
             </div>
         </div>
-     </div>
-    </main>
+    </div>
+</main>
 <div class="footer">
     <div class="footer-container">
         <div class="footer-grid center">
@@ -388,9 +276,4 @@
 
 </body>
 <script src="js/payment.js"></script>
-
-    <footer>
-
-    </footer>
-</body>
 </html>
