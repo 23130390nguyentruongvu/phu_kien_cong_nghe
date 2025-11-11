@@ -17,10 +17,7 @@ h1{
     text-align: center;
     padding-top: 115px;
 }
-.checkout-billing{
-    display: flex;
-    flex-direction: column;
-}
+
 .container{
     padding-left: 40px;
 }
@@ -29,24 +26,35 @@ h1{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-input{
-    border-radius: 5px;
-    height: 40px;
+.note{
     width: 80%;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    padding: 10px;
 }
-select{
-    border-radius: 5px;
-    height: 40px;
-    width: 80%;
-    margin-bottom: 10px;
+.user-address{
+
+    background-color: #f5f5f5;
+
 }
-.ghi-chu{
-    width: 80%;
+.address{
+    margin-top: 20px;
+    line-height: 1.5;
+    font-size: 20px;
+
 }
-label{
-    display: block;
-    margin-bottom: 10px;
+.change-address{
+    background-color:#FFD700 ;
+    border: none;
+}
+.focus{
+    color: red;
+}
+.change-address{
+    width: 50%;
+    height: 20px;
+}
+.phone-number{
+    margin-right: 20px;
 }
 .products{
     width: 65%;
@@ -59,6 +67,12 @@ label{
     padding: 1.5em 1.5em 1em;
     border-color: #046bd2;
 
+}
+.name-user ,
+.address-detail,
+.focus,
+.change-address{
+    margin-left: 20px;
 }
 #order-review{
     padding: 0 2em;

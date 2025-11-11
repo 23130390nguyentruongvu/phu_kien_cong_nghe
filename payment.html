@@ -110,37 +110,36 @@
             <div class="row">
                 <form name="checkout" method="post" class="checkout">
                     <div id="customer_details">
-                        <h3>Thông Tin Thanh Toán</h3>
-                        <div class="checkout-billing">
-                            <label>Họ và tên *</label>
-                            <input type="text" name="ho_ten" value="" placeholder=" Nhập họ và tên">
-                            <label>Số điện thoại *</label>
-                            <input type="tel" name="sdt" value="" placeholder=" Nhập số điện thoại">
-                            <label>Địa chỉ email *</label>
-                            <input type="email" name="email" value="" placeholder=" Nhập địa chỉ email">
-                            <label>Tỉnh/thành phố *</label>
-                            <select id="tinh-thanh" name="tinh">
-
-                            </select>
-                            <label>Quận/Huyện *</label>
-                            <select id="quan-huyen" name="huyen">
-
-                            </select>
-                            <label>Xã/Phường/Thị Trấn *</label>
-                            <select id="xa-phuong-thitran" name="xa">
-
-                            </select>
-                            <label>Địa chỉ *</label>
-                            <input type="text" name="diachi" value=""
-                                   placeholder=" Nhập địa chỉ cụ thể: số nhà,tên đường..">
-
-                            <label>Ghi chú đơn hàng (tùy chọn)</label>
-                            <textarea name="ghi-chu" class="ghi-chu" rows="5" placeholder="Ghi chú về đơn hàng">
-
-                            </textarea>
+                        <h3>Địa chỉ nhận hàng</h3>
+                        <div class="address">
+                            <table class="user-address">
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <strong>
+                                                <span class="name-user">Nguyễn Trường Vũ</span>
+                                                <span class="phone-number">(+84) 385018300</span>
+                                            </strong>
+                                        </p>
+                                        <p>
+                                            <span class="address-detail">
+                                                Số nhà 418
+                                            </span>
+                                            <span class="district">
+                                                Nhơn Mỹ
+                                            </span>
+                                            <span class="province">
+                                                An Giang
+                                            </span>
+                                        </p>
+                                        <p class="focus">Mặc định</p>
+                                        <button class="change-address">Thay đổi</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <textarea rows="5" placeholder="Ghi chú sản phẩm" class="note"></textarea>
                         </div>
                     </div>
-
                     <div class="products">
                         <h3 id="heading-product">Đơn hàng của bạn</h3>
                         <div id="order-review" class="checkout-order-review">
@@ -161,10 +160,9 @@
                                     <td class="product-name">
                                         <div class="product-image">
                                             <div class="ast-product-name">
-                                                Cáp sạc Xiaomi 90W chính hãng
+                                                Củ sạc Xiaomi 90W chính hãng
                                             </div>
-                                        </div>
-                                        &nbsp;
+                                        </div>&nbsp;
                                         <strong class="product-quantity">&nbsp;x1</strong>
                                     </td>
                                     <td class="product-total">
@@ -286,8 +284,6 @@
         </div>
     </div>
 </div>
-
-
 </body>
 <script src="js/payment.js"></script>
 </html>
