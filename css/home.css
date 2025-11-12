@@ -89,6 +89,8 @@
 section {
     display: flex;
     flex-direction: column;
+    margin-left: 8%;
+    margin-right: 8% ;
 }
 
 section .title-section {
@@ -130,8 +132,10 @@ section .showMoreSection {
 
 section .list-product-by-section {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 /*feedback customer*/
