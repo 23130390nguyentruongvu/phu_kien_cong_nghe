@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="shared/main.css">
     <link rel="stylesheet" href="shared/nav_account.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/address_user.css">
 </head>
 <body>
 <div class="header">
@@ -102,7 +103,6 @@
 </div>
 
 <main id="main" class="main">
-    <div class="main-container">
         <!--    open account nav-->
         <div class="nav-account">
             <div class="wrap-base-info-user">
@@ -111,9 +111,9 @@
             </div>
             <div class="wrap-nav-link">
                 <ul>
-                    <li class="nav-link-item link-selected"><i class="fa-solid fa-user"></i>Tài khoản</li>
+                    <li class="nav-link-item "><i class="fa-solid fa-user"></i>Tài khoản</li>
                     <li class="nav-link-item"><i class="fa-solid fa-clock-rotate-left"></i>Lịch sử đơn hàng</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-location-dot"></i>Địa chỉ</li>
+                    <li class="nav-link-item link-selected"><i class="fa-solid fa-location-dot"></i>Địa chỉ</li>
                     <li class="nav-link-item"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</li>
                 </ul>
             </div>
@@ -129,51 +129,66 @@
             <div class="address-user">
                 <p class="header-address">Địa chỉ</p>
                 <table class="address-content">
+                    <tbody>
                     <tr>
-                        <td>
+                        <td class="content">
                             <div class="name-phone">
-                                <p class="name">Nguyễn Trường Vũ</p> <span>|</span> <p class="phone">1234567890</p>
-                                <button class="update">Cập nhật</button>
-                                <button class="delete">Xóa</button>
+                                <p class="name">Nguyễn Trường Vũ</p> &nbsp; | &nbsp; (+84) <p class="phone">12345678</p>
                             </div>
                             <div class="address-detail">
-                                <p class="details">
-                                    số nhà 418
-                                </p>
-                                <button class="set-status">Đặt làm mặc định</button>
+                                số nhà 418
                             </div>
-                            <div class="province-district">
+                            <div class="district-province">
                                 <p class="district">xã Nhơn Mỹ</p>
-                                <p class="province">, tỉnh An Giang</p>
+                                ,&nbsp;
+                                <p class="province">tỉnh An Giang</p>
                             </div>
-                            <p class="status">Mặc định</p>
+                            <div class="status">
+                                Mặc định
+                            </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="name-phone">
-                                <p class="name">Nguyễn Trường Vũ</p> <span>|</span> <p class="phone">1234567890</p>
+                        <td class="btn">
+                            <div class="update-delete">
                                 <button class="update">Cập nhật</button>
+                                &nbsp;
                                 <button class="delete">Xóa</button>
                             </div>
-                            <div class="address-detail">
-                                <p class="details">
-                                    số nhà 418
-                                </p>
-                                <button class="set-status">Đặt làm mặc định</button>
-                            </div>
-                            <div class="province-district">
-                                <p class="district">xã Nhơn Mỹ</p>
-                                <p class="province">, tỉnh An Giang</p>
-                            </div>
-                            <p class="status">Mặc định</p>
+                            <button class="set-status">Thiết lập mặc định</button>
                         </td>
                     </tr>
 
+                    <tr>
+                        <td class="content">
+                            <div class="name-phone">
+                                <p class="name">Nguyễn Trường Vũ</p> &nbsp; | &nbsp; (+84) <p class="phone">12345678</p>
+                            </div>
+                            <div class="address-detail">
+                                số nhà 418
+                            </div>
+                            <div class="district-province">
+                                <p class="district">xã Trảng Bom</p>
+                                ,&nbsp;
+                                <p class="province">tỉnh Bình Phước</p>
+                            </div>
+                            <div class="status">
+                                Mặc định
+                            </div>
+
+                        </td>
+                        <td class="btn" >
+                            <div class="update-delete">
+                                <button class="update">Cập nhật</button>
+                                &nbsp;
+                                <button class="delete">Xóa</button>
+                            </div>
+                                <button class="set-status">Thiết lập mặc định</button>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
-    </div>
+
 </main>
 <div class="footer">
     <div class="footer-container">
