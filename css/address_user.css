@@ -1,0 +1,165 @@
+body{
+    margin:0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    min-height: 100vh;
+    box-sizing: border-box;
+    }
+#main{
+    display: flex;
+    flex-direction: row;
+
+}
+.address-user-info {
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-left: 2px solid rgb(4, 107, 210);
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+
+.add-address {
+    height: 35px;
+    width: auto;
+    padding: 0 15px;
+    background-color:#FFB300;
+    color: white;
+    font-weight: normal;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: none;
+    box-shadow: rgba(0,0,0,0.4) 2px 2px 2px;
+
+}
+.add-address:hover {
+    background-color: #d14421;
+    cursor: pointer;
+}
+
+.header-address {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+
+    font-weight: normal;
+}
+
+.address-user table.address-content {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.address-content tr {
+    border-bottom: 2px solid #eee;
+}
+
+table.address-content tr:last-child {
+    border-bottom: none;
+}
+
+table.address-content td {
+    padding: 20px 0;
+    vertical-align: top;
+}
+
+.content {
+    width: calc(100% - 250px);
+    padding-right: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.name-phone {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.address-detail, .district-province {
+    display: block;
+    color: #555;
+    margin-bottom: 2px;
+}
+.district-province {
+    display: flex;
+    flex-direction: row;
+}
+
+.status {
+    display: none;
+}
+table.address-content tr:first-child .status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 7px;
+    background-color: #f7f7f7;
+    color: #888;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    font-weight: normal;
+    border-radius: 2px;
+}
+
+.btn {
+    width: 780px;
+    text-align: right;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.update-delete {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-bottom: 0;
+    padding-right: 20px;
+}
+
+.update,
+.delete {
+    border: none;
+    color: #046bd2;
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.update:hover,
+.delete:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.set-status {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    display: inline-block;
+    min-width: 117px;
+    text-align: center;
+    border-radius: 3px;
+}
+.set-status:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
