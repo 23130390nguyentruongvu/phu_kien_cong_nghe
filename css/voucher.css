@@ -1,0 +1,71 @@
+body{
+    margin:0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    background: #F0F0F0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#main{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-container{
+    width: 100%;
+    padding: 20px;
+}
+.voucher-container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr;
+}
+.voucher{
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid gray;
+
+    margin-bottom: 10px;
+    width: 80%;
+    line-height: 28px;
+    box-shadow: rgba(0,0,0,0.4) 2px 2px 2px;
+}
+.discount-price{
+    border: 1px solid gray;
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFB300;
+    color: #fff;
+
+}
+.discount{
+    font-weight: bold;
+
+}
+.discount-content{
+    width: 100%;
+    margin: 10px;
+
+}
+.code{
+    display: flex;
+    flex-direction: row;
+}
+.code-text{
+    margin-right: 5px;
+}
+.copy{
+    height: 20px;
+    width: 40px;
+    margin-top: 4px;
+    background: #ebeaea;
+    color: #555555;
+}
+.copy:hover{
+    cursor: pointer;
+}
+.status{
+    display: none ;
+}
