@@ -1,0 +1,126 @@
+.wrap-content-all {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter-by {
+    height: 45px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 300px;
+
+}
+
+.status-order .completed {
+    color: green;
+}
+
+.wrap-content-all .main-content {
+    flex: 1;
+    border-left: 2px solid rgb(4, 107, 210);
+}
+
+.wrap-content-order {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 80px 40px 40px;
+    justify-content: center;
+    align-items: start;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.wrap-content-order:hover {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 80px 40px 40px;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.img-cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.img-cart-item {
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+}
+
+.header-order {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.address-shipping em {
+    display: inline-block;
+    max-width: 450px;
+    color: rgb(4, 107, 210);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.address-shipping {
+    margin-left: 40%;
+}
+
+.per-cart-item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: start;
+    justify-content: center;
+    padding: 5px;
+    background-color: rgb(246, 246, 246);
+    border-radius: 10px;
+    margin-right: 48px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.per-cart-item div {
+    padding-left: 20px;
+}
+
+.info-base-cart-item {
+    width: 100%;
+    margin: 10px;
+}
+
+.price-cart-item {
+    text-align: end;
+    padding-right: 30px;
+    color: red;
+}
+
+.info-cart-item {
+    color: rgb(0, 0, 0, 0.3);
+}
+
+.name-cart-item {
+    font-size: 20px;
+}
+
+.footer-order {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    font-weight: bolder;
+    color: red;
+    font-size: 22px;
+}
