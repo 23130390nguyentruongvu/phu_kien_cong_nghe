@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lí sản phẩm</title>
+    <link rel="stylesheet" href="shared/nav_admin.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/admin_product.css">
+</head>
+<body>
+<div class="wrap-all-content">
+    <!--    open nav admin-->
+    <div class="nav-admin">
+        <div class="wrap-base-info-admin">
+            <div class="wrap-img-user-admin">
+                <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
+                <span class="username-role-of-admin">
+                    <span class="username">Admin123</span>
+
+                    <div class="role">Quản trị viên</div>
+                </span>
+            </div>
+            <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
+        </div>
+        <hr>
+        <div class="wrap-nav-link-admin">
+            <ul>
+                <li class="item-nav-link-admin">
+                    <i class="fa-solid fa-eye"></i> Tổng quan
+                </li>
+                <li class="item-nav-link-admin">
+                    <i class="fa-solid fa-user-group"></i> Quản lí người dùng
+                </li>
+                <li class="item-nav-link-admin selected">
+                    <i class="fa-solid fa-box"></i> Quản lí sản phẩm
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--    close nav admin-->
+    <!--    open main content admin-->
+    <div class="main-content-admin">
+        <h1 class="title-for-page">Quản lí sản phẩm</h1>
+        <div class="wrap-find-info-product">
+            <form>
+                <input type="text" name="product-id" class="input-product-id" placeholder="Tìm kiếm theo product id">
+                <select name="filter-by-category" class="filter-by-category">
+                    <option value="all" selected>Mọi Thể Loại</option>
+                    <option value="pkmt">Phụ Kiện Máy Tính</option>
+                    <option value="pkdt">Phụ Kiện Điện Thoại</option>
+                    <option value="bcth">Bộ Chuyển Tín Hiệu</option>
+                </select>
+                <button type="submit" class="submit-data">Submit</button>
+            </form>
+        </div>
+        <div class="board-res-product">
+            <form>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phâm</th>
+                        <th>Số lượng sản phẩm biến thể</th>
+                        <th>Tổng số lượng</th>
+                        <th>Phạm vi giá</th>
+                        <th>Hiện sản phẩm lên web</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>100</td>
+                        <td>Loa Cell Phone</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>2.200.000<span class="underline-dong">đ</span> - 2.400.000<span
+                                class="underline-dong">đ</span></td>
+                        <td><input type="checkbox" name="status-product[]" class="status-product" value="100"></td>
+                    </tr>
+                    <tr>
+                        <td>120</td>
+                        <td>Dây HDMI</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>2.200.000<span class="underline-dong">đ</span> - 4.300.000<span
+                                class="underline-dong">đ</span></td>
+                        <td><input type="checkbox" name="status-product[]" class="status-product" value="120"></td>
+                    </tr>
+                    <tr>
+                        <td>200</td>
+                        <td>Đèn Chiếu Sáng Cho Xe Đạp</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2.200.000<span class="underline-dong">đ</span> - 2.400.000<span
+                                class="underline-dong">đ</span></td>
+                        <td><input type="checkbox" name="status-product[]" class="status-product" value="200"></td>
+                    </tr>
+                    <tr>
+                        <td>300</td>
+                        <td>Bàn Phím Không Dây</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>2.200.000<span class="underline-dong">đ</span> - 2.400.000<span
+                                class="underline-dong">đ</span></td>
+                        <td><input type="checkbox" name="status-product[]" class="status-product" value="300"></td>
+                    </tr>
+                    <tr>
+                        <td>900</td>
+                        <td>Màn Hình Phụ Kết Nối HDMI</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>2.200.000<span class="underline-dong">đ</span> - 2.400.000<span
+                                class="underline-dong">đ</span></td>
+                        <td><input type="checkbox" name="status-product[]" class="status-product" value="900"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="wrap-btn-submit-data-product">
+                    <input type="submit" class="submit-data-product" name="change-status" value="Đồng Ý Thay Đổi">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    close main content admin-->
+</div>
+</body>
+</html>
