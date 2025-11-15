@@ -1,0 +1,147 @@
+* {
+    font-family: Arial, sans-serif;
+}
+
+#filter-by-week-select {
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.wrap-all-content {
+    height: 100vh;
+}
+
+.item-dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 50px;
+    justify-content: start;
+    align-items: start;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 25px 25px 30px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.title-for-page {
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.title-item-dashboard {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.wrap-small-info {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.wrap-quantity {
+    font-size: 22px;
+    width: 30px;
+}
+
+.wrap-small-info .total-user {
+    margin-left: 130px;
+    padding: 8px;
+    color: #8BA6E0;
+    border-radius: 20%;
+    background-color: #DBEAFF;
+}
+
+.wrap-small-info .total-product {
+    margin-left: 130px;
+    padding: 8px;
+
+    border-radius: 20%;
+    color: #ACE8BC;
+    background-color: #D8FCE8;
+}
+
+.wrap-small-info .total-order-completed {
+    margin-left: 130px;
+    padding: 8px;
+    color: #9D4ECD;
+    border-radius: 20%;
+    background-color: #F6E7FD;
+}
+
+.wrap-small-info .total-revenue {
+    margin-left: 130px;
+    padding: 8px;
+    color: #E4A988;
+    border-radius: 20%;
+    background-color: #FFEDB7;
+}
+
+.wrap-row-item-dashboard {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-res-filter-by-week {
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.board-res-filter-by-week table {
+    width: 1200px;
+    border-collapse: collapse;
+}
+
+.board-res-filter-by-week thead {
+    text-align: start;
+    border-bottom: rgb(0, 0, 0, 0.1) solid 1px;
+}
+
+.board-res-filter-by-week thead th {
+    text-align: center;
+}
+
+.board-res-filter-by-week tbody tr {
+    text-align: center;
+    height: 30px;
+    border-bottom: rgb(0, 0, 0, 0.1) solid 1px;
+}
+
+.underline-dong {
+    text-decoration: underline;
+}
+
+.status-order {
+    border-radius: 10px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.status-order.completed {
+    color: green;
+    background-color: #D8FCE8;
+}
+
+.status-order.processing {
+    color: blue;
+    background-color: #DBEAFF;
+}
+
+.status-order.shipping {
+    color: orange;
+    background-color: #FFEDB7;
+}
+
+.status-order.cancel {
+    color: red;
+    background-color: #FBE1E4;
+}
