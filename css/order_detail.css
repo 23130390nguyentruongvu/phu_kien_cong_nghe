@@ -1,0 +1,191 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: arial, sans-serif;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.order-detail-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 1200px;
+  background: #fff;
+  border-radius: 10px;
+  z-index: 1010;
+  padding: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.order-detail-header h2 {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.order-detail-main {
+  display: flex;
+  gap: 20px;
+}
+
+.order-left {
+  flex: 2;
+}
+
+.order-right {
+  flex: 1;
+  border-left: 1px solid #046bd2;
+  padding-left: 20px;
+}
+
+/* Thông tin đơn hàng */
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #046bd2;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #f9f9f9;
+}
+
+.order-status span {
+  background: #00f75f;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Thông tin khách hàng */
+.customer-info {
+  margin-bottom: 10px;
+  position: relative;
+  background: #f9f9f9;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 6px;
+  border: 1px solid #046bd2;
+}
+
+.change-address {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 13px;
+  color: #046bd2;
+  cursor: pointer;
+}
+
+/* Sản phẩm*/
+.order-products {
+  width: 100%;
+  max-height: auto;
+  border-radius: 8px;
+  border: 1px solid #046bd2;
+}
+
+.order-products table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+}
+
+.order-products th,
+.order-products td {
+  padding: 8px;
+  text-align: left;
+  border-top: 1px solid #046bd2;
+  border-left: none;
+  border-right: none;
+}
+
+.order-products thead th {
+  /*position: sticky;*/
+  top: 0;
+  z-index: 1;
+  border: none;
+}
+.order-products th {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.product-code {
+  display: block;
+  color: #888;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+/* Payment & Summary */
+.payment-method,
+.order-summary {
+  margin-bottom: 20px;
+  border: 1px solid #046bd2;
+  border-radius: 8px;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.order-summary hr {
+  margin: 10px 0;
+}
+
+.total {
+  font-size: 18px;
+  color: #222;
+}
+
+/* Buttons */
+.order-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: #ffffff;
+  color: #000;
+  border: 1px solid;
+  padding: 10px 20px;
+  border-radius: 5px;
+  width: 30%;
+  cursor: pointer;
+  font-weight: bold;
+  height: 50px;
+}
+.cancel-btn:hover {
+  background-color: #ccc;
+  border: 2px solid #046bd2;
+}
+
+.close-btn {
+  background: orange;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 60%;
+  cursor: pointer;
+}
+.close-btn:hover {
+  background-color: #ffd900;
+  border: 2px solid #000000;
+}
