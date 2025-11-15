@@ -1,0 +1,113 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+.nav-admin {
+    width: 265px;
+    height: 100%;
+}
+
+.role {
+    background-color: #FBE1E4;
+    color: red;
+    padding: 3px;
+    border-radius: 15px;
+    margin-top: 5px;
+}
+
+.wrap-base-info-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap-base-info-admin .img-of-admin img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+
+}
+
+.wrap-img-user-admin {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.wrap-base-info-admin .title {
+    text-align: center;
+    margin: 10px;
+    color: rgb(4, 107, 210);
+}
+
+.wrap-nav-link-admin {
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+
+.wrap-nav-link-admin ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.wrap-nav-link-admin ul li {
+    margin: 10px;
+    padding: 0;
+}
+
+.item-nav-link-admin {
+    width: 100%;
+    font-size: 18px;
+    height: 30px;
+}
+
+.item-nav-link-admin.selected {
+    width: 100%;
+    color: rgb(4, 107, 210);
+    font-size: 18px;
+    height: 30px;
+
+}
+
+.item-nav-link-admin:hover {
+    color: rgb(4, 107, 210);
+    width: 100%;
+    font-size: 18px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.wrap-all-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content-admin {
+    height: 100%;
+    flex: 1;
+    border-left: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+}
