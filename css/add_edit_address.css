@@ -1,0 +1,86 @@
+body{
+    margin:0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#main{
+    display: flex;
+    flex-direction: row;
+}
+.main-container{
+    width: 100%;
+    display: flex;
+}
+
+.add-address-content{
+    width: 100%;
+    border-left: 2px solid rgb(4, 107, 210);
+
+}
+.container{
+    padding-top: 30px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#form-address{
+    margin-top: 20px;
+    width: 50%;
+
+}
+
+input{
+    margin-bottom: 10px;
+    width: 100%;
+}
+input{
+    height: 40px;
+}
+.province-district{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+}
+.province{
+    width: 50%;
+}
+.district{
+    width: 50%;
+}
+.checkbox-status{
+    height: 20px;
+    width: 20px;
+}
+.btn-done-cancel{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+.btn-done,
+.btn-cancel{
+    width: 50%;
+    height: 30px;
+    background-color: #FFB900;
+    border: none;
+    border-radius: 5px;
+}
+.btn-done,
+.btn-cancel:hover{
+    cursor: pointer;
+    background-color: #FFB100;
+
+}
+select{
+    height: 40px;
+    width: 276px;
+    margin-bottom: 10px;
+}
+.checkbox-status-d{
+    display: flex;
+    align-content: center;
+    gap: 10px;
+}
