@@ -232,7 +232,20 @@ ul.payment-methods{
 
 }
 .text-voucher{
-    border: 1px solid #046bd2;
     height: 35px;
     width: 90%;
+}
+.btn-add{
+    margin-top:20px;
+    display: none;
+    margin-left: 40px;
+}
+.btn-address{
+    width: 20%;
+    height: 40px;
+    background-color: #FFD400;
+    border: none;
+}
+.btn-add:hover{
+    cursor: pointer;
 }
