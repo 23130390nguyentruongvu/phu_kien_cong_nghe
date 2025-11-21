@@ -93,7 +93,7 @@ body {
 }
 
 /*Sản phẩm*/
-.container-product-item.two-column {
+.container-product.two-column {
   display: flex;
   gap: 20px;
   border-radius: 6px;
@@ -102,42 +102,42 @@ body {
   margin: 0 auto;
 }
 
-.container-product-item .product-image {
+.container-product .product-image {
   flex: 0 0 45%;
 }
 
-.container-product-item .product-image img {
+.container-product .product-image img {
   width: 100%;
   height: auto;
   border-radius: 6px;
 }
 
-.container-product-item .product-details {
+.container-product .product-details {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.container-product-item .title-product-item {
+.container-product .title-product {
   font-size: 22px;
   font-weight: bolđ;
   margin-bottom: 10px;
   color: #046bd2;
 }
 
-.price-product-item {
+.price-product {
   margin-bottom: 10px;
   font-size: 26px;
 }
 
-.price-product-item .original-price {
+.price-product .original-price {
   text-decoration: line-through;
   color: #999;
   margin-right: 8px;
 }
 
-.price-product-item .sale-price {
+.price-product .sale-price {
   color: red;
   font-weight: bold;
 }
@@ -209,6 +209,7 @@ body {
 .product-info li {
   margin-bottom: 6px;
 }
+
 /*Mô tả*/
 .product-description-container {
   padding-left: 20px;
@@ -250,6 +251,7 @@ body {
 .product-description-container ul {
   padding-left: 20px;
 }
+
 /*đánh giá*/
 .review-container {
   padding-left: 20px;
@@ -350,3 +352,35 @@ body {
 .submit-review-btn:hover {
   background: #024c9a;
 }
+
+/* Sản phẩm liên quan */
+.related-container {
+  padding-left: 20px;
+  border-top: 1px solid #046bd2;
+}
+
+.related-container h3 {
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  color: #046bd2;
+  font-weight: 600;
+}
+
+.content .wrap-center-content {
+    margin-bottom: 36px;
+}
+
+.container .content .wrap-center-content .products-grid-5 {
+    display: grid;
+    padding-left: 20px;
+    padding-right: 20px;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.container-product-item {
+    width: 190px;
+    height: 332px;
+    margin: 20px;
+}
+
