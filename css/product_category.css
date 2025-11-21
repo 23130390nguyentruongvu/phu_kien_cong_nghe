@@ -67,3 +67,7 @@
     border: 1px solid #024b9b;
     background: #024b9b;
 }
+
+.add-item-to-cart {
+    display: none !important;
+}

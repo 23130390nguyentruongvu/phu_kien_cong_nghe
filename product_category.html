@@ -67,9 +67,9 @@
                 <div class="main-menu below-center">
                     <div class="grid-column-below">
                         <ul>
-                            <li id="menuHome" class="menu-item active"><a href="">TRANG CHỦ</a></li>
+                            <li id="menuHome" class="menu-item"><a href="">TRANG CHỦ</a></li>
                             <li id="menuIntroduce" class="menu-item"><a href="">GIỚI THIỆU</a></li>
-                            <li id="menuProducts" class="menu-item"><a href="">DANH MỤC SẢN PHẨM<i
+                            <li id="menuProducts" class="menu-item active"><a href="">DANH MỤC SẢN PHẨM<i
                                     class="fa-solid fa-chevron-down"></i></a>
                                 <div class="show-when-hover products below-center">
                                     <div class="grid-column sub-menu-products">
@@ -219,12 +219,13 @@
                 <span class="ordering">
                     <form class="form-ordering">
                         <select name="order-by" class="order-by">
+                            <option value="none" selected>Sắp xếp theo</option>
                             <option value="newest-product" >Sắp xếp theo sản phẩm mới nhất</option>
                             <option value="oldest-product">Sắp xếp theo sản phẩm cũ nhất</option>
                             <option value="cheap-to-exp">Sắp xếp theo giá rẻ đến mắc</option>
                             <option value="exp-to-cheap">Sắp xếp theo giá mắc đến rẻ</option>
                             <option value="low-to-high-score-evaluate">Sắp xếp theo đánh giá thấp đến cao</option>
-                            <option value="high-to-low-score-evaluate" selected>Sắp xếp theo đánh giá cao đến thấp</option>
+                            <option value="high-to-low-score-evaluate">Sắp xếp theo đánh giá cao đến thấp</option>
                         </select>
                     </form>
                 </span>

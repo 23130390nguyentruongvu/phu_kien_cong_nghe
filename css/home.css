@@ -201,3 +201,14 @@ section .list-product-by-section {
     list-style: none;
     padding: 12px;
 }
+
+#featuredProducts .show-more-section {
+    display: none !important;
+}
+#newProducts .show-more-section {
+    display: none !important;
+}
+
+.add-item-to-cart {
+    display: none !important;
+}
