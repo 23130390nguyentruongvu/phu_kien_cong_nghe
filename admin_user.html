@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý người dùng</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+    <div class="wrap-all-content">
+        <!--    open nav admin-->
+        <div class="nav-admin">
+            <div class="wrap-base-info-admin">
+                <div class="wrap-img-user-admin">
+                    <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
+                    <span class="username-role-of-admin">
+                    <span class="username">Admin123</span>
+
+                    <div class="role">Quản trị viên</div>
+                </span>
+                </div>
+                <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
+            </div>
+            <hr>
+            <div class="wrap-nav-link-admin">
+                <ul>
+                    <li class="item-nav-link-admin">
+                        <i class="fa-solid fa-eye"></i> Tổng quan
+                    </li>
+                    <li class="item-nav-link-admin">
+                        <i class="fa-solid fa-user-group"></i> Quản lí người dùng
+                    </li>
+                    <li class="item-nav-link-admin selected">
+                        <i class="fa-solid fa-box"></i> Quản lí sản phẩm
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--    close nav admin-->
+        <!--    open main content admin-->
+        <div class="main-content-admin">
+            <h1 class="title-for-page">Quản lý người dùng</h1>
+            <div class="wrap-find-info-user">
+                <form>
+                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo user id">
+                    <button type="submit" class="submit-data">Tìm kiếm</button>
+                </form>
+                <div class="board-res-user">
+                    <form>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Mã người dùng</th>
+                                <th>Tên người dùng</th>
+                                <th>Tên đăng nhập</th>
+                                <th>Email</th>
+                                <th>Mật khẩu</th>
+                                <th>Role</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>Trương Vũ Nguyên</td>
+                                <td>Vunguyen123</td>
+                                <td>23130390@st.hcmuaf.edu.vn</td>
+                                <td>vunguy12345</td>
+                                <td>Customer</td>
+                                <td>đang hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>Nguyễn Văn A</td>
+                                <td>Admin123</td>
+                                <td>Admin1@gmail.com</td>
+                                <td>123</td>
+                                <td>Admin</td>
+                                <td>đang hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>Lê Thị B</td>
+                                <td>Vu1234</td>
+                                <td>Bains@gmail.com</td>
+                                <td>12345</td>
+                                <td>Customer</td>
+                                <td>không hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                            </tr>
+                            <tr>
+                                <td>04</td>
+                                <td>Trương Vũ Nguyên</td>
+                                <td>Vunguyen123</td>
+                                <td>23130390@st.hcmuaf.edu.vn</td>
+                                <td>vunguy12345</td>
+                                <td>Customer</td>
+                                <td>đang hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                            </tr>
+                            <tr>
+                                <td>05</td>
+                                <td>Trương Vũ Duy</td>
+                                <td>Vunguyen123</td>
+                                <td>23130390@st.hcmuaf.edu.vn</td>
+                                <td>vunguy12345</td>
+                                <td>Customer</td>
+                                <td>đang hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="wrap-btn-submit-data-user">
+                            <input type="submit" class="submit-data-user" name="change-status" value="Đồng Ý Thay Đổi">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
