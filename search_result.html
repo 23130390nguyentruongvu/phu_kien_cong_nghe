@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Kết quả tìm kiếm</title>
     <link rel="stylesheet" href="css/search_result.css" />
+    <link rel="stylesheet" href="shared/product_sidebar.css" />
     <link rel="stylesheet" href="shared/main.css" />
     <link
       rel="stylesheet"
@@ -142,29 +143,105 @@
     </div>
     <main>
       <div class="container">
-        <div id="sidebar">
-          <div class="sidebar-main">
-            <aside id="block-31" class="widget widget_block">
-              <h3 class="wp-block-heading">DANH MỤC TRANG</h3>
-            </aside>
-            <aside id="nav_menu-9" class="widget widget_nav_menu">
-              <nav class="menu-danh-muc-trang-container" aria-label="Menu">
-                <ul id="menu-danh-muc-trang" class="menu">
-                  <li><a href="#">Trang Chủ</a></li>
-                  <li><a href="#">Giới Thiệu</a></li>
-                  <li><a href="#">Liên Hệ</a></li>
-                  <li><a href="#">Tin Tức</a></li>
-                  <li><a href="#">Tài Khoản Của Tôi</a></li>
-                  <li><a href="#">Hướng Dẫn Mua Hàng</a></li>
-                  <li><a href="#">Phương Thức Giao Hàng</a></li>
-                  <li><a href="#">Phương Thức Thanh Toán</a></li>
-                  <li><a href="#">Chính Sách Bảo Hành</a></li>
-                  <li><a href="#">Chính Sách Bảo Mật</a></li>
-                  <li><a href="#">Điều Khoản Dịch Vụ</a></li>
+        <div class="sidebar-product">
+          <aside class="widget widget_search">
+            <h3>DANH MỤC SẢN PHẨM</h3>
+            <div class="search-box">
+              <input type="search" placeholder="Tìm sản phẩm…" />
+              <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+          </aside>
+
+          <aside class="widget widget_product_categories">
+            <ul class="product-categories">
+              <li class="category">
+                <a href="#" class="category-title">Bộ Chia Tín Hiệu</a>
+                <ul class="sub-category">
+                  <li><a href="#">Bộ Chia AV</a></li>
+                  <li><a href="#">Bộ Chia HDMI</a></li>
+                  <li><a href="#">Bộ Chia VGA</a></li>
+                  <li><a href="#">Bộ Chia USB</a></li>
                 </ul>
-              </nav>
-            </aside>
-          </div>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Bộ Chuyển Đổi Tín Hiệu</a>
+                <ul class="sub-category">
+                  <li><a href="#">Chuyển Đổi Audio Quang</a></li>
+                  <li><a href="#">Chuyển Đổi HDMI</a></li>
+                  <li><a href="#">Chuyển Đổi VGA</a></li>
+                  <li><a href="#">Chuyển Đổi USB</a></li>
+                  <li><a href="#">Cáp DisplayPort</a></li>
+                  <li><a href="#">Đầu Nối HDMI, VGA</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Dây Cáp Tín Hiệu</a>
+                <ul class="sub-category">
+                  <li><a href="#">Cáp Âm Thanh</a></li>
+                  <li><a href="#">Cáp HDMI</a></li>
+                  <li><a href="#">Cáp VGA</a></li>
+                  <li><a href="#">Cáp USB</a></li>
+                  <li><a href="#">Cáp Lập Trình</a></li>
+                  <li><a href="#">Cáp DVI</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Phụ Kiện Điện Thoại</a>
+                <ul class="sub-category">
+                  <li><a href="#">Cáp HDMI Cho Điện Thoại</a></li>
+                  <li><a href="#">Cáp OTG</a></li>
+                  <li><a href="#">Kính 3D VR Shinecon</a></li>
+                  <li><a href="#">Thiết Bị Bluetooth</a></li>
+                  <li><a href="#">Đồ Chơi SmartPhone</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Phụ Kiện Máy Tính</a>
+                <ul class="sub-category">
+                  <li><a href="#">Card Màn Hình</a></li>
+                  <li><a href="#">Card Sound USB</a></li>
+                  <li><a href="#">Card PCI Express</a></li>
+                  <li><a href="#">Chuột Bay, Micro, Webcam</a></li>
+                  <li><a href="#">Đầu Đọc Thẻ</a></li>
+                  <li><a href="#">Túi Chống Sốc</a></li>
+                  <li><a href="#">Đồ Chơi Laptop PC</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Phụ Kiện Xe</a>
+                <ul class="sub-category">
+                  <li><a href="#">Phụ Kiện Xe Đạp</a></li>
+                  <li><a href="#">Phụ Kiện Ô Tô</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Thiết Bị Mạng</a>
+                <ul class="sub-category">
+                  <li><a href="#">Bút Soi Quang</a></li>
+                  <li><a href="#">Dao Cắt Quang</a></li>
+                  <li><a href="#">Kìm Bấm Mạng</a></li>
+                  <li><a href="#">Máy Test Mạng</a></li>
+                  <li><a href="#">Dây Cáp Mạng</a></li>
+                </ul>
+              </li>
+
+              <li class="category">
+                <a href="#" class="category-title">Thiết Bị Ngoại Vi</a>
+                <ul class="sub-category">
+                  <li><a href="#">Máy Trợ Giảng, Bút Trình Chiếu</a></li>
+                  <li><a href="#">Phụ Kiện Đàn Guitar</a></li>
+                  <li><a href="#">Nguồn Sạc</a></li>
+                  <li><a href="#">Thiết Bị Khác</a></li>
+                </ul>
+              </li>
+            </ul>
+          </aside>
         </div>
 
         <div class="content">
@@ -229,101 +306,359 @@
               </div>
             </div>
 
-            <div class="product-list">
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" alt="Sản phẩm" />
-                <h4 class="product-name">Cáp sạc iPhone 20W chuẩn MFI</h4>
-                <p class="product-price">150.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-            </div>
+            <div class="wrap-center-content">
+              <div class="products-grid-5">
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_usb3_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp USB 3.0 AM to AF 1.5m
+                      </div>
+                      <div class="price-product-item">
+                        80.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
 
-            <h3 class="suggestion-title">Có thể bạn sẽ thích</h3>
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_typec_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp Type-C sạc nhanh 3A dài 1m
+                      </div>
+                      <div class="price-product-item">
+                        50.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
 
-            <div class="product-list suggestions">
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" />
-                <h4 class="product-name">Sạc nhanh 20W Apple</h4>
-                <p class="product-price">350.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" />
-                <h4 class="product-name">Sạc nhanh 20W Apple</h4>
-                <p class="product-price">350.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
-              </div>
-              <div class="product-item">
-                <img src="https://via.placeholder.com/200x200" />
-                <h4 class="product-name">Sạc nhanh 20W Apple</h4>
-                <p class="product-price">350.000₫</p>
-                <a href="#" class="btn-view">Xem Chi Tiết</a>
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_hdmi_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp HDMI 2.0 4K@60Hz 1.5m
+                      </div>
+                      <div class="price-product-item">
+                        120.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_mang_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp mạng CAT6 bấm sẵn 3m
+                      </div>
+                      <div class="price-product-item">
+                        45.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_audio_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp âm thanh 3.5mm 1m
+                      </div>
+                      <div class="price-product-item">
+                        25.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_usb2_1.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp USB 2.0 nối dài 1m
+                      </div>
+                      <div class="price-product-item">
+                        30.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img
+                          src="../assets/image/cables/cap_displayport.webp"
+                        />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp DisplayPort 1.4 8K
+                      </div>
+                      <div class="price-product-item">
+                        150.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_typec_hdmi.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp chuyển Type-C sang HDMI
+                      </div>
+                      <div class="price-product-item">
+                        180.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 9 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_lightning.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp Lightning sạc nhanh 1m
+                      </div>
+                      <div class="price-product-item">
+                        90.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 10 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_sata.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp SATA 3 tốc độ cao
+                      </div>
+                      <div class="price-product-item">
+                        35.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 11 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img
+                          src="../assets/image/cables/cap_usb3_printer.webp"
+                        />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp USB 3.0 máy in 1.5m
+                      </div>
+                      <div class="price-product-item">
+                        70.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 12 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_vga.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp VGA 1.5m chống nhiễu
+                      </div>
+                      <div class="price-product-item">
+                        50.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 13 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_otg.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp chuyển OTG Type-C
+                      </div>
+                      <div class="price-product-item">
+                        25.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 14 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_loa_rca.webp" />
+                      </div>
+                      <div class="title-product-item">Cáp âm thanh RCA 1m</div>
+                      <div class="price-product-item">
+                        40.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 15 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_typec_3a.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp Type-C 3A dây dù 1.2m
+                      </div>
+                      <div class="price-product-item">
+                        60.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 16 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_usb_micro.webp" />
+                      </div>
+                      <div class="title-product-item">Cáp Micro USB 1m</div>
+                      <div class="price-product-item">
+                        20.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 17 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_power_pc.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Dây nguồn chữ L cho PC
+                      </div>
+                      <div class="price-product-item">
+                        35.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
+
+                <!-- Cáp 18 -->
+                <div class="container-product-item">
+                  <div class="item-wrap">
+                    <div class="container-item">
+                      <div class="image-product-item">
+                        <img src="../assets/image/cables/cap_mini_hdmi.webp" />
+                      </div>
+                      <div class="title-product-item">
+                        Cáp Mini HDMI sang HDMI
+                      </div>
+                      <div class="price-product-item">
+                        90.000<span class="underline_dong">đ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-item-to-cart">
+                    <button class="add-to-cart-btn">THÊM VÀO GIỎ HÀNG</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
