@@ -37,18 +37,21 @@
     color: #b7b2b2;
     cursor: pointer;
 }
+
 .buttons .right-nav {
     padding-right: 30px;
     right: 0;
     color: #b7b2b2;
     cursor: pointer;
 }
+
 .buttons .left-nav:hover {
     padding-left: 30px;
     left: 0;
     color: black;
     cursor: pointer;
 }
+
 .buttons .right-nav:hover {
     padding-right: 30px;
     right: 0;
@@ -57,7 +60,7 @@
 }
 
 .index-dots {
-    left: 45%;
+    width: 100%;
     position: absolute;
     bottom: 15%;
     display: flex;
@@ -90,7 +93,8 @@ section {
     display: flex;
     flex-direction: column;
     margin-left: 8%;
-    margin-right: 8% ;
+    margin-right: 8%;
+    margin-bottom: 20px;
 }
 
 section .title-section {
@@ -200,4 +204,48 @@ section .list-product-by-section {
 .commit .content-commit ol li {
     list-style: none;
     padding: 12px;
+}
+
+/*article*/
+.list-article-of-admin {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.wrap-article-item {
+    height: 357px;
+    width: 277px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 12px;
+}
+
+.wrap-article-item:hover {
+    height: 357px;
+    width: 277px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.wrap-footer-article {
+    font-size: 14px;
+}
+.title-article-of-admin {
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+.sub-description {
+    flex: 1;
+    font-weight: lighter;
+}
+.read-more-article {
+    margin-bottom: 10px;
+    color: rgb(4, 107, 210);
 }
