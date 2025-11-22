@@ -125,3 +125,9 @@
     border: 1px solid rgb(4, 107, 210);
     border-radius: 10px;
 }
+
+.prod-img {
+    height: 80px;
+    width: 80px;
+    margin-left: 10px;
+}
