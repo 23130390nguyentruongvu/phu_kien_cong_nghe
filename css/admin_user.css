@@ -1,0 +1,122 @@
+.wrap-all-content {
+    height: 100vh;
+}
+.title-for-page {
+    margin-left: 40px;
+    margin-top: 40px;
+}
+.main-content-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    height: 100%;
+}
+.wrap-find-info-user{
+    width: 1200px;
+    height: 40px;
+    margin: 20px;
+}
+.wrap-find-info-user form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+}
+.wrap-find-info-user form .input-user-id {
+    height: 36px;
+    width: 500px;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid rgb(0,0,0,0.2);
+}
+.wrap-find-info-user form .submit-data {
+    height: 36px;
+    width: 100px;
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius: 10px;
+    background-color:  rgb(4, 107, 210);
+    color: white;
+    border: 1px solid rgb(4, 107, 210);
+}
+.board-res-user {
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+.board-res-user form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.board-res-user table {
+    width: 1155px;
+    border-collapse: collapse;
+}
+.board-res-user thead {
+    text-align: start;
+    border-bottom: rgb(0, 0, 0, 0.1) solid 1px;
+}
+.board-res-user thead th {
+    text-align: center;
+}
+
+.board-res-user tbody tr {
+    text-align: center;
+    height: 30px;
+    border-bottom: rgb(0, 0, 0, 0.1) solid 1px;
+}
+
+.underline-dong {
+    text-decoration: underline;
+}
+
+.status-user {
+    height: 20px;
+    width: 20px;
+}
+
+.wrap-btn-submit-data-user {
+    height: 36px;
+    width: 130px;
+    margin: 30px;
+    padding-left: 70%;
+}
+
+.wrap-btn-submit-data-user .submit-data-user {
+    height: 36px;
+    width: 130px;
+    background-color: rgb(4, 107, 210);
+    color: white;
+    border: 1px solid rgb(4, 107, 210);
+    border-radius: 10px;
+}
+.wrap-btn-submit-data-user .submit-data-user:hover {
+    height: 36px;
+    width: 130px;
+    background: #024b9b;
+    color: white;
+    border: 1px solid rgb(4, 107, 210);
+    border-radius: 10px;
+}
+.btn-delete{
+    border: none;
+    background-color: white;
+    color: rgb(4, 107, 210);
+}
+.btn-delete:hover{
+    cursor: pointer;
+}
+.wrap-find-info-user form .filter-by {
+    height: 36px;
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    border: 1px solid rgb(0,0,0,0.2);
+}
