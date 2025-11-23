@@ -10,6 +10,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="css/admin_user.css">
+    <link rel="stylesheet" href="shared/nav_admin.css">
 </head>
 <body>
     <div class="wrap-all-content">
@@ -32,10 +34,10 @@
                     <li class="item-nav-link-admin">
                         <i class="fa-solid fa-eye"></i> Tổng quan
                     </li>
-                    <li class="item-nav-link-admin">
+                    <li class="item-nav-link-admin selected">
                         <i class="fa-solid fa-user-group"></i> Quản lí người dùng
                     </li>
-                    <li class="item-nav-link-admin selected">
+                    <li class="item-nav-link-admin ">
                         <i class="fa-solid fa-box"></i> Quản lí sản phẩm
                     </li>
                 </ul>
@@ -48,6 +50,11 @@
             <div class="wrap-find-info-user">
                 <form>
                     <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo user id">
+                    <select name="filter-by" class="filter-by">
+                        <option value="all" selected>Tất cả</option>
+                        <option value="pkmt">Đang hoạt động</option>
+                        <option value="pkdt">Không còn hoạt động</option>
+                    </select>
                     <button type="submit" class="submit-data">Tìm kiếm</button>
                 </form>
                 <div class="board-res-user">
@@ -58,11 +65,7 @@
                                 <th>Mã người dùng</th>
                                 <th>Tên người dùng</th>
                                 <th>Tên đăng nhập</th>
-                                <th>Email</th>
-                                <th>Mật khẩu</th>
-                                <th>Role</th>
                                 <th>Trạng thái</th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -70,57 +73,39 @@
                                 <td>01</td>
                                 <td>Trương Vũ Nguyên</td>
                                 <td>Vunguyen123</td>
-                                <td>23130390@st.hcmuaf.edu.vn</td>
-                                <td>vunguy12345</td>
-                                <td>Customer</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
                             </tr>
                             <tr>
                                 <td>02</td>
                                 <td>Nguyễn Văn A</td>
                                 <td>Admin123</td>
-                                <td>Admin1@gmail.com</td>
-                                <td>123</td>
-                                <td>Admin</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
                             </tr>
                             <tr>
                                 <td>03</td>
                                 <td>Lê Thị B</td>
                                 <td>Vu1234</td>
-                                <td>Bains@gmail.com</td>
-                                <td>12345</td>
-                                <td>Customer</td>
-                                <td>không hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                                <td>đang hoạt động</td>
+                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
                             </tr>
                             <tr>
                                 <td>04</td>
                                 <td>Trương Vũ Nguyên</td>
                                 <td>Vunguyen123</td>
-                                <td>23130390@st.hcmuaf.edu.vn</td>
-                                <td>vunguy12345</td>
-                                <td>Customer</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
                             </tr>
                             <tr>
                                 <td>05</td>
                                 <td>Trương Vũ Duy</td>
                                 <td>Vunguyen123</td>
-                                <td>23130390@st.hcmuaf.edu.vn</td>
-                                <td>vunguy12345</td>
-                                <td>Customer</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Xóa</button></td>
+                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="wrap-btn-submit-data-user">
-                            <input type="submit" class="submit-data-user" name="change-status" value="Đồng Ý Thay Đổi">
-                        </div>
                     </form>
                 </div>
             </div>
