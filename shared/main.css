@@ -211,7 +211,7 @@ ul li {
     color: #FFD700;
 }
 
-.header .header-container .header-below .main-menu li.menu-item.active a {
+.header .header-container .header-below .main-menu li.menu-item.active>a {
     text-decoration: none;
     color: #FFD700;
 }

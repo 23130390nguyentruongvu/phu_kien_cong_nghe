@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <html>
+<script src="js/header.js"></script>
+<html>
     <head>
       <meta charset="UTF-8" />
       <title>Thông tin cá nhân</title>
@@ -39,9 +40,9 @@
                 <div class="empty"></div>
                 <div id="stateUser">
                   <div class="wrap-state-user">
-                    <a href="" class="state-user-hover"
+                    <a class="state-user-hover"
                       ><i class="fa-solid fa-circle-user"></i>
-                      <p id="stateUserLogin">Chưa đăng nhập</p>
+                      <p id="stateUserLogin">KhaBa</p>
                     </a>
                   </div>
                 </div>
@@ -71,7 +72,7 @@
                 </form>
               </div>
               <div class="center shopping-cart">
-                <a href=""
+                <a
                   ><i class="fa-solid fa-cart-shopping"
                     ><span id="badgeNumItemCart" class="badge">0</span></i
                   ></a
@@ -84,57 +85,42 @@
               <div class="empty-left"></div>
               <div class="main-menu below-center">
                 <div class="grid-column-below">
-                  <ul>
-                    <li id="menuHome" class="menu-item active">
-                      <a href="">TRANG CHỦ</a>
-                    </li>
-                    <li id="menuIntroduce" class="menu-item">
-                      <a href="">GIỚI THIỆU</a>
-                    </li>
-                    <li id="menuProducts" class="menu-item">
-                      <a href=""
-                        >DANH MỤC SẢN PHẨM<i
-                          class="fa-solid fa-chevron-down"
-                        ></i
-                      ></a>
-                      <div class="show-when-hover products below-center">
-                        <div class="grid-column sub-menu-products">
-                          <ul>
-                            <li id="menuItem1" class="sub-menu-item">
-                              <a href="">Phụ Kiện Máy Tính</a>
-                            </li>
-                            <li id="menuItem2" class="sub-menu-item">
-                              <a href="">Phụ Kiện Điện Thoại</a>
-                            </li>
-                            <li id="menuItem3" class="sub-menu-item">
-                              <a href="">Dây Cáp Tín Hiệu</a>
-                            </li>
-                            <li id="menuItem4" class="sub-menu-item">
-                              <a href="">Bộ Chia Tín Hiệu</a>
-                            </li>
-                            <li id="menuItem5" class="sub-menu-item">
-                              <a href="">phụ Kiện Xe</a>
-                            </li>
-                            <li id="menuItem6" class="sub-menu-item">
-                              <a href="">Thiết Bị Mạng</a>
-                            </li>
-                            <li id="menuItem7" class="sub-menu-item">
-                              <a href="">Thiết Bị Ngoại Vi</a>
-                            </li>
-                            <li id="menuItem8" class="sub-menu-item">
-                              <a href="">Bộ Chuyển Đổi Tín Hiệu</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li id="menuNews" class="menu-item">
-                      <a href="">TIN TỨC</a>
-                    </li>
-                    <li id="menuContact" class="menu-item">
-                      <a href="">LIÊN HỆ VỚI CHÚNG TÔI</a>
-                    </li>
-                  </ul>
+                    <ul>
+                        <li id="menuHome" class="menu-item"><a href="home.html">TRANG CHỦ</a></li>
+                        <li id="menuIntroduce" class="menu-item"><a href="introdution.html">GIỚI THIỆU</a></li>
+                        <li id="menuProducts" class="menu-item"><a href="product_category.html">DANH MỤC SẢN PHẨM<i
+                                class="fa-solid fa-chevron-down"></i></a>
+                            <div class="show-when-hover products below-center">
+                                <div class="grid-column sub-menu-products">
+                                    <ul>
+                                        <li id="menuItem1" class="sub-menu-item"
+                                        ><a href="">Phụ Kiện
+                                            Máy Tính</a></li>
+                                        <li id="menuItem2" class="sub-menu-item"
+                                        ><a href="">Phụ Kiện
+                                            Điện Thoại</a></li>
+                                        <li id="menuItem3" class="sub-menu-item"
+                                        ><a href="">Dây Cáp
+                                            Tín Hiệu</a></li>
+                                        <li id="menuItem4" class="sub-menu-item"
+                                        ><a href="">Bộ Chia
+                                            Tín Hiệu</a></li>
+                                        <li id="menuItem5" class="sub-menu-item"><a href="">phụ Kiện Xe</a>
+                                        </li>
+                                        <li id="menuItem6" class="sub-menu-item"><a href="">Thiết Bị Mạng</a>
+                                        </li>
+                                        <li id="menuItem7" class="sub-menu-item"><a href="">Thiết Bị Ngoại Vi</a>
+                                        </li>
+                                        <li id="menuItem8" class="sub-menu-item"><a href="">Bộ Chuyển Đổi Tín
+                                            Hiệu</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="menuNews" class="menu-item"><a href="news.html">TIN TỨC</a></li>
+                        <li id="menuContact" class="menu-item"><a href="contact.html">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                    </ul>
                 </div>
               </div>
               <div class="empty-right"></div>
@@ -156,13 +142,16 @@
             <div class="wrap-nav-link">
               <ul>
                 <li class="nav-link-item link-selected">
-                  <i class="fa-solid fa-user"></i>Tài khoản
+                  <i class="fa-solid fa-user"></i>
+                    <a href="personal_info.html">Tài khoản</a>
                 </li>
                 <li class="nav-link-item">
-                  <i class="fa-solid fa-clock-rotate-left"></i>Lịch sử đơn hàng
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                    <a href="history_order.html">Lịch sử đơn hàng</a>
                 </li>
                 <li class="nav-link-item">
-                  <i class="fa-solid fa-location-dot"></i>Địa chỉ
+                  <i class="fa-solid fa-location-dot"></i>
+                    <a href="address_user.html">Địa chỉ</a>
                 </li>
                 <li class="nav-link-item">
                   <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
@@ -178,45 +167,45 @@
               <div class="row-2">
                 <div class="form-group">
                   <label for="firstName"
-                    >Tên <span class="required">*</span></label
+                    >Tên</label
                   >
                   <input type="text" id="firstName" placeholder="Tên của bạn" />
                 </div>
 
                 <div class="form-group">
                   <label for="lastName"
-                    >Họ <span class="required">*</span></label
+                    >Họ</label
                   >
                   <input type="text" id="lastName" placeholder="Họ của bạn" />
                 </div>
               </div>
 
-              <div class="form-group full-width">
-                <label for="displayName"
-                  >Tên hiển thị <span class="required">*</span></label
-                >
-                <input
-                  type="text"
-                  id="displayName"
-                  placeholder="MyUserName"
-                />
+<!--              <div class="form-group full-width">-->
+<!--                <label for="displayName"-->
+<!--                  >Tên hiển thị <span class="required">*</span></label-->
+<!--                >-->
+<!--                <input-->
+<!--                  type="text"-->
+<!--                  id="displayName"-->
+<!--                  placeholder="MyUserName"-->
+<!--                />-->
 
-                <p class="note-display-name">
-                  Đây sẽ là cách tên của bạn được hiển thị trong phần tài khoản
-                  và trong các đánh giá.
-                </p>
-              </div>
+<!--                <p class="note-display-name">-->
+<!--                  Đây sẽ là cách tên của bạn được hiển thị trong phần tài khoản-->
+<!--                  và trong các đánh giá.-->
+<!--                </p>-->
+<!--              </div>-->
 
-              <div class="form-group full-width">
-                <label for="email"
-                  >Địa chỉ email <span class="required">*</span></label
-                >
-                <input
-                  type="email"
-                  id="email"
-                  value="khachhang113@gmail.com"
-                />
-              </div>
+<!--              <div class="form-group full-width">-->
+<!--                <label for="email"-->
+<!--                  >Địa chỉ email <span class="required">*</span></label-->
+<!--                >-->
+<!--                <input-->
+<!--                  type="email"-->
+<!--                  id="email"-->
+<!--                  value="khachhang113@gmail.com"-->
+<!--                />-->
+<!--              </div>-->
 
               <h3 class="change-pass-title">Thay đổi mật khẩu</h3>
 
@@ -240,7 +229,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="confirmPass">Xác nhận mật khẩu mới</label>
+                  <label for="confirmPass">Xác nhận mật khẩu mới <span class="required">*</span></label>
                   <input type="password" id="confirmPass" />
                 </div>
               </div>
@@ -252,95 +241,53 @@
       </main>
 
       <div id="footer">
-        <div class="footer">
-          <div class="footer-container">
-            <div class="footer-grid center">
-              <div class="footer-column first info">
-                <ul>
-                  <li><i class="fa-solid fa-phone"></i>Gọi: 0677xxxx</li>
-                  <li>
-                    <i class="fa-solid fa-location-dot"></i>Địa chỉ: Kios 8
-                    giang, phường Linh Trung, Thủ Đức
-                  </li>
-                  <li>
-                    <i class="fa-solid fa-envelope"></i>Email: pkcn@sp.love
-                  </li>
-                  <li>
-                    <i class="fa-solid fa-clock"></i>Thời gian làm việc: 8h-21h,
-                    thứ 2 đến thứ 7 hàng tuần
-                  </li>
-                </ul>
+          <div class="footer">
+              <div class="footer-container">
+                  <div class="footer-grid center">
+                      <div class="footer-column first info">
+                          <ul>
+                              <li><i class="fa-solid fa-phone"></i> Gọi: 0793189000</li>
+                              <li><i class="fa-solid fa-phone-volume"></i> Hotline: 0793189032</li>
+                              <li><i class="fa-solid fa-location-dot"></i> Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ
+                                  Đức
+                              </li>
+                              <li><i class="fa-solid fa-envelope"></i> Email: pkcn@sp.love</li>
+                          </ul>
+                      </div>
+                      <div class="footer-column second nav">
+                          <ul>
+                              <li><a href="payment_method.html" class="text-hover"><i class="fa-solid fa-money-bill"></i> Phương thức thanh
+                                  toán</a>
+                              </li>
+                              <li><a href="shipping_method.html" class="text-hover"><i class="fa-solid fa-truck"></i> Phương thức giao hàng</a>
+                              </li>
+                              <li><a href="warranty_policy.html" class="text-hover"><i class="fa-solid fa-award"></i> Chính sách bảo hành</a>
+                              </li>
+                              <li><a href="privacy_policy.html" class="text-hover"><i class="fa-solid fa-lock"></i> Chính sách bảo mật</a>
+                              </li>
+                              <li><a href="term_of_service.html" class="text-hover"><i class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a>
+                              </li>
+                              <li><a href="voucher.html" class="text-hover"><i class="fa-solid fa-ticket"></i> Voucher</a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="footer-column third social-media">
+                          <ul>
+                              <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                              <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                          </ul>
+                      </div>
+                      <div class="footer-column 4th logo">
+                          <img src="../assets/image/logo.webp" alt="">
+                      </div>
+                  </div>
+                  <div class="site-below">
+                      <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
+                  </div>
               </div>
-              <div class="footer-column second nav">
-                <ul>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-person-chalkboard"></i>Hướng dẫn
-                      mua hàng</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-money-bill"></i>Phương thức thanh
-                      toán</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-truck"></i>Phương thức giao hàng</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-award"></i>Chính sách bảo hành</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-lock"></i>Chính sách bảo mật</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-pen-nib"></i>Điều khoản dịch vụ</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div class="footer-column third social-media">
-                <ul>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-brands fa-facebook"></i>Facebook</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-brands fa-tiktok"></i>Tiktok</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-brands fa-instagram"></i>Instagram</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" class="text-hover"
-                      ><i class="fa-solid fa-x"></i>X</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div class="footer-column 4th logo">
-                <img src="../assets/image/logo.webp" alt="" />
-              </div>
-            </div>
-            <div class="site-below">
-              <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
-            </div>
           </div>
-        </div>
       </div>
     </body>
+    <script src="js/header.js"></script>
   </html>
 </html>

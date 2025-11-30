@@ -18,7 +18,7 @@ for (let i = 0; i < items.length; i++) {
     dot.addEventListener('click', () => {
         clearInterval(currentInterval)
         indexCur = i
-        containerSliderShowItem.style.transform = `translateX(${indexCur*-width}px)`
+        containerSliderShowItem.style.transform = `translateX(${indexCur * -width}px)`
         currentInterval = setupIntervalSlider()
         updateActiveDot()
     })
@@ -77,3 +77,24 @@ const rightNav = () => {
     currentInterval = setupIntervalSlider()
 }
 //Slider show: end
+//Event click product
+arr = Array.from(document.getElementsByClassName('container-product-item'))
+for (let item of arr) {
+    console.log(item)
+    item.addEventListener('click', (e) => {
+        window.location.href = 'product_detail.html'
+    })
+}
+//Event show more
+arr = Array.from(document.getElementsByClassName('show-more-section'))
+for (let item of arr) {
+    console.log(item)
+    item.addEventListener('click', (e) => {
+        window.location.href = 'product_category.html'
+    })
+}
+
+wrapUser = document.getElementsByClassName('wrap-state-user')[0]
+wrapUser.addEventListener('click', (e) => {
+    window.location.href = 'personal_info.html'
+})

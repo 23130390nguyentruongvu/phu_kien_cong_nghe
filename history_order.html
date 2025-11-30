@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="shared/nav_account.css">
     <link rel="stylesheet" href="css/history_order.css">
+
 </head>
 <body>
 <div id="header">
@@ -33,8 +34,8 @@
                     <div class="empty"></div>
                     <div id="stateUser">
                         <div class="wrap-state-user">
-                            <a href="" class="state-user-hover"><i class="fa-solid fa-circle-user"></i></i>
-                                <p id="stateUserLogin">MyUserName</p>
+                            <a class="state-user-hover"><i class="fa-solid fa-circle-user"></i></i>
+                                <p id="stateUserLogin">KhaBa</p>
                             </a>
                         </div>
                     </div>
@@ -55,8 +56,8 @@
                     </form>
                 </div>
                 <div class="center shopping-cart">
-                    <a href=""><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
-                                                                          class="badge">0</span></i></a>
+                    <a><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
+                                                                  class="badge">0</span></i></a>
                 </div>
             </div>
             <!--        close header-center-->
@@ -66,9 +67,9 @@
                 <div class="main-menu below-center">
                     <div class="grid-column-below">
                         <ul>
-                            <li id="menuHome" class="menu-item active"><a href="">TRANG CHỦ</a></li>
-                            <li id="menuIntroduce" class="menu-item"><a href="">GIỚI THIỆU</a></li>
-                            <li id="menuProducts" class="menu-item"><a href="">DANH MỤC SẢN PHẨM<i
+                            <li id="menuHome" class="menu-item"><a href="home.html">TRANG CHỦ</a></li>
+                            <li id="menuIntroduce" class="menu-item"><a href="introdution.html">GIỚI THIỆU</a></li>
+                            <li id="menuProducts" class="menu-item"><a href="product_category.html">DANH MỤC SẢN PHẨM<i
                                     class="fa-solid fa-chevron-down"></i></a>
                                 <div class="show-when-hover products below-center">
                                     <div class="grid-column sub-menu-products">
@@ -98,8 +99,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="menuNews" class="menu-item"><a href="">TIN TỨC</a></li>
-                            <li id="menuContact" class="menu-item"><a href="">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                            <li id="menuNews" class="menu-item"><a href="news.html">TIN TỨC</a></li>
+                            <li id="menuContact" class="menu-item"><a href="contact.html">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                         </ul>
                     </div>
                 </div>
@@ -119,10 +120,21 @@
             </div>
             <div class="wrap-nav-link">
                 <ul>
-                    <li class="nav-link-item link-selected"><i class="fa-solid fa-user"></i>Tài khoản</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-clock-rotate-left"></i>Lịch sử đơn hàng</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-location-dot"></i>Địa chỉ</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</li>
+                    <li class="nav-link-item">
+                        <i class="fa-solid fa-user"></i>
+                        <a href="personal_info.html">Tài khoản</a>
+                    </li>
+                    <li class="nav-link-item link-selected">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <a href="history_order.html">Lịch sử đơn hàng</a>
+                    </li>
+                    <li class="nav-link-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <a href="address_user.html">Địa chỉ</a>
+                    </li>
+                    <li class="nav-link-item">
+                        <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
+                    </li>
                 </ul>
             </div>
         </div>
@@ -132,6 +144,7 @@
              <span class="filter">
                     <form class="form-filter">
                         <select name="filter-by" class="filter-by">
+                            <option value="status-order-completed" selected>Tất cả trạng thái</option>
                             <option value="status-order-completed">Đã giao</option>
                             <option value="status-order-cancel">Đã hủy</option>
                             <option value="status-order-shipping">Đang chờ giao hàng</option>
@@ -212,33 +225,40 @@
             <div class="footer-grid center">
                 <div class="footer-column first info">
                     <ul>
-                        <li><i class="fa-solid fa-phone"></i>Gọi: 0677xxxx</li>
-                        <li><i class="fa-solid fa-location-dot"></i>Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ Đức
+                        <li><i class="fa-solid fa-phone"></i> Gọi: 0793189000</li>
+                        <li><i class="fa-solid fa-phone-volume"></i> Hotline: 0793189032</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ
+                            Đức
                         </li>
-                        <li><i class="fa-solid fa-envelope"></i>Email: pkcn@sp.love</li>
-                        <li><i class="fa-solid fa-clock"></i>Thời gian làm việc: 8h-21h, thứ 2 đến thứ 7 hàng tuần</li>
+                        <li><i class="fa-solid fa-envelope"></i> Email: pkcn@sp.love</li>
                     </ul>
                 </div>
                 <div class="footer-column second nav">
                     <ul>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-person-chalkboard"></i>Hướng dẫn mua
-                            hàng</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-money-bill"></i>Phương thức thanh
+                        <li><a href="payment_method.html" class="text-hover"><i class="fa-solid fa-money-bill"></i>
+                            Phương thức thanh
                             toán</a>
                         </li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-truck"></i>Phương thức giao hàng</a>
+                        <li><a href="shipping_method.html" class="text-hover"><i class="fa-solid fa-truck"></i> Phương
+                            thức giao hàng</a>
                         </li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-award"></i>Chính sách bảo hành</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-lock"></i>Chính sách bảo mật</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-pen-nib"></i>Điều khoản dịch vụ</a></li>
+                        <li><a href="warranty_policy.html" class="text-hover"><i class="fa-solid fa-award"></i> Chính
+                            sách bảo hành</a>
+                        </li>
+                        <li><a href="privacy_policy.html" class="text-hover"><i class="fa-solid fa-lock"></i> Chính sách
+                            bảo mật</a>
+                        </li>
+                        <li><a href="term_of_service.html" class="text-hover"><i class="fa-solid fa-pen-nib"></i> Điều
+                            khoản dịch vụ</a>
+                        </li>
+                        <li><a href="voucher.html" class="text-hover"><i class="fa-solid fa-ticket"></i> Voucher</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="footer-column third social-media">
                     <ul>
-                        <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i>Facebook</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-brands fa-tiktok"></i>Tiktok</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i>Instagram</a></li>
-                        <li><a href="" class="text-hover"><i class="fa-solid fa-x"></i>X</a></li>
+                        <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                        <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
                     </ul>
                 </div>
                 <div class="footer-column 4th logo">
@@ -252,4 +272,6 @@
     </div>
 </div>
 </body>
+<script src="js/header.js"></script>
+<script src="js/order_history.js"></script>
 </html>

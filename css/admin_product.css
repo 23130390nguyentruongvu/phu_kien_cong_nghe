@@ -1,3 +1,8 @@
+* {
+    font-family: Arial, sans-serif;
+}
+
+
 .wrap-all-content {
     height: 100vh;
 }
@@ -102,14 +107,15 @@
     width: 20px;
 }
 
-.wrap-btn-submit-data-product {
+.wrap-load-more {
     height: 36px;
     width: 130px;
     margin: 30px;
     padding-left: 70%;
 }
 
-.wrap-btn-submit-data-product .submit-data-product {
+.load-more  {
+    text-align: center;
     height: 36px;
     width: 130px;
     background-color: rgb(4, 107, 210);
@@ -117,8 +123,9 @@
     border: 1px solid rgb(4, 107, 210);
     border-radius: 10px;
 }
-.wrap-btn-submit-data-product .submit-data-product:hover {
+.load-more:hover {
     height: 36px;
+    text-align: center;
     width: 130px;
     background: #024b9b;
     color: white;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/voucher.css">
     <link rel="stylesheet" href="shared/sidebar.css">
+
 </head>
 <body>
 <div class="header">
@@ -26,8 +27,8 @@
                 <div class="empty"></div>
                 <div id="stateUser">
                     <div class="wrap-state-user">
-                        <a href="" class="state-user-hover"><i class="fa-solid fa-circle-user"></i></i>
-                            <p id="stateUserLogin">Chưa đăng nhập</p>
+                        <a  class="state-user-hover"><i class="fa-solid fa-circle-user"></i></i>
+                            <p id="stateUserLogin">KhaBa</p>
                         </a>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
                 </form>
             </div>
             <div class="center shopping-cart">
-                <a href=""><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
+                <a ><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
                                                                       class="badge">0</span></i></a>
             </div>
         </div>
@@ -59,9 +60,9 @@
             <div class="main-menu below-center">
                 <div class="grid-column-below">
                     <ul>
-                        <li id="menuHome" class="menu-item active"><a href="">TRANG CHỦ</a></li>
-                        <li id="menuIntroduce" class="menu-item"><a href="">GIỚI THIỆU</a></li>
-                        <li id="menuProducts" class="menu-item"><a href="">DANH MỤC SẢN PHẨM<i
+                        <li id="menuHome" class="menu-item"><a href="home.html">TRANG CHỦ</a></li>
+                        <li id="menuIntroduce" class="menu-item"><a href="introdution.html">GIỚI THIỆU</a></li>
+                        <li id="menuProducts" class="menu-item"><a href="product_category.html">DANH MỤC SẢN PHẨM<i
                                 class="fa-solid fa-chevron-down"></i></a>
                             <div class="show-when-hover products below-center">
                                 <div class="grid-column sub-menu-products">
@@ -91,8 +92,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li id="menuNews" class="menu-item"><a href="">TIN TỨC</a></li>
-                        <li id="menuContact" class="menu-item"><a href="">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                        <li id="menuNews" class="menu-item"><a href="news.html">TIN TỨC</a></li>
+                        <li id="menuContact" class="menu-item"><a href="contact.html">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                     </ul>
                 </div>
             </div>
@@ -265,49 +266,53 @@
                 </div>
             </div>
         </main>
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-grid center">
-            <div class="footer-column first info">
-                <ul>
-                    <li><i class="fa-solid fa-phone"></i>Gọi: 0677xxxx</li>
-                    <li><i class="fa-solid fa-location-dot"></i>Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ Đức
-                    </li>
-                    <li><i class="fa-solid fa-envelope"></i>Email: pkcn@sp.love</li>
-                    <li><i class="fa-solid fa-clock"></i>Thời gian làm việc: 8h-21h, thứ 2 đến thứ 7 hàng tuần</li>
-                </ul>
+<div id="footer">
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-grid center">
+                <div class="footer-column first info">
+                    <ul>
+                        <li><i class="fa-solid fa-phone"></i> Gọi: 0793189000</li>
+                        <li><i class="fa-solid fa-phone-volume"></i> Hotline: 0793189032</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ
+                            Đức
+                        </li>
+                        <li><i class="fa-solid fa-envelope"></i> Email: pkcn@sp.love</li>
+                    </ul>
+                </div>
+                <div class="footer-column second nav">
+                    <ul>
+                        <li><a href="payment_method.html" class="text-hover"><i class="fa-solid fa-money-bill"></i> Phương thức thanh
+                            toán</a>
+                        </li>
+                        <li><a href="shipping_method.html" class="text-hover"><i class="fa-solid fa-truck"></i> Phương thức giao hàng</a>
+                        </li>
+                        <li><a href="warranty_policy.html" class="text-hover"><i class="fa-solid fa-award"></i> Chính sách bảo hành</a>
+                        </li>
+                        <li><a href="privacy_policy.html" class="text-hover"><i class="fa-solid fa-lock"></i> Chính sách bảo mật</a>
+                        </li>
+                        <li><a href="term_of_service.html" class="text-hover"><i class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a>
+                        </li>
+                        <li><a href="voucher.html" class="text-hover"><i class="fa-solid fa-ticket"></i> Voucher</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column third social-media">
+                    <ul>
+                        <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                        <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column 4th logo">
+                    <img src="../assets/image/logo.webp" alt="">
+                </div>
             </div>
-            <div class="footer-column second nav">
-                <ul>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-person-chalkboard"></i>Hướng dẫn mua
-                        hàng</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-money-bill"></i>Phương thức thanh
-                        toán</a>
-                    </li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-truck"></i>Phương thức giao hàng</a>
-                    </li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-award"></i>Chính sách bảo hành</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-lock"></i>Chính sách bảo mật</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-pen-nib"></i>Điều khoản dịch vụ</a></li>
-                </ul>
+            <div class="site-below">
+                <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
             </div>
-            <div class="footer-column third social-media">
-                <ul>
-                    <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i>Facebook</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-brands fa-tiktok"></i>Tiktok</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i>Instagram</a></li>
-                    <li><a href="" class="text-hover"><i class="fa-solid fa-x"></i>X</a></li>
-                </ul>
-            </div>
-            <div class="footer-column 4th logo">
-                <img src="../assets/image/logo.webp" alt="">
-            </div>
-        </div>
-        <div class="site-below">
-            <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
         </div>
     </div>
 </div>
 
-</body>
+</body>  <script src="js/header.js"></script>
 </html>
