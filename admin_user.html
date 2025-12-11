@@ -55,7 +55,7 @@
                         <option value="pkmt">Đang hoạt động</option>
                         <option value="pkdt">Không còn hoạt động</option>
                     </select>
-                    <button type="submit" class="submit-data">Tìm kiếm</button>
+                    <button type="submit" class="submit-data">Submit</button>
                 </form>
                 <div class="board-res-user">
                     <form>
@@ -66,6 +66,7 @@
                                 <th>Tên người dùng</th>
                                 <th>Tên đăng nhập</th>
                                 <th>Trạng thái</th>
+                                <th>Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -74,38 +75,75 @@
                                 <td>Trương Vũ Nguyên</td>
                                 <td>Vunguyen123</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
+                                <td>
+                                <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                          <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                </td>
                             </tr>
                             <tr>
                                 <td>02</td>
                                 <td>Nguyễn Văn A</td>
                                 <td>Admin123</td>
                                 <td>đang bị khóa</td>
-                                <td><button class="btn-delete" name="btn-delete">Mở tài khoản</button></td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span></td>
                             </tr>
                             <tr>
                                 <td>03</td>
                                 <td>Lê Thị B</td>
                                 <td>Vu1234</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span></td>
                             </tr>
                             <tr>
                                 <td>04</td>
                                 <td>Trương Vũ Nguyên</td>
                                 <td>Vunguyen123</td>
                                 <td>đang bị khóa</td>
-                                <td><button class="btn-delete" name="btn-delete">Mở tài khoản</button></td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                </td>
                             </tr>
                             <tr>
                                 <td>05</td>
                                 <td>Trương Vũ Duy</td>
                                 <td>Vunguyen123</td>
                                 <td>đang hoạt động</td>
-                                <td><button class="btn-delete" name="btn-delete">Khóa tài khoản</button></td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>06</td>
+                                <td>Nguyễn Văn B</td>
+                                <td>HeheBoi</td>
+                                <td>đang bị khóa</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-show"><i class="fa-solid fa-eye"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span></td>
                             </tr>
                             </tbody>
                         </table>
+                        <div class="wrap-load-more">
+                            <input class="load-more" name="change-status" value="Tải thêm">
+                        </div>
                     </form>
                 </div>
             </div>
