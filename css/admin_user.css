@@ -237,7 +237,7 @@ img{
     background: #fff;
     margin: 5% auto;
     padding: 20px;
-    width: 1240px;
+    width: 1040px;
     border-radius: 8px;
     max-height: 80vh;
     overflow-y: auto;
@@ -277,4 +277,11 @@ img{
     height: 40px;
     background-color: red;
 
+}
+.set-active{
+    margin-left: 7px;
+    padding-bottom: 10px;
+}
+.popup-actions{
+    margin-top: 20px;
 }

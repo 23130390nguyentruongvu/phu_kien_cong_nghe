@@ -265,20 +265,23 @@
                 <h2>Chỉnh sửa thông tin người dùng</h2>
                 <form id="editUserForm">
                     <label for="name-user">Tên người dùng:</label>
-                    <input type="text" id="name-user" name="name-user" placeholder="Tên người dùng">
+                    <input type="text" id="name-user" name="name-user" value="Lê Thị B" placeholder="Tên người dùng">
                     <br>
                     <label for="user-name">User Name:</label>
-                    <input type="text" id="user-name" name="user-name" value="Nguyễn Trường Vũ" readonly>
+                    <input type="text" id="user-name" name="user-name" value="Vu1234" disabled>
                     <br>
                     <label for="email">Email:</label>
-                    <input type="text" id="email" name="email" value="Vucun" readonly>
-                    <br>
-                    <label for="pass">Mật khẩu:</label>
-                    <input type="password" id="pass" name="pass" placeholder="Mật khẩu">
+                    <input type="text" id="email" name="email" value="Vunguyen@gmail.com" disabled>
                     <br>
                     <label for="avatar">Avatar:</label>
-                    <input type="text" id="avatar" name="avatar" placeholder="Url avatar">
-
+                    <input type="text" id="avatar" name="avatar" value="assets/image/customer/customer_1.webp" placeholder="Url avatar">
+                    <br>
+                    <label for="set-active">Trạng thái: </label>
+                    <span id="set-active" class="set-active">
+                        <span>Đang hoạt dộng</span>
+                        <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                    </span>
+                    <br>
                     <div class="popup-actions">
                         <button type="submit" id="submit-update-user">Cập nhật</button>
                         <button type="button" id="closeUpdate">Đóng</button>
