@@ -1,0 +1,270 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Liên Hệ</title>
+    <link rel="stylesheet" href="css/contact.css" />
+    <link rel="stylesheet" href="shared/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="header">
+      <div class="header">
+        <div class="header-container">
+          <!--     open header-above-->
+          <div class="header-above">
+            <div class="grid-column-above">
+              <div class="information">
+                <ul>
+                  <li><strong>Phụ Kiện Công Nghệ</strong></li>
+                  <li>
+                    Kết nối với chúng tôi:
+                    <a href="" class="text-hover"
+                      ><i class="fa-brands fa-facebook"></i
+                    ></a>
+                    <a href="" class="text-hover"
+                      ><i class="fa-brands fa-instagram"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="empty"></div>
+              <div id="stateUser">
+                <div class="wrap-state-user">
+                  <a   class="state-user-hover"
+                    ><i class="fa-solid fa-circle-user"></i>
+                    <p id="stateUserLogin">KhaBa</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--        close header-above-->
+          <!--        open header-center-->
+          <div class="header-center">
+            <div class="center logo">
+              <a href="../index.html"
+                ><img
+                  src="../assets/image/logo.webp"
+                  style="width: 60px; height: 60px"
+              /></a>
+            </div>
+            <div class="center form-search">
+              <form action="" method="get">
+                <input
+                  type="search"
+                  name="search-product"
+                  placeholder="Tìm kiếm sản phẩm..."
+                  class="search-input"
+                />
+                <button class="search-button" type="submit">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </form>
+            </div>
+            <div class="center shopping-cart">
+              <a
+                ><i class="fa-solid fa-cart-shopping"
+                  ><span id="badgeNumItemCart" class="badge">0</span></i
+                ></a
+              >
+            </div>
+          </div>
+          <!--        close header-center-->
+          <!--        open header-below-->
+          <div class="header-below">
+            <div class="empty-left"></div>
+            <div class="main-menu below-center">
+              <div class="grid-column-below">
+                  <ul>
+                      <li id="menuHome" class="menu-item"><a href="home.jsp">TRANG CHỦ</a></li>
+                      <li id="menuIntroduce" class="menu-item"><a href="introduction.jsp">GIỚI THIỆU</a></li>
+                      <li id="menuProducts" class="menu-item"><a href="product_category.jsp">DANH MỤC SẢN PHẨM<i
+                              class="fa-solid fa-chevron-down"></i></a>
+                          <div class="show-when-hover products below-center">
+                              <div class="grid-column sub-menu-products">
+                                  <ul>
+                                      <li id="menuItem1" class="sub-menu-item"
+                                      ><a href="">Phụ Kiện
+                                          Máy Tính</a></li>
+                                      <li id="menuItem2" class="sub-menu-item"
+                                      ><a href="">Phụ Kiện
+                                          Điện Thoại</a></li>
+                                      <li id="menuItem3" class="sub-menu-item"
+                                      ><a href="">Dây Cáp
+                                          Tín Hiệu</a></li>
+                                      <li id="menuItem4" class="sub-menu-item"
+                                      ><a href="">Bộ Chia
+                                          Tín Hiệu</a></li>
+                                      <li id="menuItem5" class="sub-menu-item"><a href="">phụ Kiện Xe</a>
+                                      </li>
+                                      <li id="menuItem6" class="sub-menu-item"><a href="">Thiết Bị Mạng</a>
+                                      </li>
+                                      <li id="menuItem7" class="sub-menu-item"><a href="">Thiết Bị Ngoại Vi</a>
+                                      </li>
+                                      <li id="menuItem8" class="sub-menu-item"><a href="">Bộ Chuyển Đổi Tín
+                                          Hiệu</a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </li>
+                      <li id="menuNews" class="menu-item"><a href="news.jsp">TIN TỨC</a></li>
+                      <li id="menuContact" class="menu-item active"><a href="contact.html">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                  </ul>
+              </div>
+            </div>
+            <div class="empty-right"></div>
+          </div>
+          <!--        close header-below-->
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="container">
+        <div id="sidebar">
+          <div class="sidebar-main">
+            <aside id="block-31" class="widget widget_block">
+              <h3 class="wp-block-heading">DANH MỤC TRANG</h3>
+            </aside>
+            <aside id="nav_menu-9" class="widget widget_nav_menu">
+              <nav class="menu-danh-muc-trang-container" aria-label="Menu">
+                  <ul id="menu-danh-muc-trang" class="menu">
+                      <li><a href="home.jsp">Trang Chủ</a></li>
+                      <li><a href="introduction.jsp">Giới Thiệu</a></li>
+                      <li><a href="contact.html">Liên Hệ</a></li>
+                      <li><a href="news.jsp">Tin Tức</a></li>
+                      <li><a href="personal_info.jsp">Tài Khoản Của Tôi</a></li>
+                      <li><a href="shipping_method.jsp">Phương Thức Giao Hàng</a></li>
+                      <li><a href="payment_method.jsp">Phương Thức Thanh Toán</a></li>
+                      <li><a href="warranty_policy.jsp">Chính Sách Bảo Hành</a></li>
+                      <li><a href="privacy_policy.jsp">Chính Sách Bảo Mật</a></li>
+                      <li><a href="term_of_service.jsp">Điều Khoản Dịch Vụ</a></li>
+                  </ul>
+              </nav>
+            </aside>
+          </div>
+        </div>
+
+        <div class="content">
+          <h2>Liên Hệ</h2>
+
+          <section class="contact-info">
+            <h3>Thông tin liên hệ</h3>
+            <p><b>Phụ Kiện Công Nghệ</b></p>
+            <p>Địa chỉ: VQCR+GP6, khu phố 6, Thủ Đức, Thành phố Hồ Chí Minh</p>
+            <p>
+              Email:
+              <a href="mailto:phukiencongnghenonglam@gmail.com"
+                >phukiencongnghenonglam@gmail.com</a
+              >
+            </p>
+            <p>
+              Điện thoại: <a href="tel:02460278331">0123 456 789</a> –
+              <a href="tel:0986828331">0963 369 336</a>
+            </p>
+          </section>
+
+          <section class="map-section">
+            <h3>Bản đồ chỉ đường</h3>
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.2143797342956!2d106.78919067369718!3d10.871292757439459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175278521e2b8f5%3A0xcc08026a2d7c6c01!2zVlFDUitHUDYsIGtodSBwaOG7kSA2LCBMaW5oIFRydW5nLCBUaOG7pyDEkOG7qWMsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1761395325706!5m2!1svi!2s"
+                width="100%"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
+            </div>
+          </section>
+
+          <section class="contact-form">
+            <h3>Liên hệ với chúng tôi</h3>
+            <p>
+              Luôn sẵn sàng hỗ trợ và tư vấn cho bạn để có sản phẩm tốt nhất
+            </p>
+
+            <form>
+              <label>Họ và tên</label>
+              <input type="text" placeholder="Họ và tên của bạn" required />
+
+              <label>Điện thoại</label>
+              <input type="text" placeholder="Số điện thoại" required />
+
+              <label>Email</label>
+              <input type="email" placeholder="Email" required />
+
+              <label>Nội dung</label>
+              <textarea
+                rows="4"
+                placeholder="Nhập nội dung liên hệ..."
+                required
+              ></textarea>
+
+              <button type="submit">Gửi yêu cầu liên hệ</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer">
+        <div class="footer">
+            <div class="footer-container">
+                <div class="footer-grid center">
+                    <div class="footer-column first info">
+                        <ul>
+                            <li><i class="fa-solid fa-phone"></i> Gọi: 0793189000</li>
+                            <li><i class="fa-solid fa-phone-volume"></i> Hotline: 0793189032</li>
+                            <li><i class="fa-solid fa-location-dot"></i> Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ
+                                Đức
+                            </li>
+                            <li><i class="fa-solid fa-envelope"></i> Email: pkcn@sp.love</li>
+                        </ul>
+                    </div>
+                    <div class="footer-column second nav">
+                        <ul>
+                            <li><a href="payment_method.jsp" class="text-hover"><i class="fa-solid fa-money-bill"></i> Phương thức thanh
+                                toán</a>
+                            </li>
+                            <li><a href="shipping_method.jsp" class="text-hover"><i class="fa-solid fa-truck"></i> Phương thức giao hàng</a>
+                            </li>
+                            <li><a href="warranty_policy.jsp" class="text-hover"><i class="fa-solid fa-award"></i> Chính sách bảo hành</a>
+                            </li>
+                            <li><a href="privacy_policy.jsp" class="text-hover"><i class="fa-solid fa-lock"></i> Chính sách bảo mật</a>
+                            </li>
+                            <li><a href="term_of_service.jsp" class="text-hover"><i class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a>
+                            </li>
+                            <li><a href="voucher.jsp" class="text-hover"><i class="fa-solid fa-ticket"></i> Voucher</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-column third social-media">
+                        <ul>
+                            <li><a href="" class="text-hover"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+                            <li><a href="" class="text-hover"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column 4th logo">
+                        <img src="../assets/image/logo.webp" alt="">
+                    </div>
+                </div>
+                <div class="site-below">
+                    <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>  <script src="js/header.js"></script>
+</html>

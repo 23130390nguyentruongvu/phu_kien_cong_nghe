@@ -1,0 +1,377 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lí sản phẩm</title>
+    <link rel="stylesheet" href="shared/nav_admin.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/admin_product.css">
+</head>
+<body>
+<div class="wrap-all-content">
+    <!--    open nav admin-->
+    <div class="nav-admin">
+        <div class="wrap-base-info-admin">
+            <div class="wrap-img-user-admin">
+                <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
+                <span class="username-role-of-admin">
+                    <span class="username">Admin123</span>
+
+                    <div class="role">Quản trị viên</div>
+                </span>
+            </div>
+            <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
+        </div>
+        <hr>
+        <div class="wrap-nav-link-admin">
+            <ul>
+                <li class="item-nav-link-admin ">
+                    <i class="fa-solid fa-eye"></i> <a href="admin_overview.jsp">Tổng quan</a>
+                </li>
+                <li class="item-nav-link-admin">
+                    <i class="fa-solid fa-user-group"></i> <a href="admin_user.jsp">Quản lí người dùng</a>
+                </li>
+                <li class="item-nav-link-admin selected">
+                    <i class="fa-solid fa-box"></i> <a href="admin_product.html">Quản lí sản phẩm</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--    close nav admin-->
+    <!--    open main content admin-->
+    <div class="main-content-admin">
+        <h1 class="title-for-page">Quản lí sản phẩm</h1>
+        <div class="wrap-find-info-product">
+            <form>
+                <input type="text" name="product-id" class="input-product-id"
+                       placeholder="Tìm kiếm theo mã sản phẩm hoặc tên sản phẩm">
+                <select name="filter-by-category" class="filter-by-category">
+                    <option value="all" selected>Mọi Thể Loại</option>
+                    <option value="pkmt">Phụ Kiện Máy Tính</option>
+                    <option value="pkdt">Phụ Kiện Điện Thoại</option>
+                    <option value="bcth">Bộ Chuyển Tín Hiệu</option>
+                </select>
+                <button type="submit" class="submit-data">Submit</button>
+            </form>
+        </div>
+        <div class="edit-product head-edit">
+            <span class="edit-product-add-prod"><i class="fa-solid fa-circle-plus"></i></span>
+        </div>
+        <div class="board-res-product">
+            <form>
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phâm</th>
+                        <th>Số lượng sản phẩm biến thể</th>
+                        <th>Tổng số lượng</th>
+                        <th>Phạm vi giá</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_1.webp"></td>
+                        <td>100</td>
+                        <td>Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>500.000<span class="underline-dong">đ</span> - 1.000.000<span
+                                class="underline-dong">đ</span></td>
+                        <td>
+                            <span class="edit-product">
+                                <span class="edit-product-remove" data-id="100"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var" data-id="100"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update" data-id="100"><i
+                                        class="fa-solid fa-pen-to-square"></i></span>
+                                <span class="edit-product-show-var" data-id="100"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_2.webp"></td>
+                        <td>120</td>
+                        <td>Bộ chia tín hiệu AV (Video và Audio) 1 ra 8</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>250.000<span class="underline-dong">đ</span> - 1.000.000<span
+                                class="underline-dong">đ</span></td>
+                        <td>
+                                      <span class="edit-product">
+                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_3.webp"></td>
+                        <td>200</td>
+                        <td>Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>1.000.000<span class="underline-dong">đ</span> - 2.400.000<span
+                                class="underline-dong">đ</span></td>
+                        <td>
+                                      <span class="edit-product">
+                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="prod-img" src="assets/image/fake_products/item_pkdt_1.webp"></td>
+                        <td>300</td>
+                        <td>Giá đỡ điện thoại kim loại</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>40.000<span class="underline-dong">đ</span> - 100.000<span
+                                class="underline-dong">đ</span></td>
+                        <td>
+                                      <span class="edit-product">
+                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="prod-img" src="assets/image/fake_products/item_pkdt_2.webp"></td>
+                        <td>900</td>
+                        <td>Ốp lưng điện thoại IPhone</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>20.000<span class="underline-dong">đ</span> - 90.000<span
+                                class="underline-dong">đ</span></td>
+                        <td>
+                            <span class="edit-product">
+                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="wrap-load-more">
+                    <input class="load-more" name="change-status" value="Tải thêm">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    close main content admin-->
+    <!--    popup-->
+    <!-- Popup xác nhận hành động -->
+    <div id="popup-confirm" style="z-index: 1001" class="popup">
+        <div class="popup-content">
+            <h2>Xác nhận hành động</h2>
+            <p id="confirmMessage"></p>
+            <form id="confirmForm" method="post">
+                <input type="hidden" id="confirmId" name="id">
+                <button type="submit" id="confirmYes">Đồng ý</button>
+                <button type="button" id="confirmNo">Hủy</button>
+            </form>
+        </div>
+    </div>
+    <!--   Popup add product-->
+    <div id="popup-add-product" class="popup">
+        <div class="popup-content">
+            <h2>Thêm sản phẩm mới</h2>
+            <form>
+                <input type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
+                <br>
+                <input type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
+                <br>
+                <textarea name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
+                <br>
+                <textarea name="description" class="form-input" placeholder="Mô tả dài"></textarea>
+                <br>
+                <div class="wrap-status-product">
+                    <label for="statusProduct">Hiện lên website</label>
+                    <input type="checkbox" name="status" checked id="statusProduct">
+                </div>
+                <br>
+                <label>Danh sách URL ảnh:</label>
+                <div id="imageUrlList">
+                    <div class="image-url-item">
+                        <input type="text" name="imageUrls[]" placeholder="Nhập URL ảnh">
+                        <!--                        lưu index được chọn-->
+                        <input type="radio" name="mainImage" value="0" checked> Ảnh chính
+                        <button type="button" class="remove-url">Xóa</button>
+                    </div>
+                </div>
+                <button type="button" id="addImageUrl">Thêm URL ảnh</button>
+                <!-- Biến thể sản phẩm -->
+                <label>Danh sách các biến thể:</label>
+                <div id="variantList">
+                    <div class="variant-item">
+                        <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">
+                        <br>
+                        <input type="text" class="form-input" name="sku" placeholder="Mã SKU">
+                        <br>
+                        <input type="number" class="form-input" name="variantPrices" placeholder="Giá">
+                        <br>
+                        <input type="number" class="form-input" name="variantStocks" placeholder="Số lượng">
+                        <br>
+                        <input type="number" class="form-input" name="gram" placeholder="Trọng lượng">
+                        <br>
+                        <input type="text" class="form-input" name="color" placeholder="Màu sắc">
+                        <br>
+                        <input type="text" class="form-input" name="size" placeholder="Kích thước">
+                        <br>
+                        <input type="text" class="form-input" name="variantImage" placeholder="Url hình ảnh">
+                    </div>
+                </div>
+                <div class="wrap-button-cancel-submit">
+                    <button id="submitAddProd" type="submit" class="submit">Thêm</button>
+                    <button id="closeAddProd" type="button" class="close">Đóng</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <!--  Popup  views product variant-->
+    <div id="popup-variants" class="popup">
+        <div class="popup-content">
+            <h2>Danh sách biến thể</h2>
+            <div class="board-res-product">
+                <table class="table-prod-variants">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã biến thể</th>
+                        <th>Tên biến thể</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thông số</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <img class="img-product-var" src="assets/image/fake_products/item_pkdt_4.webp">
+                        </td>
+                        <td>100</td>
+                        <td>Kính cường lực</td>
+                        <td>500.000đ</td>
+                        <td>10</td>
+                        <td>23x25cm, xanh</td>
+                        <td>
+                            <span class="edit-product">
+                                <span class="edit-product-var-remove" data-id="100"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-var-update" data-id="100"><i class="fa-solid fa-pen-to-square"></i></span>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button id="closeVariants">Đóng</button>
+        </div>
+    </div>
+    <!--    Popup add/edit product variant-->
+    <div id="popup-add-edit-variant" class="popup">
+        <div class="popup-content">
+            <h2>Biến thể sản phẩm</h2>
+            <form id="variantForm" method="post">
+                <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể" required>
+                <br>
+                <input type="text" class="form-input" name="sku" placeholder="Mã SKU" required>
+                <br>
+                <input type="number" class="form-input" name="variantPrices" placeholder="Giá" required>
+                <br>
+                <input type="number" class="form-input" name="variantStocks" placeholder="Số lượng" required>
+                <br>
+                <input type="number" class="form-input" name="gram" placeholder="Trọng lượng (gram)">
+                <br>
+                <input type="text" class="form-input" name="color" placeholder="Màu sắc">
+                <br>
+                <input type="text" class="form-input" name="size" placeholder="Kích thước">
+                <br>
+                <input type="text" class="form-input" name="variantImage" placeholder="URL hình ảnh">
+                <br>
+
+                <div class="wrap-button-cancel-submit">
+                    <button type="submit" id="submitAddProdVar" class="submit">Chấp nhận</button>
+                    <button type="button" id="closeAddProdVar" class="close">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--    edit product-->
+    <div id="popup-edit" class="popup">
+        <div class="popup-content edit-product-content">
+            <h2>Chỉnh sửa sản phẩm</h2>
+            <form id="editProductForm">
+                <!-- Tên sản phẩm -->
+                <label for="name-product">Tên sản phẩm:</label>
+                <input type="text" id="name-product" name="name-product" placeholder="Tên sản phẩm">
+                <br>
+                <!-- Thời hạn bảo hành -->
+                <label for="warranty">Thời hạn bảo hành (tháng):</label>
+                <input type="number" id="warranty" name="warranty" placeholder="VD: 12">
+                <br>
+
+                <!-- Mô tả ngắn -->
+                <label for="short-desc">Mô tả ngắn:</label>
+                <input type="text" id="short-desc" name="short-desc" placeholder="Mô tả ngắn">
+                <br>
+
+                <!-- Mô tả dài -->
+                <label for="long-desc">Mô tả dài:</label>
+                <textarea id="long-desc" name="long-desc" placeholder="Mô tả chi tiết"></textarea>
+                <br>
+
+                <!-- Hiển thị trên web -->
+                <label>Hiển thị trên website<input style="height: 20px" type="checkbox" name="isVisible" checked>
+
+                </label>
+                <br>
+
+                <!-- Ảnh sản phẩm -->
+                <label>Ảnh sản phẩm:</label>
+                <div class="product-images">
+                    <div class="image-item">
+                        <img src="assets/image/fake_products/item_bcth_1.webp" alt="Ảnh 1">
+                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage" checked>
+                        <button type="button" class="remove-img">Xóa</button>
+                    </div>
+                    <div class="image-item">
+                        <img src="assets/image/fake_products/item_bcth_2.webp" alt="Ảnh 2">
+                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage">
+                        <button type="button" class="remove-img">Xóa</button>
+                    </div>
+                </div>
+                <button type="button" id="addImage">Thêm ảnh mới</button>
+
+                <!-- Nút hành động -->
+                <div class="popup-actions">
+                    <button type="submit" id="submit-update-product">Cập nhật</button>
+                    <button type="button" id="closeEdit">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+<script src="js/admin_product.js"></script>
+</html>

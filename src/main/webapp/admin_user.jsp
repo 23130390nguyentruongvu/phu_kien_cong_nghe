@@ -1,0 +1,298 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý người dùng</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/admin_user.css">
+    <link rel="stylesheet" href="shared/nav_admin.css">
+</head>
+<body>
+    <div class="wrap-all-content">
+        <!--    open nav admin-->
+        <div class="nav-admin">
+            <div class="wrap-base-info-admin">
+                <div class="wrap-img-user-admin">
+                    <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
+                    <span class="username-role-of-admin">
+                    <span class="username">Admin123</span>
+
+                    <div class="role">Quản trị viên</div>
+                </span>
+                </div>
+                <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
+            </div>
+            <hr>
+            <div class="wrap-nav-link-admin">
+                <ul>
+                    <li class="item-nav-link-admin ">
+                        <i class="fa-solid fa-eye"></i> <a href="admin_overview.jsp">Tổng quan</a>
+                    </li>
+                    <li class="item-nav-link-admin selected">
+                        <i class="fa-solid fa-user-group"></i> <a href="admin_user.html">Quản lí người dùng</a>
+                    </li>
+                    <li class="item-nav-link-admin">
+                        <i class="fa-solid fa-box"></i> <a href="admin_product.jsp">Quản lí sản phẩm</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--    close nav admin-->
+        <!--    open main content admin-->
+        <div class="main-content-admin">
+            <h1 class="title-for-page">Quản lý người dùng</h1>
+            <div class="wrap-find-info-user">
+                <form>
+                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo user id">
+                    <select name="filter-by" class="filter-by">
+                        <option value="all" selected>Tất cả</option>
+                        <option value="pkmt">Đang hoạt động</option>
+                        <option value="pkdt">Không còn hoạt động</option>
+                    </select>
+                    <button type="submit" class="submit-data">Submit</button>
+                </form>
+            </div>
+            <div class="edit-user head-edit">
+                <span class="edit-user-add-user"><i class="fa-solid fa-circle-plus"></i></span>
+            </div>
+                <div class="board-res-user">
+                    <form>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Mã người dùng</th>
+                                <th>Avatar</th>
+                                <th>Tên người dùng</th>
+                                <th>User Name</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>
+                                    <img class="avatar-img"  src="assets/image/customer/customer_3.webp">
+                               </td>
+                                <td>Trương Vũ Nguyên</td>
+                                <td>Vunguyen123</td>
+                                <td>đang hoạt động</td>
+                                <td>
+                                <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>
+                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
+                               </td>
+                                <td>Nguyễn Văn A</td>
+                                <td>Admin123</td>
+                                <td>đang bị khóa</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>
+                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
+                                </td>
+                                <td>Lê Thị B</td>
+                                <td>Vu1234</td>
+                                <td>đang hoạt động</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>04</td>
+                                <td>
+                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
+                               </td>
+                                <td>Trương Vũ Nguyên</td>
+                                <td>Vunguyen123</td>
+                                <td>đang bị khóa</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>05</td>
+                                <td>
+                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
+                                </td>
+                                <td>Trương Vũ Duy</td>
+                                <td>Vunguyen123</td>
+                                <td>đang hoạt động</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>06</td>
+                                <td>
+                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
+                              </td>
+                                <td>Nguyễn Văn B</td>
+                                <td>HeheBoi</td>
+                                <td>đang bị khóa</td>
+                                <td>
+                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                                <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="wrap-load-more">
+                            <input type="button" class="load-more" name="change-status" value="Tải thêm">
+                        </div>
+                    </form>
+                </div>
+            </div>
+<!--        <div id="popup-confirm" style="z-index: 1001" class="popup">-->
+<!--            <div class="popup-content">-->
+<!--                <h2>Xác nhận hành động</h2>-->
+<!--                <p id="confirmMessage"></p>-->
+<!--                <form id="confirmForm" method="post">-->
+<!--                    <input type="hidden" id="confirmId" name="id">-->
+<!--                    <button type="submit" id="confirmYes">Đồng ý</button>-->
+<!--                    <button type="button" id="confirmNo">Hủy</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div id="popup-add-user" class="popup">
+            <div class="popup-content">
+                <h2>Thêm User mới</h2>
+                <form>
+                    <input type="text" name="name" class="form-input" placeholder="Tên người dùng">
+                    <br>
+                    <input type="text" name="userName" class="form-input" placeholder="Username">
+                    <br>
+                    <input type="email" name="email" class="form-input" placeholder="Email">
+                    <br>
+                    <input type="password" name="password" class="form-input" placeholder="Password">
+                    <br>
+                    <input type="password" name="re-password" class="form-input" placeholder="Nhập lại Password">
+                    <br>
+                    <input type="text" name="avatar" class="form-input" placeholder="Url hình ảnh">
+                    <br>
+                    <div class="wrap-button-cancel-submit">
+                        <button id="submitAddProd" type="submit" class="submit">Thêm</button>
+                        <button id="closeAddProd" type="button" class="close">Đóng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="popup-view-user" class="popup">
+            <div class="popup-content">
+                <h2>Chi tiết user</h2>
+                <div class="board-res-user">
+                    <table class="table-prod-variants">
+                        <thead>
+                        <tr>
+                            <th>Mã người dùng</th>
+                            <th>Avatar</th>
+                            <th>Tên người dùng</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Mật khẩu</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                               1
+                            </td>
+                            <td><img src="assets/image/customer/customer_1.webp"></td>
+                            <td>Nguyễn Trường Vũ</td>
+                            <td>Vucun</td>
+                            <td>Vu123@gmail.com</td>
+                            <td>123</td>
+                            <td>đang hoạt động</td>
+                            <td>
+                            <span class="edit-user">
+                                <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
+                                <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
+                            </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button id="closeUserView">Đóng</button>
+            </div>
+        </div>
+
+        <div id="popup-update-user" class="popup">
+            <div class="popup-content">
+                <h2>Chỉnh sửa thông tin người dùng</h2>
+                <form id="editUserForm">
+                    <label for="name-user">Tên người dùng:</label>
+                    <input type="text" id="name-user" name="name-user" value="Lê Thị B" placeholder="Tên người dùng">
+                    <br>
+                    <label for="user-name">User Name:</label>
+                    <input type="text" id="user-name" name="user-name" value="Vu1234" disabled>
+                    <br>
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" value="Vunguyen@gmail.com" disabled>
+                    <br>
+                    <label for="avatar">Avatar:</label>
+                    <input type="text" id="avatar" name="avatar" value="assets/image/customer/customer_1.webp" placeholder="Url avatar">
+                    <br>
+                    <label for="set-active">Trạng thái: </label>
+                    <span id="set-active" class="set-active">
+                        <span>Đang hoạt dộng</span>
+                        <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                    </span>
+                    <br>
+                    <div class="popup-actions">
+                        <button type="submit" id="submit-update-user">Cập nhật</button>
+                        <button type="button" id="closeUpdate">Đóng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+
+</body>
+<script src="js/admin_user.js"></script>
+</html>
