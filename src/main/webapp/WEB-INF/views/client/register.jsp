@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Đăng Ký</title>
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="../../../css/register.css">
 
 </head>
 <body>
@@ -47,6 +49,6 @@
             </div>
         </div>
     </main>
-    <script src="js/register.js"></script>
+    <script src="../../../js/register.js"></script>
 </body>
 </html>

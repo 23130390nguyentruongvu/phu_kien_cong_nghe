@@ -1,12 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/product_detail.css" />
-    <link rel="stylesheet" href="shared/main.css" />
+    <link rel="stylesheet" href="../../../css/product_detail.css" />
+    <link rel="stylesheet" href="../../../shared/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -14,134 +16,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="shared/item_product.css" />
+    <link rel="stylesheet" href="../../../shared/item_product.css" />
 
     <title>Cáp nối dài USB 3.0 dài 1,5M AM to AF</title>
   </head>
   <body>
-    <div class="header">
-      <div class="header-container">
-        <!--     open header-above-->
-        <div class="header-above">
-          <div class="grid-column-above">
-            <div class="information">
-              <ul>
-                <li><strong>Phụ Kiện Công Nghệ</strong></li>
-                <li>
-                  Kết nối với chúng tôi:
-                  <a href="" class="text-hover"
-                    ><i class="fa-brands fa-facebook"></i
-                  ></a>
-                  <a href="" class="text-hover"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-            <div class="empty"></div>
-            <div id="stateUser">
-              <div class="wrap-state-user">
-                <a class="state-user-hover">
-                  <i class="fa-solid fa-circle-user"></i>
-                  <p id="stateUserLogin">KhaBa</p>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--        close header-above-->
-        <!--        open header-center-->
-        <div class="header-center">
-          <div class="center logo">
-            <a href="../index.html"
-              ><img
-                src="../assets/image/logo.webp"
-                style="width: 60px; height: 60px"
-            /></a>
-          </div>
-          <div class="center form-search">
-            <form action="" method="get">
-              <input
-                type="search"
-                name="search-product"
-                placeholder="Tìm kiếm sản phẩm..."
-                class="search-input"
-              />
-              <button class="search-button" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-          </div>
-          <div class="center shopping-cart">
-            <a
-              ><i class="fa-solid fa-cart-shopping"
-                ><span id="badgeNumItemCart" class="badge">0</span></i
-              ></a
-            >
-          </div>
-        </div>
-        <!--        close header-center-->
-        <!--        open header-below-->
-        <div class="header-below">
-          <div class="empty-left"></div>
-          <div class="main-menu below-center">
-            <div class="grid-column-below">
-              <ul>
-                <li id="menuHome" class="menu-item">
-                  <a href="home.jsp">TRANG CHỦ</a>
-                </li>
-                <li id="menuIntroduce" class="menu-item">
-                  <a href="introduction.jsp">GIỚI THIỆU</a>
-                </li>
-                <li id="menuProducts" class="menu-item">
-                  <a href="product_category.jsp"
-                    >DANH MỤC SẢN PHẨM<i class="fa-solid fa-chevron-down"></i
-                  ></a>
-                  <div class="show-when-hover products below-center">
-                    <div class="grid-column sub-menu-products">
-                      <ul>
-                        <li id="menuItem1" class="sub-menu-item">
-                          <a href="">Phụ Kiện Máy Tính</a>
-                        </li>
-                        <li id="menuItem2" class="sub-menu-item">
-                          <a href="">Phụ Kiện Điện Thoại</a>
-                        </li>
-                        <li id="menuItem3" class="sub-menu-item">
-                          <a href="">Dây Cáp Tín Hiệu</a>
-                        </li>
-                        <li id="menuItem4" class="sub-menu-item">
-                          <a href="">Bộ Chia Tín Hiệu</a>
-                        </li>
-                        <li id="menuItem5" class="sub-menu-item">
-                          <a href="">phụ Kiện Xe</a>
-                        </li>
-                        <li id="menuItem6" class="sub-menu-item">
-                          <a href="">Thiết Bị Mạng</a>
-                        </li>
-                        <li id="menuItem7" class="sub-menu-item">
-                          <a href="">Thiết Bị Ngoại Vi</a>
-                        </li>
-                        <li id="menuItem8" class="sub-menu-item">
-                          <a href="">Bộ Chuyển Đổi Tín Hiệu</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-                <li id="menuNews" class="menu-item">
-                  <a href="news.jsp">TIN TỨC</a>
-                </li>
-                <li id="menuContact" class="menu-item">
-                  <a href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="empty-right"></div>
-        </div>
-        <!--        close header-below-->
-      </div>
-    </div>
+  <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
     <main>
       <div class="container">
@@ -619,84 +499,7 @@
       </div>
     </main>
 
-    <div id="footer">
-      <div class="footer">
-        <div class="footer-container">
-          <div class="footer-grid center">
-            <div class="footer-column first info">
-              <ul>
-                <li><i class="fa-solid fa-phone"></i> Gọi: 0793189000</li>
-                <li>
-                  <i class="fa-solid fa-phone-volume"></i> Hotline: 0793189032
-                </li>
-                <li>
-                  <i class="fa-solid fa-location-dot"></i> Địa chỉ: Kios 8
-                  giang, phường Linh Trung, Thủ Đức
-                </li>
-                <li>
-                  <i class="fa-solid fa-envelope"></i> Email: pkcn@sp.love
-                </li>
-              </ul>
-            </div>
-            <div class="footer-column second nav">
-              <ul>
-                <li>
-                  <a href="payment_method.jsp" class="text-hover"
-                    ><i class="fa-solid fa-money-bill"></i> Phương thức thanh
-                    toán</a
-                  >
-                </li>
-                <li>
-                  <a href="shipping_method.jsp" class="text-hover"
-                    ><i class="fa-solid fa-truck"></i> Phương thức giao hàng</a
-                  >
-                </li>
-                <li>
-                  <a href="warranty_policy.jsp" class="text-hover"
-                    ><i class="fa-solid fa-award"></i> Chính sách bảo hành</a
-                  >
-                </li>
-                <li>
-                  <a href="privacy_policy.jsp" class="text-hover"
-                    ><i class="fa-solid fa-lock"></i> Chính sách bảo mật</a
-                  >
-                </li>
-                <li>
-                  <a href="term_of_service.jsp" class="text-hover"
-                    ><i class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a
-                  >
-                </li>
-                <li>
-                  <a href="voucher.jsp" class="text-hover"
-                    ><i class="fa-solid fa-ticket"></i> Voucher</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="footer-column third social-media">
-              <ul>
-                <li>
-                  <a href="" class="text-hover"
-                    ><i class="fa-brands fa-facebook"></i> Facebook</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-hover"
-                    ><i class="fa-brands fa-instagram"></i> Instagram</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="footer-column 4th logo">
-              <img src="../assets/image/logo.webp" alt="" />
-            </div>
-          </div>
-          <div class="site-below">
-            <p>Copyright © 2025 Phụ Kiện Công Nghệ</p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
   </body>
-  <script src="js/header.js"></script>
+  <script src="../../../js/header.js"></script>
 </html>
