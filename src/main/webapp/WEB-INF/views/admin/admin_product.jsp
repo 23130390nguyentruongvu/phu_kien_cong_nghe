@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lí sản phẩm</title>
-    <link rel="stylesheet" href="shared/nav_admin.css">
+    <link rel="stylesheet" href="../../../shared/nav_admin.css">
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -13,7 +13,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="css/admin_product.css">
+    <link rel="stylesheet" href="../../../css/admin_product.css">
 </head>
 <body>
 <div class="wrap-all-content">
@@ -373,5 +373,5 @@
 
 </div>
 </body>
-<script src="js/admin_product.js"></script>
+<script src="../../../js/admin_product.js"></script>
 </html>

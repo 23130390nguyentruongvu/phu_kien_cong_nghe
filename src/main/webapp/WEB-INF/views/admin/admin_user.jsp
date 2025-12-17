@@ -12,8 +12,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="css/admin_user.css">
-    <link rel="stylesheet" href="shared/nav_admin.css">
+    <link rel="stylesheet" href="../../../css/admin_user.css">
+    <link rel="stylesheet" href="../../../shared/nav_admin.css">
 </head>
 <body>
     <div class="wrap-all-content">
@@ -294,5 +294,5 @@
      </div>
 
 </body>
-<script src="js/admin_user.js"></script>
+<script src="../../../js/admin_user.js"></script>
 </html>

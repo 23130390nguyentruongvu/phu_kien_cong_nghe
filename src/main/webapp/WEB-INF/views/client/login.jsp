@@ -1,12 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Đăng Nhập</title>
-    <link rel="stylesheet" href="css/login.css">
-    <script src="js/login.js"></script>
+    <link rel="stylesheet" href="../../../css/login.css">
+    <script src="../../../js/login.js"></script>
 </head>
 <body>
 <div class="header">
