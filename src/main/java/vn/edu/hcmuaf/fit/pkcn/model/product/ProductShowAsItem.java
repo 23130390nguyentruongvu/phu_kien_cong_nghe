@@ -1,0 +1,66 @@
+package vn.edu.hcmuaf.fit.pkcn.model.product;
+
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
+public class ProductShowAsItem {
+    private int productId;
+    private String name;
+    private String imageMain;
+    private BigDecimal minPrice;
+    private DecimalFormat df;
+
+    public ProductShowAsItem() {
+        this.df = new DecimalFormat("#,###");
+    }
+
+    public ProductShowAsItem(int productId, String name, String imageMain, BigDecimal minPrice) {
+        this.productId = productId;
+        this.name = name;
+        this.imageMain = imageMain;
+        this.minPrice = minPrice;
+        this.df = new DecimalFormat("#,###");
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    @ColumnName("id")
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @ColumnName("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageMain() {
+        return imageMain;
+    }
+
+    @ColumnName("url_image")
+    public void setImageMain(String imageMain) {
+        this.imageMain = imageMain;
+    }
+
+    public BigDecimal getMinPrice() {
+        return minPrice;
+    }
+
+    @ColumnName("min_price")
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMinPriceByFormat() {
+        return df.format(minPrice);
+    }
+}

@@ -78,13 +78,13 @@ const rightNav = () => {
 }
 //Slider show: end
 //Event click product
-arr = Array.from(document.getElementsByClassName('container-product-item'))
-for (let item of arr) {
-    console.log(item)
-    item.addEventListener('click', (e) => {
-        window.location.href = 'product_detail.jsp'
-    })
-}
+// arr = Array.from(document.getElementsByClassName('container-product-item'))
+// for (let item of arr) {
+//     console.log(item)
+//     item.addEventListener('click', (e) => {
+//         window.location.href = 'product_detail.jsp'
+//     })
+// }
 //Event show more
 arr = Array.from(document.getElementsByClassName('show-more-section'))
 for (let item of arr) {
