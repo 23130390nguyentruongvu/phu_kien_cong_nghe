@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container-header-main-footer">
-    <jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <main>
         <!--        open slider show-->
         <div class="slider-show-wrap">
@@ -44,103 +44,26 @@
         <section id="newProducts" class="product-section">
             <div class="title-section"><span>SẢN PHẨM MỚI</span></div>
             <div class="list-product-by-section">
-                <!--                item 1-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_1.webp" loading="lazy"
-                                     decoding="async">
+                <%--                show item--%>
+                <c:forEach var="newProduct" items="${requestScope.NewProducts}">
+                    <div class="container-product-item">
+                        <div class="item-wrap">
+                            <div class="container-item">
+                                <div class="image-product-item">
+                                    <img src="${newProduct.imageMain}" loading="lazy"
+                                         decoding="async">
+                                </div>
+                                <div class="title-product-item">${newProduct.name}</div>
+                                <div class="price-product-item">${newProduct.minPriceByFormat}<span
+                                        class="underline_dong">đ</span></div>
                             </div>
-                            <div class="title-product-item">Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
+                        </div>
+                        <div class="wrap-btn-search-similar">
+                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
                         </div>
                     </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 2-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_3.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 3-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_5.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu camera, 2 camera lề, 1 camera lùi</div>
-                            <div class="price-product-item">100.000.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 4-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_1.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Giá đỡ laptop kim loại</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 5-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Lót chuột họa tiết hoa hồng</div>
-                            <div class="price-product-item">10.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 6-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_6.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Túi chống sốc cho laptop</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                end item-->
+                </c:forEach>
+
             </div>
 
         </section>
@@ -148,206 +71,50 @@
         <section id="featuredProducts" class="product-section">
             <div class="title-section"><span>SẢN PHẨM NỔI BẬT</span></div>
             <div class="list-product-by-section">
-                <!--                item 1-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_1.webp" loading="lazy"
-                                     decoding="async">
+                <%--                show item--%>
+                <c:forEach var="featuredProduct" items="${requestScope.FeaturedProducts}">
+                    <div class="container-product-item">
+                        <div class="item-wrap">
+                            <div class="container-item">
+                                <div class="image-product-item">
+                                    <img src="${featuredProduct.imageMain}" loading="lazy"
+                                         decoding="async">
+                                </div>
+                                <div class="title-product-item">${featuredProduct.name}</div>
+                                <div class="price-product-item">${featuredProduct.minPriceByFormat}<span
+                                        class="underline_dong">đ</span></div>
                             </div>
-                            <div class="title-product-item">Giá đỡ điện thoại kim loại</div>
-                            <div class="price-product-item">45.000<span class="underline_dong">đ</span></div>
+                        </div>
+                        <div class="wrap-btn-search-similar">
+                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
                         </div>
                     </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 2-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_1.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 3-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_2.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu AV (Video và Audio) 1 ra 8</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 4-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Lót chuột họa tiết hoa hồn</div>
-                            <div class="price-product-item">10.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 5-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_3.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 6-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ gộp tín hiệu HDMI 2.0 4k@60Hz</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                end item-->
+                </c:forEach>
             </div>
         </section>
 
-        <section id="phoneProducts" class="product-section">
-            <div class="title-section"><span>PHỤ KIỆN ĐIỆN THOẠI</span></div>
+        <section id="convertVGA" class="product-section">
+            <div class="title-section"><span>${requestScope.NameVGA}</span></div>
             <div class="list-product-by-section">
-                <!--                item 1-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_1.webp" loading="lazy"
-                                     decoding="async">
+                <%--                show item--%>
+                <c:forEach var="vga" items="${requestScope.VGAProducts}">
+                    <div class="container-product-item">
+                        <div class="item-wrap">
+                            <div class="container-item">
+                                <div class="image-product-item">
+                                    <img src="${vga.imageMain}" loading="lazy"
+                                         decoding="async">
+                                </div>
+                                <div class="title-product-item">${vga.name}</div>
+                                <div class="price-product-item">${vga.minPriceByFormat}<span
+                                        class="underline_dong">đ</span></div>
                             </div>
-                            <div class="title-product-item">Giá đỡ điện thoại kim loại</div>
-                            <div class="price-product-item">45.000<span class="underline_dong">đ</span></div>
+                        </div>
+                        <div class="wrap-btn-search-similar">
+                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
                         </div>
                     </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 2-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_2.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Ốp lưng điện thoại IPhone</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 3-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_3.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Quạt tản nhiệt điện thoại</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 4-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Kính cường lực kinh kông</div>
-                            <div class="price-product-item">10.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 5-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_5.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Dây đeo cho điện thoại</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 6-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkdt_6.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Dây đính đá gắn vào điện thoại</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                end item-->
+                </c:forEach>
             </div>
             <div class="show-more-section">
                 <button id="showMorePhoneProducts" name="showMorePhoneProducts" class="showMoreSection" type="button">
@@ -356,106 +123,28 @@
             </div>
         </section>
 
-        <section id="computerProducts" class="product-section">
-            <div class="title-section"><span>PHỤ KIỆN MÁY TÍNH</span></div>
+        <section id="keyboard" class="product-section">
+            <div class="title-section"><span>${requestScope.KeyboardName}</span></div>
             <div class="list-product-by-section">
-                <!--                item 1-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_1.webp" loading="lazy"
-                                     decoding="async">
+                <%--                show item--%>
+                <c:forEach var="keyboard" items="${requestScope.KeyboardProducts}">
+                    <div class="container-product-item">
+                        <div class="item-wrap">
+                            <div class="container-item">
+                                <div class="image-product-item">
+                                    <img src="${keyboard.imageMain}" loading="lazy"
+                                         decoding="async">
+                                </div>
+                                <div class="title-product-item">${keyboard.name}</div>
+                                <div class="price-product-item">${keyboard.minPriceByFormat}<span
+                                        class="underline_dong">đ</span></div>
                             </div>
-                            <div class="title-product-item">Giá đỡ laptop kim loại</div>
-                            <div class="price-product-item">45.000<span class="underline_dong">đ</span></div>
+                        </div>
+                        <div class="wrap-btn-search-similar">
+                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
                         </div>
                     </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 2-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_2.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Tai nghe chụp G58/G70 Pro</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 3-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_3.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Dụng cụ 10in1 vệ sinh máy tính</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 4-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Lót chuột họa tiết hoa hồng</div>
-                            <div class="price-product-item">10.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 5-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_5.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Webcam</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 6-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_pkmt_6.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Túi chống sốc cho laptop</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                end item-->
+                </c:forEach>
             </div>
             <div class="show-more-section">
                 <button id="showMoreComputerProducts" name="showMoreComputerProducts" class="showMoreSection"
@@ -464,118 +153,11 @@
             </div>
         </section>
 
-        <section id="signalSplitterProducts" class="product-section">
-            <div class="title-section"><span>BỘ CHIA TÍN HIỆU</span></div>
-            <div class="list-product-by-section">
-                <!--                item 1-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_1.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps</div>
-                            <div class="price-product-item">45.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 2-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_2.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu AV (Video và Audio) 1 ra 8</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 3-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_3.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 4-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_4.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ gộp tín hiệu HDMI 2.0 4k@60Hz</div>
-                            <div class="price-product-item">10.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 5-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_5.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ chia tín hiệu camera, 2 camera lề, 1 camera lùi</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                item 6-->
-                <div class="container-product-item">
-                    <div class="item-wrap">
-                        <div class="container-item">
-                            <div class="image-product-item">
-                                <img src="../assets/image/fake_products/item_bcth_6.webp" loading="lazy"
-                                     decoding="async">
-                            </div>
-                            <div class="title-product-item">Bộ khuếch đại truyền hình cáp, chia tín hiệu tivi</div>
-                            <div class="price-product-item">100.000<span class="underline_dong">đ</span></div>
-                        </div>
-                    </div>
-                    <div class="wrap-btn-search-similar">
-                        <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                    </div>
-                </div>
-                <!--                end item-->
-            </div>
-            <div class="show-more-section">
-                <button id="showMoreSplitterProducts" name="showMoreSplitterProducts" class="showMoreSection"
-                        type="button">Xem thêm
-                </button>
-            </div>
-        </section>
         <!--        close product sections-->
         <section id="articleOfAdmin" class="product-section">
             <div class="title-section"><span>TIN TỨC</span></div>
             <div class="list-article-of-admin">
-<!--                article 1-->
+                <!--                article 1-->
                 <div class="wrap-article-item">
                     <div class="title-article-of-admin">
                         <h3>Bùng nổ về kính thực tế ảo 2025</h3>
@@ -595,7 +177,7 @@
                         <div class="num-comment">Không có bình luận</div>
                     </div>
                 </div>
-<!--                article 2-->
+                <!--                article 2-->
                 <div class="wrap-article-item">
                     <div class="title-article-of-admin">
                         <h3>Các thiết bị mạng trong hệ thống</h3>
@@ -612,13 +194,14 @@
                         <div class="num-comment">Không có bình luận</div>
                     </div>
                 </div>
-<!--                article 3-->
+                <!--                article 3-->
                 <div class="wrap-article-item">
                     <div class="title-article-of-admin">
                         <h3>Bộ dụng cụ dán phim cách nhiệt</h3>
                     </div>
                     <div class="sub-description">
-                        <p>Bộ dụng cụ dán phim cách nhiệt gồm những gì? Bộ dụng cụ dán phim cách nhiệt đóng vai trò quan trọng giúp những
+                        <p>Bộ dụng cụ dán phim cách nhiệt gồm những gì? Bộ dụng cụ dán phim cách nhiệt đóng vai trò quan
+                            trọng giúp những
                             người kỹ thuật viên dán phim hiệu quả, không bị bong tróc hay thừa bong bóng khí.
                             Vậy bộ dụng cụ dán phim này gồm những</p>
                     </div>
@@ -629,13 +212,14 @@
                         <div class="num-comment">1 bình luận</div>
                     </div>
                 </div>
-<!--                article 4-->
+                <!--                article 4-->
                 <div class="wrap-article-item">
                     <div class="title-article-of-admin">
                         <h3>Kết nối Đàn Piano điện với Máy tính</h3>
                     </div>
                     <div class="sub-description">
-                        <p>Hướng dẫn kết nối Đàn Piano điện với Máy tính Làm Thế Nào Để Kết Nối Đàn Piano Điện Với Máy Tính?
+                        <p>Hướng dẫn kết nối Đàn Piano điện với Máy tính Làm Thế Nào Để Kết Nối Đàn Piano Điện Với Máy
+                            Tính?
                             Hãy cùng Phụ Kiện Công Nghệ tìm hiểu nhé. – Trong thời đại công nghệ số, làm thế
                             nào để kết nối đàn piano điện với máy tính</p>
                     </div>
@@ -720,7 +304,7 @@
         <!--        close commit from shop-->
         <hr style="margin-top: 5px; margin-bottom: 15px; background-color: rgb(4, 107, 210); height: 1px">
     </main>
-    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
 <script src="${pageContext.request.contextPath}/js/home.js"></script>
