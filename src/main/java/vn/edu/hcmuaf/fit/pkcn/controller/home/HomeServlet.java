@@ -27,7 +27,7 @@ public class HomeServlet extends HttpServlet {
 
         int limit = 12;
         List<ProductShowAsItem> newProducts = ps.getNewProducts(limit);
-        List<ProductShowAsItem> featuredProducts = ps.getFeaturedProducts(limit);
+        List<ProductShowAsItem> featuredProducts = ps.getFeaturedProducts(limit, 4);
         List<ProductShowAsItem> vgaProducts = ps.getProductsByChildCategory(6, 12);
         List<ProductShowAsItem> accessoriesKeyboard = ps.getProductsByChildCategory(6, 16);
 

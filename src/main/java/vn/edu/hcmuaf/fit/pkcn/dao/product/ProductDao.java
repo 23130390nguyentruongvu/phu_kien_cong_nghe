@@ -25,7 +25,7 @@ public class ProductDao {
         return getProductShowAsItemBySql(sql, limit);
     }
 
-    public List<ProductShowAsItem> getFeatureProducts(int limit) {
+    public List<ProductShowAsItem> getFeatureProductsByOne(int limit) {
         String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
@@ -33,7 +33,32 @@ public class ProductDao {
                 "AND pi.product_variant_id IS NULL AND pi.is_main = 1 " +
                 "ORDER BY p.create_date DESC " +
                 "LIMIT :limit";
-        return getProductShowAsItemBySql(sql, limit);
+
+        List<ProductShowAsItem> res = getProductShowAsItemBySql(sql, limit);
+        return res.isEmpty() ? null : res;
+    }
+
+    //Lay cac san pham co trung binh star >= 4
+    public List<ProductShowAsItem> getFeaturedProductsByReview(int limit, int avgStar) {
+        try {
+            if (avgStar > 5 || avgStar < 0) return null;
+            String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
+                    "FROM products p " +
+                    "JOIN product_images pi ON pi.product_id = p.id " +
+                    "JOIN reviews r ON r.product_id = p.id " +
+                    "WHERE p.status = 1 " +
+                    "AND pi.product_variant_id IS NULL AND pi.is_main = 1 " +
+                    "GROUP BY p.id, p.name, pi.url_image, p.min_price " +
+                    "HAVING AVG(r.num_star) >= " + avgStar + " " +
+                    "ORDER BY p.create_date DESC " +
+                    "LIMIT :limit";
+
+            List<ProductShowAsItem> res = getProductShowAsItemBySql(sql, limit);
+            return res.isEmpty() ? null : res;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     public List<ProductShowAsItem> getProductsByChildCategory(int categoryId, int limit) {
@@ -49,6 +74,7 @@ public class ProductDao {
         return getProductShowAsItemBySql(sql, limit, categoryId);
     }
 
+    //Ham nay se tra ve mang rong neu khong thoa cau lenh sql
     private List<ProductShowAsItem> getProductShowAsItemBySql(String sql, int limit) {
         return jdbi.withHandle(handle -> {
             Iterator<ProductShowAsItem> i =

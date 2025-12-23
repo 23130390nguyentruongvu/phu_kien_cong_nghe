@@ -68,30 +68,33 @@
 
         </section>
 
-        <section id="featuredProducts" class="product-section">
-            <div class="title-section"><span>SẢN PHẨM NỔI BẬT</span></div>
-            <div class="list-product-by-section">
-                <%--                show item--%>
-                <c:forEach var="featuredProduct" items="${requestScope.FeaturedProducts}">
-                    <div class="container-product-item">
-                        <div class="item-wrap">
-                            <div class="container-item">
-                                <div class="image-product-item">
-                                    <img src="${featuredProduct.imageMain}" loading="lazy"
-                                         decoding="async">
+        <c:if test="${not empty requestScope.FeaturedProducts}">
+            <section id="featuredProducts" class="product-section">
+                <div class="title-section"><span>SẢN PHẨM NỔI BẬT</span></div>
+                <div class="list-product-by-section">
+                        <%--                show item--%>
+                    <c:forEach var="featuredProduct" items="${requestScope.FeaturedProducts}">
+                        <div class="container-product-item">
+                            <div class="item-wrap">
+                                <div class="container-item">
+                                    <div class="image-product-item">
+                                        <img src="${featuredProduct.imageMain}" loading="lazy"
+                                             decoding="async">
+                                    </div>
+                                    <div class="title-product-item">${featuredProduct.name}</div>
+                                    <div class="price-product-item">${featuredProduct.minPriceByFormat}<span
+                                            class="underline_dong">đ</span></div>
                                 </div>
-                                <div class="title-product-item">${featuredProduct.name}</div>
-                                <div class="price-product-item">${featuredProduct.minPriceByFormat}<span
-                                        class="underline_dong">đ</span></div>
+                            </div>
+                            <div class="wrap-btn-search-similar">
+                                <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
                             </div>
                         </div>
-                        <div class="wrap-btn-search-similar">
-                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </section>
+                    </c:forEach>
+                </div>
+            </section>
+        </c:if>
+
 
         <section id="convertVGA" class="product-section">
             <div class="title-section"><span>${requestScope.NameVGA}</span></div>
