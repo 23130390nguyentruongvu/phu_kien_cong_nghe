@@ -245,6 +245,7 @@ section .list-product-by-section {
     flex: 1;
     font-weight: lighter;
 }
+
 .read-more-article {
     margin-bottom: 10px;
     color: rgb(4, 107, 210);

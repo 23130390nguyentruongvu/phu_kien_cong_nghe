@@ -3,9 +3,9 @@ package vn.edu.hcmuaf.fit.pkcn;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.common.ContactShopDao;
-import vn.edu.hcmuaf.fit.pkcn.model.common.ContactShop;
-import vn.edu.hcmuaf.fit.pkcn.service.common.ContactShopService;
+import vn.edu.hcmuaf.fit.pkcn.dao.contactshop.ContactShopDao;
+import vn.edu.hcmuaf.fit.pkcn.model.contactshop.ContactShop;
+import vn.edu.hcmuaf.fit.pkcn.service.contactshop.ContactShopService;
 
 @WebListener
 public class ApplicationContextListener implements ServletContextListener {

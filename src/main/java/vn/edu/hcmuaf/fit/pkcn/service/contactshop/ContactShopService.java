@@ -1,7 +1,7 @@
-package vn.edu.hcmuaf.fit.pkcn.service.common;
+package vn.edu.hcmuaf.fit.pkcn.service.contactshop;
 
-import vn.edu.hcmuaf.fit.pkcn.dao.common.ContactShopDao;
-import vn.edu.hcmuaf.fit.pkcn.model.common.ContactShop;
+import vn.edu.hcmuaf.fit.pkcn.dao.contactshop.ContactShopDao;
+import vn.edu.hcmuaf.fit.pkcn.model.contactshop.ContactShop;
 
 public class ContactShopService {
     private ContactShopDao csDao;

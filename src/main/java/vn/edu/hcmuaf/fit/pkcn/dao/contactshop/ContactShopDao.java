@@ -1,7 +1,7 @@
-package vn.edu.hcmuaf.fit.pkcn.dao.common;
+package vn.edu.hcmuaf.fit.pkcn.dao.contactshop;
 
 import org.jdbi.v3.core.Jdbi;
-import vn.edu.hcmuaf.fit.pkcn.model.common.ContactShop;
+import vn.edu.hcmuaf.fit.pkcn.model.contactshop.ContactShop;
 
 public class ContactShopDao {
     private Jdbi jdbi;

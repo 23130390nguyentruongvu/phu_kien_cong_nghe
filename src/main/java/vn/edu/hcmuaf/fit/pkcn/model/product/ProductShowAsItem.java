@@ -13,7 +13,7 @@ public class ProductShowAsItem {
     private DecimalFormat df;
 
     public ProductShowAsItem() {
-        this.df = new DecimalFormat("#,###");
+        this.df = new DecimalFormat("#,### đ");
     }
 
     public ProductShowAsItem(int productId, String name, String imageMain, BigDecimal minPrice) {
