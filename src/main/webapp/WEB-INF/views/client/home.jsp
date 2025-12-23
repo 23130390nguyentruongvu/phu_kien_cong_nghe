@@ -19,26 +19,26 @@
 <div class="container-header-main-footer">
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <main>
-        <!--        open slider show-->
-        <div class="slider-show-wrap">
-            <div class="slider-show">
-                <div class="slider-show-items">
-                    <div class="slider-show-item"><img src="../../../assets/image/item_carousel_1.webp"></div>
-                    <div class="slider-show-item"><img src="../../../assets/image/item_carousel_2.webp"></div>
-                    <div class="slider-show-item"><img src="../../../assets/image/item_carousel_3.webp"></div>
-                    <div class="slider-show-item"><img src="../../../assets/image/item_carousel_4.webp"></div>
+        <c:if test="${not empty requestScope.SliderShows}">
+            <!-- open slider show-->
+
+            <div class="slider-show-wrap">
+                <div class="slider-show">
+                    <div class="slider-show-items">
+                        <c:forEach var="slidershow" items="${requestScope.SliderShows}">
+                            <div class="slider-show-item"><img src="${slidershow.urlImage}"></div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
 
-        </div>
-        <div class="buttons">
-            <div class="left-nav button" onclick="navLeft()"><i class="fa-solid fa-less-than"></i></div>
-            <div class="right-nav button" onclick="rightNav()"><i class="fa-solid fa-greater-than"></i></div>
-        </div>
-        <div class="index-dots">
-
-        </div>
-        <!--        close slider show-->
+            <div class="buttons">
+                <div class="left-nav button" onclick="navLeft()"><i class="fa-solid fa-less-than"></i></div>
+                <div class="right-nav button" onclick="rightNav()"><i class="fa-solid fa-greater-than"></i></div>
+            </div>
+            <div class="index-dots"></div>
+            <!-- close slider show-->
+        </c:if>
         <hr style="margin-top: 5px; margin-bottom: 15px; background-color: rgb(4, 107, 210); height: 1px">
         <!--        open product sections-->
         <section id="newProducts" class="product-section">
@@ -54,8 +54,7 @@
                                          decoding="async">
                                 </div>
                                 <div class="title-product-item">${newProduct.name}</div>
-                                <div class="price-product-item">${newProduct.minPriceByFormat}<span
-                                        class="underline_dong">đ</span></div>
+                                <div class="price-product-item">${newProduct.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
@@ -82,8 +81,7 @@
                                              decoding="async">
                                     </div>
                                     <div class="title-product-item">${featuredProduct.name}</div>
-                                    <div class="price-product-item">${featuredProduct.minPriceByFormat}<span
-                                            class="underline_dong">đ</span></div>
+                                    <div class="price-product-item">${featuredProduct.minPriceByFormat}</div>
                                 </div>
                             </div>
                             <div class="wrap-btn-search-similar">
@@ -109,8 +107,7 @@
                                          decoding="async">
                                 </div>
                                 <div class="title-product-item">${vga.name}</div>
-                                <div class="price-product-item">${vga.minPriceByFormat}<span
-                                        class="underline_dong">đ</span></div>
+                                <div class="price-product-item">${vga.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
@@ -120,9 +117,12 @@
                 </c:forEach>
             </div>
             <div class="show-more-section">
-                <button id="showMorePhoneProducts" name="showMorePhoneProducts" class="showMoreSection" type="button">
-                    Xem thêm
-                </button>
+                <form action="product-category" method="get">
+                    <button id="showMorePhoneProducts" name="id" value="${requestScope.CategoryIdVga}"
+                            class="showMoreSection" type="submit">
+                        Xem thêm
+                    </button>
+                </form>
             </div>
         </section>
 
@@ -139,8 +139,7 @@
                                          decoding="async">
                                 </div>
                                 <div class="title-product-item">${keyboard.name}</div>
-                                <div class="price-product-item">${keyboard.minPriceByFormat}<span
-                                        class="underline_dong">đ</span></div>
+                                <div class="price-product-item">${keyboard.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
@@ -150,9 +149,12 @@
                 </c:forEach>
             </div>
             <div class="show-more-section">
-                <button id="showMoreComputerProducts" name="showMoreComputerProducts" class="showMoreSection"
-                        type="button">Xem thêm
-                </button>
+                <form action="product-category" method="get">
+                    <button id="showMorePhoneProducts" name="id" value="${requestScope.CategoryIdVga}"
+                            class="showMoreSection" type="submit">
+                        Xem thêm
+                    </button>
+                </form>
             </div>
         </section>
 
@@ -160,126 +162,31 @@
         <section id="articleOfAdmin" class="product-section">
             <div class="title-section"><span>TIN TỨC</span></div>
             <div class="list-article-of-admin">
-                <!--                article 1-->
-                <div class="wrap-article-item">
-                    <div class="title-article-of-admin">
-                        <h3>Bùng nổ về kính thực tế ảo 2025</h3>
-                    </div>
-                    <div class="sub-description">
-                        <p>Ngày nay kính thực tế ảo đang được nhiều người ưa chuộng, nắm được xu hướng đó, các ông lớn
-                            về công nghệ
-                            như Meta đã chạy đua để cho ra hàng loạt các mẫu mã kính với giá từ vài triệu đến hàng chục
-                            - trăm triệu.
-                            Điển hình là kính thực tế Orion do Meta ra mắt, đây là chiếc kính được nghiên cứu trong 5
-                            năm qua</p>
-                    </div>
-                    <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
-                    <div class="wrap-footer-article">
-                        <hr>
-                        <div class="post-date">Ngày đăng: 20/10/2025</div>
-                        <div class="num-comment">Không có bình luận</div>
-                    </div>
-                </div>
-                <!--                article 2-->
-                <div class="wrap-article-item">
-                    <div class="title-article-of-admin">
-                        <h3>Các thiết bị mạng trong hệ thống</h3>
-                    </div>
-                    <div class="sub-description">
-                        <p>Các Thiết bị mạng trong hệ thống mạng bạn cần biết Mạng gia đình hay mạng văn phòng hoặc
-                            các mạng lớn hơn đều gọi chung là một hệ thống mạng. Và trong đó chứa rất nhiều phụ kiện,
-                            Thiết bị mạng khác nhau. Hôm nay, Phụ Kiện Công Nghệ</p>
-                    </div>
-                    <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
-                    <div class="wrap-footer-article">
-                        <hr>
-                        <div class="post-date">Ngày đăng: 20/10/2025</div>
-                        <div class="num-comment">Không có bình luận</div>
-                    </div>
-                </div>
-                <!--                article 3-->
-                <div class="wrap-article-item">
-                    <div class="title-article-of-admin">
-                        <h3>Bộ dụng cụ dán phim cách nhiệt</h3>
-                    </div>
-                    <div class="sub-description">
-                        <p>Bộ dụng cụ dán phim cách nhiệt gồm những gì? Bộ dụng cụ dán phim cách nhiệt đóng vai trò quan
-                            trọng giúp những
-                            người kỹ thuật viên dán phim hiệu quả, không bị bong tróc hay thừa bong bóng khí.
-                            Vậy bộ dụng cụ dán phim này gồm những</p>
-                    </div>
-                    <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
-                    <div class="wrap-footer-article">
-                        <hr>
-                        <div class="post-date">Ngày đăng: 11/10/2025</div>
-                        <div class="num-comment">1 bình luận</div>
-                    </div>
-                </div>
-                <!--                article 4-->
-                <div class="wrap-article-item">
-                    <div class="title-article-of-admin">
-                        <h3>Kết nối Đàn Piano điện với Máy tính</h3>
-                    </div>
-                    <div class="sub-description">
-                        <p>Hướng dẫn kết nối Đàn Piano điện với Máy tính Làm Thế Nào Để Kết Nối Đàn Piano Điện Với Máy
-                            Tính?
-                            Hãy cùng Phụ Kiện Công Nghệ tìm hiểu nhé. – Trong thời đại công nghệ số, làm thế
-                            nào để kết nối đàn piano điện với máy tính</p>
-                    </div>
-                    <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
-                    <div class="wrap-footer-article">
-                        <hr>
-                        <div class="post-date">Ngày đăng: 20/10/2024</div>
-                        <div class="num-comment">100 bình luận</div>
-                    </div>
-                </div>
+                <!--                article item-->
+                <c:if test="${not empty requestScope.ArticleItems}">
+                    <c:forEach var="article" items="${requestScope.ArticleItems}">
+                        <div class="wrap-article-item">
+                            <div class="title-article-of-admin">
+                                <h3>${article.title}</h3>
+                            </div>
+                            <div class="sub-description">
+                                <p>${article.subDescription}</p>
+                            </div>
+                            <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
+                            <div class="wrap-footer-article">
+                                <hr>
+                                <div class="post-date">Ngày đăng: ${article.postDateFormat}</div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
         </section>
-        <hr style="margin-top: 5px; margin-bottom: 15px; background-color: rgb(4, 107, 210); height: 1px">
-        <!--        open customer feedback-->
-        <div id="feedback" class="customer-feedback">
-            <div class="title">PHẢN HỒI CỦA KHÁCH HÀNG</div>
-            <div class="container-feedback">
-                <span class="customer-1">
-                    <div class="customer customer-avatar">
-                        <img src="assets/image/customer/customer_1.webp">
-                    </div>
-                    <div class="customer-name">Trường Vũ</div>
-                    <div class="customer-review">
-                        <em>Giá cả ở đây phù hợp, chất lượng tốt. Là dân IT nên tôi phải thường xuyên sử dụng các phụ kiện
-                        để hỗ trợ công việc, đây là nơi làm cho tôi cảm thấy hài lòng. Chúc shop ngày càng buôn may bán đắt!</em>
-                    </div>
-                </span>
-                <span class="customer customer-2">
-                    <div class="customer-avatar">
-                        <img src="assets/image/customer/customer_2.webp">
-                    </div>
-                    <div class="customer-name">Quang Duy</div>
-                    <div class="customer-review">
-                        <em> Mình thường hay đặt mua hàng của shop này, mình rất tin tưởng vào chất lượng sản phẩm, dịch vụ chăm
-                        sóc khách hàng và sự uy tín của shop. Sẽ ủng hộ shop dài dài!</em>
-                    </div>
-                </span>
-                <span class="customer customer-3">
-                    <div class="customer-avatar">
-                        <img src="assets/image/customer/customer_3.webp">
-                    </div>
-                    <div class="customer-name">Trọng Tín</div>
-                    <div class="customer-review">
-                       <em>
-                           Dù đã mua qua rất nhiều shop nhưng mình vẫn thích cách làm việc của shop bên đây, tận tâm tận tình, dù
-                        đôi lúc mắc lỗi trong quá trình đóng gói sản phẩm nhưng shop rất thiện chí làm việc. Sẽ ủng hộ shop dài lâu!
-                       </em>
-                    </div>
-                </span>
-            </div>
-        </div>
-        <!--        close customer feedback-->
         <hr style="margin-top: 5px; margin-bottom: 15px; background-color: rgb(4, 107, 210); height: 1px">
         <!--        open commit from shop-->
         <div class="commit">
             <span class="img-shop">
-                <img src="../../../assets/image/img_shop.webp">
+                <img src="${applicationScope.ContactShop.avatar}">
             </span>
             <span class="content-commit">
                 <h2>Phụ Kiện Công Nghệ Cam Kết:</h2>

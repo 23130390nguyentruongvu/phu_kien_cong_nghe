@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.model.common;
+package vn.edu.hcmuaf.fit.pkcn.model.contactshop;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
