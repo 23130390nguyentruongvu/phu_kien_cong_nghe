@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng Nhập</title>
-    <link rel="stylesheet" href="../../../css/login.css">
-    <script src="../../../js/login.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+    <script src="${pageContext.request.contextPath}/js/login.js"></script>
 </head>
 <body>
 <div class="header">

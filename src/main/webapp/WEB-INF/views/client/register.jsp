@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng Ký</title>
-    <link rel="stylesheet" href="../../../css/register.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
 
 </head>
 <body>
