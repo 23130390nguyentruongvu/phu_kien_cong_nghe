@@ -12,7 +12,7 @@ public class UserDao {
     }
 
     public boolean register(User user){
-        String sql = "INSERT INTO users (avatar,email,full_name,id,password,role_id,status,user_name) values (:avatar,:email,:fullName,:id,:password,:roleId,:status,:userName)) ";
+        String sql = "INSERT INTO users (avatar,email,full_name,id,password,role_id,status,user_name) values (:avatar,:email,:fullName,:id,:password,:role,:status,:userName) ";
         return jdbi.withHandle(handle -> {
             return   handle.createUpdate(sql)
                     .bindBean(user)

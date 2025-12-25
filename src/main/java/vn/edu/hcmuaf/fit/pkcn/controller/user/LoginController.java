@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.controller;
+package vn.edu.hcmuaf.fit.pkcn.controller.user;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
