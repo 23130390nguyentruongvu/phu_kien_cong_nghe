@@ -32,15 +32,20 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
                 <p class="title-register">Đăng Ký</p>
                 <form class="register" id="registrationForm" action="register" method="post">
                     <input type="text" name="full_name" required = "required" placeholder="Họ và tên">
-                    <br>
+                    <span class="error-msg" id="nameError"></span>
+
                     <input type="email" name="email" required = "required" placeholder="Email">
-                    <br>
+                    <span class="error-msg" id="emailError"></span>
+
                     <input type="text" name="user_name" required = "required" placeholder="Username">
-                    <br>
+                    <span class="error-msg" id="userError"></span>
+
                     <input type="password" name="password" required = "required" placeholder="Mật khẩu" id="password1">
-                    <br>
+                    <span class="error-msg" id="pw1Error"></span>
+
                     <input type="password" name="confirm_password" required = "required" placeholder="Nhập lại mật khẩu" id="password2">
-                    <br>
+                    <span class="error-msg" id="pw2Error"></span>
+
                     <input type="submit" value="Đăng Ký" class="btn-register">
                     <br>
                     <a href="/phu_kien_cong_nghe/pages/trong_tin/page_login/login.html" class="have-account">Đã có tài khoản?</a>

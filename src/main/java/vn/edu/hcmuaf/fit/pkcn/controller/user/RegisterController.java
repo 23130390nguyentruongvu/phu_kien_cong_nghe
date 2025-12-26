@@ -25,6 +25,12 @@ public class RegisterController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/client/register.jsp").forward(request, response);
         return;
     }
+        String passRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+={}\\[\\]:;\"'<>,.?/-]).{8,16}$";
+        if(!password.matches(passRegex)){
+            request.setAttribute("error","Mật khẩu phải có 8-16 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt" );
+            request.getRequestDispatcher("/WEB-INF/views/client/register.jsp").forward(request, response);
+            return;
+        }
         UserService userService = new UserService(JDBI.getJdbi());
 
         if(userService.checkExist(userName,email)){
