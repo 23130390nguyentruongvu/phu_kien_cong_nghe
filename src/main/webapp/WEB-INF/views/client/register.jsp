@@ -30,7 +30,10 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
             <div class="container">
                 <div class="form-register">
                 <p class="title-register">Đăng Ký</p>
-                <form class="register" id="registrationForm" action="register" method="post">
+                    <c:if test="${not empty error}">
+                    <p class="server-error" style="color: red; text-align: center;">${error}</p>
+                    </c:if>
+                <form class="register" id="registrationForm" action="${pageContext.request.contextPath}/register" method="post">
                     <input type="text" name="full_name" required = "required" placeholder="Họ và tên">
                     <span class="error-msg" id="nameError"></span>
 
@@ -54,6 +57,6 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
             </div>
         </div>
     </main>
-    <script src="../../../js/register.js"></script>
+    <script src="${pageContext.request.contextPath}/js/register.js"></script>
 </body>
 </html>

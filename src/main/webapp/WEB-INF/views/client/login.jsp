@@ -36,15 +36,20 @@
         <div class="container">
             <div class="form-login">
                 <p class="title_login">Đăng Nhập</p>
-                <form class="login" action="#" method="post">
-                    <input type="email" name="email" required="required" placeholder="Tên đăng nhập hoặc email">
+                <c:if test="${not empty error}">
+                    <div class="alert-error" style="color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; background-color: #fff2f2;">
+                            ${error}
+                    </div>
+                </c:if>
+                <form class="login" action="${pageContext.request.contextPath}/login" method="post">
+                    <input type="text" name="loginInfo" required="required" placeholder="Tên đăng nhập hoặc email">
                     <br>
                     <input type="password" name="password" required="required" placeholder="Mật khẩu">
                     <br>
                     <a class="forgot-pass" href="#" id="forgot-password-link">Quên mật khẩu?</a>
                     <input class="submit" name="submit" type="submit" value="Đăng Nhập">
                     <br>
-                    <a class="new-account" href="register.jsp">Đăng
+                    <a class="new-account" href="${pageContext.request.contextPath}/register">Đăng
                         ký</a>
                 </form>
             </div>

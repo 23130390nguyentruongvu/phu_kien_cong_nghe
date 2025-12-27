@@ -86,7 +86,7 @@ public class User {
     public int getRole() {
         return role;
     }
-    @ColumnName("role")
+    @ColumnName("role_id")
     public void setRole(int role) {
         this.role = role;
     }

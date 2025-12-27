@@ -11,6 +11,16 @@
             this.jdbi = jdbi;
         }
 
+        public User login(String usernameoremail) {
+            String sql = "select * from users where user_name = :loginInfo or email = :loginInfo";
+            return  jdbi.withHandle(handle -> {
+                return handle.createQuery(sql)
+                        .bind("loginInfo", usernameoremail)
+                        .mapToBean(User.class)
+                        .findOne()
+                        .orElse(null);
+            });
+        }
         public boolean register(User user){
             String sql = "INSERT INTO users (avatar,email,full_name,id,password,role_id,status,user_name) values (:avatar,:email,:fullName,:id,:password,:role,:status,:userName) ";
             return jdbi.withHandle(handle -> {
@@ -19,14 +29,15 @@
                         .execute() > 0;
             });
         }
-        public boolean checkExist(String username, String email){
-            String sql = "Select Count(*) From Users where user_name =:user_name or email = :email";
-            return jdbi.withHandle(handle ->{
-                return handle.createQuery(sql)
-                        .bind("user_name", username)
+        public boolean checkExist(String username, String email) {
+            String sql = "SELECT COUNT(*) FROM users WHERE user_name = :username OR email = :email";
+            return jdbi.withHandle(handle -> {
+                Long count = handle.createQuery(sql)
+                        .bind("username", username)
                         .bind("email", email)
-                        .mapTo(Integer.class)
-                        .one() > 0;
+                        .mapTo(Long.class)
+                        .one();
+                return count > 0;
             });
         }
     }
