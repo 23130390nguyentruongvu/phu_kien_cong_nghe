@@ -1,11 +1,13 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.article;
 
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.article.ArticleDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.article.ArticleShowAsItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleDao {
     private Jdbi jdbi;
@@ -33,5 +35,19 @@ public class ArticleDao {
             return lst;
         });
         return res.isEmpty() ? null : res;
+    }
+
+    // Trang chi tiết
+    public Optional<ArticleDetail> getArticleById(int id) {
+        String sql = "SELECT id, author_id, title, content, post_date "+
+                "FROM articles "+
+                "WHERE id = :id ";
+
+        return jdbi.withHandle(h ->
+                h.createQuery(sql)
+                        .bind("id", id)
+                        .mapToBean(ArticleDetail.class)
+                        .findOne()
+        );
     }
 }
