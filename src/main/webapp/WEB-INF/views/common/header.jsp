@@ -71,27 +71,13 @@
                                 <div class="show-when-hover products below-center">
                                     <div class="grid-column sub-menu-products">
                                         <ul>
-                                            <li id="menuItem1" class="sub-menu-item"
-                                            ><a href="">Phụ Kiện
-                                                Máy Tính</a></li>
-                                            <li id="menuItem2" class="sub-menu-item"
-                                            ><a href="">Phụ Kiện
-                                                Điện Thoại</a></li>
-                                            <li id="menuItem3" class="sub-menu-item"
-                                            ><a href="">Dây Cáp
-                                                Tín Hiệu</a></li>
-                                            <li id="menuItem4" class="sub-menu-item"
-                                            ><a href="">Bộ Chia
-                                                Tín Hiệu</a></li>
-                                            <li id="menuItem5" class="sub-menu-item"><a href="">phụ Kiện Xe</a>
-                                            </li>
-                                            <li id="menuItem6" class="sub-menu-item"><a href="">Thiết Bị Mạng</a>
-                                            </li>
-                                            <li id="menuItem7" class="sub-menu-item"><a href="">Thiết Bị Ngoại Vi</a>
-                                            </li>
-                                            <li id="menuItem8" class="sub-menu-item"><a href="">Bộ Chuyển Đổi Tín
-                                                Hiệu</a>
-                                            </li>
+                                            <c:if test="${not empty applicationScope.ParentCategories}">
+                                                <c:forEach var="parent" items="${applicationScope.ParentCategories}">
+                                                    <li class="sub-menu-item">
+                                                        <a href="">${parent.nameCategory}</a>
+                                                    </li>
+                                                </c:forEach>
+                                            </c:if>
                                         </ul>
                                     </div>
                                 </div>

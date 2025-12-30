@@ -1,16 +1,39 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.category;
 
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.category.Category;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CategoryDao {
     private Jdbi jdbi;
+
     public CategoryDao(Jdbi jdbi) {
         this.jdbi = jdbi;
     }
+
     public String getNameCategoryById(int categoryId) {
         String sql = "SELECT category_name FROM categories WHERE id = :categoryId";
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("categoryId", categoryId)
                 .mapTo(String.class).first());
+    }
+
+    public List<Category> getParentCategories() {
+        String sql = "SELECT * " +
+                "FROM categories " +
+                "WHERE parent_id IS NULL";
+        return jdbi.withHandle(handle -> {
+            List<Category> lst = new ArrayList<>();
+            Iterator<Category> iter = handle.createQuery(sql)
+                    .mapToBean(Category.class).stream().iterator();
+
+            while (iter.hasNext()) {
+                lst.add(iter.next());
+            }
+            return lst;
+        });
     }
 }
