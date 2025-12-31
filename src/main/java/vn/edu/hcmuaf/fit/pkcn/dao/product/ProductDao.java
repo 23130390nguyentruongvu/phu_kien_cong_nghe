@@ -15,6 +15,47 @@ public class ProductDao {
         this.jdbi = jdbi;
     }
 
+    public List<ProductShowAsItem> getAllProduct() {
+        String sql = "SELECT p.*, pi.url_image " +
+                "FROM products p " +
+                "JOIN product_images pi ON pi.product_id = p.id " +
+                "WHERE pi.is_main = 1 AND pi.product_variant_id IS NULL";
+        return jdbi.withHandle(handle -> {
+            List<ProductShowAsItem> lst = new ArrayList<>();
+            Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
+                    .mapToBean(ProductShowAsItem.class)
+                    .stream().iterator();
+
+            while (iter.hasNext()) {
+                ProductShowAsItem i = iter.next();
+                lst.add(i);
+            }
+            return lst;
+        });
+    }
+
+    public List<ProductShowAsItem> getProductByParentCategoryId(int categoryId) {
+        String sql = "SELECT p.*, pi.url_image " +
+                "FROM categories c " +
+                "JOIN product_categories pc ON pc.category_id = c.id " +
+                "JOIN products p ON p.id = pc.product_id " +
+                "JOIN product_images pi ON pi.product_id = p.id " +
+                "WHERE c.parent_id = :categoryId AND pi.is_main = 1 AND pi.product_variant_id IS NULL";
+        return jdbi.withHandle(handle -> {
+            List<ProductShowAsItem> lst = new ArrayList<>();
+            Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
+                    .bind("categoryId", categoryId)
+                    .mapToBean(ProductShowAsItem.class)
+                    .stream().iterator();
+
+            while (iter.hasNext()) {
+                ProductShowAsItem i = iter.next();
+                lst.add(i);
+            }
+            return lst;
+        });
+    }
+
     public List<ProductShowAsItem> getNewProducts(int limit) {
         String sql = "SELECT p.*, pi.url_image " +
                 "FROM products p " +

@@ -1,19 +1,18 @@
 package vn.edu.hcmuaf.fit.pkcn.model.product;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
+import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public class ProductShowAsItem {
     private int productId;
     private String name;
     private String imageMain;
     private BigDecimal minPrice;
-    private DecimalFormat df;
+
 
     public ProductShowAsItem() {
-        this.df = new DecimalFormat("#,### đ");
     }
 
     public ProductShowAsItem(int productId, String name, String imageMain, BigDecimal minPrice) {
@@ -21,7 +20,6 @@ public class ProductShowAsItem {
         this.name = name;
         this.imageMain = imageMain;
         this.minPrice = minPrice;
-        this.df = new DecimalFormat("#,###");
     }
 
     public int getProductId() {
@@ -61,6 +59,16 @@ public class ProductShowAsItem {
     }
 
     public String getMinPriceByFormat() {
-        return df.format(minPrice);
+        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, minPrice);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductShowAsItem{" +
+                "productId=" + productId +
+                ", name='" + name + '\'' +
+                ", imageMain='" + imageMain + '\'' +
+                ", minPrice=" + minPrice +
+                '}';
     }
 }

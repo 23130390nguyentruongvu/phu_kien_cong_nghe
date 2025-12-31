@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.service.product;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
@@ -10,6 +11,14 @@ public class ProductService {
 
     public ProductService(ProductDao productDao) {
         this.productDao = productDao;
+    }
+
+    public List<ProductShowAsItem> getAllProducts() {
+        return productDao.getAllProduct();
+    }
+
+    public List<ProductShowAsItem> getProductByParentId(int parentId) {
+        return productDao.getProductByParentCategoryId(parentId);
     }
 
     public List<ProductShowAsItem> getNewProducts(int limit) {
@@ -24,7 +33,7 @@ public class ProductService {
 
         //Neu khong co cac san pham nao duoc danh gia hoac danh gia kem thi shop co the hien thi
         //cac san pham duoc admin danh dau la noi bat
-        if(lst == null) lst = productDao.getFeatureProductsByOne(limit);
+        if (lst == null) lst = productDao.getFeatureProductsByOne(limit);
 
         //neu cung khong co san pham duoc danh dau noi bat thi tien hanh hidden section noi bat (tra ve null)
         return lst;
