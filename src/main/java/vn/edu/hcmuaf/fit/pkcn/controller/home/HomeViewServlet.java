@@ -68,6 +68,8 @@ public class HomeViewServlet extends HttpServlet {
         request.setAttribute("KeyboardName", cs.getNameCategoryById(categoryIdKeyboard));
         request.setAttribute("CategoryIdVga", categoryIdVGA);
         request.setAttribute("CategoryIdKeyboard", categoryIdKeyboard);
+        // thiet lap active cho header
+        request.setAttribute("activeHeader", 1);
 
         request.getRequestDispatcher("WEB-INF/views/client/home.jsp")
                 .forward(request, response);

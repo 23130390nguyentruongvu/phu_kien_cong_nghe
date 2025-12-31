@@ -25,7 +25,8 @@ public class ArticleServlet extends HttpServlet {
         List<ArticleShowAsItem> articles = service.getArticleItems(10);
 
         request.setAttribute("ArticleItems", articles);
-
+        // thiet lap active cho header
+        request.setAttribute("activeHeader", 4);
         request.getRequestDispatcher("/WEB-INF/views/client/news.jsp")
                 .forward(request, response);
     }

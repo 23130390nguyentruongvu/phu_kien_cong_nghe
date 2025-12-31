@@ -13,8 +13,10 @@
                         <ul>
                             <li><strong>${contactShop.getShopName()}</strong></li>
                             <li>Kết nối với chúng tôi:
-                                <a href="${contactShop.getUrlFb()}" class="text-hover"><i class="fa-brands fa-facebook"></i></a>
-                                <a href="${contactShop.getUrlIns()}" class="text-hover"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="${contactShop.getUrlFb()}" class="text-hover"><i
+                                        class="fa-brands fa-facebook"></i></a>
+                                <a href="${contactShop.getUrlIns()}" class="text-hover"><i
+                                        class="fa-brands fa-instagram"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -42,7 +44,8 @@
             <!--        open header-center-->
             <div class="header-center">
                 <div class="center logo">
-                    <a href="../index.html"><img src="${contactShop.getAvatar()}" style="width: 60px;height: 60px;"/></a>
+                    <a href="../index.html"><img src="${contactShop.getAvatar()}"
+                                                 style="width: 60px;height: 60px;"/></a>
                 </div>
                 <div class="center form-search">
                     <form action="" method="get">
@@ -64,17 +67,30 @@
                 <div class="main-menu below-center">
                     <div class="grid-column-below">
                         <ul>
-                            <li id="menuHome" class="menu-item active"><a href="home.html">TRANG CHỦ</a></li>
-                            <li id="menuIntroduce" class="menu-item"><a href="introduction.jsp">GIỚI THIỆU</a></li>
-                            <li id="menuProducts" class="menu-item"><a href="product_category.jsp">DANH MỤC SẢN PHẨM<i
-                                    class="fa-solid fa-chevron-down"></i></a>
+                            <li id="menuHome"
+                                class="menu-item ${requestScope.activeHeader == 1 ? 'active' : ''}"><a
+                                    href="home.html">TRANG CHỦ</a></li>
+                            <li id="menuIntroduce" class="menu-item ${requestScope.activeHeader == 2 ? 'active' : ''}">
+                                <a href="introduction.jsp">GIỚI
+                                    THIỆU</a></li>
+                            <li id="menuProducts" class="menu-item ${requestScope.activeHeader == 3 ? 'active' : ''}">
+
+                                <a href="${pageContext.request.contextPath}/product-category-parent?id=">DANH MỤC SẢN
+                                    PHẨM
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </a>
                                 <div class="show-when-hover products below-center">
                                     <div class="grid-column sub-menu-products">
                                         <ul>
                                             <c:if test="${not empty applicationScope.ParentCategories}">
                                                 <c:forEach var="parent" items="${applicationScope.ParentCategories}">
                                                     <li class="sub-menu-item">
-                                                        <a href="">${parent.nameCategory}</a>
+                                                        <c:url var="categoryLink" value="/product-category-parent">
+                                                            <c:param name="id" value="${parent.id}"/>
+                                                            <c:param name="name-category"
+                                                                     value="${parent.nameCategory}"/>
+                                                        </c:url>
+                                                        <a href="${categoryLink}">${parent.nameCategory}</a>
                                                     </li>
                                                 </c:forEach>
                                             </c:if>
@@ -82,8 +98,10 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="menuNews" class="menu-item"><a href="news.jsp">TIN TỨC</a></li>
-                            <li id="menuContact" class="menu-item"><a href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                            <li id="menuNews" class="menu-item ${requestScope.activeHeader == 4 ? 'active' : ''}" ><a
+                                    href="news.jsp">TIN TỨC</a></li>
+                            <li id="menuContact" class="menu-item ${requestScope.activeHeader == 5 ? 'active' : ''}" ><a
+                                    href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                         </ul>
                     </div>
                 </div>

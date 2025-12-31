@@ -61,4 +61,14 @@ public class ProductShowAsItem {
     public String getMinPriceByFormat() {
         return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, minPrice);
     }
+
+    @Override
+    public String toString() {
+        return "ProductShowAsItem{" +
+                "productId=" + productId +
+                ", name='" + name + '\'' +
+                ", imageMain='" + imageMain + '\'' +
+                ", minPrice=" + minPrice +
+                '}';
+    }
 }

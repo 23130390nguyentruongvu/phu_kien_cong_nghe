@@ -14,7 +14,7 @@ import vn.edu.hcmuaf.fit.pkcn.service.contactshop.ContactShopService;
 import java.io.IOException;
 import java.util.List;
 
-@WebFilter("/*")
+@WebFilter(urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST})
 public class LayoutFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
