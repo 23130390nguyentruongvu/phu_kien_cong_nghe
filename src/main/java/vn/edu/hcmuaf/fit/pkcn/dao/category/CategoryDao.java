@@ -36,4 +36,19 @@ public class CategoryDao {
             return lst;
         });
     }
+
+    //Trả về true nếu categoryId có tồn tại và parent_id của nó là null
+    public boolean isCategoryParent(int categoryId) {
+        String sql = "SELECT 1 " +
+                "FROM categories " +
+                "WHERE id = :categoryId AND parent_id IS NULL";
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("categoryId", categoryId)
+                        .mapTo(Integer.class)
+                        .findOne()
+                        .isPresent()
+
+        );
+    }
 }

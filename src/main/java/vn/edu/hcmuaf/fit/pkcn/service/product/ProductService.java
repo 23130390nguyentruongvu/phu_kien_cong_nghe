@@ -17,8 +17,8 @@ public class ProductService {
         return productDao.getAllProduct();
     }
 
-    public List<ProductShowAsItem> getProductByParentId(int parentId) {
-        return productDao.getProductByParentCategoryId(parentId);
+    public List<ProductShowAsItem> getProductByCategory(int categoryId, boolean isParent) {
+        return isParent?productDao.getProductByParentCategoryId(categoryId):productDao.getProductsByCategoryId(categoryId);
     }
 
     public List<ProductShowAsItem> getNewProducts(int limit) {

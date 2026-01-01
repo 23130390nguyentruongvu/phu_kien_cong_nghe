@@ -75,7 +75,7 @@
                                     THIỆU</a></li>
                             <li id="menuProducts" class="menu-item ${requestScope.activeHeader == 3 ? 'active' : ''}">
 
-                                <a href="${pageContext.request.contextPath}/product-category-parent?id=">DANH MỤC SẢN
+                                <a href="${pageContext.request.contextPath}/product-category?id=">DANH MỤC SẢN
                                     PHẨM
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </a>
@@ -85,7 +85,7 @@
                                             <c:if test="${not empty applicationScope.ParentCategories}">
                                                 <c:forEach var="parent" items="${applicationScope.ParentCategories}">
                                                     <li class="sub-menu-item">
-                                                        <c:url var="categoryLink" value="/product-category-parent">
+                                                        <c:url var="categoryLink" value="/product-category">
                                                             <c:param name="id" value="${parent.id}"/>
                                                             <c:param name="name-category"
                                                                      value="${parent.nameCategory}"/>

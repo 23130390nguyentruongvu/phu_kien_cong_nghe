@@ -16,4 +16,7 @@ public class CategoryService {
     public List<Category> getParentCategories() {
         return categoryDao.getParentCategories();
     }
+    public boolean isCategoryParent(int categoryId) {
+        return categoryDao.isCategoryParent(categoryId);
+    }
 }

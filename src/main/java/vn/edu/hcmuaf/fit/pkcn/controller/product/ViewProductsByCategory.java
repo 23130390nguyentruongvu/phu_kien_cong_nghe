@@ -4,33 +4,41 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.service.category.CategoryService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "ViewProductsByCategory", value = "/product-category-parent")
-public class ViewProductsByParentCategory extends HttpServlet {
+@WebServlet(name = "ViewProductsByCategory", value = "/product-category")
+public class ViewProductsByCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ProductShowAsItem> productsByParentCate = new ArrayList<>();
-        String categoryName = request.getParameter("name-category");
+        ProductService productService = new ProductService(
+                new ProductDao(JDBI.getJdbi())
+        );
+        CategoryService categoryService = new CategoryService(
+                new CategoryDao(JDBI.getJdbi())
+        );
+
+        String categoryName = "";
+        String paramId = "";
 
         try {
-            ProductService productService = new ProductService(
-                    new ProductDao(JDBI.getJdbi())
-            );
-
-            String paramId = request.getParameter("id");
+            categoryName = request.getParameter("name-category");
+            paramId = request.getParameter("id");
             //Neu param cua id khong co thi lay ra tat ca san pham
             if (paramId.isEmpty()) {
                 productsByParentCate = productService.getAllProducts();
             } else {
                 int id = Integer.parseInt(paramId);
-                productsByParentCate = productService.getProductByParentId(id);
+                boolean isParentId = categoryService.isCategoryParent(id);
+                productsByParentCate = productService.getProductByCategory(id, isParentId);
             }
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
@@ -39,6 +47,7 @@ public class ViewProductsByParentCategory extends HttpServlet {
         }
 
         //Ben servlet kiem tra neu empty thi thong bao khong tim thay
+        request.setAttribute("categoryId", paramId);
         request.setAttribute("ProductsResult", productsByParentCate);
         request.setAttribute("CategoryName", categoryName);
         // thiet lap active cho header
