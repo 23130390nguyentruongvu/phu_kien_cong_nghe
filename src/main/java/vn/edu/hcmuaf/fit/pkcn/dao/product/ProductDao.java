@@ -144,4 +144,26 @@ public class ProductDao {
             return lst;
         });
     }
+
+    public List<ProductShowAsItem> getProductsByCategoryId(int categoryId) {
+        String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
+                "FROM products p " +
+                "JOIN product_images pi ON pi.product_id = p.id " +
+                "JOIN product_categories pc ON pc.product_id = p.id " +
+                "WHERE p.status = 1 " +
+                "AND pi.product_variant_id IS NULL " +
+                "AND pi.is_main = 1 " +
+                "AND pc.category_id = :categoryId";
+        return jdbi.withHandle(handle -> {
+            List<ProductShowAsItem> res = new ArrayList<>();
+            Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
+                    .bind("categoryId", categoryId)
+                    .mapToBean(ProductShowAsItem.class)
+                    .stream().iterator();
+            while (iter.hasNext()) {
+                res.add(iter.next());
+            }
+            return res;
+        });
+    }
 }
