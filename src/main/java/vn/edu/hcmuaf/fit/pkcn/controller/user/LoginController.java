@@ -24,7 +24,7 @@ import java.io.IOException;
         if(user!=null){
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
-            response.sendRedirect(request.getContextPath() + "/home");
+            response.sendRedirect(request.getContextPath() + "/");
         }else{
             request.setAttribute("error","Tài khoản hoặc mật khẩu không đúng");
             request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);

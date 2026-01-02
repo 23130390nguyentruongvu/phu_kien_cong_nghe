@@ -9,8 +9,8 @@ let isValid = true;
     const passwordErr1 = document.getElementById('pw1Error');
     const passwordErr2 = document.getElementById('pw2Error');
     const nameErr = document.getElementById('nameError');
-
-    document.querySelector('.error-msg').forEach(er => er.innerText = "");
+    const usernameErr = document.getElementById('userError')
+    document.querySelectorAll('.error-msg').forEach(er => er.innerText = "");
     document.querySelectorAll('input').forEach(er => er.classList.remove('invalid'));
 
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;"'<>,.?/-]).{8,16}$/;
@@ -26,8 +26,20 @@ let isValid = true;
         password_confirm.classList.add('invalid');
         isValid = false;
     }
-    if(password.value.trim() === ""){
+    if(password.value === ""){
         document.getElementById('nameError').innerText = "Vui lòng điền đầy đủ thông tin"
+        isValid = false;
+    }
+
+    const  usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
+
+    if(username.value.length === 0){
+        usernameErr.innerText = "Username không thể bỏ trống!";
+        username.classList.add('invalid');
+        isValid = false;
+    }else if(!usernameRegex.test(username.value)) {
+        usernameErr.innerText = "Username phải chứ ít nhất một chữ cái và không thể có ký tự đặc biệt";
+        username.classList.add('invalid');
         isValid = false;
     }
     if(isValid === false){
