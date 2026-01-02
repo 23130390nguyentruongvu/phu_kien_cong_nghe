@@ -19,6 +19,8 @@ public class ArticleService {
         return articleDao.getItemArticles(limit);
     }
 
-    public Optional<ArticleDetail> getArticleDetail(int id) { return articleDao.getArticleById(id); }
+    public ArticleDetail getArticleDetail(int id) {
+        return articleDao.getArticleById(id);
+    }
 
 }

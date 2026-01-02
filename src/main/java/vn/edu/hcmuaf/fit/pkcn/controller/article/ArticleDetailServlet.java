@@ -5,6 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.article.ArticleDao;
+import vn.edu.hcmuaf.fit.pkcn.model.article.ArticleDetail;
 import vn.edu.hcmuaf.fit.pkcn.service.article.ArticleService;
 
 import java.io.IOException;
@@ -22,10 +23,14 @@ public class ArticleDetailServlet extends HttpServlet {
                 new ArticleDao(JDBI.getJdbi())
         );
 
-        service.getArticleDetail(id).ifPresent(article ->
-                request.setAttribute("article", article)
-        );
+        ArticleDetail article = service.getArticleDetail(id);
 
+        if (article == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        request.setAttribute("article", article);
         request.getRequestDispatcher("/WEB-INF/views/client/news_detail.jsp")
                 .forward(request, response);
     }

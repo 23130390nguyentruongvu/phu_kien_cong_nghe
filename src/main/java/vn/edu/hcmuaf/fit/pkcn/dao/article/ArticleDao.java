@@ -38,16 +38,19 @@ public class ArticleDao {
     }
 
     // Trang chi tiết
-    public Optional<ArticleDetail> getArticleById(int id) {
-        String sql = "SELECT id, author_id, title, content, post_date "+
-                "FROM articles "+
-                "WHERE id = :id ";
+    public ArticleDetail getArticleById(int id) {
 
-        return jdbi.withHandle(h ->
-                h.createQuery(sql)
-                        .bind("id", id)
-                        .mapToBean(ArticleDetail.class)
-                        .findOne()
-        );
+        String sql = "SELECT id, author_id, title, subdescription, post_date, content " +
+                "FROM articles " +
+                "WHERE id = :id";
+
+        ArticleDetail article;
+        return jdbi.withHandle(handle -> {
+            return handle.createQuery(sql)
+                    .bind("id", id)
+                    .mapToBean(ArticleDetail.class)
+                    .one();
+        });
     }
+
 }

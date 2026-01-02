@@ -172,7 +172,11 @@
                             <div class="sub-description">
                                 <p>${article.subDescription}</p>
                             </div>
-                            <div class="read-more-article"><em><a href="">Đọc thêm</a></em></div>
+                            <div class="read-more-article">
+                                <em>
+                                <a href="${pageContext.request.contextPath}/news-detail?id=${article.id}">Đọc thêm</a>
+                            </em>
+                            </div>
                             <div class="wrap-footer-article">
                                 <hr>
                                 <div class="post-date">Ngày đăng: ${article.postDateFormat}</div>
