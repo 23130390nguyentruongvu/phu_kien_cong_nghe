@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng Ký</title>
-    <link rel="stylesheet" href="../../../css/register.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
 
 </head>
 <body>
@@ -30,17 +30,25 @@
             <div class="container">
                 <div class="form-register">
                 <p class="title-register">Đăng Ký</p>
-                <form class="register" id="registrationForm">
-                    <input type="text" required = "required" placeholder="Họ và tên">
-                    <br>
-                    <input type="email" required = "required" placeholder="Email">
-                    <br>
-                    <input type="text" required = "required" placeholder="Username">
-                    <br>
-                    <input type="password" required = "required" placeholder="Mật khẩu" id="password1">
-                    <br>
-                    <input type="password" required = "required" placeholder="Nhập lại mật khẩu" id="password2">
-                    <br>
+                    <c:if test="${not empty error}">
+                    <p class="server-error" style="color: red; text-align: center;">${error}</p>
+                    </c:if>
+                <form class="register" id="registrationForm" action="${pageContext.request.contextPath}/register" method="post">
+                    <input type="text" name="full_name" required = "required" placeholder="Họ và tên">
+                    <span class="error-msg" id="nameError"></span>
+
+                    <input type="email" name="email" required = "required" placeholder="Email">
+                    <span class="error-msg" id="emailError"></span>
+
+                    <input type="text" name="user_name" required = "required" placeholder="Username">
+                    <span class="error-msg" id="userError"></span>
+
+                    <input type="password" name="password" required = "required" placeholder="Mật khẩu" id="password1">
+                    <span class="error-msg" id="pw1Error"></span>
+
+                    <input type="password" name="confirm_password" required = "required" placeholder="Nhập lại mật khẩu" id="password2">
+                    <span class="error-msg" id="pw2Error"></span>
+
                     <input type="submit" value="Đăng Ký" class="btn-register">
                     <br>
                     <a href="/phu_kien_cong_nghe/pages/trong_tin/page_login/login.html" class="have-account">Đã có tài khoản?</a>
@@ -49,6 +57,6 @@
             </div>
         </div>
     </main>
-    <script src="../../../js/register.js"></script>
+    <script src="${pageContext.request.contextPath}/js/register.js"></script>
 </body>
 </html>

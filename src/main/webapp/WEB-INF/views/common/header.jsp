@@ -13,16 +13,28 @@
                         <ul>
                             <li><strong>${contactShop.getShopName()}</strong></li>
                             <li>Kết nối với chúng tôi:
-                                <a href="${contactShop.getUrlFb()}" class="text-hover"><i class="fa-brands fa-facebook"></i></a>
-                                <a href="${contactShop.getUrlIns()}" class="text-hover"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="${contactShop.getUrlFb()}" class="text-hover"><i
+                                        class="fa-brands fa-facebook"></i></a>
+                                <a href="${contactShop.getUrlIns()}" class="text-hover"><i
+                                        class="fa-brands fa-instagram"></i></a>
                             </li>
                         </ul>
                     </div>
                     <div class="empty"></div>
                     <div id="stateUser">
                         <div class="wrap-state-user">
-                            <a class="state-user-hover"><i class="fa-solid fa-circle-user"></i></i>
-                                <p id="stateUserLogin">KhaBa</p>
+                            <a class="state-user-hover">
+                                <i class="fa-solid fa-circle-user"></i>
+                                <p id="stateUserLogin">
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.user}">
+                                            ${sessionScope.user.fullName}
+                                        </c:when>
+                                        <c:otherwise>
+                                            Đăng nhập
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
                             </a>
                         </div>
                     </div>
@@ -32,7 +44,8 @@
             <!--        open header-center-->
             <div class="header-center">
                 <div class="center logo">
-                    <a href="../index.html"><img src="${contactShop.getAvatar()}" style="width: 60px;height: 60px;"/></a>
+                    <a href="../index.html"><img src="${contactShop.getAvatar()}"
+                                                 style="width: 60px;height: 60px;"/></a>
                 </div>
                 <div class="center form-search">
                     <form action="" method="get">
@@ -54,40 +67,41 @@
                 <div class="main-menu below-center">
                     <div class="grid-column-below">
                         <ul>
-                            <li id="menuHome" class="menu-item active"><a href="home.html">TRANG CHỦ</a></li>
-                            <li id="menuIntroduce" class="menu-item"><a href="introduction.jsp">GIỚI THIỆU</a></li>
-                            <li id="menuProducts" class="menu-item"><a href="product_category.jsp">DANH MỤC SẢN PHẨM<i
-                                    class="fa-solid fa-chevron-down"></i></a>
+                            <li id="menuHome"
+                                class="menu-item ${requestScope.activeHeader == 1 ? 'active' : ''}"><a
+                                    href="home.html">TRANG CHỦ</a></li>
+                            <li id="menuIntroduce" class="menu-item ${requestScope.activeHeader == 2 ? 'active' : ''}">
+                                <a href="introduction.jsp">GIỚI
+                                    THIỆU</a></li>
+                            <li id="menuProducts" class="menu-item ${requestScope.activeHeader == 3 ? 'active' : ''}">
+
+                                <a href="${pageContext.request.contextPath}/product-category?id=">DANH MỤC SẢN
+                                    PHẨM
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </a>
                                 <div class="show-when-hover products below-center">
                                     <div class="grid-column sub-menu-products">
                                         <ul>
-                                            <li id="menuItem1" class="sub-menu-item"
-                                            ><a href="">Phụ Kiện
-                                                Máy Tính</a></li>
-                                            <li id="menuItem2" class="sub-menu-item"
-                                            ><a href="">Phụ Kiện
-                                                Điện Thoại</a></li>
-                                            <li id="menuItem3" class="sub-menu-item"
-                                            ><a href="">Dây Cáp
-                                                Tín Hiệu</a></li>
-                                            <li id="menuItem4" class="sub-menu-item"
-                                            ><a href="">Bộ Chia
-                                                Tín Hiệu</a></li>
-                                            <li id="menuItem5" class="sub-menu-item"><a href="">phụ Kiện Xe</a>
-                                            </li>
-                                            <li id="menuItem6" class="sub-menu-item"><a href="">Thiết Bị Mạng</a>
-                                            </li>
-                                            <li id="menuItem7" class="sub-menu-item"><a href="">Thiết Bị Ngoại Vi</a>
-                                            </li>
-                                            <li id="menuItem8" class="sub-menu-item"><a href="">Bộ Chuyển Đổi Tín
-                                                Hiệu</a>
-                                            </li>
+                                            <c:if test="${not empty applicationScope.ParentCategories}">
+                                                <c:forEach var="parent" items="${applicationScope.ParentCategories}">
+                                                    <li class="sub-menu-item">
+                                                        <c:url var="categoryLink" value="/product-category">
+                                                            <c:param name="id" value="${parent.id}"/>
+                                                        </c:url>
+                                                        <a href="${categoryLink}">${parent.nameCategory}</a>
+                                                    </li>
+                                                </c:forEach>
+                                            </c:if>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li id="menuNews" class="menu-item"><a href="${pageContext.request.contextPath}/news">TIN TỨC</a></li>
                             <li id="menuContact" class="menu-item"><a href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                            <li id="menuNews" class="menu-item ${requestScope.activeHeader == 4 ? 'active' : ''}" ><a
+                                    href="news.jsp">TIN TỨC</a></li>
+                            <li id="menuContact" class="menu-item ${requestScope.activeHeader == 5 ? 'active' : ''}" ><a
+                                    href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                         </ul>
                     </div>
                 </div>

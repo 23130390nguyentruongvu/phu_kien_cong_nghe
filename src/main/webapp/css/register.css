@@ -83,3 +83,12 @@ input{
     padding-left: 129px;
     text-decoration: none;
 }
+.error-msg{
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+}
+input.invalid{
+    border: 1px solid red;
+}
