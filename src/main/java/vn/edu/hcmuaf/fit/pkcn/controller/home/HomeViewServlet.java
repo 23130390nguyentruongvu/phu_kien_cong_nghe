@@ -15,6 +15,7 @@ import vn.edu.hcmuaf.fit.pkcn.service.article.ArticleService;
 import vn.edu.hcmuaf.fit.pkcn.service.category.CategoryService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.service.slidershow.SliderShowService;
+import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,7 +38,7 @@ public class HomeViewServlet extends HttpServlet {
 
         //Lay du lieu cho cac section san pham
         ProductService ps = new ProductService(
-                new ProductDao(JDBI.getJdbi())
+                new ProductDao(JDBI.getJdbi()), new SortProductImpl()
         );
         CategoryService cs = new CategoryService(
                 new CategoryDao(JDBI.getJdbi())

@@ -125,16 +125,29 @@
             <div class="wrap-above-content">
                 <span class="name-category"><h1>${requestScope.CategoryName}</h1></span>
                 <span class="ordering">
-                    <form class="form-ordering" method="get" action="">
-                        <input type="hidden" name="categoryId" value="${requestScope.categoryId}">
-                        <select name="order-by" class="order-by">
-                            <option value="" selected>Sắp xếp</option>
-                            <option value="newest-product">Sắp xếp theo sản phẩm mới nhất</option>
-                            <option value="oldest-product">Sắp xếp theo sản phẩm cũ nhất</option>
-                            <option value="cheap-to-exp">Sắp xếp theo giá rẻ đến mắc</option>
-                            <option value="exp-to-cheap">Sắp xếp theo giá mắc đến rẻ</option>
-                            <option value="low-to-high-score-evaluate">Sắp xếp theo đánh giá thấp đến cao</option>
-                            <option value="high-to-low-score-evaluate">Sắp xếp theo đánh giá cao đến thấp</option>
+                    <form class="form-ordering" method="get"
+                          action="${pageContext.request.contextPath}/product-category">
+                        <input type="hidden" name="id" value="${requestScope.categoryId}">
+                        <select name="order-by" class="order-by" onchange="this.form.submit()">
+                            <option value="" ${empty requestScope.orderBy?'selected':''}>Sắp xếp</option>
+                            <option value="newest-product" ${requestScope.orderBy == 'newest-product'?'selected':''}>
+                                Sắp xếp theo sản phẩm mới nhất
+                            </option>
+                            <option value="oldest-product" ${requestScope.orderBy == 'oldest-product'?'selected':''}>
+                                Sắp xếp theo sản phẩm cũ nhất
+                            </option>
+                            <option value="cheap-to-exp" ${requestScope.orderBy == 'cheap-to-exp'?'selected':''}>
+                                Sắp xếp theo giá rẻ đến mắc
+                            </option>
+                            <option value="exp-to-cheap" ${requestScope.orderBy == 'exp-to-cheap'?'selected':''}>
+                                Sắp xếp theo giá mắc đến rẻ
+                            </option>
+                            <option value="low-to-high-score-evaluate" ${requestScope.orderBy == 'low-to-high-score-evaluate'?'selected':''}>
+                                Sắp xếp theo đánh giá thấp đến cao
+                            </option>
+                            <option value="high-to-low-score-evaluate" ${requestScope.orderBy == 'high-to-low-score-evaluate'?'selected':''}>
+                                Sắp xếp theo đánh giá cao đến thấp
+                            </option>
                         </select>
                     </form>
                 </span>

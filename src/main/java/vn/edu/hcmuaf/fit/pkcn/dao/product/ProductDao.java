@@ -15,11 +15,12 @@ public class ProductDao {
         this.jdbi = jdbi;
     }
 
-    public List<ProductShowAsItem> getAllProduct() {
-        String sql = "SELECT p.*, pi.url_image " +
+    public List<ProductShowAsItem> getAllProduct(String sortSql) {
+        String sql = (sortSql == null)?"SELECT p.*, pi.url_image " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
-                "WHERE pi.is_main = 1 AND pi.product_variant_id IS NULL";
+                "WHERE pi.is_main = 1 AND pi.product_variant_id IS NULL"
+                :sortSql;
         return jdbi.withHandle(handle -> {
             List<ProductShowAsItem> lst = new ArrayList<>();
             Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
@@ -34,13 +35,14 @@ public class ProductDao {
         });
     }
 
-    public List<ProductShowAsItem> getProductByParentCategoryId(int categoryId) {
-        String sql = "SELECT p.*, pi.url_image " +
+    public List<ProductShowAsItem> getProductByParentCategoryId(int categoryId, String sortSql) {
+        String sql = (sortSql == null)?"SELECT p.*, pi.url_image " +
                 "FROM categories c " +
                 "JOIN product_categories pc ON pc.category_id = c.id " +
                 "JOIN products p ON p.id = pc.product_id " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
-                "WHERE c.parent_id = :categoryId AND pi.is_main = 1 AND pi.product_variant_id IS NULL";
+                "WHERE c.parent_id = :categoryId AND pi.is_main = 1 AND pi.product_variant_id IS NULL"
+                :sortSql;
         return jdbi.withHandle(handle -> {
             List<ProductShowAsItem> lst = new ArrayList<>();
             Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
@@ -145,15 +147,15 @@ public class ProductDao {
         });
     }
 
-    public List<ProductShowAsItem> getProductsByCategoryId(int categoryId) {
-        String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
+    public List<ProductShowAsItem> getProductsByCategoryId(int categoryId, String sqlSort) {
+        String sql = (sqlSort == null) ? "SELECT p.name, pi.url_image, p.min_price, p.id " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
                 "JOIN product_categories pc ON pc.product_id = p.id " +
                 "WHERE p.status = 1 " +
                 "AND pi.product_variant_id IS NULL " +
                 "AND pi.is_main = 1 " +
-                "AND pc.category_id = :categoryId";
+                "AND pc.category_id = :categoryId" : sqlSort;
         return jdbi.withHandle(handle -> {
             List<ProductShowAsItem> res = new ArrayList<>();
             Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
@@ -166,4 +168,5 @@ public class ProductDao {
             return res;
         });
     }
+
 }

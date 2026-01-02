@@ -87,8 +87,6 @@
                                                     <li class="sub-menu-item">
                                                         <c:url var="categoryLink" value="/product-category">
                                                             <c:param name="id" value="${parent.id}"/>
-                                                            <c:param name="name-category"
-                                                                     value="${parent.nameCategory}"/>
                                                         </c:url>
                                                         <a href="${categoryLink}">${parent.nameCategory}</a>
                                                     </li>
