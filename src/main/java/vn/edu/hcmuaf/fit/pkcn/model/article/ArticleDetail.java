@@ -49,6 +49,12 @@ public class ArticleDetail {
         return subDescription;
     }
 
+    @ColumnName("subdescription")
+    public void setSubDescription(String subDescription) {
+        this.subDescription = subDescription;
+    }
+
+
     public LocalDateTime getPostDate() {
         return postDate;
     }
