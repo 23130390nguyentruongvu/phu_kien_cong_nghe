@@ -6,10 +6,11 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "CartServlet", value = "/CartServlet")
-public class CartServlet extends HttpServlet {
+@WebServlet(name = "CartServlet", value = "/view-cart")
+public class ViewCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
     }
 

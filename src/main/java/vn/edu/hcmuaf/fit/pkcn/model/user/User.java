@@ -1,9 +1,10 @@
 package vn.edu.hcmuaf.fit.pkcn.model.user;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String userName;
     private String email;
