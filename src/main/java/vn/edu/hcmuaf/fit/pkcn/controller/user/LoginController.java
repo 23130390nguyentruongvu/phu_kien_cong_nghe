@@ -24,7 +24,11 @@ import java.io.IOException;
         if(user!=null){
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
-            response.sendRedirect(request.getContextPath() + "/");
+           if(user.getRole()==1){
+               request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
+           }else if(user.getRole()==2){
+               response.sendRedirect(request.getContextPath()+"/");
+           }
         }else{
             request.setAttribute("error","Tài khoản hoặc mật khẩu không đúng");
             request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);

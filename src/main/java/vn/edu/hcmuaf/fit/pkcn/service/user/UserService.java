@@ -26,7 +26,7 @@ public class UserService {
 
         if (user != null) {
             String md5Pass = HashMD5.MD5(password);
-            if (user.getPassword().equals(md5Pass)) {
+            if (user.getPassword().equalsIgnoreCase(md5Pass)) {
                 return user;
             }
         }

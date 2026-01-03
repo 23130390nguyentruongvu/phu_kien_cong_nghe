@@ -11,6 +11,7 @@ public class User {
     private String fullName;
     private String avatar;
     private String status;
+    @ColumnName("role_id")
     private int role;
 
     public User() {
