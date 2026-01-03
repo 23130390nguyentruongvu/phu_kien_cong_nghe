@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.service.product;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,4 +101,10 @@ public class ProductService {
         }
         return sql;
     }
+
+    public ProductDetail getProductDetailById(int productId) {
+        if (productId <= 0) return null;
+        return productDao.getProductDetailById(productId);
+    }
+
 }

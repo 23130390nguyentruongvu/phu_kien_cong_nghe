@@ -3,7 +3,10 @@ package vn.edu.hcmuaf.fit.pkcn.dao.product;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -168,5 +171,54 @@ public class ProductDao {
             return res;
         });
     }
+
+    public ProductDetail getProductDetailById(int productId) {
+        return jdbi.withHandle(handle -> {
+
+            String productSql = ""
+                    + "SELECT p.id, p.name, p.subtitle AS subDescription, p.description, "
+                    + "       p.warranty_period AS warranty, c.category_name "
+                    + "FROM products p "
+                    + "JOIN product_categories pc ON pc.product_id = p.id "
+                    + "JOIN categories c ON c.id = pc.category_id "
+                    + "WHERE p.id = :productId AND p.status = 1";
+
+            ProductDetail product = handle.createQuery(productSql)
+                    .bind("productId", productId)
+                    .mapToBean(ProductDetail.class)
+                    .findOne()
+                    .orElse(null);
+
+            if (product == null) return null;
+
+            String variantSql = ""
+                    + "SELECT pv.id, pv.product_id, pv.sku, pv.name, pv.price, pv.stock, "
+                    + "       pv.gram, pv.color, pv.size, pi.url_image "
+                    + "FROM product_variants pv "
+                    + "LEFT JOIN product_images pi ON pi.id = pv.product_variant_id AND pi.is_main = 1 "
+                    + "WHERE pv.product_id = :productId";
+
+            List<ProductVariant> variants = handle.createQuery(variantSql)
+                    .bind("productId", productId)
+                    .mapToBean(ProductVariant.class)
+                    .list();
+
+            product.setVariants(variants);
+
+            String productImageSql = ""
+                    + "SELECT pi.url_image "
+                    + "FROM product_images pi "
+                    + "WHERE pi.product_id = :productId AND pi.pv_id IS NULL";
+
+            List<String> productImages = handle.createQuery(productImageSql)
+                    .bind("productId", productId)
+                    .mapTo(String.class)
+                    .list();
+
+            return product;
+        });
+    }
+
+
 
 }
