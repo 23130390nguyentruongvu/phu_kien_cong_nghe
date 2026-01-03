@@ -32,4 +32,8 @@ public class UserService {
         }
         return null;
     }
+    public void updateUserInfo(int id, String fullName, String plainPassword) {
+        String hashedPassword = HashMD5.MD5(plainPassword);
+        userDao.updateProfile(id, fullName, hashedPassword);
+    }
 }
