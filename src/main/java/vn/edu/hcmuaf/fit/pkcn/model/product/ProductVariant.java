@@ -9,6 +9,7 @@ public class ProductVariant {
     private int id;
     private int productId;
     private String sku;
+    private String urlImage;
     private String name;
     private BigDecimal price;
     private int stock;
@@ -132,5 +133,14 @@ public class ProductVariant {
     @ColumnName("update_date")
     public void setUpdate(LocalDateTime update) {
         this.update = update;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    @ColumnName("url_image")
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }
