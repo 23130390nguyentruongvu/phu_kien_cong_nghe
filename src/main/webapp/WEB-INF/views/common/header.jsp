@@ -99,8 +99,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="menuNews" class="menu-item"><a href="${pageContext.request.contextPath}/news">TIN TỨC</a></li>
-                            <li id="menuContact" class="menu-item"><a href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                             <li id="menuNews" class="menu-item ${requestScope.activeHeader == 4 ? 'active' : ''}" ><a
                                     href="news.jsp">TIN TỨC</a></li>
                             <li id="menuContact" class="menu-item ${requestScope.activeHeader == 5 ? 'active' : ''}" ><a

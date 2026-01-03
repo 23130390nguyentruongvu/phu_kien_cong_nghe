@@ -161,8 +161,7 @@ body {
   margin-right: 8px;
 }
 
-.price-product .sale-price {
-  color: red;
+.price-product .current-price {
   font-weight: bold;
 }
 
