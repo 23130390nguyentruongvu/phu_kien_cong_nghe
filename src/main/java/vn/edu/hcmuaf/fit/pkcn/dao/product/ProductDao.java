@@ -175,12 +175,12 @@ public class ProductDao {
     public ProductDetail getProductDetailById(int productId) {
         return jdbi.withHandle(handle -> {
 
-            String productSql = ""
-                    + "SELECT p.id, p.name, p.subtitle AS subDescription, p.description, "
-                    + "       p.warranty_period AS warranty, c.category_name "
+            // 1. Lấy product detail chung
+            String productSql = "SELECT p.id, p.name, p.subtitle AS subDescription, "
+                    + "p.description, p.warranty_period AS warranty, c.category_name "
                     + "FROM products p "
-                    + "JOIN product_categories pc ON pc.product_id = p.id "
-                    + "JOIN categories c ON c.id = pc.category_id "
+                    + "LEFT JOIN product_categories pc ON pc.product_id = p.id "
+                    + "LEFT JOIN categories c ON c.id = pc.category_id "
                     + "WHERE p.id = :productId AND p.status = 1";
 
             ProductDetail product = handle.createQuery(productSql)
@@ -191,11 +191,12 @@ public class ProductDao {
 
             if (product == null) return null;
 
+            // 2. Lấy các biến thể
             String variantSql = ""
                     + "SELECT pv.id, pv.product_id, pv.sku, pv.name, pv.price, pv.stock, "
                     + "       pv.gram, pv.color, pv.size, pi.url_image "
                     + "FROM product_variants pv "
-                    + "LEFT JOIN product_images pi ON pi.id = pv.product_variant_id AND pi.is_main = 1 "
+                    + "LEFT JOIN product_images pi ON pi.product_variant_id = pv.id AND pi.is_main = 1 "
                     + "WHERE pv.product_id = :productId";
 
             List<ProductVariant> variants = handle.createQuery(variantSql)
@@ -205,20 +206,25 @@ public class ProductDao {
 
             product.setVariants(variants);
 
+            // 3. Lấy ảnh của sản phẩm chung (không thuộc biến thể)
             String productImageSql = ""
                     + "SELECT pi.url_image "
                     + "FROM product_images pi "
-                    + "WHERE pi.product_id = :productId AND pi.pv_id IS NULL";
+                    + "WHERE pi.product_id = :productId AND pi.product_variant_id IS NULL";
 
             List<String> productImages = handle.createQuery(productImageSql)
                     .bind("productId", productId)
                     .mapTo(String.class)
                     .list();
 
+            if (!productImages.isEmpty() && (product.getVariants() == null || product.getVariants().isEmpty())) {
+                ProductVariant mainVariant = new ProductVariant();
+                mainVariant.setUrlImage(productImages.get(0));
+                product.setVariants(List.of(mainVariant));
+            }
+
             return product;
         });
     }
-
-
 
 }
