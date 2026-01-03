@@ -31,6 +31,14 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/views/client/register.jsp").forward(request, response);
             return;
         }
+
+        String usernameRegex = "^(?=.*[a-zA-Z])[a-zA-Z0-9]+$";
+
+        if(userName == null || !userName.matches(usernameRegex)){
+            request.setAttribute("error","Username phải có ít nhất 1 chữ cái và không chứa ký tự đặc biệt!");
+            request.getRequestDispatcher("/WEB-INF/views/client/register.jsp").forward(request, response);
+            return;
+        }
         UserService userService = new UserService(JDBI.getJdbi());
 
         if(userService.checkExist(userName,email)){

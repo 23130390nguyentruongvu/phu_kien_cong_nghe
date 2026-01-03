@@ -4,14 +4,14 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<script src="../../../js/header.js"></script>
+<script src="${pageContext.request.contextPath}/js/header.js"></script>
 <html>
     <head>
       <meta charset="UTF-8" />
       <title>Thông tin cá nhân</title>
-      <link rel="stylesheet" href="../../../css/personal_info.css" />
-      <link rel="stylesheet" href="../../../shared/main.css" />
-      <link rel="stylesheet" href="../../../shared/nav_account.css" />
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/personal_info.css" />
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css" />
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -22,7 +22,7 @@
     </head>
     <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+    <c:set var="u" value="${sessionScope.user}" />
       <main>
         <div class="wrap-content-all">
           <div class="nav-account">
@@ -30,7 +30,7 @@
               <span class="img-user-account"
                 ><img src="../../../assets/image/logo.webp" loading="lazy"
               /></span>
-              <span class="user-name-account"><strong>MyUserName</strong></span>
+              <span class="user-name-account"><strong>${u.userName}</strong></span>
             </div>
             <div class="wrap-nav-link">
               <ul>
@@ -47,7 +47,9 @@
                     <a href="address_user.jsp">Địa chỉ</a>
                 </li>
                 <li class="nav-link-item">
-                  <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
+                  <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none; color: inherit;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                  </a>
                 </li>
               </ul>
             </div>

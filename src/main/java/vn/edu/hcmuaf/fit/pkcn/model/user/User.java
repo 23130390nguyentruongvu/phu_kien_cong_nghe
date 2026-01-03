@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String fullName;
     private String avatar;
     private String status;
+    @ColumnName("role_id")
     private int role;
 
     public User() {

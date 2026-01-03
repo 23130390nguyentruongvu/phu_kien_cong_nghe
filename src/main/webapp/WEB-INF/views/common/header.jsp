@@ -23,19 +23,22 @@
                     <div class="empty"></div>
                     <div id="stateUser">
                         <div class="wrap-state-user">
-                            <a class="state-user-hover">
-                                <i class="fa-solid fa-circle-user"></i>
-                                <p id="stateUserLogin">
-                                    <c:choose>
-                                        <c:when test="${not empty sessionScope.user}">
-                                            ${sessionScope.user.fullName}
-                                        </c:when>
-                                        <c:otherwise>
-                                            Đăng nhập
-                                        </c:otherwise>
-                                    </c:choose>
-                                </p>
-                            </a>
+                            <c:choose>
+                                <c:when test="${empty sessionScope.user}">
+                                    <c:url var="loginUrl" value="/login" />
+                                    <a href="${loginUrl}" class="state-user-hover">
+                                        <i class="fa-solid fa-circle-user"></i>
+                                        <p id="stateUserLogin">Đăng nhập</p>
+                                    </a>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/personal_info" class="state-user-hover">
+                                        <i class="fa-solid fa-circle-user" style="color: #ffc107;"></i>
+                                        <p id="stateUserLogin">Hello, ${sessionScope.user.fullName}</p>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

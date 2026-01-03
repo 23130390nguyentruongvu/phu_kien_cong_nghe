@@ -41,7 +41,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
                     <span class="error-msg" id="emailError"></span>
 
                     <input type="text" name="user_name" required = "required" placeholder="Username">
-                    <span class="error-msg" id="userError"></span>
+                    <span class="error-msg" id="usernameErr"></span>
 
                     <input type="password" name="password" required = "required" placeholder="Mật khẩu" id="password1">
                     <span class="error-msg" id="pw1Error"></span>

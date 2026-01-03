@@ -12,8 +12,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../../../css/admin_user.css">
-    <link rel="stylesheet" href="../../../shared/nav_admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_user.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
 </head>
 <body>
     <div class="wrap-all-content">

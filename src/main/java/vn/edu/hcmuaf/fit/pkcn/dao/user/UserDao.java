@@ -40,4 +40,13 @@
                 return count > 0;
             });
         }
+        public void updateProfile(int id, String fullName, String password) {
+            jdbi.useHandle(handle ->
+                    handle.createUpdate("UPDATE users SET full_name = :fullName, password = :password WHERE id = :id")
+                            .bind("fullName", fullName)
+                            .bind("password", password)
+                            .bind("id", id)
+                            .execute()
+            );
+        }
     }

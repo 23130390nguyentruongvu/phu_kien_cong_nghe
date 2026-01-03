@@ -11,8 +11,12 @@ import java.io.IOException;
     @WebServlet(name = "LoginController", value = "/login")
     public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);
-
+        HttpSession session = request.getSession();
+        if(session!=null && session.getAttribute("user")!=null){
+            response.sendRedirect(request.getContextPath()+"/");
+            return;
+        }
+        request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request,response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginInfo = request.getParameter("loginInfo");
@@ -24,7 +28,11 @@ import java.io.IOException;
         if(user!=null){
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
-            response.sendRedirect(request.getContextPath() + "/home");
+           if(user.getRole()==1){
+               request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
+           }else if(user.getRole()==2){
+               response.sendRedirect(request.getContextPath()+"/");
+           }
         }else{
             request.setAttribute("error","Tài khoản hoặc mật khẩu không đúng");
             request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);
