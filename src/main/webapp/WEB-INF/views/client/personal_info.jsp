@@ -47,7 +47,9 @@
                     <a href="address_user.jsp">Địa chỉ</a>
                 </li>
                 <li class="nav-link-item">
-                  <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
+                  <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none; color: inherit;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                  </a>
                 </li>
               </ul>
             </div>
