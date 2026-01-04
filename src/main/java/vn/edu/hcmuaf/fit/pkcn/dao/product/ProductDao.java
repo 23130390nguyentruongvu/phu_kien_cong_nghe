@@ -179,7 +179,7 @@ public class ProductDao {
             // 1️⃣ Load product thông tin chung + category
             String productSql = ""
                     + "SELECT p.id, p.name, p.subtitle AS subtitle, p.description, "
-                    + "       p.warranty_period AS warranty, c.category_name "
+                    + "       p.warranty_period AS warranty_period, c.category_name "
                     + "FROM products p "
                     + "LEFT JOIN product_categories pc ON pc.product_id = p.id "
                     + "LEFT JOIN categories c ON c.id = pc.category_id "

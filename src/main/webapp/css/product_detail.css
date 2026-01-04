@@ -318,6 +318,11 @@ body {
   padding-left: 20px;
 }
 
+.sub-info,
+.product-description-container {
+    white-space: pre-line;
+}
+
 /*đánh giá*/
 .review-container {
   padding-left: 20px;
