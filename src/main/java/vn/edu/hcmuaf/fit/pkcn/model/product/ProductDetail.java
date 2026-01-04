@@ -9,12 +9,14 @@ import java.util.List;
 public class ProductDetail {
     private int id;
     private String name;
+    private List<Image> images;
     private String categoryName;
     private BigDecimal minPrice;
     private int warranty;
     private String subDescription;
     private String description;
     private List<ProductVariant> variants;
+    private ProductVariant defaultVariant;
 
     public ProductDetail() {}
 
@@ -93,5 +95,19 @@ public class ProductDetail {
         this.variants = variants;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
 
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public ProductVariant getDefaultVariant() {
+        return defaultVariant;
+    }
+
+    public void setDefaultVariant(ProductVariant defaultVariant) {
+        this.defaultVariant = defaultVariant;
+    }
 }

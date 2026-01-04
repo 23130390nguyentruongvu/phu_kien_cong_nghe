@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
 import org.jdbi.v3.core.Jdbi;
 
+import vn.edu.hcmuaf.fit.pkcn.model.product.Image;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
@@ -175,9 +176,10 @@ public class ProductDao {
     public ProductDetail getProductDetailById(int productId) {
         return jdbi.withHandle(handle -> {
 
-            // 1. Lấy product detail chung
-            String productSql = "SELECT p.id, p.name, p.subtitle AS subDescription, "
-                    + "p.description, p.warranty_period AS warranty, c.category_name "
+            // 1️⃣ Load product thông tin chung + category
+            String productSql = ""
+                    + "SELECT p.id, p.name, p.subtitle AS subtitle, p.description, "
+                    + "       p.warranty_period AS warranty, c.category_name "
                     + "FROM products p "
                     + "LEFT JOIN product_categories pc ON pc.product_id = p.id "
                     + "LEFT JOIN categories c ON c.id = pc.category_id "
@@ -189,14 +191,13 @@ public class ProductDao {
                     .findOne()
                     .orElse(null);
 
-            if (product == null) return null;
+            if (product == null) return null; // sản phẩm không tồn tại
 
-            // 2. Lấy các biến thể
+            // 2️⃣ Load variants
             String variantSql = ""
                     + "SELECT pv.id, pv.product_id, pv.sku, pv.name, pv.price, pv.stock, "
-                    + "       pv.gram, pv.color, pv.size, pi.url_image "
+                    + "       pv.gram, pv.color, pv.size "
                     + "FROM product_variants pv "
-                    + "LEFT JOIN product_images pi ON pi.product_variant_id = pv.id AND pi.is_main = 1 "
                     + "WHERE pv.product_id = :productId";
 
             List<ProductVariant> variants = handle.createQuery(variantSql)
@@ -206,22 +207,25 @@ public class ProductDao {
 
             product.setVariants(variants);
 
-            // 3. Lấy ảnh của sản phẩm chung (không thuộc biến thể)
-            String productImageSql = ""
-                    + "SELECT pi.url_image "
+            // 3️⃣ Load tất cả ảnh sản phẩm (main + variant)
+            String imageSql = ""
+                    + "SELECT pi.id, pi.product_id, pi.product_variant_id AS pv_id, pi.url_image "
                     + "FROM product_images pi "
-                    + "WHERE pi.product_id = :productId AND pi.product_variant_id IS NULL";
+                    + "WHERE pi.product_id = :productId "
+                    + "ORDER BY pi.is_main DESC, pi.id ASC"; // main image lên đầu
 
-            List<String> productImages = handle.createQuery(productImageSql)
+            List<Image> images = handle.createQuery(imageSql)
                     .bind("productId", productId)
-                    .mapTo(String.class)
+                    .map((rs, ctx) -> {
+                        Image img = new Image();
+                        img.setId(rs.getInt("id"));
+                        img.setUrlImage(rs.getString("url_image"));
+                        img.setPvId(rs.getObject("pv_id") != null ? rs.getInt("pv_id") : null);
+                        return img;
+                    })
                     .list();
 
-            if (!productImages.isEmpty() && (product.getVariants() == null || product.getVariants().isEmpty())) {
-                ProductVariant mainVariant = new ProductVariant();
-                mainVariant.setUrlImage(productImages.get(0));
-                product.setVariants(List.of(mainVariant));
-            }
+            product.setImages(images);
 
             return product;
         });

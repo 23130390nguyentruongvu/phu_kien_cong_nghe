@@ -19,9 +19,6 @@ public class ProductDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-
         String paramId = request.getParameter("id");
         if (paramId == null || paramId.isEmpty()) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
