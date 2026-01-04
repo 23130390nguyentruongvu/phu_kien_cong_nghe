@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.pkcn.service.product;
 
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 
@@ -104,7 +105,22 @@ public class ProductService {
 
     public ProductDetail getProductDetailById(int productId) {
         if (productId <= 0) return null;
-        return productDao.getProductDetailById(productId);
-    }
 
+        ProductDetail product = productDao.getProductDetailById(productId);
+        if (product == null) return null;
+
+        List<ProductVariant> variants = product.getVariants();
+        if (variants != null && !variants.isEmpty()) {
+
+            // default variant
+            ProductVariant defaultVariant = variants.stream()
+                    .filter(v -> v.getStock() > 0)
+                    .findFirst()
+                    .orElse(variants.get(0));
+            product.setDefaultVariant(defaultVariant);
+
+
+        }
+        return product;
+    }
 }
