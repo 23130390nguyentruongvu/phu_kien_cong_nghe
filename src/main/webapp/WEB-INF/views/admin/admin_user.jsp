@@ -77,102 +77,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>01</td>
-                                <td>
-                                    <img class="avatar-img"  src="assets/image/customer/customer_3.webp">
-                               </td>
-                                <td>Trương Vũ Nguyên</td>
-                                <td>Vunguyen123</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>02</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
-                               </td>
-                                <td>Nguyễn Văn A</td>
-                                <td>Admin123</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>03</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                                </td>
-                                <td>Lê Thị B</td>
-                                <td>Vu1234</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>04</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                               </td>
-                                <td>Trương Vũ Nguyên</td>
-                                <td>Vunguyen123</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>05</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                                </td>
-                                <td>Trương Vũ Duy</td>
-                                <td>Vunguyen123</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>06</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
-                              </td>
-                                <td>Nguyễn Văn B</td>
-                                <td>HeheBoi</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
+                            <c:forEach var="user" items="${users}">
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>
+                                        <img class="avatar-img" src="${user.avatar != null ? user.avatar : 'assets/image/logo.webp'}" alt="Avatar">
+                                    </td>
+                                    <td>${user.fullName}</td>
+                                    <td>${user.userName}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${user.status == 'active'}">
+                                                <span style="color: green;">Đang hoạt động</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span style="color: red;">Đang bị khóa</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <span class="edit-user-lock" onclick="lockUser(${user.id})"><i class="fa-solid fa-lock"></i></span>
+                                        <span class="edit-user-unlock" onclick="unlockUser(${user.id})"><i class="fa-solid fa-unlock"></i></span>
+                                        <span class="edit-user-remove" onclick="deleteUser(${user.id})"><i class="fa-solid fa-circle-minus"></i></span>
+                                        <span class="edit-user-update" onclick="openUpdatePopup(${user.id})"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                         <div class="wrap-load-more">

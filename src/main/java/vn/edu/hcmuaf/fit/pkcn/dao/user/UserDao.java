@@ -4,6 +4,9 @@
     import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 
     import java.io.IOException;
+    import java.util.ArrayList;
+    import java.util.Iterator;
+    import java.util.List;
 
     public class UserDao {
         private Jdbi jdbi;
@@ -48,5 +51,20 @@
                             .bind("id", id)
                             .execute()
             );
+        }
+        //  danh sach user
+        public List<User> getAllUsers() {
+            String sql = "SELECT id, avatar, full_name , user_name , status FROM users";
+            return jdbi.withHandle(handle -> {
+                List<User> listUser = new ArrayList<>();
+                Iterator<User> iter = handle.createQuery(sql)
+                        .mapToBean(User.class)
+                        .stream().iterator();
+                while (iter.hasNext()) {
+                    User user = iter.next();
+                    listUser.add(user);
+                }
+                return listUser;
+            });
         }
     }
