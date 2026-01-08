@@ -8,7 +8,7 @@ public abstract class FormatUtils {
     public static final String PATTERN_VND = "#,### VND";
     private static DecimalFormat df = new DecimalFormat();
 
-    public static String formatPrice(String pattern, BigDecimal price) {
+    public static String formatPrice(String pattern, Number price) {
         if (pattern == null || pattern.isEmpty()) return "";
         df.applyPattern(pattern);
         return df.format(price);

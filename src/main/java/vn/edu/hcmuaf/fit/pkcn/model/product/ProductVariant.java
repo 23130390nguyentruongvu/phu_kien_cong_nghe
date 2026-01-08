@@ -1,11 +1,13 @@
 package vn.edu.hcmuaf.fit.pkcn.model.product;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
+import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class ProductVariant {
+public class ProductVariant implements Serializable {
     private int id;
     private int productId;
     private String sku;
@@ -142,5 +144,9 @@ public class ProductVariant {
     @ColumnName("url_image")
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getPriceByFormat() {
+        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
     }
 }
