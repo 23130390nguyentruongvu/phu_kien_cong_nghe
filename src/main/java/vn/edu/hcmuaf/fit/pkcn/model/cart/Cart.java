@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.model.cart;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
+import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ public class Cart implements Serializable {
                     prodVar.getId(),
                     quantity,
                     nameProd,
-                    0
+                    0,
+                    prodVar
             );
         cartItem.updateQuantity(quantity);
         cart.put(prodVar.getId(), cartItem);
@@ -64,12 +66,29 @@ public class Cart implements Serializable {
     }
 
     public List<CartItem> getCartItems() {
-        return cart.values().stream().toList();
+        try {
+            return cart.values().stream().toList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public boolean mergeUser(User user) {
         if (this.user != null) return false;
         this.user = user;
         return true;
+    }
+
+    public double priceTotal() {
+        List<CartItem> items = getCartItems();
+        double priceTotal = 0;
+        for (CartItem item : items) {
+            priceTotal += item.getPrice();
+        }
+        return priceTotal;
+    }
+
+    public String getPriceByFormat() {
+        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, priceTotal());
     }
 }
