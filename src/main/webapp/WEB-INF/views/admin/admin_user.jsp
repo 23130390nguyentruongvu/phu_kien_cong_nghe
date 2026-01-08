@@ -51,7 +51,7 @@
             <h1 class="title-for-page">Quản lý người dùng</h1>
             <div class="wrap-find-info-user">
                 <form>
-                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo user id">
+                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng">
                     <select name="filter-by" class="filter-by">
                         <option value="all" selected>Tất cả</option>
                         <option value="pkmt">Đang hoạt động</option>
@@ -126,7 +126,7 @@
         <div id="popup-add-user" class="popup">
             <div class="popup-content">
                 <h2>Thêm User mới</h2>
-                <form>
+                <form action="manage-user" method="post">
                     <input type="text" name="name" class="form-input" placeholder="Tên người dùng">
                     <br>
                     <input type="text" name="userName" class="form-input" placeholder="Username">
@@ -139,6 +139,11 @@
                     <br>
                     <input type="text" name="avatar" class="form-input" placeholder="Url hình ảnh">
                     <br>
+                    <select name="role" class="form-input">
+                        <option value="#" disabled selected>Chọn vai trò</option>
+                        <option value="1" ${user.role == 1 ? 'selected' : ''}>Admin</option>
+                        <option value="2" ${user.role == 2 ? 'selected' : ''}>Customer</option>
+                    </select>
                     <div class="wrap-button-cancel-submit">
                         <button id="submitAddProd" type="submit" class="submit">Thêm</button>
                         <button id="closeAddProd" type="button" class="close">Đóng</button>
@@ -224,5 +229,5 @@
      </div>
 
 </body>
-<script src="../../../js/admin_user.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_user.js"></script>
 </html>

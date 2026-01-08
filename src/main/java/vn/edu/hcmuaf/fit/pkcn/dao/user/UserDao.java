@@ -67,4 +67,9 @@
                 return listUser;
             });
         }
+        // tim kiem theo ten user
+        public List<User> getUserByName(String fullName) {
+            List<User> listUser = new ArrayList<>();
+            return listUser;
+        }
     }
