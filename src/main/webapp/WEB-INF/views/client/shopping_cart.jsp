@@ -67,14 +67,16 @@
                                             <td class="product-quantity">
                                                 <div class="quantity-wrap">
                                                     <div class="quantity-input">
-                                                        <a id="quantityDecItemCart"
-                                                                class="btn-dec-item-quantity btn">
+                                                        <a href="javascript:void(0)" id="quantityDecItemCart"
+                                                           onclick="updateCartItem(${cartItem.productVariantId}, -1, '${pageContext.request.contextPath}/update-cart-item')"
+                                                           class="btn-dec-item-quantity btn">
                                                             -
                                                         </a>
                                                         <span class="num-quantity-item">${cartItem.quantity}</span>
 
-                                                        <a id="quantityIncItemCart"
-                                                                class="btn-inc-item-quantity btn">
+                                                        <a href="javascript:void(0)" id="quantityIncItemCart"
+                                                           onclick="updateCartItem(${cartItem.productVariantId}, 1, '${pageContext.request.contextPath}/update-cart-item')"
+                                                           class="btn-inc-item-quantity btn">
                                                             +
                                                         </a>
 
@@ -123,5 +125,5 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
-<script src="../../../js/header.js"></script>
+<script src="${pageContext.request.contextPath}/js/shopping_cart.js"></script>
 </html>

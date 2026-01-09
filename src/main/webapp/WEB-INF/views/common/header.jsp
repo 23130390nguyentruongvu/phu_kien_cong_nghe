@@ -59,7 +59,7 @@
                     </form>
                 </div>
                 <div class="center shopping-cart">
-                    <a><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
+                    <a href="${pageContext.request.contextPath}/view-cart"><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
                                                                   class="badge">0</span></i></a>
                 </div>
             </div>

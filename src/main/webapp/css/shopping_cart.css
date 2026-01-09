@@ -152,6 +152,7 @@ a {
     color: rgb(4, 107, 210)
 }
 
-td .underline_dong {
-    text-decoration: underline;
+#quantityIncItemCart, #quantityDecItemCart {
+    font-size: 25px;
+    text-align: center;
 }
