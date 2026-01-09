@@ -44,6 +44,12 @@ public class Cart implements Serializable {
         cart.put(prodVar.getId(), cartItem);
     }
 
+    public boolean plusOrMinusOneQuantity(int prodVarId, boolean isPlus) {
+        CartItem cartItem = cart.get(prodVarId);
+        if (cartItem == null) return false;
+        return isPlus ? cartItem.plusOneQuantity() : cartItem.minusOneQuantity();
+    }
+
     public boolean updateCartItem(int prodVarId, int quantity) {
         CartItem cartItem = cart.get(prodVarId);
         if (cartItem == null) return false;

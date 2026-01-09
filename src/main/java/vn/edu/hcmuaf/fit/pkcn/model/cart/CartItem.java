@@ -4,6 +4,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CartItem implements Serializable {
     private int productVariantId;
@@ -18,6 +19,23 @@ public class CartItem implements Serializable {
         this.nameProduct = nameProduct;
         this.price = price;
         this.productVariant = prodVar;
+    }
+
+    public boolean plusOneQuantity() {
+        this.quantity++;
+        this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+        return true;
+    }
+
+    public boolean minusOneQuantity() {
+        this.quantity--;
+        if (this.quantity <= 0) {
+            this.quantity = 1;
+            this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+            return false;
+        }
+        this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+        return true;
     }
 
     public void updateQuantity(int quantity) {
@@ -52,5 +70,17 @@ public class CartItem implements Serializable {
 
     public String getPriceByFormat() {
         return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItem cartItem = (CartItem) o;
+        return productVariantId == cartItem.productVariantId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(productVariantId);
     }
 }
