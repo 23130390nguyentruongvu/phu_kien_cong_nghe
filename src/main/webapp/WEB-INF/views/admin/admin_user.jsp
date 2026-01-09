@@ -96,10 +96,24 @@
                                         </c:choose>
                                     </td>
                                     <td>
-                                        <span class="edit-user-lock" onclick="lockUser(${user.id})"><i class="fa-solid fa-lock"></i></span>
-                                        <span class="edit-user-unlock" onclick="unlockUser(${user.id})"><i class="fa-solid fa-unlock"></i></span>
-                                        <span class="edit-user-remove" onclick="deleteUser(${user.id})"><i class="fa-solid fa-circle-minus"></i></span>
-                                        <span class="edit-user-update" onclick="openUpdatePopup(${user.id})"><i class="fa-solid fa-pen-to-square"></i></span>
+                                        <c:choose>
+                                            <c:when test="${user.status == 'active'}">
+                                                <a href="manage-user?action=lock&id=${user.id}" onclick="return confirm('Khóa người dùng?')">
+                                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="manage-user?action=unlock&id=${user.id}">
+                                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock" style="color: orange;"></i></span>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <a href="manage-user?action=delete&id=${user.id}" onclick="return confirm('Xóa người dùng?')">
+                                            <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                        </a>
+                                        <span class="edit-user-update" onclick="openPopupEditUser(${user.id})">
+                                             <i class="fa-solid fa-pen-to-square"></i>
+                                        </span>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -200,28 +214,32 @@
         <div id="popup-update-user" class="popup">
             <div class="popup-content">
                 <h2>Chỉnh sửa thông tin người dùng</h2>
-                <form id="editUserForm">
+                <form id="editUserForm" action="manage-user" method="post">
+                    <input type="hidden" id="edit-id" name="id">
+
                     <label for="name-user">Tên người dùng:</label>
-                    <input type="text" id="name-user" name="name-user" value="Lê Thị B" placeholder="Tên người dùng">
+                    <input type="text" id="name-user" name="name" class="form-input">
                     <br>
                     <label for="user-name">User Name:</label>
-                    <input type="text" id="user-name" name="user-name" value="Vu1234" disabled>
+                    <input type="text" id="user-name" name="userName" class="form-input" readonly style="background: #eee;">
                     <br>
                     <label for="email">Email:</label>
-                    <input type="text" id="email" name="email" value="Vunguyen@gmail.com" disabled>
+                    <input type="text" id="email-edit" name="email" class="form-input" readonly style="background: #eee;">
                     <br>
-                    <label for="avatar">Avatar:</label>
-                    <input type="text" id="avatar" name="avatar" value="assets/image/customer/customer_1.webp" placeholder="Url avatar">
+                    <label for="avatar-edit">Avatar URL:</label>
+                    <input type="text" id="avatar-edit" name="avatar" class="form-input">
                     <br>
-                    <label for="set-active">Trạng thái: </label>
-                    <span id="set-active" class="set-active">
-                        <span>Đang hoạt dộng</span>
-                        <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                    </span>
+
+                    <label for="role-edit">Vai trò:</label>
+                    <select name="role" id="role-edit" class="form-input">
+                        <option value="1">Admin</option>
+                        <option value="2">Customer</option>
+                    </select>
                     <br>
+
                     <div class="popup-actions">
-                        <button type="submit" id="submit-update-user">Cập nhật</button>
-                        <button type="button" id="closeUpdate">Đóng</button>
+                        <button type="submit" id="submit-update-user" class="submit">Cập nhật</button>
+                        <button type="button" id="closeUpdate" class="close">Đóng</button>
                     </div>
                 </form>
             </div>

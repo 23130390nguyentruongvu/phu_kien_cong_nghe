@@ -43,4 +43,16 @@ public class UserService {
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
+    public boolean updateStatusSv(int id, String status) {
+        return userDao.updateStatus(id, status);
+    }
+    public boolean deleteUserSv(int id) {
+        return userDao.deleteUser(id);
+    }
+    public boolean updateUserAdmin(User user) {
+        return userDao.updateUser(user);
+    }
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
+    }
 }

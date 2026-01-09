@@ -72,4 +72,39 @@
             List<User> listUser = new ArrayList<>();
             return listUser;
         }
+        public boolean updateStatus(int id, String status) {
+            String sql = "UPDATE users SET status = :status WHERE id = :id";
+            return jdbi.withHandle( handle -> {
+                return   handle.createUpdate(sql)
+                        .bind("status", status)
+                        .bind("id", id)
+                        .execute() > 0;
+            });
+        }
+        public boolean deleteUser(int id) {
+            String sql = "DELETE FROM users WHERE id = :id";
+            return jdbi.withHandle(handle -> {
+                return handle.createUpdate(sql)
+                        .bind("id", id)
+                        .execute()>0;
+            });
+        }
+        public User getUserById(int id) {
+            String sql = "SELECT id, user_name, email, full_name, avatar, status, role_id FROM users WHERE id = :id";
+            return jdbi.withHandle(handle ->
+                    handle.createQuery(sql)
+                            .bind("id", id)
+                            .mapToBean(User.class)
+                            .findOne()
+                            .orElse(null)
+            );
+        }
+        public boolean updateUser(User user) {
+            String sql = "UPDATE users SET full_name = :fullName, avatar = :avatar, role_id = :role WHERE id = :id";
+            return jdbi.withHandle(handle ->
+                    handle.createUpdate(sql)
+                            .bindBean(user)
+                            .execute() > 0
+            );
+        }
     }

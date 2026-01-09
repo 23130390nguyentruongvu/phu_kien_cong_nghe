@@ -41,8 +41,26 @@ public class ManageUser extends HttpServlet {
         response.sendRedirect("manage-user");
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
         UserService userService = new UserService(JDBI.getJdbi());
+
+        if(action!=null){
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            switch (action) {
+                case "lock":
+                    userService.updateStatusSv(id, "locked");
+                    break;
+                case "unlock":
+                     userService.updateStatusSv(id, "active");
+                     break;
+                case "delete":
+                    userService.deleteUserSv(id);
+                    break;
+            }
+            response.sendRedirect("manage-user");
+            return;
+        }
         List<User> users = userService.getAllUsers();
         request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
