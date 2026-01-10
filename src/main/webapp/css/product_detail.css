@@ -145,7 +145,7 @@ body {
 
 .container-product .title-product {
   font-size: 22px;
-  font-weight: bolđ;
+  font-weight: bold;
   margin-bottom: 10px;
   color: #046bd2;
 }
@@ -202,10 +202,14 @@ body {
   margin-bottom: 5px;
 }
 
-.variant-item.active,
 .variant-item:hover {
-  border-color: #046bd2;
+  border-color: #5FA2E6;
   background: #eaf3ff;
+}
+
+.variant-item.active {
+    border-color: #046bd2;
+    background: #eaf3ff;
 }
 
 .action-row {
@@ -258,7 +262,7 @@ body {
   border-radius: 6px;
   background-color: #046bd2;
   color: #fff;
-  font: bold;
+    font-weight: bold;
   border: none;
   cursor: pointer;
   white-space: nowrap;
@@ -268,12 +272,20 @@ body {
   background-color: #024b9b;
 }
 
-.product-info ul {
-  list-style: disc;
+/* Chrome, Edge, Safari */
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.product-info li {
-  margin-bottom: 6px;
+/* Firefox */
+.quantity-input {
+    -moz-appearance: textfield;
+}
+
+.product-info{
+margin-bottom: 5px;
 }
 
 /*Mô tả*/
@@ -292,13 +304,15 @@ body {
 }
 
 .product-description-container {
-  margin-top: 10px;
+  margin-top: 5px;
+    margin-bottom: 5px;
+
 }
 
 .product-description-container h3 {
   font-size: 22px;
   margin-top: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   color: #046bd2;
   font-weight: 600;
 }
@@ -312,10 +326,27 @@ body {
 .product-description-container p,
 .product-description-container li {
   line-height: 1.6;
+    margin-bottom: 5px;
+
 }
 
 .product-description-container ul {
   padding-left: 20px;
+}
+
+.sub-info{
+
+}
+
+.sub-info li{
+    line-height: 1.6;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.sub-info,
+.product-description-container {
+    white-space: pre-line;
 }
 
 /*đánh giá*/
@@ -327,7 +358,7 @@ body {
 .review-container h3 {
   font-size: 22px;
   margin-top: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   color: #046bd2;
   font-weight: 600;
 }

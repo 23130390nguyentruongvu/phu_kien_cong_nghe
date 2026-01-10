@@ -51,4 +51,21 @@ public class CategoryDao {
 
         );
     }
+
+    //Lấy SubCategories
+    public List<Category> getSubCategories(int parentId) {
+        String sql = """
+        SELECT *
+        FROM categories
+        WHERE parent_id = :parentId
+    """;
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("parentId", parentId)
+                        .mapToBean(Category.class)
+                        .list()
+        );
+    }
+
 }

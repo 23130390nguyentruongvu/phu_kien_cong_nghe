@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
+    <script src="${pageContext.request.contextPath}/js/product_detail.js"></script>
+
 
 </head>
 <body>
@@ -122,7 +124,7 @@
                 </aside>
             </div>
 
-          <div class="content">
+            <div class="content">
               <div class="container-product two-column">
                   <div class="product-image">
                       <c:if test="${not empty product.images}">
@@ -174,6 +176,14 @@
 
                               <div class="variant-list">
                                   <c:forEach items="${product.variants}" var="v">
+
+                                      <c:set var="variantImage" value="" />
+                                      <c:forEach items="${product.images}" var="img">
+                                          <c:if test="${img.pvId == v.id}">
+                                              <c:set var="variantImage" value="${img.urlImage}" />
+                                          </c:if>
+                                      </c:forEach>
+
                                       <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
                                           <input
                                                   type="radio"
@@ -182,6 +192,7 @@
                                               ${v.id == product.defaultVariant.id ? 'checked' : ''}
                                                   hidden
                                           />
+                                          <img src="${variantImage}" alt="${v.name}" />
                                           <span>${v.name}</span>
                                       </label>
                                   </c:forEach>
@@ -224,7 +235,7 @@
 
               <div class="product-description-container">
                   <h3>Mô tả sản phẩm</h3>
-                  ${product.description}
+                  <li>${product.description}</li>
               </div>
 
               <div class="review-container">
