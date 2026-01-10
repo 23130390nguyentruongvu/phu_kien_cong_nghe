@@ -42,6 +42,7 @@ public class ManageUser extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        String searchName = request.getParameter("searchName");
         UserService userService = new UserService(JDBI.getJdbi());
 
         if(action!=null){
@@ -62,6 +63,11 @@ public class ManageUser extends HttpServlet {
             return;
         }
         List<User> users = userService.getAllUsers();
+        if(searchName!=null && !searchName.isEmpty()){
+            users = userService.getUserByName(searchName);
+        }else{
+            users = userService.getAllUsers();
+        }
         request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
     }

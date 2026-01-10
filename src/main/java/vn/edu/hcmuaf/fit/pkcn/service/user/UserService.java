@@ -55,4 +55,7 @@ public class UserService {
     public User getUserById(int id) {
         return userDao.getUserById(id);
     }
+    public List<User> getUserByName(String fullName) {
+        return userDao.getUserByName(fullName);
+    }
 }

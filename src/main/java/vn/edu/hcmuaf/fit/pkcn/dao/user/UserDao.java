@@ -69,8 +69,19 @@
         }
         // tim kiem theo ten user
         public List<User> getUserByName(String fullName) {
-            List<User> listUser = new ArrayList<>();
-            return listUser;
+            String sql = "SELECT id, avatar, full_name , user_name , status FROM users WHERE full_name LIKE :fullName";
+            return jdbi.withHandle(handle -> {
+                List<User> listUser = new ArrayList<>();
+                Iterator<User> Iter = handle.createQuery(sql)
+                        .bind("fullName", "%" + fullName + "%")
+                        .mapToBean(User.class)
+                        .stream().iterator();
+                while (Iter.hasNext()) {
+                    User user = Iter.next();
+                    listUser.add(user);
+                }
+                return listUser;
+            });
         }
         public boolean updateStatus(int id, String status) {
             String sql = "UPDATE users SET status = :status WHERE id = :id";

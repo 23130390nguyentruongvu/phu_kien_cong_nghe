@@ -50,8 +50,8 @@
         <div class="main-content-admin">
             <h1 class="title-for-page">Quản lý người dùng</h1>
             <div class="wrap-find-info-user">
-                <form>
-                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng">
+                <form action="manage-user" method="get">
+                    <input type="text" name="searchName" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng" value="${param.searchName}">
                     <select name="filter-by" class="filter-by">
                         <option value="all" selected>Tất cả</option>
                         <option value="pkmt">Đang hoạt động</option>
@@ -98,7 +98,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${user.status == 'active'}">
-                                                <a href="manage-user?action=lock&id=${user.id}" onclick="return confirm('Khóa người dùng?')">
+                                                <a href="manage-user?action=lock&id=${user.id}">
                                                     <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
                                                 </a>
                                             </c:when>
@@ -108,11 +108,13 @@
                                                 </a>
                                             </c:otherwise>
                                         </c:choose>
-                                        <a href="manage-user?action=delete&id=${user.id}" onclick="return confirm('Xóa người dùng?')">
+                                        <a href="manage-user?action=delete&id=${user.id}">
                                             <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
                                         </a>
-                                        <span class="edit-user-update" onclick="openPopupEditUser(${user.id})">
-                                             <i class="fa-solid fa-pen-to-square"></i>
+                                        <span class="edit-user-update"
+                                              style="cursor: pointer;"
+                                              onclick="openUpdatePopup('${user.id}', '${user.fullName}', '${user.userName}', '${user.email}', '${user.avatar}', '${user.role}')">
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </span>
                                     </td>
                                 </tr>
@@ -245,7 +247,17 @@
             </div>
         </div>
      </div>
-
+    <div id="popup-confirm" style="z-index: 1001" class="popup">
+        <div class="popup-content">
+            <h2>Xác nhận hành động</h2>
+            <p id="confirmMessage"></p>
+            <form id="confirmForm" method="post">
+                <input type="hidden" id="confirmId" name="id">
+                <button type="submit" id="confirmYes">Đồng ý</button>
+                <button type="button" id="confirmNo">Hủy</button>
+            </form>
+        </div>
+    </div>
 </body>
 <script src="${pageContext.request.contextPath}/js/admin_user.js"></script>
 </html>
