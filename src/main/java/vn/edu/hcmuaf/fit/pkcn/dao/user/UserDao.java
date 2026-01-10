@@ -4,6 +4,9 @@
     import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 
     import java.io.IOException;
+    import java.util.ArrayList;
+    import java.util.Iterator;
+    import java.util.List;
 
     public class UserDao {
         private Jdbi jdbi;
@@ -47,6 +50,72 @@
                             .bind("password", password)
                             .bind("id", id)
                             .execute()
+            );
+        }
+        //  danh sach user
+        public List<User> getAllUsers() {
+            String sql = "SELECT id, avatar, full_name , user_name , status FROM users";
+            return jdbi.withHandle(handle -> {
+                List<User> listUser = new ArrayList<>();
+                Iterator<User> iter = handle.createQuery(sql)
+                        .mapToBean(User.class)
+                        .stream().iterator();
+                while (iter.hasNext()) {
+                    User user = iter.next();
+                    listUser.add(user);
+                }
+                return listUser;
+            });
+        }
+        // tim kiem theo ten user
+        public List<User> getUserByName(String fullName) {
+            String sql = "SELECT id, avatar, full_name , user_name , status FROM users WHERE full_name LIKE :fullName";
+            return jdbi.withHandle(handle -> {
+                List<User> listUser = new ArrayList<>();
+                Iterator<User> Iter = handle.createQuery(sql)
+                        .bind("fullName", "%" + fullName + "%")
+                        .mapToBean(User.class)
+                        .stream().iterator();
+                while (Iter.hasNext()) {
+                    User user = Iter.next();
+                    listUser.add(user);
+                }
+                return listUser;
+            });
+        }
+        public boolean updateStatus(int id, String status) {
+            String sql = "UPDATE users SET status = :status WHERE id = :id";
+            return jdbi.withHandle( handle -> {
+                return   handle.createUpdate(sql)
+                        .bind("status", status)
+                        .bind("id", id)
+                        .execute() > 0;
+            });
+        }
+        public boolean deleteUser(int id) {
+            String sql = "DELETE FROM users WHERE id = :id";
+            return jdbi.withHandle(handle -> {
+                return handle.createUpdate(sql)
+                        .bind("id", id)
+                        .execute()>0;
+            });
+        }
+        public User getUserById(int id) {
+            String sql = "SELECT id, user_name, email, full_name, avatar, status, role_id FROM users WHERE id = :id";
+            return jdbi.withHandle(handle ->
+                    handle.createQuery(sql)
+                            .bind("id", id)
+                            .mapToBean(User.class)
+                            .findOne()
+                            .orElse(null)
+            );
+        }
+        public boolean updateUser(User user) {
+            String sql = "UPDATE users SET full_name = :fullName, avatar = :avatar, role_id = :role WHERE id = :id";
+            return jdbi.withHandle(handle ->
+                    handle.createUpdate(sql)
+                            .bindBean(user)
+                            .execute() > 0
             );
         }
     }

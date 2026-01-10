@@ -50,8 +50,8 @@
         <div class="main-content-admin">
             <h1 class="title-for-page">Quản lý người dùng</h1>
             <div class="wrap-find-info-user">
-                <form>
-                    <input type="text" name="user-id" class="input-user-id" placeholder="Tìm kiếm theo user id">
+                <form action="manage-user" method="get">
+                    <input type="text" name="searchName" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng" value="${param.searchName}">
                     <select name="filter-by" class="filter-by">
                         <option value="all" selected>Tất cả</option>
                         <option value="pkmt">Đang hoạt động</option>
@@ -77,102 +77,48 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>01</td>
-                                <td>
-                                    <img class="avatar-img"  src="assets/image/customer/customer_3.webp">
-                               </td>
-                                <td>Trương Vũ Nguyên</td>
-                                <td>Vunguyen123</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>02</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
-                               </td>
-                                <td>Nguyễn Văn A</td>
-                                <td>Admin123</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>03</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                                </td>
-                                <td>Lê Thị B</td>
-                                <td>Vu1234</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>04</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                               </td>
-                                <td>Trương Vũ Nguyên</td>
-                                <td>Vunguyen123</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>05</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_1.webp">
-                                </td>
-                                <td>Trương Vũ Duy</td>
-                                <td>Vunguyen123</td>
-                                <td>đang hoạt động</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>06</td>
-                                <td>
-                                    <img class="avatar-img" src="assets/image/customer/customer_3.webp">
-                              </td>
-                                <td>Nguyễn Văn B</td>
-                                <td>HeheBoi</td>
-                                <td>đang bị khóa</td>
-                                <td>
-                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock"></i></span>
-                                    <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-user-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                <span class="edit-user-show-var"><i class="fa-solid fa-eye"></i></span>
-                                </td>
-                            </tr>
+                            <c:forEach var="user" items="${users}">
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>
+                                        <img class="avatar-img" src="${user.avatar != null ? user.avatar : 'assets/image/logo.webp'}" alt="Avatar">
+                                    </td>
+                                    <td>${user.fullName}</td>
+                                    <td>${user.userName}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${user.status == 'active'}">
+                                                <span style="color: green;">Đang hoạt động</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span style="color: red;">Đang bị khóa</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${user.status == 'active'}">
+                                                <a href="manage-user?action=lock&id=${user.id}">
+                                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="manage-user?action=unlock&id=${user.id}">
+                                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock" style="color: orange;"></i></span>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <a href="manage-user?action=delete&id=${user.id}">
+                                            <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
+                                        </a>
+                                        <span class="edit-user-update"
+                                              style="cursor: pointer;"
+                                              onclick="openUpdatePopup('${user.id}', '${user.fullName}', '${user.userName}', '${user.email}', '${user.avatar}', '${user.role}')">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                         <div class="wrap-load-more">
@@ -196,7 +142,7 @@
         <div id="popup-add-user" class="popup">
             <div class="popup-content">
                 <h2>Thêm User mới</h2>
-                <form>
+                <form action="manage-user" method="post">
                     <input type="text" name="name" class="form-input" placeholder="Tên người dùng">
                     <br>
                     <input type="text" name="userName" class="form-input" placeholder="Username">
@@ -209,6 +155,11 @@
                     <br>
                     <input type="text" name="avatar" class="form-input" placeholder="Url hình ảnh">
                     <br>
+                    <select name="role" class="form-input">
+                        <option value="#" disabled selected>Chọn vai trò</option>
+                        <option value="1" ${user.role == 1 ? 'selected' : ''}>Admin</option>
+                        <option value="2" ${user.role == 2 ? 'selected' : ''}>Customer</option>
+                    </select>
                     <div class="wrap-button-cancel-submit">
                         <button id="submitAddProd" type="submit" class="submit">Thêm</button>
                         <button id="closeAddProd" type="button" class="close">Đóng</button>
@@ -265,34 +216,48 @@
         <div id="popup-update-user" class="popup">
             <div class="popup-content">
                 <h2>Chỉnh sửa thông tin người dùng</h2>
-                <form id="editUserForm">
+                <form id="editUserForm" action="manage-user" method="post">
+                    <input type="hidden" id="edit-id" name="id">
+
                     <label for="name-user">Tên người dùng:</label>
-                    <input type="text" id="name-user" name="name-user" value="Lê Thị B" placeholder="Tên người dùng">
+                    <input type="text" id="name-user" name="name" class="form-input">
                     <br>
                     <label for="user-name">User Name:</label>
-                    <input type="text" id="user-name" name="user-name" value="Vu1234" disabled>
+                    <input type="text" id="user-name" name="userName" class="form-input" readonly style="background: #eee;">
                     <br>
                     <label for="email">Email:</label>
-                    <input type="text" id="email" name="email" value="Vunguyen@gmail.com" disabled>
+                    <input type="text" id="email-edit" name="email" class="form-input" readonly style="background: #eee;">
                     <br>
-                    <label for="avatar">Avatar:</label>
-                    <input type="text" id="avatar" name="avatar" value="assets/image/customer/customer_1.webp" placeholder="Url avatar">
+                    <label for="avatar-edit">Avatar URL:</label>
+                    <input type="text" id="avatar-edit" name="avatar" class="form-input">
                     <br>
-                    <label for="set-active">Trạng thái: </label>
-                    <span id="set-active" class="set-active">
-                        <span>Đang hoạt dộng</span>
-                        <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                    </span>
+
+                    <label for="role-edit">Vai trò:</label>
+                    <select name="role" id="role-edit" class="form-input">
+                        <option value="1">Admin</option>
+                        <option value="2">Customer</option>
+                    </select>
                     <br>
+
                     <div class="popup-actions">
-                        <button type="submit" id="submit-update-user">Cập nhật</button>
-                        <button type="button" id="closeUpdate">Đóng</button>
+                        <button type="submit" id="submit-update-user" class="submit">Cập nhật</button>
+                        <button type="button" id="closeUpdate" class="close">Đóng</button>
                     </div>
                 </form>
             </div>
         </div>
      </div>
-
+    <div id="popup-confirm" style="z-index: 1001" class="popup">
+        <div class="popup-content">
+            <h2>Xác nhận hành động</h2>
+            <p id="confirmMessage"></p>
+            <form id="confirmForm" method="post">
+                <input type="hidden" id="confirmId" name="id">
+                <button type="submit" id="confirmYes">Đồng ý</button>
+                <button type="button" id="confirmNo">Hủy</button>
+            </form>
+        </div>
+    </div>
 </body>
-<script src="../../../js/admin_user.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_user.js"></script>
 </html>

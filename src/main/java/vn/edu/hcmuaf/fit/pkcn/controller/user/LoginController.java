@@ -29,7 +29,7 @@ import java.io.IOException;
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
            if(user.getRole()==1){
-               request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
+               response.sendRedirect(request.getContextPath()+"/manage-user");
            }else if(user.getRole()==2){
                response.sendRedirect(request.getContextPath()+"/");
            }
