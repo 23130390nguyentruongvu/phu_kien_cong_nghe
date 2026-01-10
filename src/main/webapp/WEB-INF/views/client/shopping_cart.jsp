@@ -50,7 +50,13 @@
                                     <tbody>
                                     <c:forEach var="cartItem" items="${sessionScope.cart.cartItems}">
                                         <tr class="row-item">
-                                            <td class="icon-remove"><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td class="icon-remove"
+                                                onclick="handleDelete(
+                                                    ${cartItem.productVariantId},
+                                                    '${cartItem.nameDetail}',
+                                                        '${pageContext.request.contextPath}/delete-cart-item'
+                                                        )">
+                                                <i class="fa-regular fa-circle-xmark"></i></td>
                                             <td class="image-product">
                                                 <a href="">
                                                     <img src="${cartItem.productVariant.urlImage}">

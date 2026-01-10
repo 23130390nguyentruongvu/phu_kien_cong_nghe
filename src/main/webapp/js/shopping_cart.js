@@ -20,3 +20,28 @@ const updateCartItem = (id, change, path) => {
     document.body.appendChild(form);
     form.submit();
 }
+
+const removeCartItem = (id, isDelete, path) => {
+    // Tạo một form ẩn
+    const formDelete = document.createElement('form');
+    formDelete.method = 'post';
+    formDelete.action = path;
+
+    // Tạo các input chứa dữ liệu
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = id;
+
+    formDelete.appendChild(idInput);
+    document.body.appendChild(formDelete);
+    formDelete.submit();
+}
+
+function handleDelete(id, name, path) {
+    // Hiển thị popup xác nhận (Confirm box)
+    const result = confirm("Bạn có chắc chắn muốn xóa sản phẩm '" + name + "' khỏi giỏ hàng không?");
+    if (result) {
+        removeCartItem(id, result, path)
+    }
+}
