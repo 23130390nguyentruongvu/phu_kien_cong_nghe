@@ -123,4 +123,9 @@ public class ProductService {
         }
         return product;
     }
+
+    public List<ProductShowAsItem> getRelatedProducts(int productId) {
+        return productDao.getRelatedProducts(productId);
+    }
+
 }

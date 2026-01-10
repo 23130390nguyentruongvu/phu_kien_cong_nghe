@@ -231,4 +231,38 @@ public class ProductDao {
         });
     }
 
+    public List<ProductShowAsItem> getRelatedProducts(int productId) {
+        String sql = """
+        SELECT 
+            p.id,
+            p.name AS name,
+            p.min_price,
+            (
+                SELECT pi.url_image
+                FROM product_images pi
+                WHERE pi.product_id = p.id
+                  AND pi.is_main = 1
+                LIMIT 1
+            ) AS url_image
+        FROM products p
+        JOIN product_categories pc ON p.id = pc.product_id
+        WHERE pc.category_id IN (
+            SELECT category_id
+            FROM product_categories
+            WHERE product_id = :productId
+        )
+        AND p.id != :productId
+        ORDER BY RAND()
+        LIMIT 4
+    """;
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("productId", productId)
+                        .mapToBean(ProductShowAsItem.class)
+                        .list()
+        );
+    }
+
+
 }
