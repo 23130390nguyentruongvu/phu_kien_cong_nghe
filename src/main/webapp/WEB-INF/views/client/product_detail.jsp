@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/item_product.css">
     <script src="${pageContext.request.contextPath}/js/product_detail.js"></script>
 
 
@@ -324,96 +325,52 @@
 
                   <div class="wrap-center-content">
                       <div class="products-grid-5">
-                          <div class="container-product-item">
-                              <div class="item-wrap">
-                                  <div class="container-item">
-                                      <div class="image-product-item">
-                                          <img
-                                                  src="../assets/image/fake_products/item_pkdt_1.webp"
-                                                  loading="lazy"
-                                                  decoding="async"
-                                          />
+
+                          <c:if test="${not empty relatedProducts}">
+                              <c:forEach var="p" items="${relatedProducts}">
+                                  <div class="container-product-item">
+                                      <div class="item-wrap">
+                                          <div class="container-item">
+
+                                              <div class="image-product-item">
+                                                  <img
+                                                          src="${p.imageMain}"
+                                                          loading="lazy"
+                                                          decoding="async"
+                                                          alt="${p.name}"
+                                                  />
+                                              </div>
+
+                                              <div class="title-product-item">
+                                                      ${p.name}
+                                              </div>
+
+                                              <div class="price-product-item">
+                                                      ${p.minPriceByFormat}
+                                              </div>
+
+                                          </div>
                                       </div>
-                                      <div class="title-product-item">
-                                          Giá đỡ điện thoại kim loại
-                                      </div>
-                                      <div class="price-product-item">
-                                          45.000<span class="underline_dong">đ</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="wrap-btn-search-similar">
-                                  <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                              </div>
-                          </div>
-                          <div class="container-product-item">
-                              <div class="item-wrap">
-                                  <div class="container-item">
-                                      <div class="image-product-item">
-                                          <img
-                                                  src="../assets/image/fake_products/item_bcth_1.webp"
-                                                  loading="lazy"
-                                                  decoding="async"
-                                          />
-                                      </div>
-                                      <div class="title-product-item">
-                                          Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps
-                                      </div>
-                                      <div class="price-product-item">
-                                          100.000<span class="underline_dong">đ</span>
+
+                                      <div class="wrap-btn-search-similar">
+                                          <a
+                                                  href="${pageContext.request.contextPath}/product-detail?id=${p.productId}"
+                                                  class="search-similar"
+                                          >
+                                              SẢN PHẨM TƯƠNG TỰ
+                                          </a>
                                       </div>
                                   </div>
-                              </div>
-                              <div class="wrap-btn-search-similar">
-                                  <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                              </div>
-                          </div>
-                          <div class="container-product-item">
-                              <div class="item-wrap">
-                                  <div class="container-item">
-                                      <div class="image-product-item">
-                                          <img
-                                                  src="../assets/image/fake_products/item_bcth_2.webp"
-                                                  loading="lazy"
-                                                  decoding="async"
-                                          />
-                                      </div>
-                                      <div class="title-product-item">
-                                          Bộ chia tín hiệu AV (Video và Audio) 1 ra 8
-                                      </div>
-                                      <div class="price-product-item">
-                                          100.000<span class="underline_dong">đ</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="wrap-btn-search-similar">
-                                  <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                              </div>
-                          </div>
-                          <div class="container-product-item">
-                              <div class="item-wrap">
-                                  <div class="container-item">
-                                      <div class="image-product-item">
-                                          <img
-                                                  src="../assets/image/fake_products/item_bcth_3.webp"
-                                                  loading="lazy"
-                                                  decoding="async"
-                                          />
-                                      </div>
-                                      <div class="title-product-item">
-                                          Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L
-                                      </div>
-                                      <div class="price-product-item">
-                                          100.000<span class="underline_dong">đ</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="wrap-btn-search-similar">
-                                  <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                              </div>
-                          </div>
+                              </c:forEach>
+                          </c:if>
+
+                          <c:if test="${empty relatedProducts}">
+                              <div>Không có sản phẩm liên quan</div>
+                          </c:if>
+
                       </div>
                   </div>
+
               </div>
 
           </div>

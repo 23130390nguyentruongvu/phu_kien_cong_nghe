@@ -7,10 +7,12 @@ import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ProductDetailServlet", value = "/product-detail")
 public class ProductDetailServlet extends HttpServlet {
@@ -33,13 +35,16 @@ public class ProductDetailServlet extends HttpServlet {
                     new SortProductImpl()
             );
 
+
             ProductDetail product = productService.getProductDetailById(productId);
 
-            System.out.println("Product detail: " + product);
-            System.out.println("Variants size: " +
-                    (product.getVariants() == null ? "null" : product.getVariants().size()));
+            List<ProductShowAsItem> relatedProducts =
+                    productService.getRelatedProducts(productId);
+
 
             request.setAttribute("product", product);
+            request.setAttribute("relatedProducts", relatedProducts);
+
             request.getRequestDispatcher("/WEB-INF/views/client/product_detail.jsp")
                     .forward(request, response);
 
