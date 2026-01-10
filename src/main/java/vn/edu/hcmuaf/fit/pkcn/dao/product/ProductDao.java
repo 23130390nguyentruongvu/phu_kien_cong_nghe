@@ -176,7 +176,7 @@ public class ProductDao {
     public ProductDetail getProductDetailById(int productId) {
         return jdbi.withHandle(handle -> {
 
-            // 1️⃣ Load product thông tin chung + category
+            // Load product thông tin chung + category
             String productSql = ""
                     + "SELECT p.id, p.name, p.subtitle AS subtitle, p.description, "
                     + "       p.warranty_period AS warranty_period, c.category_name "
@@ -193,7 +193,7 @@ public class ProductDao {
 
             if (product == null) return null; // sản phẩm không tồn tại
 
-            // 2️⃣ Load variants
+            // Load variants
             String variantSql = ""
                     + "SELECT pv.id, pv.product_id, pv.sku, pv.name, pv.price, pv.stock, "
                     + "       pv.gram, pv.color, pv.size "
@@ -207,7 +207,7 @@ public class ProductDao {
 
             product.setVariants(variants);
 
-            // 3️⃣ Load tất cả ảnh sản phẩm (main + variant)
+            // Load tất cả ảnh sản phẩm (main + variant)
             String imageSql = ""
                     + "SELECT pi.id, pi.product_id, pi.product_variant_id AS pv_id, pi.url_image "
                     + "FROM product_images pi "
