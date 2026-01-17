@@ -39,6 +39,8 @@ public class OrderHistoryServlet extends HttpServlet {
                 List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId(), status);
                 request.setAttribute("orders", res);
                 request.setAttribute("filterBy", status);
+                request.setAttribute("linkNav", 2);
+
                 request.getRequestDispatcher("/WEB-INF/views/client/history_order.jsp").forward(request, response);
             }
         } catch (Exception e) {

@@ -47,7 +47,7 @@
             <!--        open header-center-->
             <div class="header-center">
                 <div class="center logo">
-                    <a href="../index.html"><img src="${contactShop.getAvatar()}"
+                    <a href="${pageContext.request.contextPath}/"><img src="${contactShop.getAvatar()}"
                                                  style="width: 60px;height: 60px;"/></a>
                 </div>
                 <div class="center form-search">
