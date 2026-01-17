@@ -2,13 +2,11 @@ package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
 import org.jdbi.v3.core.Jdbi;
 
-import vn.edu.hcmuaf.fit.pkcn.model.product.Image;
-import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
-import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
-import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
+import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,12 +17,38 @@ public class ProductDao {
         this.jdbi = jdbi;
     }
 
+    public HashMap<Integer, List<ProductVariantWrapOrder>> getProdVarWrapOrder(List<Integer> orderIds) {
+        String sql = "SELECT od.order_id, od.id, od.product_variant_id, p.name as name_product, pv.name as type, od.quantity, od.price_total, pi.url_image " +
+                "FROM order_details od " +
+                "JOIN product_variants pv ON pv.id = od.product_variant_id " +
+                "JOIN product_images pi ON pi.product_variant_id = pv.id " +
+                "JOIN products p ON p.id = pv.product_id " +
+                "WHERE od.order_id IN(<orderIds>)";
+        return jdbi.withHandle(handle -> {
+            HashMap<Integer, List<ProductVariantWrapOrder>> res = new HashMap<>();
+            Iterator<ProductVariantWrapOrder> iter = handle.createQuery(sql)
+                    .bindList("orderIds", orderIds)
+                    .mapToBean(ProductVariantWrapOrder.class)
+                    .stream().iterator();
+            while (iter.hasNext()) {
+                ProductVariantWrapOrder tmp = iter.next();
+                if (res.containsKey(tmp.getOrderId())) res.get(tmp.getOrderId()).add(tmp);
+                else {
+                    List<ProductVariantWrapOrder> tmps = new ArrayList<>();
+                    tmps.add(tmp);
+                    res.put(tmp.getOrderId(), tmps);
+                }
+            }
+            return res;
+        });
+    }
+
     public List<ProductShowAsItem> getAllProduct(String sortSql) {
-        String sql = (sortSql == null)?"SELECT p.*, pi.url_image " +
+        String sql = (sortSql == null) ? "SELECT p.*, pi.url_image " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
                 "WHERE pi.is_main = 1 AND pi.product_variant_id IS NULL"
-                :sortSql;
+                : sortSql;
         return jdbi.withHandle(handle -> {
             List<ProductShowAsItem> lst = new ArrayList<>();
             Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
@@ -40,13 +64,13 @@ public class ProductDao {
     }
 
     public List<ProductShowAsItem> getProductByParentCategoryId(int categoryId, String sortSql) {
-        String sql = (sortSql == null)?"SELECT p.*, pi.url_image " +
+        String sql = (sortSql == null) ? "SELECT p.*, pi.url_image " +
                 "FROM categories c " +
                 "JOIN product_categories pc ON pc.category_id = c.id " +
                 "JOIN products p ON p.id = pc.product_id " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
                 "WHERE c.parent_id = :categoryId AND pi.is_main = 1 AND pi.product_variant_id IS NULL"
-                :sortSql;
+                : sortSql;
         return jdbi.withHandle(handle -> {
             List<ProductShowAsItem> lst = new ArrayList<>();
             Iterator<ProductShowAsItem> iter = handle.createQuery(sql)
@@ -233,28 +257,28 @@ public class ProductDao {
 
     public List<ProductShowAsItem> getRelatedProducts(int productId) {
         String sql = """
-        SELECT 
-            p.id,
-            p.name AS name,
-            p.min_price,
-            (
-                SELECT pi.url_image
-                FROM product_images pi
-                WHERE pi.product_id = p.id
-                  AND pi.is_main = 1
-                LIMIT 1
-            ) AS url_image
-        FROM products p
-        JOIN product_categories pc ON p.id = pc.product_id
-        WHERE pc.category_id IN (
-            SELECT category_id
-            FROM product_categories
-            WHERE product_id = :productId
-        )
-        AND p.id != :productId
-        ORDER BY RAND()
-        LIMIT 4
-    """;
+                    SELECT 
+                        p.id,
+                        p.name AS name,
+                        p.min_price,
+                        (
+                            SELECT pi.url_image
+                            FROM product_images pi
+                            WHERE pi.product_id = p.id
+                              AND pi.is_main = 1
+                            LIMIT 1
+                        ) AS url_image
+                    FROM products p
+                    JOIN product_categories pc ON p.id = pc.product_id
+                    WHERE pc.category_id IN (
+                        SELECT category_id
+                        FROM product_categories
+                        WHERE product_id = :productId
+                    )
+                    AND p.id != :productId
+                    ORDER BY RAND()
+                    LIMIT 4
+                """;
 
         return jdbi.withHandle(handle ->
                 handle.createQuery(sql)

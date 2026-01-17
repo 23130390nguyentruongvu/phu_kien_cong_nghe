@@ -7,7 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Lịch Sử Đơn Hàng</title>
-    <link rel="stylesheet" href="../../../shared/main.css"/>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -15,12 +14,13 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../../../shared/nav_account.css">
-    <link rel="stylesheet" href="../../../css/history_order.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/history_order.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css">
 
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main>
     <div class="wrap-content-all">
         <!--    open account nav-->
@@ -63,74 +63,48 @@
                         </select>
                     </form>
                 </span>
-            <div class="wrap-content-order">
-                <div class="header-order">
-                    <span class="status-order"><strong>Trạng thái: <em class="completed">Đã giao</em></strong></span>
-                    <span class="address-shipping"><em><i class="fa-regular fa-truck"></i> Đại Học Nông Lâm TP.HCM</em></span>
+            <c:if test="${empty requestScope.orders}">
+                <div class="wrap-content-order">
+                    <h3>Bạn chưa có đơn hàng nào</h3>
+                </div>
+            </c:if>
+            <c:if test="${not empty requestScope.orders}">
+                <c:forEach var="order" items="${requestScope.orders}">
+                    <div class="wrap-content-order">
+                        <div class="header-order">
+                        <span class="status-order"><strong>Trạng thái:
+                            <em class="${order.status}">${order.status}</em>
+                        </strong>
+                        </span>
+                            <span class="address-shipping"><em><i
+                                    class="fa-regular fa-truck"></i> ${order.address}</em></span>
 
-                </div>
-                <div class="per-cart-item">
-                    <span class="img-cart-item"><img src="assets/image/fake_products/item_bcth_1.webp"
+                        </div>
+                        <c:forEach var="orderDetail" items="${order.orderDetails}">
+                            <div class="per-cart-item">
+                    <span class="img-cart-item"><img src="${orderDetail.urlImage}"
                                                      loading="lazy"></span>
-                    <span class="info-base-cart-item">
-                    <span class="name-cart-item"><strong>Switch</strong></span>
-                    <div class="info-cart-item">Đen, 10kg, 30x40cm</div>
-                        <div class="info-quantity-cart-item">Số lượng: 2</div>
-                    <div class="price-cart-item">2000đ</div>
+                                <span class="info-base-cart-item">
+                    <span class="name-cart-item"><strong>${orderDetail.name}</strong></span>
+                    <div class="info-cart-item">${orderDetail.type}</div>
+                        <div class="info-quantity-cart-item">Số lượng: ${orderDetail.quantity}</div>
+                    <div class="price-cart-item">${orderDetail.priceByFormat}</div>
                 </span>
-                </div>
-                <div class="footer-order">
-                    <p class="price-total-pay-order"><i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
-                        2000đ
-                    </p>
-                </div>
-            </div>
-            <div class="wrap-content-order">
-                <div class="header-order">
-                    <span class="status-order"><strong>Trạng thái: <em class="completed">Đã giao</em></strong></span>
-                    <span class="address-shipping"><em><i class="fa-regular fa-truck"></i> 233 An Giang, Cái Bè - Chợ đầu mối, Long Xuyên, Đồng Nai, Cần Thơ</em></span>
-                </div>
-                <div class="per-cart-item">
-                    <span class="img-cart-item"><img src="assets/image/fake_products/item_bcth_1.webp"
-                                                     loading="lazy"></span>
-                    <span class="info-base-cart-item">
-                    <span class="name-cart-item"><strong>Switch</strong></span>
-                    <div class="info-cart-item">Đen, 10kg, 30x40cm</div>
-                        <div class="info-quantity-cart-item">Số lượng: 2</div>
-                    <div class="price-cart-item">2000đ</div>
-                </span>
-                </div>
-                <div class="per-cart-item">
-                    <span class="img-cart-item"><img src="assets/image/fake_products/item_bcth_2.webp"
-                                                     loading="lazy"></span>
-                    <span class="info-base-cart-item">
-                    <span class="name-cart-item"><strong>FJGEAR</strong></span>
-                    <div class="info-cart-item">Đen, 10kg, 70x40cm</div>
-                        <div class="info-quantity-cart-item">Số lượng: 1</div>
-                    <div class="price-cart-item">2000đ</div>
-                </span>
-                </div>
-                <div class="per-cart-item">
-                    <span class="img-cart-item"><img src="assets/image/fake_products/item_bcth_4.webp"
-                                                     loading="lazy"></span>
-                    <span class="info-base-cart-item">
-                    <span class="name-cart-item"><strong>UGREEN</strong></span>
-                    <div class="info-cart-item">Đen, 10gram, 40cm</div>
-                        <div class="info-quantity-cart-item">Số lượng: 2</div>
-                    <div class="price-cart-item">2000đ</div>
-                </span>
-                </div>
-                <div class="footer-order">
-                    <p class="price-total-pay-order"><i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
-                        6000đ
-                    </p>
-                </div>
-            </div>
+                            </div>
+                        </c:forEach>
+                        <div class="footer-order">
+                            <p class="price-total-pay-order"><i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
+                                    ${order.priceFormat}
+                            </p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:if>
+            <!--        close main content-->
         </div>
-        <!--        close main content-->
     </div>
 </main>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script src="../../../js/header.js"></script>
 <script src="../../../js/order_history.js"></script>

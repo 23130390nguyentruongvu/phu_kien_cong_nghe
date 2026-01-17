@@ -13,8 +13,16 @@
 
 }
 
-.status-order .completed {
+.status-order em.completed {
     color: green;
+}
+
+.status-order em.pending {
+    color: orange;
+}
+
+.status-order em.cancel {
+    color: red;
 }
 
 .wrap-content-all .main-content {
