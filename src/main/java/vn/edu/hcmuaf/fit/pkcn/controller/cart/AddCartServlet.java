@@ -40,5 +40,6 @@ public class AddCartServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        response.sendRedirect(request.getHeader("Referer"));
     }
 }

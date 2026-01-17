@@ -168,38 +168,42 @@
                           </c:if>
                       </ul>
 
-                      <form method="POST" action="${pageContext.request.contextPath}/add-to-cart">
-                          <input type="hidden" name="product_id" value="${product.id}" />
+                      <form method="POST" action="${pageContext.request.contextPath}/add-cart">
+
+                          <input type="hidden" name="id" value="${product.defaultVariant.id}" />
+
+                          <input type="hidden" name="name" value="${product.name}" />
 
                           <c:if test="${not empty product.variants}">
-                          <div class="variant-section">
-                              <div class="variant-title">Chọn loại:</div>
+                              <div class="variant-section">
+                                  <div class="variant-title">Chọn loại:</div>
 
-                              <div class="variant-list">
-                                  <c:forEach items="${product.variants}" var="v">
+                                  <div class="variant-list">
+                                      <c:forEach items="${product.variants}" var="v">
 
-                                      <c:set var="variantImage" value="" />
-                                      <c:forEach items="${product.images}" var="img">
-                                          <c:if test="${img.pvId == v.id}">
-                                              <c:set var="variantImage" value="${img.urlImage}" />
-                                          </c:if>
+                                          <c:set var="variantImage" value="" />
+                                          <c:forEach items="${product.images}" var="img">
+                                              <c:if test="${img.pvId == v.id}">
+                                                  <c:set var="variantImage" value="${img.urlImage}" />
+                                              </c:if>
+                                          </c:forEach>
+
+                                          <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
+                                              <input
+                                                      type="radio"
+                                                      name="id"
+                                                      value="${v.id}"
+                                                  ${v.id == product.defaultVariant.id ? 'checked' : ''}
+                                                      hidden
+                                              />
+                                              <img src="${variantImage}" alt="${v.name}" />
+                                              <span>${v.name}</span>
+                                          </label>
                                       </c:forEach>
-
-                                      <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
-                                          <input
-                                                  type="radio"
-                                                  name="variant_id"
-                                                  value="${v.id}"
-                                              ${v.id == product.defaultVariant.id ? 'checked' : ''}
-                                                  hidden
-                                          />
-                                          <img src="${variantImage}" alt="${v.name}" />
-                                          <span>${v.name}</span>
-                                      </label>
-                                  </c:forEach>
+                                  </div>
                               </div>
-                          </div>
                           </c:if>
+
                           <div class="action-row">
                               <div class="quantity-row">
                                   <button type="button" class="quantity-btn" data-action="minus">-</button>
@@ -221,6 +225,7 @@
                               </button>
                           </div>
                       </form>
+
                       <ul class="product-info">
                           <li>SKU: ${product.defaultVariant.sku}</li>
                           <li>Danh mục: ${product.categoryName}</li>
