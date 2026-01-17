@@ -50,7 +50,7 @@
         <div class="main-content-admin">
             <h1 class="title-for-page">Quản lý người dùng</h1>
             <div class="wrap-find-info-user">
-                <form action="manage-user" method="get">
+                <form action="search-user" method="get">
                     <input type="text" name="searchName" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng" value="${param.searchName}">
                     <select name="filter-by" class="filter-by">
                         <option value="all" selected>Tất cả</option>
@@ -77,9 +77,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="user" items="${users}">
+                            <c:forEach var="user" items="${users}" varStatus="loop">
                                 <tr>
-                                    <td>${user.id}</td>
+                                    <td>${loop.index + 1}</td>
                                     <td>
                                         <img class="avatar-img" src="${user.avatar != null ? user.avatar : 'assets/image/logo.webp'}" alt="Avatar">
                                     </td>
@@ -98,17 +98,20 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${user.status == 'active'}">
-                                                <a href="manage-user?action=lock&id=${user.id}">
+                                                <a href="${pageContext.request.contextPath}/lock-unlock-user?action=lock&id=${user.id}"
+                                                onclick="return confirm('Đồng ý khóa người dùng này?')">
                                                     <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
                                                 </a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="manage-user?action=unlock&id=${user.id}">
+                                                <a href="${pageContext.request.contextPath}/lock-unlock-user?action=unlock&id=${user.id}"
+                                                   onclick="return confirm('Đồng ý mở khóa người dùng này?')">
                                                     <span class="edit-user-unlock"><i class="fa-solid fa-unlock" style="color: orange;"></i></span>
                                                 </a>
                                             </c:otherwise>
                                         </c:choose>
-                                        <a href="manage-user?action=delete&id=${user.id}">
+                                        <a href="${pageContext.request.contextPath}/delete-user?action=delete&id=${user.id}"
+                                           onclick="return confirm('Đồng ý xóa người dùng này?')">
                                             <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
                                         </a>
                                         <span class="edit-user-update"
@@ -142,7 +145,7 @@
         <div id="popup-add-user" class="popup">
             <div class="popup-content">
                 <h2>Thêm User mới</h2>
-                <form action="manage-user" method="post">
+                <form action="add-user" method="post">
                     <input type="text" name="name" class="form-input" placeholder="Tên người dùng">
                     <br>
                     <input type="text" name="userName" class="form-input" placeholder="Username">
@@ -216,7 +219,7 @@
         <div id="popup-update-user" class="popup">
             <div class="popup-content">
                 <h2>Chỉnh sửa thông tin người dùng</h2>
-                <form id="editUserForm" action="manage-user" method="post">
+                <form id="editUserForm" action="${pageContext.request.contextPath}/edit-user" method="post">
                     <input type="hidden" id="edit-id" name="id">
 
                     <label for="name-user">Tên người dùng:</label>
@@ -240,7 +243,7 @@
                     <br>
 
                     <div class="popup-actions">
-                        <button type="submit" id="submit-update-user" class="submit">Cập nhật</button>
+                        <button type="submit" id="submit-update-user" class="submit" >Cập nhật</button>
                         <button type="button" id="closeUpdate" class="close">Đóng</button>
                     </div>
                 </form>

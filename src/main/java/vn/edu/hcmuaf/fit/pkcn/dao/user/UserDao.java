@@ -111,10 +111,13 @@
             );
         }
         public boolean updateUser(User user) {
-            String sql = "UPDATE users SET full_name = :fullName, avatar = :avatar, role_id = :role WHERE id = :id";
+            String sql = "UPDATE users SET full_name = :fullName, avatar = :avatar, role_id = :roleId WHERE id = :id";
             return jdbi.withHandle(handle ->
                     handle.createUpdate(sql)
-                            .bindBean(user)
+                            .bind("fullName", user.getFullName())
+                            .bind("avatar", user.getAvatar())
+                            .bind("roleId", user.getRole())
+                            .bind("id", user.getId())
                             .execute() > 0
             );
         }
