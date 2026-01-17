@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.pkcn.model.order;
 
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariantWrapOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderShowAsItem {
@@ -10,4 +12,52 @@ public class OrderShowAsItem {
     private String address;
     private double totalPrice;
     private List<ProductVariantWrapOrder> orderDetails;
+
+    public OrderShowAsItem() {
+        orderDetails = new ArrayList<>();
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    @ColumnName("id")
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    @ColumnName("status_order")
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    @ColumnName("address_detail")
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    @ColumnName("total_must_pay")
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<ProductVariantWrapOrder> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<ProductVariantWrapOrder> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
 }
