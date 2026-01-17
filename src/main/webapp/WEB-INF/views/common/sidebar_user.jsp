@@ -18,11 +18,11 @@
             </li>
             <li class="nav-link-item ${requestScope.linkNav == 3?'link-selected':''}">
                 <i class="fa-solid fa-location-dot"></i>
-                <a href="${pageContext.request.contextPath}/">Địa chỉ</a>
+                <a href="${pageContext.request.contextPath}/address-user">Địa chỉ</a>
             </li>
             <li class="nav-link-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                <a href="${pageContext.request.contextPath}/logout" onclick="return confirm("Bạn có thực sự muốn đăng xuất")">Đăng xuất</a>
             </li>
         </ul>
     </div>
