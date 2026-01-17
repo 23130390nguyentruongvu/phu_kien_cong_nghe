@@ -25,6 +25,36 @@
     <c:set var="u" value="${sessionScope.user}" />
       <main>
         <div class="wrap-content-all">
+          <div class="nav-account">
+            <div class="wrap-base-info-user">
+              <span class="img-user-account"
+                ><img src="../../../assets/image/logo.webp" loading="lazy"
+              /></span>
+              <span class="user-name-account"><strong>${u.userName}</strong></span>
+            </div>
+            <div class="wrap-nav-link">
+              <ul>
+                <li class="nav-link-item link-selected">
+                  <i class="fa-solid fa-user"></i>
+                    <a href="personal_info.html">Tài khoản</a>
+                </li>
+                <li class="nav-link-item">
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                    <a href="history_order.jsp">Lịch sử đơn hàng</a>
+                </li>
+                <li class="nav-link-item">
+                  <i class="fa-solid fa-location-dot"></i>
+                    <a href="${pageContext.request.contextPath}/address-user">Địa chỉ</a>
+                </li>
+                <li class="nav-link-item">
+                  <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none; color: inherit;" onclick="return confirm('Bạn thực sự muốn đăng xuất')">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
             <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
           <div class="main-content">
             <h2 class="title-account">Thông tin tài khoản</h2>

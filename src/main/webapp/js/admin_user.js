@@ -14,6 +14,10 @@ function openUpdatePopup(id, fullName, userName, email, avatar, role) {
     document.getElementById('edit-id').value = id;
     document.getElementById('name-user').value = fullName;
 
+    const roleSelect = document.getElementById("role-edit");
+    if(roleSelect){
+        roleSelect.value = role;
+    }
     const userNameInput = document.getElementById('user-name');
     userNameInput.value = userName;
     userNameInput.readOnly = true;

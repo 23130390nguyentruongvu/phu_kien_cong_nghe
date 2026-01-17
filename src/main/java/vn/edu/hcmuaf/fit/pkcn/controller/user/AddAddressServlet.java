@@ -1,0 +1,54 @@
+package vn.edu.hcmuaf.fit.pkcn.controller.user;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.user.UserAddressDao;
+import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.model.user.User;
+import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+
+import java.io.IOException;
+@WebServlet(name = "AddAddress", value = "/add-address")
+public class AddAddressServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            response.sendRedirect(request.getContextPath()+"/login");
+            return;
+        }
+        String receiverName = request.getParameter("receiverName");
+        String phoneNumber = request.getParameter("phone");
+        String province = request.getParameter("province");
+        String district = request.getParameter("district");
+        String detail = request.getParameter("addressDetail");
+
+
+        Address address = new Address();
+        address.setUserId(user.getId());
+        address.setReceiverName(receiverName);
+        address.setPhoneNumber(phoneNumber);
+        address.setProvinceCity(province);
+        address.setDistrict(district);
+        address.setAddressDetail(detail);
+        address.setIsSelect(0);
+
+        AddressService addressService = new AddressService(JDBI.getJdbi());
+        boolean re = addressService.addAddressSv(address);
+        if(re){
+            response.sendRedirect(request.getContextPath()+"/address-user");
+        }else{
+            request.setAttribute("error","Không thể thêm địa chỉ mới, vui lòng thử lại!");
+            request.getRequestDispatcher("/WEB-INF/views/client/add_address.jsp").forward(request, response);
+        }
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/views/client/add_address.jsp").forward(request, response);
+    }
+}

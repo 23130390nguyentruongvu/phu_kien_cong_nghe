@@ -7,10 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Thêm địa chỉ mới</title>
-    <link rel="stylesheet" href="../../../shared/nav_account.css">
-    <link rel="stylesheet" href="../../../shared/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../../../css/add_edit_address.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_edit_address.css" />
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -35,13 +35,13 @@
             <div class="add-address-content">
                 <div class="container">
                     <div class="title"><h3>Địa chỉ mới</h3></div>
-                    <form class="form-address" id="form-address" method="post">
+                    <form class="form-address" id="form-address" method="post" action="${pageContext.request.contextPath}/add-address">
                         <div class="form-main">
                             <div class="name">
-                                <input type="text" class="input-name" placeholder="&nbsp;Họ và tên">
+                                <input type="text" name="receiverName" class="input-name" placeholder="&nbsp;Họ và tên">
                             </div>
                             <div class="phone">
-                                <input type="tel" class="input-phone" placeholder="&nbsp;Số điện thoại">
+                                <input type="tel" name="phone" class="input-phone" placeholder="&nbsp;Số điện thoại">
                             </div>
                             <div class="province-district" >
                                 <div class="select-province">
@@ -55,19 +55,20 @@
                                 <div class="select-district">
                                 <select class="input-district" name="district">
                                     <option></option>
+                                    <option>Chợ Mới</option>
                                 </select>
                                 </div>
                             </div>
                             <div class="address-detail">
-                                <input class="input-address-details" type="text" placeholder="&nbsp;Địa chỉ chi tiết">
+                                <input class="input-address-details" name="addressDetail"   type="text" placeholder="&nbsp;Địa chỉ chi tiết">
                             </div>
 <!--                            <div class="checkbox-status-d">-->
 <!--                                <input class="checkbox-status" type="checkbox" id="check">-->
 <!--                                <label for="check">Đặt làm mặc định</label>-->
 <!--                            </div>-->
                             <div class="btn-done-cancel">
-                                <button class="btn-cancel">Trở lại</button>
-                                <button class="btn-done">Hoàn thành</button>
+                                <button type="button" class="btn-cancel" onclick="window.location.href= 'address-user'">Trở lại</button>
+                                <button type="submit" class="btn-done">Hoàn thành</button>
                             </div>
                         </div>
                     </form>

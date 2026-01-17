@@ -7,10 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Địa chỉ của tôi</title>
-    <link rel="stylesheet" href="../../../shared/main.css">
-    <link rel="stylesheet" href="../../../shared/nav_account.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../../../css/address_user.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/address_user.css" />
 
 </head>
 <body>
@@ -28,7 +28,7 @@
                 <script>
                     btnAddAddress = document.getElementsByClassName("add-address")[0];
                     btnAddAddress.addEventListener("click", () => {
-                        window.location.href = 'add_address.html';
+                        window.location.href = "${pageContext.request.contextPath}/add-address";
                     })
                 </script>
             </div>
