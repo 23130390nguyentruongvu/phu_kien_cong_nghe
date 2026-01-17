@@ -23,15 +23,25 @@ public class OrderHistoryServlet extends HttpServlet {
                 new OrderDao(JDBI.getJdbi()),
                 new ProductDao(JDBI.getJdbi())
         );
+        String status = request.getParameter("filter-by");
         try {
             if (user == null)
                 response.sendRedirect(request.getContextPath() + "/login");
             else {
-                List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId());
+                if (status != null)
+                    if (status.isEmpty() || (
+                            !status.equalsIgnoreCase("pending")
+                                    && !status.equalsIgnoreCase("completed")
+                                    && !status.equalsIgnoreCase("shipping")
+                                    && !status.equalsIgnoreCase("cancel"))
+                    ) status = null;
+
+                List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId(), status);
                 request.setAttribute("orders", res);
+                request.setAttribute("filterBy", status);
                 request.getRequestDispatcher("/WEB-INF/views/client/history_order.jsp").forward(request, response);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
