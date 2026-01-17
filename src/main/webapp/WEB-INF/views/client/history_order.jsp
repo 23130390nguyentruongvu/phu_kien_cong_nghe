@@ -53,19 +53,20 @@
         <!--        open main content-->
         <div class="main-content">
              <span class="filter">
-                    <form class="form-filter">
+                    <form class="form-filter" method="get" action="${pageContext.request.contextPath}/order-history"
+                          onchange="this.submit()">
                         <select name="filter-by" class="filter-by">
-                            <option value="status-order-completed" selected>Tất cả trạng thái</option>
-                            <option value="status-order-completed">Đã giao</option>
-                            <option value="status-order-cancel">Đã hủy</option>
-                            <option value="status-order-shipping">Đang chờ giao hàng</option>
-                            <option value="status-order-processing">Đang chờ Xử lí</option>
+                            <option value="" ${empty requestScope.filterBy ? 'selected' : ''}>Tất cả trạng thái</option>
+                            <option value="completed" ${requestScope.filterBy == 'completed' ? 'selected' : ''}>Đã giao</option>
+                            <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
+                            <option value="shipping" ${requestScope.filterBy == 'shipping' ? 'selected' : ''}>Đang giao hàng</option>
+                            <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
                     </form>
                 </span>
             <c:if test="${empty requestScope.orders}">
                 <div class="wrap-content-order">
-                    <h3>Bạn chưa có đơn hàng nào</h3>
+                    <h3>Không tìm thấy đơn hàng nào</h3>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.orders}">
