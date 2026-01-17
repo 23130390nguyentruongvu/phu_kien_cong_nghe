@@ -15,15 +15,17 @@ public class OrderDao {
         this.jdbi = jdbi;
     }
 
-    public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId) {
+    public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
+        String filter = status == null?":status IS NULL":"o.status_order = :status";
         String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
-                "WHERE o.user_id = :userId";
+                "WHERE o.user_id = :userId AND " + filter;
         return jdbi.withHandle(handle -> {
             HashMap<Integer, OrderShowAsItem> res = new HashMap<>();
             Iterator<OrderShowAsItem> iter = handle.createQuery(sql)
                     .bind("userId", userId)
+                    .bind("status", status)
                     .mapToBean(OrderShowAsItem.class)
                     .stream().iterator();
             while (iter.hasNext()) {

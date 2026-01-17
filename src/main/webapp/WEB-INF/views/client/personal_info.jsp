@@ -55,6 +55,7 @@
             </div>
           </div>
 
+            <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
           <div class="main-content">
             <h2 class="title-account">Thông tin tài khoản</h2>
 

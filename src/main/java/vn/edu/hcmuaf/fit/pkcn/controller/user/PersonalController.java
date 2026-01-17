@@ -20,6 +20,7 @@ public class PersonalController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             request.setAttribute("user", user);
+            request.setAttribute("linkNav", 1);
             request.getRequestDispatcher("/WEB-INF/views/client/personal_info.jsp").forward(request, response);
         }else{
             response.sendRedirect(request.getContextPath()+"/login");

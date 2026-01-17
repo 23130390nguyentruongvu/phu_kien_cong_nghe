@@ -19,8 +19,8 @@ public class OrderService {
         this.productDao = productDao;
     }
 
-    public List<OrderShowAsItem> getOrdersShowAsItem(int userId) {
-        HashMap<Integer, OrderShowAsItem> res = orderDao.getOrdersShowAsItem(userId);
+    public List<OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
+        HashMap<Integer, OrderShowAsItem> res = orderDao.getOrdersShowAsItem(userId, status);
         if (res.isEmpty()) return null;
         //Lấy các id của order để lấy các order detail
         List<Integer> orderIds = res.keySet().stream().toList();

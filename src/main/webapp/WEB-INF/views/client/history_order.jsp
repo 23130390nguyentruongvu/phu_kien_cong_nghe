@@ -24,48 +24,25 @@
 <main>
     <div class="wrap-content-all">
         <!--    open account nav-->
-        <div class="nav-account">
-            <div class="wrap-base-info-user">
-                <span class="img-user-account"><img src="../../../assets/image/logo.webp" loading="lazy"></span>
-                <span class="user-name-account"><strong>MyUserName</strong></span>
-            </div>
-            <div class="wrap-nav-link">
-                <ul>
-                    <li class="nav-link-item">
-                        <i class="fa-solid fa-user"></i>
-                        <a href="personal_info.jsp">Tài khoản</a>
-                    </li>
-                    <li class="nav-link-item link-selected">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <a href="history_order.html">Lịch sử đơn hàng</a>
-                    </li>
-                    <li class="nav-link-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <a href="address_user.jsp">Địa chỉ</a>
-                    </li>
-                    <li class="nav-link-item">
-                        <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
         <!--    close account nav-->
         <!--        open main content-->
         <div class="main-content">
              <span class="filter">
-                    <form class="form-filter">
+                    <form class="form-filter" method="get" action="${pageContext.request.contextPath}/order-history"
+                          onchange="this.submit()">
                         <select name="filter-by" class="filter-by">
-                            <option value="status-order-completed" selected>Tất cả trạng thái</option>
-                            <option value="status-order-completed">Đã giao</option>
-                            <option value="status-order-cancel">Đã hủy</option>
-                            <option value="status-order-shipping">Đang chờ giao hàng</option>
-                            <option value="status-order-processing">Đang chờ Xử lí</option>
+                            <option value="" ${empty requestScope.filterBy ? 'selected' : ''}>Tất cả trạng thái</option>
+                            <option value="completed" ${requestScope.filterBy == 'completed' ? 'selected' : ''}>Đã giao</option>
+                            <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
+                            <option value="shipping" ${requestScope.filterBy == 'shipping' ? 'selected' : ''}>Đang giao hàng</option>
+                            <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
                     </form>
                 </span>
             <c:if test="${empty requestScope.orders}">
                 <div class="wrap-content-order">
-                    <h3>Bạn chưa có đơn hàng nào</h3>
+                    <h3>Không tìm thấy đơn hàng nào</h3>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.orders}">

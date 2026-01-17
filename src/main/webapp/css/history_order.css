@@ -25,6 +25,10 @@
     color: red;
 }
 
+.status-order em.shipping {
+    color: rgb(4, 107, 210);
+}
+
 .wrap-content-all .main-content {
     flex: 1;
     border-left: 2px solid rgb(4, 107, 210);
