@@ -24,106 +24,7 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <main>
         <div class="container">
-            <div class="sidebar-product">
-                <aside class="widget widget_search">
-                    <h3>DANH MỤC SẢN PHẨM</h3>
-                    <div class="search-box">
-                        <input type="search" placeholder="Tìm sản phẩm…" />
-                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
-                </aside>
-
-                <aside class="widget widget_product_categories">
-                    <ul class="product-categories">
-                        <li class="category">
-                            <a href="#" class="category-title">Bộ Chia Tín Hiệu</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Bộ Chia AV</a></li>
-                                <li><a href="#">Bộ Chia HDMI</a></li>
-                                <li><a href="#">Bộ Chia VGA</a></li>
-                                <li><a href="#">Bộ Chia USB</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Bộ Chuyển Đổi Tín Hiệu</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Chuyển Đổi Audio Quang</a></li>
-                                <li><a href="#">Chuyển Đổi HDMI</a></li>
-                                <li><a href="#">Chuyển Đổi VGA</a></li>
-                                <li><a href="#">Chuyển Đổi USB</a></li>
-                                <li><a href="#">Cáp DisplayPort</a></li>
-                                <li><a href="#">Đầu Nối HDMI, VGA</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Dây Cáp Tín Hiệu</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Cáp Âm Thanh</a></li>
-                                <li><a href="#">Cáp HDMI</a></li>
-                                <li><a href="#">Cáp VGA</a></li>
-                                <li><a href="#">Cáp USB</a></li>
-                                <li><a href="#">Cáp Lập Trình</a></li>
-                                <li><a href="#">Cáp DVI</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Phụ Kiện Điện Thoại</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Cáp HDMI Cho Điện Thoại</a></li>
-                                <li><a href="#">Cáp OTG</a></li>
-                                <li><a href="#">Kính 3D VR Shinecon</a></li>
-                                <li><a href="#">Thiết Bị Bluetooth</a></li>
-                                <li><a href="#">Đồ Chơi SmartPhone</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Phụ Kiện Máy Tính</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Card Màn Hình</a></li>
-                                <li><a href="#">Card Sound USB</a></li>
-                                <li><a href="#">Card PCI Express</a></li>
-                                <li><a href="#">Chuột Bay, Micro, Webcam</a></li>
-                                <li><a href="#">Đầu Đọc Thẻ</a></li>
-                                <li><a href="#">Túi Chống Sốc</a></li>
-                                <li><a href="#">Đồ Chơi Laptop PC</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Phụ Kiện Xe</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Phụ Kiện Xe Đạp</a></li>
-                                <li><a href="#">Phụ Kiện Ô Tô</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Thiết Bị Mạng</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Bút Soi Quang</a></li>
-                                <li><a href="#">Dao Cắt Quang</a></li>
-                                <li><a href="#">Kìm Bấm Mạng</a></li>
-                                <li><a href="#">Máy Test Mạng</a></li>
-                                <li><a href="#">Dây Cáp Mạng</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="category">
-                            <a href="#" class="category-title">Thiết Bị Ngoại Vi</a>
-                            <ul class="sub-category">
-                                <li><a href="#">Máy Trợ Giảng, Bút Trình Chiếu</a></li>
-                                <li><a href="#">Phụ Kiện Đàn Guitar</a></li>
-                                <li><a href="#">Nguồn Sạc</a></li>
-                                <li><a href="#">Thiết Bị Khác</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </aside>
-            </div>
+            <jsp:include page="/WEB-INF/views/common/category_sidebar.jsp"/>
 
             <div class="content">
               <div class="container-product two-column">
@@ -168,38 +69,42 @@
                           </c:if>
                       </ul>
 
-                      <form method="POST" action="${pageContext.request.contextPath}/add-to-cart">
-                          <input type="hidden" name="product_id" value="${product.id}" />
+                      <form method="POST" action="${pageContext.request.contextPath}/add-cart">
+
+                          <input type="hidden" name="id" value="${product.defaultVariant.id}" />
+
+                          <input type="hidden" name="name" value="${product.name}" />
 
                           <c:if test="${not empty product.variants}">
-                          <div class="variant-section">
-                              <div class="variant-title">Chọn loại:</div>
+                              <div class="variant-section">
+                                  <div class="variant-title">Chọn loại:</div>
 
-                              <div class="variant-list">
-                                  <c:forEach items="${product.variants}" var="v">
+                                  <div class="variant-list">
+                                      <c:forEach items="${product.variants}" var="v">
 
-                                      <c:set var="variantImage" value="" />
-                                      <c:forEach items="${product.images}" var="img">
-                                          <c:if test="${img.pvId == v.id}">
-                                              <c:set var="variantImage" value="${img.urlImage}" />
-                                          </c:if>
+                                          <c:set var="variantImage" value="" />
+                                          <c:forEach items="${product.images}" var="img">
+                                              <c:if test="${img.pvId == v.id}">
+                                                  <c:set var="variantImage" value="${img.urlImage}" />
+                                              </c:if>
+                                          </c:forEach>
+
+                                          <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
+                                              <input
+                                                      type="radio"
+                                                      name="id"
+                                                      value="${v.id}"
+                                                  ${v.id == product.defaultVariant.id ? 'checked' : ''}
+                                                      hidden
+                                              />
+                                              <img src="${variantImage}" alt="${v.name}" />
+                                              <span>${v.name}</span>
+                                          </label>
                                       </c:forEach>
-
-                                      <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
-                                          <input
-                                                  type="radio"
-                                                  name="variant_id"
-                                                  value="${v.id}"
-                                              ${v.id == product.defaultVariant.id ? 'checked' : ''}
-                                                  hidden
-                                          />
-                                          <img src="${variantImage}" alt="${v.name}" />
-                                          <span>${v.name}</span>
-                                      </label>
-                                  </c:forEach>
+                                  </div>
                               </div>
-                          </div>
                           </c:if>
+
                           <div class="action-row">
                               <div class="quantity-row">
                                   <button type="button" class="quantity-btn" data-action="minus">-</button>
@@ -221,6 +126,7 @@
                               </button>
                           </div>
                       </form>
+
                       <ul class="product-info">
                           <li>SKU: ${product.defaultVariant.sku}</li>
                           <li>Danh mục: ${product.categoryName}</li>
