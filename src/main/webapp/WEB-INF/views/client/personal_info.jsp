@@ -44,7 +44,7 @@
                 </li>
                 <li class="nav-link-item">
                   <i class="fa-solid fa-location-dot"></i>
-                    <a href="address_user.jsp">Địa chỉ</a>
+                    <a href="${pageContext.request.contextPath}/address-user">Địa chỉ</a>
                 </li>
                 <li class="nav-link-item">
                   <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none; color: inherit;" onclick="return confirm('Bạn thực sự muốn đăng xuất')">
