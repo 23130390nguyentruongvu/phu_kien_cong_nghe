@@ -4,24 +4,25 @@
 <div class="nav-account">
     <div class="wrap-base-info-user">
         <span class="img-user-account"><img src="${empty sessionScope.user?'':sessionScope.user.avatar}" loading="lazy"></span>
-        <span class="user-name-account"><strong>MyUserName</strong></span>
+        <span class="user-name-account"><strong>${empty sessionScope.user?'':sessionScope.user.fullName}</strong></span>
     </div>
     <div class="wrap-nav-link">
         <ul>
-            <li class="nav-link-item">
+            <li class="nav-link-item ${requestScope.linkNav == 1?'link-selected':''}">
                 <i class="fa-solid fa-user"></i>
-                <a href="${pageContext.request.contextPath}/">Tài khoản</a>
+                <a href="${pageContext.request.contextPath}/personal_info">Tài khoản</a>
             </li>
-            <li class="nav-link-item link-selected">
+            <li class="nav-link-item ${requestScope.linkNav == 2?'link-selected':''}">
                 <i class="fa-solid fa-clock-rotate-left"></i>
                 <a href="${pageContext.request.contextPath}/order-history">Lịch sử đơn hàng</a>
             </li>
-            <li class="nav-link-item">
+            <li class="nav-link-item ${requestScope.linkNav == 3?'link-selected':''}">
                 <i class="fa-solid fa-location-dot"></i>
                 <a href="${pageContext.request.contextPath}/">Địa chỉ</a>
             </li>
             <li class="nav-link-item">
-                <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
             </li>
         </ul>
     </div>
