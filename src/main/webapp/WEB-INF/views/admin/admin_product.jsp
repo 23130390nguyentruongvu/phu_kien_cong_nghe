@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lí sản phẩm</title>
-    <link rel="stylesheet" href="../../../shared/nav_admin.css">
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -14,37 +13,14 @@
             referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="../../../css/admin_product.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_product.css">
+
 </head>
 <body>
 <div class="wrap-all-content">
     <!--    open nav admin-->
-    <div class="nav-admin">
-        <div class="wrap-base-info-admin">
-            <div class="wrap-img-user-admin">
-                <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
-                <span class="username-role-of-admin">
-                    <span class="username">Admin123</span>
-
-                    <div class="role">Quản trị viên</div>
-                </span>
-            </div>
-            <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
-        </div>
-        <hr>
-        <div class="wrap-nav-link-admin">
-            <ul>
-                <li class="item-nav-link-admin ">
-                    <i class="fa-solid fa-eye"></i> <a href="admin_overview.jsp">Tổng quan</a>
-                </li>
-                <li class="item-nav-link-admin">
-                    <i class="fa-solid fa-user-group"></i> <a href="admin_user.jsp">Quản lí người dùng</a>
-                </li>
-                <li class="item-nav-link-admin selected">
-                    <i class="fa-solid fa-box"></i> <a href="admin_product.html">Quản lí sản phẩm</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <jsp:include page="/WEB-INF/views/common/sidebar_admin.jsp"/>
     <!--    close nav admin-->
     <!--    open main content admin-->
     <div class="main-content-admin">
@@ -188,11 +164,11 @@
             </form>
         </div>
     </div>
-    <!--   Popup add product-->
+    <!-- TODO:Popup ADD product -->
     <div id="popup-add-product" class="popup">
         <div class="popup-content">
             <h2>Thêm sản phẩm mới</h2>
-            <form>
+            <form enctype="multipart/form-data">
                 <input type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
                 <br>
                 <input type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
@@ -206,16 +182,12 @@
                     <input type="checkbox" name="status" checked id="statusProduct">
                 </div>
                 <br>
-                <label>Danh sách URL ảnh:</label>
-                <div id="imageUrlList">
-                    <div class="image-url-item">
-                        <input type="text" name="imageUrls[]" placeholder="Nhập URL ảnh">
-                        <!--                        lưu index được chọn-->
-                        <input type="radio" name="mainImage" value="0" checked> Ảnh chính
-                        <button type="button" class="remove-url">Xóa</button>
-                    </div>
-                </div>
-                <button type="button" id="addImageUrl">Thêm URL ảnh</button>
+
+                <!-- Upload ảnh sản phẩm -->
+                <label>Ảnh sản phẩm:</label>
+                <input type="file" id="productImages" name="productImages[]" multiple accept="image/*">
+                <div id="productPreview"></div>
+
                 <!-- Biến thể sản phẩm -->
                 <label>Danh sách các biến thể:</label>
                 <div id="variantList">
@@ -234,17 +206,43 @@
                         <br>
                         <input type="text" class="form-input" name="size" placeholder="Kích thước">
                         <br>
-                        <input type="text" class="form-input" name="variantImage" placeholder="Url hình ảnh">
+                        <!-- Chỉ cho phép chọn 1 ảnh biến thể -->
+                        <label>Ảnh biến thể:</label>
+                        <input type="file" name="variantImage" accept="image/*">
                     </div>
                 </div>
+
                 <div class="wrap-button-cancel-submit">
                     <button id="submitAddProd" type="submit" class="submit">Thêm</button>
                     <button id="closeAddProd" type="button" class="close">Đóng</button>
                 </div>
             </form>
-
         </div>
     </div>
+
+    <script>
+        // Hiển thị preview ảnh sản phẩm và chọn ảnh chính
+        document.getElementById('productImages').addEventListener('change', function (event) {
+            const preview = document.getElementById('productPreview');
+            preview.innerHTML = ''; // clear cũ
+            Array.from(event.target.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.classList.add('preview-item');
+                    div.innerHTML = '\
+    <img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
+    <br>\
+    <input type="radio" name="mainImage" value="' + index + '" ' + (index == 0 ? 'checked' : '') + '> Ảnh chính\
+';
+
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+
     <!--  Popup  views product variant-->
     <div id="popup-variants" class="popup">
         <div class="popup-content">
@@ -274,8 +272,10 @@
                         <td>23x25cm, xanh</td>
                         <td>
                             <span class="edit-product">
-                                <span class="edit-product-var-remove" data-id="100"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-var-update" data-id="100"><i class="fa-solid fa-pen-to-square"></i></span>
+                                <span class="edit-product-var-remove" data-id="100"><i
+                                        class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-var-update" data-id="100"><i
+                                        class="fa-solid fa-pen-to-square"></i></span>
                             </span>
                         </td>
                     </tr>
@@ -373,5 +373,6 @@
 
 </div>
 </body>
-<script src="../../../js/admin_product.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
+
 </html>
