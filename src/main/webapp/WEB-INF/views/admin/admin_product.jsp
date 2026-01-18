@@ -213,46 +213,27 @@
     </script>
 
     <!--  Popup  views product variant-->
-    <div id="popup-variants" class="popup">
+    <div id="popup-variants" class="popup" style="display:none;">
         <div class="popup-content">
-            <h2>Danh sách biến thể</h2>
+            <h2>Danh sách biến thể cho Sản phẩm<span id="display-id"></span></h2>
             <div class="board-res-product">
                 <table class="table-prod-variants">
                     <thead>
                     <tr>
-                        <th></th>
-                        <th>Mã biến thể</th>
-                        <th>Tên biến thể</th>
+                        <th>Ảnh</th>
+                        <th>Mã</th>
+                        <th>Loại</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Thông số</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <img class="img-product-var" src="assets/image/fake_products/item_pkdt_4.webp">
-                        </td>
-                        <td>100</td>
-                        <td>Kính cường lực</td>
-                        <td>500.000đ</td>
-                        <td>10</td>
-                        <td>23x25cm, xanh</td>
-                        <td>
-                            <span class="edit-product">
-                                <span class="edit-product-var-remove" data-id="100"><i
-                                        class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-var-update" data-id="100"><i
-                                        class="fa-solid fa-pen-to-square"></i></span>
-                            </span>
-                        </td>
-                    </tr>
+                    <tbody id="variant-data-container">
                     </tbody>
                 </table>
             </div>
-
-            <button id="closeVariants">Đóng</button>
+            <button type="button" id="closeVariants">Đóng</button>
         </div>
     </div>
     <!--    Popup add/edit product variant-->
@@ -343,5 +324,7 @@
 </div>
 </body>
 <script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
-
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
 </html>

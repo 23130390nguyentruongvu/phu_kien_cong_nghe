@@ -1,0 +1,3 @@
+Các file jsp trong fragment được dùng phục vụ cho ajax, khi ta click 1 nút ở trình duyệt thì ta dùng ajax gọi
+xuống servlet -> servlet xử lí xong thì forward vào các jsp trong fragments -> sau đó jsp đổ dữ liệu lên các
+thẻ và trả response cho ajax -> ajax đổ kết quả đó cho html tương ứng
