@@ -12,39 +12,14 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../../../css/admin_overview.css">
-    <link rel="stylesheet" href="../../../shared/nav_admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_product.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_overview.css">
 </head>
 <body>
 <div class="wrap-all-content">
     <!--    open nav admin-->
-    <div class="nav-admin">
-        <div class="wrap-base-info-admin">
-            <div class="wrap-img-user-admin">
-                <span class="img-of-admin"><img src="assets/image/customer/customer_2.webp" alt=""></span>
-                <span class="username-role-of-admin">
-                    <span class="username">Admin123</span>
-
-                    <div class="role">Quản trị viên</div>
-                </span>
-            </div>
-            <div class="title"><h2><i class="fa-solid fa-crown"></i> Trang quản lí</h2></div>
-        </div>
-        <hr>
-        <div class="wrap-nav-link-admin">
-            <ul>
-                <li class="item-nav-link-admin selected">
-                    <i class="fa-solid fa-eye"></i> <a href="admin_overview.html">Tổng quan</a>
-                </li>
-                <li class="item-nav-link-admin">
-                    <i class="fa-solid fa-user-group"></i> <a href="admin_user.jsp">Quản lí người dùng</a>
-                </li>
-                <li class="item-nav-link-admin">
-                    <i class="fa-solid fa-box"></i> <a href="admin_product.jsp">Quản lí sản phẩm</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <jsp:include page="/WEB-INF/views/common/sidebar_admin.jsp"/>
     <!--    close nav admin-->
     <!--    open main content admin-->
     <div class="main-content-admin">
