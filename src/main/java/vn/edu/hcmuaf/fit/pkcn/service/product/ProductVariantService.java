@@ -3,6 +3,8 @@ package vn.edu.hcmuaf.fit.pkcn.service.product;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
+import java.util.List;
+
 public class ProductVariantService {
     private ProductVariantDao productVariantDao;
 
@@ -16,5 +18,9 @@ public class ProductVariantService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<ProductVariant> getProductVariantsByProdId(int prodId) {
+        return productVariantDao.getProdVarsByProdId(prodId);
     }
 }

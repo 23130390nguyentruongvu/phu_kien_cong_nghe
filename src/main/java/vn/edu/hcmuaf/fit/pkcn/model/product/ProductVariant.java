@@ -149,4 +149,8 @@ public class ProductVariant implements Serializable {
     public String getPriceByFormat() {
         return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
     }
+
+    public String getSpecific() {
+        return gram + "g, " + size + ", màu: " + color;
+    }
 }

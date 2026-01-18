@@ -24,6 +24,24 @@ public class ProductVariantDao {
         );
     }
 
+    public List<ProductVariant> getProdVarsByProdId(int prodId) {
+        String sql = """
+                SELECT pv.*, pi.url_image
+                FROM product_variants pv
+                JOIN product_images pi ON pi.product_variant_id = pv.id
+                WHERE pv.product_id = :prodId
+                """;
+        return jdbi.withHandle(handle -> {
+            Iterator<ProductVariant> iter = handle.createQuery(sql)
+                    .bind("prodId", prodId)
+                    .mapToBean(ProductVariant.class)
+                    .stream().iterator();
+            List<ProductVariant> res = new ArrayList<>();
+            while (iter.hasNext()) res.add(iter.next());
+            return res;
+        });
+    }
+
     public HashMap<Integer, List<ProductVariant>> getProdVarByProdId(List<Integer> ids) {
         String sql = "SELECT pv.*, pi.url_image " +
                 "FROM product_variants pv " +

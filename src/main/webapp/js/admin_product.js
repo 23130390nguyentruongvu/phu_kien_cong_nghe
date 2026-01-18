@@ -1,3 +1,25 @@
+//set sự kiện ajax cho show popup variants
+const showPopupVariants = async (prodId) => {
+    const container = document.getElementById('variant-data-container');
+    const popup = document.getElementById('popup-variants');
+
+    fetch(`${contextPath}/get-variants?productId=${prodId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Lỗi Server: " + response.status);
+            }
+            return response.text();
+        })
+        .then(html => {
+            container.innerHTML = html;
+        })
+        .catch(err => {
+            console.log(err)
+            container.innerHTML = `<tr><td colspan="7" style="color:red; text-align:center;">Không thể tải dữ liệu</td></tr>`;
+        })
+}
+
+
 // Mở popup thêm sản phẩm
 document.querySelector('.head-edit .edit-product-add-prod').onclick = () => {
     document.getElementById('popup-add-product').style.display = 'block';
@@ -8,8 +30,9 @@ document.getElementById('closeAddProd').onclick = () => {
 
 // Mở popup xem biến thể
 document.querySelectorAll('.edit-product-show-var').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.getElementById('popup-variants').style.display = 'block';
+    btn.addEventListener('click', (e) => {
+        const productId = e.currentTarget.dataset.id;
+        showPopupVariants(productId).then(r => document.getElementById('popup-variants').style.display = 'block')
     });
 });
 document.getElementById('closeVariants').onclick = () => {
