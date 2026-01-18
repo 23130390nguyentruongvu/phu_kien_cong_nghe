@@ -69,3 +69,5 @@ src/main/webapp/uploads/*
 *.crt
 *.jks
 keystore.jks
+
+src/main/webapp/js/firebase.js
