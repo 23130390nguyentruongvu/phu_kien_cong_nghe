@@ -27,127 +27,62 @@
         <h1 class="title-for-page">Quản lí sản phẩm</h1>
         <div class="wrap-find-info-product">
             <form>
-                <input type="text" name="product-id" class="input-product-id"
+                <input type="text" name="keySearch" class="input-product-id"
                        placeholder="Tìm kiếm theo mã sản phẩm hoặc tên sản phẩm">
-                <select name="filter-by-category" class="filter-by-category">
-                    <option value="all" selected>Mọi Thể Loại</option>
-                    <option value="pkmt">Phụ Kiện Máy Tính</option>
-                    <option value="pkdt">Phụ Kiện Điện Thoại</option>
-                    <option value="bcth">Bộ Chuyển Tín Hiệu</option>
-                </select>
-                <button type="submit" class="submit-data">Submit</button>
+                <button type="submit" class="submit-data">Tìm kiếm</button>
             </form>
         </div>
         <div class="edit-product head-edit">
             <span class="edit-product-add-prod"><i class="fa-solid fa-circle-plus"></i></span>
         </div>
         <div class="board-res-product">
-            <form>
-                <table>
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Mã sản phẩm</th>
-                        <th>Tên sản phâm</th>
-                        <th>Số lượng sản phẩm biến thể</th>
-                        <th>Tổng số lượng</th>
-                        <th>Phạm vi giá</th>
-                        <th>Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_1.webp"></td>
-                        <td>100</td>
-                        <td>Switch để bàn TP-Link LS1005G 5 cổng 10/100/1000Mbps</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>500.000<span class="underline-dong">đ</span> - 1.000.000<span
-                                class="underline-dong">đ</span></td>
-                        <td>
-                            <span class="edit-product">
-                                <span class="edit-product-remove" data-id="100"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var" data-id="100"><i class="fa-solid fa-circle-plus"></i></span>
-                                <span class="edit-product-update" data-id="100"><i
-                                        class="fa-solid fa-pen-to-square"></i></span>
-                                <span class="edit-product-show-var" data-id="100"><i class="fa-solid fa-eye"></i></span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_2.webp"></td>
-                        <td>120</td>
-                        <td>Bộ chia tín hiệu AV (Video và Audio) 1 ra 8</td>
-                        <td>4</td>
-                        <td>1</td>
-                        <td>250.000<span class="underline-dong">đ</span> - 1.000.000<span
-                                class="underline-dong">đ</span></td>
-                        <td>
-                                      <span class="edit-product">
-                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
-                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img class="prod-img" src="assets/image/fake_products/item_bcth_3.webp"></td>
-                        <td>200</td>
-                        <td>Bộ chia tín hiệu âm thanh RCA 2 trong 4 R/L</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>1.000.000<span class="underline-dong">đ</span> - 2.400.000<span
-                                class="underline-dong">đ</span></td>
-                        <td>
-                                      <span class="edit-product">
-                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
-                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img class="prod-img" src="assets/image/fake_products/item_pkdt_1.webp"></td>
-                        <td>300</td>
-                        <td>Giá đỡ điện thoại kim loại</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>40.000<span class="underline-dong">đ</span> - 100.000<span
-                                class="underline-dong">đ</span></td>
-                        <td>
-                                      <span class="edit-product">
-                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
-                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                          <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img class="prod-img" src="assets/image/fake_products/item_pkdt_2.webp"></td>
-                        <td>900</td>
-                        <td>Ốp lưng điện thoại IPhone</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>20.000<span class="underline-dong">đ</span> - 90.000<span
-                                class="underline-dong">đ</span></td>
-                        <td>
-                            <span class="edit-product">
-                                <span class="edit-product-remove"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var"><i class="fa-solid fa-circle-plus"></i></span>
-                                <span class="edit-product-update"><i class="fa-solid fa-pen-to-square"></i></span>
-                                <span class="edit-product-show-var"><i class="fa-solid fa-eye"></i></span>
-                            </span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="wrap-load-more">
-                    <input class="load-more" name="change-status" value="Tải thêm">
+            <c:if test="${empty requestScope.products}">
+                <div>
+                    <h3>Không có sản phẩm nào</h3>
                 </div>
-            </form>
+            </c:if>
+            <c:if test="${not empty requestScope.products}">
+                <form>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phâm</th>
+                            <th>Số lượng sản phẩm biến thể</th>
+                            <th>Tổng số lượng</th>
+                            <th>Phạm vi giá</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="product" items="${requestScope.products}">
+                            <tr>
+                                <td><img class="prod-img" src="${product.mainImage}"></td>
+                                <td>${product.prodId}</td>
+                                <td>${product.name}</td>
+                                <td>${product.productVariantQuant}</td>
+                                <td>${product.totalStock}</td>
+                                <td>${product.rangePriceFormat}</td>
+                                <td>
+                            <span class="edit-product">
+                                <span class="edit-product-remove" data-id="${product.prodId}"><i class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var" data-id="${product.prodId}"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-update" data-id="${product.prodId}"><i
+                                        class="fa-solid fa-pen-to-square"></i></span>
+                                <span class="edit-product-show-var" data-id="${product.prodId}"><i class="fa-solid fa-eye"></i></span>
+                            </span>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                        <%--                <div class="wrap-load-more">--%>
+                        <%--                    <input class="load-more" name="change-status" value="Tải thêm">--%>
+                        <%--                </div>--%>
+                </form>
+
+            </c:if>
         </div>
     </div>
     <!--    close main content admin-->
@@ -211,7 +146,7 @@
                         <input type="file" name="variantImage" accept="image/*">
                     </div>
                 </div>
-
+                <button type="button" id="addVariantBtn">Thêm biến thể</button>
                 <div class="wrap-button-cancel-submit">
                     <button id="submitAddProd" type="submit" class="submit">Thêm</button>
                     <button id="closeAddProd" type="button" class="close">Đóng</button>
@@ -239,6 +174,40 @@
                     preview.appendChild(div);
                 };
                 reader.readAsDataURL(file);
+            });
+        });
+        document.getElementById('addVariantBtn').addEventListener('click', function () {
+            const variantList = document.getElementById('variantList');
+
+            // Tạo một div mới cho biến thể
+            const newVariant = document.createElement('div');
+            newVariant.classList.add('variant-item');
+            newVariant.innerHTML = '\
+            <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">\
+            <br>\
+            <input type="text" class="form-input" name="sku" placeholder="Mã SKU">\
+            <br>\
+            <input type="number" class="form-input" name="variantPrices" placeholder="Giá">\
+            <br>\
+            <input type="number" class="form-input" name="variantStocks" placeholder="Số lượng">\
+            <br>\
+            <input type="number" class="form-input" name="gram" placeholder="Trọng lượng">\
+            <br>\
+            <input type="text" class="form-input" name="color" placeholder="Màu sắc">\
+            <br>\
+            <input type="text" class="form-input" name="size" placeholder="Kích thước">\
+            <br>\
+            <label>Ảnh biến thể:</label>\
+            <input type="file" name="variantImage" accept="image/*">\
+            <button type="button" class="removeVariant">Xóa biến thể</button>\
+        ';
+
+            // Thêm vào danh sách
+            variantList.appendChild(newVariant);
+
+            // Gắn sự kiện xóa
+            newVariant.querySelector('.removeVariant').addEventListener('click', function () {
+                variantList.removeChild(newVariant);
             });
         });
     </script>

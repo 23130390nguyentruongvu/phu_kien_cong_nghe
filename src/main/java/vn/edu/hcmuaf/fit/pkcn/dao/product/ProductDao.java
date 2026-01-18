@@ -63,6 +63,26 @@ public class ProductDao {
         });
     }
 
+    public HashMap<Integer, ProductAdminShowAsItem> getProducts(String key) {
+        String sql = "SELECT p.*, pi.url_image " +
+                "FROM products p " +
+                "JOIN product_images pi ON p.id = pi.product_id " +
+                "WHERE (:key IS NULL OR (p.id = :key OR name LIKE CONCAT('%', :key, '%'))) " +
+                "AND pi.is_main = 1";
+        return jdbi.withHandle(handle -> {
+            HashMap<Integer, ProductAdminShowAsItem> res = new HashMap<>();
+            Iterator<ProductAdminShowAsItem> iter = handle.createQuery(sql)
+                    .bind("key", key)
+                    .mapToBean(ProductAdminShowAsItem.class)
+                    .stream().iterator();
+            while (iter.hasNext()) {
+                ProductAdminShowAsItem tmp = iter.next();
+                res.put(tmp.getProdId(), tmp);
+            }
+            return res;
+        });
+    }
+
     public List<ProductShowAsItem> getProductByParentCategoryId(int categoryId, String sortSql) {
         String sql = (sortSql == null) ? "SELECT p.*, pi.url_image " +
                 "FROM categories c " +
@@ -287,6 +307,4 @@ public class ProductDao {
                         .list()
         );
     }
-
-
 }

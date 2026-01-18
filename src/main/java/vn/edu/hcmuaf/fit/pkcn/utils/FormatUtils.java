@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public abstract class FormatUtils {
     public static final String PATTERN_VND = "#,### VND";
+    public static final String PATTERN_NONE_UNIT = "#,###";
     private static DecimalFormat df = new DecimalFormat();
 
     public static String formatPrice(String pattern, Number price) {

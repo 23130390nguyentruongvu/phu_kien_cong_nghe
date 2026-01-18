@@ -3,6 +3,11 @@ package vn.edu.hcmuaf.fit.pkcn.dao.product;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 public class ProductVariantDao {
     private Jdbi jdbi;
 
@@ -17,5 +22,31 @@ public class ProductVariantDao {
                 .mapToBean(ProductVariant.class)
                 .one()
         );
+    }
+
+    public HashMap<Integer, List<ProductVariant>> getProdVarByProdId(List<Integer> ids) {
+        String sql = "SELECT pv.*, pi.url_image " +
+                "FROM product_variants pv " +
+                "JOIN product_images pi ON pi.product_variant_id = pv.id " +
+                "WHERE pv.product_id IN (<ids>)";
+        return jdbi.withHandle(handle -> {
+            HashMap<Integer, List<ProductVariant>> res = new HashMap<>();
+            Iterator<ProductVariant> iter = handle.createQuery(sql)
+                    .bindList("ids", ids)
+                    .mapToBean(ProductVariant.class)
+                    .stream().iterator();
+
+            while (iter.hasNext()) {
+                ProductVariant tmp = iter.next();
+                if (res.containsKey(tmp.getProductId()))
+                    res.get(tmp.getProductId()).add(tmp);
+                else {
+                    List<ProductVariant> lst = new ArrayList<>();
+                    lst.add(tmp);
+                    res.put(tmp.getProductId(), lst);
+                }
+            }
+            return res;
+        });
     }
 }

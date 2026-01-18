@@ -7,6 +7,8 @@ import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.article.ArticleDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.slidershow.SliderShowDao;
 import vn.edu.hcmuaf.fit.pkcn.model.article.ArticleShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
@@ -38,7 +40,10 @@ public class HomeViewServlet extends HttpServlet {
 
         //Lay du lieu cho cac section san pham
         ProductService ps = new ProductService(
-                new ProductDao(JDBI.getJdbi()), new SortProductImpl()
+                new ProductDao(JDBI.getJdbi()),
+                new SortProductImpl(),
+                new ProductImageDao(JDBI.getJdbi()),
+                new ProductVariantDao(JDBI.getJdbi())
         );
         CategoryService cs = new CategoryService(
                 new CategoryDao(JDBI.getJdbi())
