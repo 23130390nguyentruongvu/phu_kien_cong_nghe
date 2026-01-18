@@ -1,21 +1,33 @@
 package vn.edu.hcmuaf.fit.pkcn.service.product;
 
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
+import vn.edu.hcmuaf.fit.pkcn.model.product.ProductAdminShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductService {
     private ProductDao productDao;
     private SortProduct sortSql;
+    private ProductImageDao productImageDao;
+    private ProductVariantDao productVariantDao;
 
-    public ProductService(ProductDao productDao, SortProduct sortSql) {
+    public ProductService(ProductDao productDao,
+                          SortProduct sortSql,
+                          ProductImageDao productImageDao,
+                          ProductVariantDao productVariantDao
+    ) {
         this.productDao = productDao;
         this.sortSql = sortSql;
+        this.productImageDao = productImageDao;
+        this.productVariantDao = productVariantDao;
     }
 
     /*
@@ -122,6 +134,24 @@ public class ProductService {
 
         }
         return product;
+    }
+
+    public List<ProductAdminShowAsItem> getProductsForAdmin(String key) {
+        HashMap<Integer, ProductAdminShowAsItem> res = productDao.getProducts(key);
+        if(res.isEmpty()) return null;
+        List<Integer> ids = res.keySet().stream().toList();
+
+        //Lấy các ảnh phụ
+        HashMap<Integer, List<String>> images = productImageDao.getImagesProduct(ids, false);
+        for (Map.Entry<Integer, List<String>> entry : images.entrySet())
+            res.get(entry.getKey()).setImages(entry.getValue());
+
+        //Lấy các biến thể
+        HashMap<Integer, List<ProductVariant>> variants = productVariantDao.getProdVarByProdId(ids);
+        for (Map.Entry<Integer, List<ProductVariant>> entry : variants.entrySet())
+            res.get(entry.getKey()).setProductVariants(entry.getValue());
+
+        return res.values().stream().toList();
     }
 
     public List<ProductShowAsItem> getRelatedProducts(int productId) {

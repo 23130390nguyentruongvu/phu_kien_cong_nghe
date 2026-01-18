@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.service.category.CategoryService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
@@ -21,7 +23,10 @@ public class ViewProductsByCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ProductShowAsItem> productsByParentCate = new ArrayList<>();
         ProductService productService = new ProductService(
-                new ProductDao(JDBI.getJdbi()), new SortProductImpl()
+                new ProductDao(JDBI.getJdbi()),
+                new SortProductImpl(),
+                new ProductImageDao(JDBI.getJdbi()),
+                new ProductVariantDao(JDBI.getJdbi())
         );
         CategoryService categoryService = new CategoryService(
                 new CategoryDao(JDBI.getJdbi())
