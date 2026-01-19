@@ -11,10 +11,11 @@ public class ProductVariantService {
     public ProductVariantService(ProductVariantDao productVariantDao) {
         this.productVariantDao = productVariantDao;
     }
+
     public ProductVariant getProductVariantById(int prodVarId) {
         try {
             return productVariantDao.getProdVarById(prodVarId);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -22,5 +23,9 @@ public class ProductVariantService {
 
     public List<ProductVariant> getProductVariantsByProdId(int prodId) {
         return productVariantDao.getProdVarsByProdId(prodId);
+    }
+
+    public List<String> getSkusBySkus(List<String> skus) {
+        return productVariantDao.getSkusBySkus(skus);
     }
 }

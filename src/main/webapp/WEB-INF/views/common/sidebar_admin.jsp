@@ -4,7 +4,7 @@
 <div class="nav-admin">
     <div class="wrap-base-info-admin">
         <div class="wrap-img-user-admin">
-            <span class="img-of-admin"><img src="{${sessionScope.user.avatar}" alt=""></span>
+            <span class="img-of-admin"><img src="${sessionScope.user.avatar}" alt=""></span>
             <span class="username-role-of-admin">
                     <span class="username">${sessionScope.user.userName}</span>
 

@@ -24,6 +24,19 @@ public class ProductVariantDao {
         );
     }
 
+    public List<String> getSkusBySkus(List<String> skus) {
+        String sql = """
+                SELECT sku
+                FROM product_variants
+                WHERE sku IN (<skus>)
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bindList("skus", skus)
+                .mapTo(String.class)
+                .list()
+        );
+    }
+
     public List<ProductVariant> getProdVarsByProdId(int prodId) {
         String sql = """
                 SELECT pv.*, pi.url_image
