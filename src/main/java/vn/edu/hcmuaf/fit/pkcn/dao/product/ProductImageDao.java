@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import java.util.ArrayList;
@@ -40,5 +41,45 @@ public class ProductImageDao {
                     });
             return res;
         });
+    }
+
+    //Product variant id co the null
+    public void insertProductImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
+        String sql = """
+                INSERT INTO product_images(product_variant_id, product_id, url_image, is_main)
+                VALUES(:prodVarId, :prodId, :urlImage, :isMain)
+                """;
+        handle.createUpdate(sql)
+                .bind("prodVarId", prodVarId)
+                .bind("prodId", productId)
+                .bind("urlImage", urlImage)
+                .bind("isMain", 0)
+                .execute();
+    }
+
+    public void updateMainImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
+        String sql1 = """
+                UPDATE product_images
+                SET is_main = :isMain
+                WHERE product_id = :prodId
+                """;
+        handle.createUpdate(sql1)
+                .bind("prodId", productId)
+                .bind("isMain", 0)
+                .execute();
+
+        String sql = """
+                UPDATE product_images
+                SET is_main = :isMain
+                WHERE (:prodVarId IS NULL || product_variant_id = :prodVarId)
+                    AND product_id = :prodId
+                    AND url_image = :urlImage
+                """;
+        handle.createUpdate(sql)
+                .bind("prodVarId", prodVarId)
+                .bind("prodId", productId)
+                .bind("urlImage", urlImage)
+                .bind("isMain", 1)
+                .execute();
     }
 }

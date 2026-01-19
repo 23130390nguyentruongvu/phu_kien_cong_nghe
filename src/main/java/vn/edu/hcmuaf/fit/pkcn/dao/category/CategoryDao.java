@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.category;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.category.Category;
 
@@ -66,6 +67,17 @@ public class CategoryDao {
                         .mapToBean(Category.class)
                         .list()
         );
+    }
+
+    public void insertCategoryProductWithTransaction(Handle handle, int categoryId, int productId) {
+        String sql = """
+                INSERT INTO product_categories(product_id, category_id)
+                VALUES(:productId, :categoryId)
+                """;
+        handle.createUpdate(sql)
+                .bind("productId", productId)
+                .bind("categoryId", categoryId)
+                .execute();
     }
 
     public List<Category> getSubCategories() {

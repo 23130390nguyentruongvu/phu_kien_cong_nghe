@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
 import java.util.ArrayList;
@@ -79,5 +81,24 @@ public class ProductVariantDao {
             }
             return res;
         });
+    }
+
+    public int insertProductVariantWithTransaction(Handle handle, int prodId, JSonProductVariant variant) {
+        String sql = """
+                INSERT INTO product_variants (product_id, sku, name, price, stock, gram, color, size)
+                VALUES(:prodId, :sku, :name, :price, :stock, :gram, :color, :size)
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodId", prodId) // Tham số id sản phẩm cha
+                .bind("sku", variant.getSku())
+                .bind("name", variant.getName())
+                .bind("price", variant.getPrice())
+                .bind("stock", variant.getStock())
+                .bind("gram", variant.getGram())
+                .bind("color", variant.getColor())
+                .bind("size", variant.getSize())
+                .executeAndReturnGeneratedKeys()
+                .mapTo(Integer.class)
+                .one();
     }
 }

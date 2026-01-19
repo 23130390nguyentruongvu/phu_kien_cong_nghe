@@ -157,7 +157,7 @@
                         <br>
                         <!-- Chỉ cho phép chọn 1 ảnh biến thể -->
                         <label>Ảnh biến thể:</label>
-                        <input type="file" name="variantImage" accept="image/*">
+                        <input type="file" name="add-prod-variantImages" accept="image/*">
                     </div>
                 </div>
                 <br>
@@ -183,7 +183,7 @@
                     div.innerHTML = '\<' +
                         'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
                          <br>\
-                        <input type="radio" name="mainImage" value="' + index + '" ' + (index === 0 ? 'checked' : '') + '> Ảnh chính\
+                        <input type="radio" name="add-prod-mainImage" value="' + index + '" ' + (index === 0 ? 'checked' : '') + '> Ảnh chính\
 ';
 
                     preview.appendChild(div);
@@ -213,7 +213,7 @@
             <input type="text" class="form-input" name="size" placeholder="Kích thước">\
             <br>\
             <label>Ảnh biến thể:</label>\
-            <input type="file" name="variantImage" accept="image/*">\
+            <input type="file" name="add-prod-variantImages" accept="image/*">\
             <button type="button" class="removeVariant">Xóa biến thể</button>\
         `;
 
@@ -338,9 +338,13 @@
 
 </div>
 </body>
-<script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
-<script src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 <script>
-    const contextPath = "${pageContext.request.contextPath}";
+    window.contextPath = "${pageContext.request.contextPath}";
 </script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/firebase.js"></script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
+
+<script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
 </html>

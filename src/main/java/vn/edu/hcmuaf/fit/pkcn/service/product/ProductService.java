@@ -1,8 +1,12 @@
 package vn.edu.hcmuaf.fit.pkcn.service.product;
 
+import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductAdminShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
@@ -18,12 +22,15 @@ public class ProductService {
     private SortProduct sortSql;
     private ProductImageDao productImageDao;
     private ProductVariantDao productVariantDao;
+    private CategoryDao categoryDao;
 
     public ProductService(ProductDao productDao,
                           SortProduct sortSql,
                           ProductImageDao productImageDao,
-                          ProductVariantDao productVariantDao
+                          ProductVariantDao productVariantDao,
+                          CategoryDao categoryDao
     ) {
+        this.categoryDao = categoryDao;
         this.productDao = productDao;
         this.sortSql = sortSql;
         this.productImageDao = productImageDao;
@@ -138,7 +145,7 @@ public class ProductService {
 
     public List<ProductAdminShowAsItem> getProductsForAdmin(String key) {
         HashMap<Integer, ProductAdminShowAsItem> res = productDao.getProducts(key);
-        if(res.isEmpty()) return null;
+        if (res.isEmpty()) return null;
         List<Integer> ids = res.keySet().stream().toList();
 
         //Lấy các ảnh phụ
@@ -158,4 +165,35 @@ public class ProductService {
         return productDao.getRelatedProducts(productId);
     }
 
+    public boolean addProduct(JSonProduct product) {
+        try {
+            return JDBI.getJdbi().inTransaction(handle -> {
+                //add product
+                int idProd = productDao.insertProductWithTransaction(handle, product);
+                HashMap<Integer, JSonProductVariant> variantHashMap = new HashMap<>();
+
+                //add product variant
+                for (JSonProductVariant variant : product.getVariants()) {
+                    int idVar = productVariantDao.insertProductVariantWithTransaction(handle, idProd, variant);
+                    variantHashMap.put(idVar, variant);//Vì variant có chứa ảnh nên cần nhớ id của nó cho product image
+                }
+
+                //add image
+                for (String url : product.getImageUrls())
+                    productImageDao.insertProductImageWithTransaction(handle, null, idProd, url);
+
+                for (Map.Entry<Integer, JSonProductVariant> entry : variantHashMap.entrySet())
+                    productImageDao.insertProductImageWithTransaction(
+                            handle, entry.getKey(), idProd, entry.getValue().getImageUrl()
+                    );
+                productImageDao.updateMainImageWithTransaction(handle, null, idProd, product.getMainImageUrl());
+                categoryDao.insertCategoryProductWithTransaction(handle, Integer.parseInt(product.getCategoryId()), idProd);
+
+                return true;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
