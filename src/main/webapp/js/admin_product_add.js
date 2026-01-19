@@ -1,3 +1,43 @@
+import { storage, ref, uploadBytesResumable, getDownloadURL } from "./firebase.js";
+
+const contextPath = window.contextPath
+
+//Show thông báo
+function showAlert(type, message) {
+    // type: 'success', 'error', 'warning'
+    const alertDiv = document.createElement('div');
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        z-index: 10000;
+        animation: slideIn 0.3s ease-in-out;
+        max-width: 400px;
+    `;
+
+    if (type === 'success') {
+        alertDiv.style.backgroundColor = '#4CAF50';
+        alertDiv.innerHTML = '✓ ' + message;
+    } else if (type === 'error') {
+        alertDiv.style.backgroundColor = '#f44336';
+        alertDiv.innerHTML = '✕ ' + message;
+    } else if (type === 'warning') {
+        alertDiv.style.backgroundColor = '#ff9800';
+        alertDiv.innerHTML = '⚠ ' + message;
+    }
+
+    document.body.appendChild(alertDiv);
+
+    // Tự động xóa sau 3 giây
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 3000);
+}
+
 //Thằng này sẽ check tính hợp lệ của form popup add product
 function validateFormData() {
     const errors = [];
@@ -36,7 +76,7 @@ function validateFormData() {
         const gram = item.querySelector('input[name="gram"]').value.trim();
         const color = item.querySelector('input[name="color"]').value.trim();
         const size = item.querySelector('input[name="size"]').value.trim();
-        const variantImage = item.querySelector('input[name="variantImage"]').files;
+        const variantImage = item.querySelector('input[name="add-prod-variantImages"]').files;
 
         if (!variantName) errors.push(`Biến thể ${index + 1}: Tên biến thể không được để trống`);
         if (!sku) errors.push(`Biến thể ${index + 1}: Mã SKU không được để trống`);
@@ -72,7 +112,7 @@ async function checkSKUExists(skuList) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ skus: skuList })
+            body: JSON.stringify({skus: skuList})
         });
 
         if (!response.ok) {
@@ -90,49 +130,44 @@ async function checkSKUExists(skuList) {
 }
 
 //up ảnh lên firestorage
-async function uploadImageToFirebase(file, folder) {
+async function uploadImageToFirebase(file, folderPath, fileName) {
     return new Promise((resolve, reject) => {
-        // Tạo tên file unique
-        const timestamp = Date.now();
-        const fileName = `${timestamp}_${file.name}`;
-        const storageRef = storage.ref(`${folder}/${fileName}`);
+        // 1. Tạo reference
+        const storageRef = ref(storage, `${folderPath}/${fileName}`);
 
-        // Upload file
-        const uploadTask = storageRef.put(file);
+        const metadata = {
+            contentType: file.type
+        };
+
+        // 2. Bắt đầu upload
+        const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
         uploadTask.on('state_changed',
             (snapshot) => {
-                // Progress
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
+                console.log(`Đang upload ${fileName}: ${progress.toFixed(2)}%`);
             },
             (error) => {
-                // Error
-                console.error('Upload error:', error);
+                console.error('Lỗi upload Firebase:', error);
                 reject(error);
             },
-            () => {
-                // Success - lấy URL
-                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            async () => {
+                // 3. Lấy URL (Cách mới: getDownloadURL(task.snapshot.ref))
+                try {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
                     resolve(downloadURL);
-                });
+                } catch (err) {
+                    reject(err);
+                }
             }
         );
     });
 }
 
-// Upload nhiều ảnh
-async function uploadMultipleImages(files, folder) {
-    const uploadPromises = Array.from(files).map(file =>
-        uploadImageToFirebase(file, folder)
-    );
-    return Promise.all(uploadPromises);
-}
-
 //Gửi data xuống servlet khi đã check và upload hình ảnh lên firestorage thành công
 async function submitProductToServlet(productData) {
     try {
-        const response = await fetch('AddProductServlet', {
+        const response = await fetch(contextPath + '/add-product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -154,45 +189,12 @@ async function submitProductToServlet(productData) {
     }
 }
 
-//Show thông báo
-function showAlert(type, message) {
-    // type: 'success', 'error', 'warning'
-    const alertDiv = document.createElement('div');
-    alertDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 5px;
-        color: white;
-        font-weight: bold;
-        z-index: 10000;
-        animation: slideIn 0.3s ease-in-out;
-        max-width: 400px;
-    `;
-
-    if (type === 'success') {
-        alertDiv.style.backgroundColor = '#4CAF50';
-        alertDiv.innerHTML = '✓ ' + message;
-    } else if (type === 'error') {
-        alertDiv.style.backgroundColor = '#f44336';
-        alertDiv.innerHTML = '✕ ' + message;
-    } else if (type === 'warning') {
-        alertDiv.style.backgroundColor = '#ff9800';
-        alertDiv.innerHTML = '⚠ ' + message;
-    }
-
-    document.body.appendChild(alertDiv);
-
-    // Tự động xóa sau 5 giây
-    setTimeout(() => {
-        alertDiv.remove();
-    }, 5000);
-}
-
 //bắt sự kiện submit của form add product
 document.getElementById('form-add-product').addEventListener('submit', async (ev) => {
     ev.preventDefault();
+
+    //Lấy là uuid để lưu vào phân cấp thư mục của storage products/uuid/main + variants (SKU)
+    const folderId = self.crypto.randomUUID();
 
     const submitBtn = document.getElementById('submitAddProd');
     const originalText = submitBtn.textContent;
@@ -200,55 +202,78 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
     submitBtn.textContent = 'Đang xử lý...';
 
     try {
-        //Validate form
+        //TODO: Validate form
         const validation = validateFormData();
         if (!validation.isValid) {
             showAlert('error', validation.errors.join('<br>'));
             return;
         }
 
-        //Kiểm tra SKU tồn tại trên server
+        //TODO: Kiểm tra SKU tồn tại trên server
         const skuCheck = await checkSKUExists(validation.skuList);
         if (skuCheck.exists) {
             showAlert('error', `Mã SKU đã tồn tại: ${skuCheck.duplicateSKUs.join(', ')}`);
             return;
         }
 
-        // BƯỚC 3: Upload ảnh sản phẩm lên Firebase Storage
-        showAlert('warning', 'Đang upload ảnh sản phẩm...');
-        const productImages = document.getElementById('productImages').files;
-        const productImageURLs = await uploadMultipleImages(productImages, 'products');
+        //TODO: Upload ảnh sản phẩm lên Firebase Storage
+        //Thêm ảnh của sản phẩm chung
+        const productImages = document.getElementById('add-prod-productImages').files;
+        const productImageURLs = [];
 
-        // Xác định ảnh chính
-        const mainImageIndex = document.querySelector('input[name="mainImage"]:checked')?.value || 0;
+        for (let i = 0; i < productImages.length; i++) {
+            // Đặt tên theo kiểu: prod_timestamp_index
+            const customFileName = `prod_${Date.now()}_${i}`;
+            const url = await uploadImageToFirebase(
+                productImages[i],
+                `products/${folderId}/main`,
+                customFileName
+            );
+            productImageURLs.push(url);
+        }
 
-        // BƯỚC 4: Upload ảnh biến thể và thu thập dữ liệu
-        showAlert('warning', 'Đang upload ảnh biến thể...');
-        const variantItems = document.querySelectorAll('.variant-item');
+        //TODO: Xác định ảnh chính
+        const mainImageIndex = document.querySelector('input[name="add-prod-mainImage"]:checked')?.value || 0;
+
+        //TODO: Upload ảnh biến thể và thu thập dữ liệu
+        const variantItems = document.querySelectorAll('.add-prod-variant-item');
         const variantsData = [];
 
         for (let i = 0; i < variantItems.length; i++) {
             const item = variantItems[i];
 
-            // Upload ảnh biến thể
-            const variantImageFile = item.querySelector('input[name="variantImage"]').files[0];
-            const variantImageURL = await uploadImageToFirebase(variantImageFile, 'variants');
+            // 1. Lấy mã SKU trước để làm tên file ảnh
+            const sku = item.querySelector('input[name="sku"]').value.trim();
+            const variantImageFile = item.querySelector('input[name="add-prod-variantImages"]').files[0];
 
-            // Thu thập dữ liệu biến thể
+            let variantImageURL = "";
+
+            // 2. Chỉ upload nếu có chọn file ảnh
+            if (variantImageFile) {
+                // Đường dẫn: products/{folderId}/variants/{sku}
+                // Không có extension phía sau tên file sku
+                variantImageURL = await uploadImageToFirebase(
+                    variantImageFile,
+                    `products/${folderId}/variants`,
+                    sku
+                );
+            }
+
+            // 3. Thu thập dữ liệu biến thể
             variantsData.push({
                 name: item.querySelector('input[name="variantNames"]').value.trim(),
-                sku: item.querySelector('input[name="sku"]').value.trim(),
-                price: parseFloat(item.querySelector('input[name="variantPrices"]').value),
-                stock: parseInt(item.querySelector('input[name="variantStocks"]').value),
-                gram: parseFloat(item.querySelector('input[name="gram"]').value),
+                sku: sku,
+                price: parseFloat(item.querySelector('input[name="variantPrices"]').value) || 0,
+                stock: parseInt(item.querySelector('input[name="variantStocks"]').value) || 0,
+                gram: parseFloat(item.querySelector('input[name="gram"]').value) || 0,
                 color: item.querySelector('input[name="color"]').value.trim(),
                 size: item.querySelector('input[name="size"]').value.trim(),
-                imageUrl: variantImageURL
+                imageUrl: variantImageURL // Đây là link URL từ Firebase
             });
         }
-
-        // BƯỚC 5: Tạo object dữ liệu hoàn chỉnh
+        // Tạo object dữ liệu hoàn chỉnh
         const productData = {
+            folderId: folderId,
             name: document.querySelector('input[name="name"]').value.trim(),
             warrantyPeriod: parseInt(document.querySelector('input[name="warranty-period"]').value),
             categoryId: document.querySelector('select[name="categoryId"]').value,
@@ -260,7 +285,7 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
             variants: variantsData
         };
 
-        // BƯỚC 6: Gửi dữ liệu xuống servlet
+        //TODO: Gửi dữ liệu xuống servlet
         showAlert('warning', 'Đang lưu sản phẩm...');
         const result = await submitProductToServlet(productData);
 
@@ -283,3 +308,43 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
         submitBtn.textContent = originalText;
     }
 })
+
+/*
+Cấu trúc json request xuống servlet
+{
+  "folderId": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Tên sản phẩm chính",
+  "warrantyPeriod": 12,
+  "categoryId": "CAT001",
+  "subtitle": "Mô tả ngắn gọn cho sản phẩm",
+  "description": "Nội dung mô tả chi tiết sản phẩm bằng HTML hoặc text",
+  "status": true,
+  "imageUrls": [
+    "https://firebasestorage.googleapis.com/.../main/prod_17152345_0?alt=media",
+    "https://firebasestorage.googleapis.com/.../main/prod_17152345_1?alt=media"
+  ],
+  "mainImageIndex": 0,
+  "variants": [
+    {
+      "name": "Biến thể màu Đỏ - Size L",
+      "sku": "SKU-IP15-RED-L",
+      "price": 25000000.0,
+      "stock": 50,
+      "gram": 200.5,
+      "color": "Red",
+      "size": "L",
+      "imageUrl": "https://firebasestorage.googleapis.com/.../variants/SKU-IP15-RED-L?alt=media"
+    },
+    {
+      "name": "Biến thể màu Xanh - Size XL",
+      "sku": "SKU-IP15-BLUE-XL",
+      "price": 26000000.0,
+      "stock": 30,
+      "gram": 210.0,
+      "color": "Blue",
+      "size": "XL",
+      "imageUrl": "https://firebasestorage.googleapis.com/.../variants/SKU-IP15-BLUE-XL?alt=media"
+    }
+  ]
+}
+ */
