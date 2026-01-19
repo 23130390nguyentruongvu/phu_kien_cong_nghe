@@ -51,10 +51,15 @@
                                                  style="width: 60px;height: 60px;"/></a>
                 </div>
                 <div class="center form-search">
-                    <form action="" method="get">
-                        <input type="search" name="search-product" placeholder="Tìm kiếm sản phẩm..."
-                               class="search-input">
-                        <button class="search-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+                    <form action="${pageContext.request.contextPath}/search" method="get">
+                        <input
+                                type="search"
+                                name="keyword"
+                                placeholder="Tìm kiếm sản phẩm..."
+                                class="search-input"
+                        >
+                        <button class="search-button" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
                 </div>

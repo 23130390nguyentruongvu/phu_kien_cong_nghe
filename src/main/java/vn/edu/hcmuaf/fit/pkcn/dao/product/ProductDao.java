@@ -307,4 +307,31 @@ public class ProductDao {
                         .list()
         );
     }
+
+    public List<ProductShowAsItem> searchByKeyword(String keyword) {
+
+        String sql = """
+        SELECT
+            p.id,
+            p.name,
+            p.min_price,
+            (
+                SELECT pi.url_image
+                FROM product_images pi
+                WHERE pi.product_id = p.id
+                  AND pi.is_main = 1
+                LIMIT 1
+            ) AS url_image
+        FROM products p
+        WHERE p.name LIKE :keyword
+    """;
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("keyword", "%" + keyword + "%")
+                        .mapToBean(ProductShowAsItem.class)
+                        .list()
+        );
+    }
+
 }

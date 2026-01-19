@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/item_product.css">
     <script src="${pageContext.request.contextPath}/js/product_detail.js"></script>
 
-
 </head>
 <body>
 <div class="container-header-main-footer">

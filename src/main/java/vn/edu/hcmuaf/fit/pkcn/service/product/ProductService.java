@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
+import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,14 @@ public class ProductService {
         this.productImageDao = productImageDao;
         this.productVariantDao = productVariantDao;
     }
+
+    public ProductService(ProductDao productDao,
+                          SortProductImpl sortSql
+    ) {
+        this.productDao = productDao;
+        this.sortSql = sortSql;
+    }
+
 
     /*
         kiểm tra nếu sortOption là null hoặc empty thì chỉ lấy các dữ liệu lên;
@@ -156,6 +165,10 @@ public class ProductService {
 
     public List<ProductShowAsItem> getRelatedProducts(int productId) {
         return productDao.getRelatedProducts(productId);
+    }
+
+    public List<ProductShowAsItem> searchProducts(String keyword) {
+        return productDao.searchByKeyword(keyword);
     }
 
 }
