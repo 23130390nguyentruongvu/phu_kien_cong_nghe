@@ -55,10 +55,10 @@ public class CategoryDao {
     //Lấy SubCategories
     public List<Category> getSubCategories(int parentId) {
         String sql = """
-        SELECT *
-        FROM categories
-        WHERE parent_id = :parentId
-    """;
+                    SELECT *
+                    FROM categories
+                    WHERE parent_id = :parentId
+                """;
 
         return jdbi.withHandle(handle ->
                 handle.createQuery(sql)
@@ -68,4 +68,17 @@ public class CategoryDao {
         );
     }
 
+    public List<Category> getSubCategories() {
+        String sql = """
+                    SELECT *
+                    FROM categories
+                    WHERE parent_id IS NOT NULL
+                """;
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .mapToBean(Category.class)
+                        .list()
+        );
+    }
 }

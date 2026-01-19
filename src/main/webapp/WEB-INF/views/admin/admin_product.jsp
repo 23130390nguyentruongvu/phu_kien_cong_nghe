@@ -66,11 +66,14 @@
                                 <td>${product.rangePriceFormat}</td>
                                 <td>
                             <span class="edit-product">
-                                <span class="edit-product-remove" data-id="${product.prodId}"><i class="fa-solid fa-circle-minus"></i></span>
-                                <span class="edit-product-add-var" data-id="${product.prodId}"><i class="fa-solid fa-circle-plus"></i></span>
+                                <span class="edit-product-remove" data-id="${product.prodId}"><i
+                                        class="fa-solid fa-circle-minus"></i></span>
+                                <span class="edit-product-add-var" data-id="${product.prodId}"><i
+                                        class="fa-solid fa-circle-plus"></i></span>
                                 <span class="edit-product-update" data-id="${product.prodId}"><i
                                         class="fa-solid fa-pen-to-square"></i></span>
-                                <span class="edit-product-show-var" data-id="${product.prodId}"><i class="fa-solid fa-eye"></i></span>
+                                <span class="edit-product-show-var" data-id="${product.prodId}"><i
+                                        class="fa-solid fa-eye"></i></span>
                             </span>
                                 </td>
                             </tr>
@@ -103,14 +106,25 @@
     <div id="popup-add-product" class="popup">
         <div class="popup-content">
             <h2>Thêm sản phẩm mới</h2>
-            <form enctype="multipart/form-data">
-                <input type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
+            <form id="form-add-product" enctype="multipart/form-data" method="post">
+                <input id="add-prod-name" type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
                 <br>
-                <input type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
+                <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
                 <br>
-                <textarea name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
+                <select id="add-prod-categoryId" class="form-input" name="categoryId">
+                    <c:if test="${empty requestScope.categories}">
+                        <option value="">Chưa có thể loại nào</option>
+                    </c:if>
+                    <c:if test="${not empty requestScope.categories}">
+                        <c:forEach var="category" items="${requestScope.categories}">
+                            <option value="${category.id}">${category.nameCategory}</option>
+                        </c:forEach>
+                    </c:if>
+                </select>
                 <br>
-                <textarea name="description" class="form-input" placeholder="Mô tả dài"></textarea>
+                <textarea id="add-prod-subtitle" name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
+                <br>
+                <textarea id="add-prod-description" name="description" class="form-input" placeholder="Mô tả dài"></textarea>
                 <br>
                 <div class="wrap-status-product">
                     <label for="statusProduct">Hiện lên website</label>
@@ -120,13 +134,13 @@
 
                 <!-- Upload ảnh sản phẩm -->
                 <label>Ảnh sản phẩm:</label>
-                <input type="file" id="productImages" name="productImages[]" multiple accept="image/*">
+                <input type="file" id="add-prod-productImages" name="productImages[]" multiple accept="image/*">
                 <div id="productPreview"></div>
 
                 <!-- Biến thể sản phẩm -->
                 <label>Danh sách các biến thể:</label>
                 <div id="variantList">
-                    <div class="variant-item">
+                    <div class="add-prod-variant-item variant-item">
                         <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">
                         <br>
                         <input type="text" class="form-input" name="sku" placeholder="Mã SKU">
@@ -146,6 +160,7 @@
                         <input type="file" name="variantImage" accept="image/*">
                     </div>
                 </div>
+                <br>
                 <button type="button" id="addVariantBtn">Thêm biến thể</button>
                 <div class="wrap-button-cancel-submit">
                     <button id="submitAddProd" type="submit" class="submit">Thêm</button>
@@ -157,7 +172,7 @@
 
     <script>
         // Hiển thị preview ảnh sản phẩm và chọn ảnh chính
-        document.getElementById('productImages').addEventListener('change', function (event) {
+        document.getElementById('add-prod-productImages').addEventListener('change', function (event) {
             const preview = document.getElementById('productPreview');
             preview.innerHTML = ''; // clear cũ
             Array.from(event.target.files).forEach((file, index) => {
@@ -165,10 +180,10 @@
                 reader.onload = function (e) {
                     const div = document.createElement('div');
                     div.classList.add('preview-item');
-                    div.innerHTML = '\
-    <img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
-    <br>\
-    <input type="radio" name="mainImage" value="' + index + '" ' + (index == 0 ? 'checked' : '') + '> Ảnh chính\
+                    div.innerHTML = '\<' +
+                        'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
+                         <br>\
+                        <input type="radio" name="mainImage" value="' + index + '" ' + (index === 0 ? 'checked' : '') + '> Ảnh chính\
 ';
 
                     preview.appendChild(div);
@@ -181,8 +196,8 @@
 
             // Tạo một div mới cho biến thể
             const newVariant = document.createElement('div');
-            newVariant.classList.add('variant-item');
-            newVariant.innerHTML = '\
+            newVariant.classList.add('add-prod-variant-item', 'variant-item');
+            newVariant.innerHTML = `\
             <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">\
             <br>\
             <input type="text" class="form-input" name="sku" placeholder="Mã SKU">\
@@ -200,7 +215,7 @@
             <label>Ảnh biến thể:</label>\
             <input type="file" name="variantImage" accept="image/*">\
             <button type="button" class="removeVariant">Xóa biến thể</button>\
-        ';
+        `;
 
             // Thêm vào danh sách
             variantList.appendChild(newVariant);
@@ -324,6 +339,7 @@
 </div>
 </body>
 <script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 <script>
     const contextPath = "${pageContext.request.contextPath}";
 </script>
