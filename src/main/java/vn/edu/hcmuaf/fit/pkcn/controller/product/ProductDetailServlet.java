@@ -5,6 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
@@ -36,7 +37,8 @@ public class ProductDetailServlet extends HttpServlet {
                     new ProductDao(JDBI.getJdbi()),
                     new SortProductImpl(),
                     new ProductImageDao(JDBI.getJdbi()),
-                    new ProductVariantDao(JDBI.getJdbi())
+                    new ProductVariantDao(JDBI.getJdbi()),
+                    new CategoryDao(JDBI.getJdbi())
             );
 
 

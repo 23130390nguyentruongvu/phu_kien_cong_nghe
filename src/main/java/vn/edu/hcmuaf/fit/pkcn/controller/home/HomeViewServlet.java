@@ -43,7 +43,8 @@ public class HomeViewServlet extends HttpServlet {
                 new ProductDao(JDBI.getJdbi()),
                 new SortProductImpl(),
                 new ProductImageDao(JDBI.getJdbi()),
-                new ProductVariantDao(JDBI.getJdbi())
+                new ProductVariantDao(JDBI.getJdbi()),
+                new CategoryDao(JDBI.getJdbi())
         );
         CategoryService cs = new CategoryService(
                 new CategoryDao(JDBI.getJdbi())

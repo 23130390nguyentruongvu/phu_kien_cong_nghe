@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
 import java.math.BigDecimal;
@@ -334,4 +336,16 @@ public class ProductDao {
         );
     }
 
+
+    public int insertProductWithTransaction(Handle handle, JSonProduct product) {
+        String sql = """
+                INSERT INTO products(folder_id, name, warranty_period, subtitle, description, min_price, max_price, status, stock)
+                VALUES(:folderId, :name, :warrantyPeriod, :subtitle, :description, :minPrice, :maxPrice, :status, :stock)
+                """;
+        return handle.createUpdate(sql)
+                .bindBean(product)
+                .executeAndReturnGeneratedKeys()
+                .mapTo(Integer.class)
+                .one();
+    }
 }
