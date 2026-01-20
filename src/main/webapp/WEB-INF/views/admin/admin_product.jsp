@@ -66,7 +66,8 @@
                                 <td>${product.rangePriceFormat}</td>
                                 <td>
                             <span class="edit-product">
-                                <span class="edit-product-remove" data-id="${product.prodId}"><i
+                                <span class="edit-product-remove" data-name="${product.name}"
+                                      data-id="${product.prodId}"><i
                                         class="fa-solid fa-circle-minus"></i></span>
                                 <span class="edit-product-add-var" data-id="${product.prodId}"><i
                                         class="fa-solid fa-circle-plus"></i></span>
@@ -80,28 +81,14 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                        <%--                <div class="wrap-load-more">--%>
-                        <%--                    <input class="load-more" name="change-status" value="Tải thêm">--%>
-                        <%--                </div>--%>
                 </form>
 
             </c:if>
         </div>
     </div>
     <!--    close main content admin-->
+
     <!--    popup-->
-    <!-- Popup xác nhận hành động -->
-    <div id="popup-confirm" style="z-index: 1001" class="popup">
-        <div class="popup-content">
-            <h2>Xác nhận hành động</h2>
-            <p id="confirmMessage"></p>
-            <form id="confirmForm" method="post">
-                <input type="hidden" id="confirmId" name="id">
-                <button type="submit" id="confirmYes">Đồng ý</button>
-                <button type="button" id="confirmNo">Hủy</button>
-            </form>
-        </div>
-    </div>
     <!-- TODO:Popup ADD product -->
     <div id="popup-add-product" class="popup">
         <div class="popup-content">
@@ -260,7 +247,7 @@
         });
     </script>
 
-    <!--  Popup  views product variant-->
+    <!-- TODO: Popup  views product variant-->
     <div id="popup-variants" class="popup" style="display:none;">
         <div class="popup-content">
             <h2>Danh sách biến thể cho Sản phẩm<span id="display-id"></span></h2>
@@ -284,7 +271,7 @@
             <button type="button" id="closeVariants">Đóng</button>
         </div>
     </div>
-    <!--    Popup add/edit product variant-->
+    <!--   TODO: Popup add/edit product variant-->
     <div id="popup-add-edit-variant" class="popup">
         <div class="popup-content">
             <h2>Biến thể sản phẩm</h2>
@@ -378,6 +365,8 @@
 <script type="module" src="${pageContext.request.contextPath}/js/firebase.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product_remove.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product.js"></script>
 </html>
