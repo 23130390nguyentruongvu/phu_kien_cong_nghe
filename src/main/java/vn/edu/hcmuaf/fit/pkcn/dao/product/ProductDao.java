@@ -352,4 +352,13 @@ public class ProductDao {
                         .orElse(null)
         );
     }
+
+    public boolean removeProduct(int prodId) {
+        String sql = """
+                DELETE 
+                FROM products
+                WHERE id = :prodId
+                """;
+        return jdbi.withHandle(handle -> handle.createUpdate(sql).bind("prodId", prodId).execute() > 0);
+    }
 }

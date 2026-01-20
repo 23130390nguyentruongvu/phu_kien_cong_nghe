@@ -16,43 +16,44 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "JsonGetFolderIdServlet", value = "/get-folder-id")
-public class JsonGetFolderIdServlet extends HttpServlet {
+@WebServlet(name = "JsonRemoveProductServlet", value = "/remove-product")
+public class JsonRemoveProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean hasImageInStorage = false;
-        String folderId ="";
-        String message = "";
-        ProductService ps = new ProductService(
-                new ProductDao(JDBI.getJdbi()),
-                new SortProductImpl(),
-                new ProductImageDao(JDBI.getJdbi()),
-                new ProductVariantDao(JDBI.getJdbi()),
-                new CategoryDao(JDBI.getJdbi())
-        );
-        try {
-            int variantId = Integer.parseInt(request.getParameter("variantId"));
-            folderId = ps.getFolderIdWithVarId(variantId);
-            message = "OK";
-            hasImageInStorage = true;
-        }catch (Exception e) {
-            e.printStackTrace();
-            message = e.getMessage();
-        }
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        boolean success = false;
+        String message = "";
+        String folderId = null;
+
+        try {
+            int prodId = Integer.parseInt(request.getParameter("productId"));
+            ProductService ps = new ProductService(
+                    new ProductDao(JDBI.getJdbi()),
+                    new SortProductImpl(),
+                    new ProductImageDao(JDBI.getJdbi()),
+                    new ProductVariantDao(JDBI.getJdbi()),
+                    new CategoryDao(JDBI.getJdbi())
+            );
+
+            folderId = ps.getFolderIdWithProdId(prodId);
+            success = ps.removeProduct(prodId);
+            message = success ? "Xóa sản phẩm " + prodId + " thành công" : "Xóa sản phẩm " + prodId + " thất bại";
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = "Lỗi xảy ra khi xóa sản phẩm " + e.getMessage();
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("folderId", folderId);
-        map.put("hasImageInStorage", hasImageInStorage);
+        map.put("success", success);
         map.put("message", message);
         String jsonRes = new Gson().toJson(map);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonRes);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
