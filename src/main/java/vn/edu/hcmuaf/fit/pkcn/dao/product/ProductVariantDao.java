@@ -101,4 +101,41 @@ public class ProductVariantDao {
                 .mapTo(Integer.class)
                 .one();
     }
+
+    public boolean removeProductVariant(Handle handle, int variantId) {
+        String sql = """
+                DELETE FROM product_variants
+                WHERE id = :variantId
+                """;
+        return handle.createUpdate(sql).bind("variantId", variantId).execute() > 0;
+    }
+
+    public int getProductId(int variantId) {
+        String sql = """
+                SELECT product_id
+                FROM product_variants
+                WHERE id = :variantId
+                """;
+        return jdbi
+                .withHandle(
+                        handle -> handle.createQuery(sql)
+                                .bind("variantId", variantId)
+                                .mapTo(Integer.class)
+                                .findOne()
+                                .orElse(-1));
+    }
+
+    public String getSku(int variantId) {
+        String sql = """
+                SELECT sku
+                FROM product_variants
+                WHERE id = :variantId
+                """;
+        return jdbi.withHandle(
+                handle -> handle.createQuery(sql)
+                        .bind("variantId", variantId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null));
+    }
 }

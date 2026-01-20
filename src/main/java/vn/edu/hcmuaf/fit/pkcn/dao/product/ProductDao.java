@@ -65,6 +65,22 @@ public class ProductDao {
         });
     }
 
+    public int updatePrice(Handle handle, int productId) {
+        String sql = """
+                  UPDATE products p
+                     LEFT JOIN (
+                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p
+                         FROM product_variants
+                         WHERE product_id = :productId
+                         GROUP BY product_id
+                     ) pv_stats ON p.id = pv_stats.product_id
+                    SET p.min_price = COALESCE(pv_stats.min_p, 0),
+                    p.max_price = COALESCE(pv_stats.max_p, 0)
+                WHERE p.id = :productId;
+                """;
+        return handle.createUpdate(sql).bind("productId", productId).execute();
+    }
+
     public HashMap<Integer, ProductAdminShowAsItem> getProducts(String key) {
         String sql = "SELECT p.*, pi.url_image " +
                 "FROM products p " +
@@ -320,5 +336,20 @@ public class ProductDao {
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
                 .one();
+    }
+
+    public String getFolderId(int prodId) {
+        String sql = """
+                SELECT folder_id
+                FROM products
+                WHERE id = :prodId
+                """;
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("prodId", prodId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
     }
 }
