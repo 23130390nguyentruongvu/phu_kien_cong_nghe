@@ -109,7 +109,8 @@
             <form id="form-add-product" enctype="multipart/form-data" method="post">
                 <input id="add-prod-name" type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
                 <br>
-                <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
+                <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input"
+                       placeholder="Thời gian bảo hành (tháng)">
                 <br>
                 <select id="add-prod-categoryId" class="form-input" name="categoryId">
                     <c:if test="${empty requestScope.categories}">
@@ -124,7 +125,8 @@
                 <br>
                 <textarea id="add-prod-subtitle" name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
                 <br>
-                <textarea id="add-prod-description" name="description" class="form-input" placeholder="Mô tả dài"></textarea>
+                <textarea id="add-prod-description" name="description" class="form-input"
+                          placeholder="Mô tả dài"></textarea>
                 <br>
                 <div class="wrap-status-product">
                     <label for="statusProduct">Hiện lên website</label>
@@ -158,6 +160,7 @@
                         <!-- Chỉ cho phép chọn 1 ảnh biến thể -->
                         <label>Ảnh biến thể:</label>
                         <input type="file" name="add-prod-variantImages" accept="image/*">
+                        <div class="variant-image-preview" style="margin-top: 5px;"></div>
                     </div>
                 </div>
                 <br>
@@ -171,6 +174,30 @@
     </div>
 
     <script>
+        //Sự kiện review ảnh
+        function handleVariantImagePreview(inputElement) {
+            const file = inputElement.files[0];
+            const container = inputElement.closest('.add-prod-variant-item');
+            const previewDiv = container.querySelector('.variant-image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewDiv.innerHTML = '\<' +
+                        'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">'
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewDiv.innerHTML = '';
+            }
+        }
+
+        //Set hiện ảnh cho biến thể đầu tiên
+        document.querySelectorAll('input[name="add-prod-variantImages"]').forEach(input => {
+            input.addEventListener('change', function () {
+                handleVariantImagePreview(this);
+            });
+        });
+
         // Hiển thị preview ảnh sản phẩm và chọn ảnh chính
         document.getElementById('add-prod-productImages').addEventListener('change', function (event) {
             const preview = document.getElementById('productPreview');
@@ -214,11 +241,17 @@
             <br>\
             <label>Ảnh biến thể:</label>\
             <input type="file" name="add-prod-variantImages" accept="image/*">\
+            <div class="variant-image-preview" style="margin-top: 5px;"></div>\
             <button type="button" class="removeVariant">Xóa biến thể</button>\
         `;
 
             // Thêm vào danh sách
             variantList.appendChild(newVariant);
+
+            const fileInput = newVariant.querySelector('input[type="file"]');
+            fileInput.addEventListener('change', function () {
+                handleVariantImagePreview(this);
+            });
 
             // Gắn sự kiện xóa
             newVariant.querySelector('.removeVariant').addEventListener('click', function () {
@@ -346,5 +379,5 @@
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 
-<script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product.js"></script>
 </html>

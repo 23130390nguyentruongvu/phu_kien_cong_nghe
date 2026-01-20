@@ -109,6 +109,8 @@ public class ProductAdminShowAsItem {
 
     @ColumnName("max_price")
     public void setMaxPrice(BigDecimal maxPrice) {
+        if (minPrice != null)
+            if (maxPrice.doubleValue() == minPrice.doubleValue()) return;
         this.maxPrice = maxPrice;
     }
 

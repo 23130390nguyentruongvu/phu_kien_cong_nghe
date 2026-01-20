@@ -37,6 +37,25 @@ public class ProductService {
         this.productVariantDao = productVariantDao;
     }
 
+    public boolean removeVarAndUpdatePriceProductWithTransaction(int prodId, int variantId) {
+        return JDBI.getJdbi().inTransaction(handle -> {
+            boolean isSuccess = true;
+            isSuccess = isSuccess && productVariantDao.removeProductVariant(handle, variantId);
+
+            isSuccess = isSuccess && productDao.updatePrice(handle, prodId) > 0;
+
+            return isSuccess;
+        });
+    }
+
+    public String getFolderId(int variantId) throws Exception {
+        int prodId = productVariantDao.getProductId(variantId);
+        if (prodId == -1) throw new Exception("Không tìm thấy product id");
+        String folderId = productDao.getFolderId(prodId);
+        if (folderId == null) throw new Exception("Không tìm thấy folder id");
+        return folderId;
+    }
+
     /*
         kiểm tra nếu sortOption là null hoặc empty thì chỉ lấy các dữ liệu lên;
         Trong trường hợp có thì ta truyền câu sql của SortProduct đã xử lí vào hàm của productDao

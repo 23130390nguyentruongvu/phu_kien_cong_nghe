@@ -1,3 +1,5 @@
+import {deleteSkuImage, deleteProductVariant} from './admin_product_remove_variant.js';
+
 //set sự kiện ajax cho show popup variants
 const showPopupVariants = async (prodId) => {
     const container = document.getElementById('variant-data-container');
@@ -12,6 +14,54 @@ const showPopupVariants = async (prodId) => {
         })
         .then(html => {
             container.innerHTML = html;
+            const sizeVariants = document.querySelectorAll(".product-variant-item").length
+
+            //xử lí sự kiện xóa biến thể
+            /*
+            đầu tiên gọi xuống JsonGetFolderServlet để lấy các thông tin về folderId, nếu folderId không có thì
+            tức hình ảnh sản phẩm đó chưa từng được lưu trên storage thì ta chỉ việc xóa sản phẩm dưới db, còn nếu có thì
+            sau khi xóa xong bên trong JsonRemoveProductServlet sẽ có trả về mã SKU để dựa vào đấy truy ra đường dẫn
+            mà storage đang lưu ảnh của biến thể đó
+             */
+            document.querySelectorAll(".edit-product-var-remove").forEach(function (el) {
+                el.addEventListener("click", async function () {
+
+                    const id = this.dataset.id; // lấy product variant id
+                    if (sizeVariants < 2) {
+                        alert("Không thể xóa biến thể " + id + " khi sản phẩm chung chỉ có " + sizeVariants + " biến thể");
+                    } else {
+                        const isDelete = confirm("Bạn có chắc chắn muốn xóa biến thể mang mã: " + id + " không?")
+                        if (isDelete) {
+                            try {
+                                // lấy thông tin folderId và SKU trước khi xóa trong DB
+                                const folderRes = await fetch(`${contextPath}/get-folder-id?variantId=${id}`);
+                                const folderData = await folderRes.json();
+
+                                // Gọi Servlet xóa trong Database
+                                const res = await deleteProductVariant(id);
+
+                                if (res.success) {
+                                    // Nếu DB xóa xong và trước đó có ảnh trên storage thì mới xóa Firebase
+                                    if (folderData.hasImageInStorage) {
+                                        const deleteStorage = await deleteSkuImage(folderData.folderId, res.sku);
+                                        alert(res.message + " và " + deleteStorage.message)
+                                    } else
+                                        alert(res.message);
+                                    // Reload lại danh sách biến thể sau khi xóa thành công
+                                    await showPopupVariants(prodId);
+                                } else {
+                                    alert("Lỗi xóa DB: " + res.message);
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                alert("Lỗi hệ thống: " + err.message);
+                            }
+
+                        }
+                    }
+                });
+            });
+
         })
         .catch(err => {
             console.log(err)
@@ -30,9 +80,20 @@ document.getElementById('closeAddProd').onclick = () => {
 
 // Mở popup xem biến thể
 document.querySelectorAll('.edit-product-show-var').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const productId = e.currentTarget.dataset.id;
-        showPopupVariants(productId).then(r => document.getElementById('popup-variants').style.display = 'block')
+    btn.addEventListener('click', async (e) => {
+        const productId = btn.dataset.id; // Dùng trực tiếp biến btn sẽ an toàn hơn
+        const popup = document.getElementById('popup-variants');
+        const container = document.getElementById('variant-data-container');
+
+        popup.style.display = 'block';
+        container.innerHTML = `<tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>`;
+
+        try {
+            await showPopupVariants(productId);
+        } catch (error) {
+            console.error("Lỗi khi mở popup:", error);
+            container.innerHTML = `<tr><td colspan="7" style="color:red; text-align:center;">Lỗi: ${error.message}</td></tr>`;
+        }
     });
 });
 document.getElementById('closeVariants').onclick = () => {
