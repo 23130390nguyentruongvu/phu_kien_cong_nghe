@@ -301,52 +301,16 @@
         </div>
     </div>
 
-    <!--    edit product-->
+    <!--  TODO:  edit product-->
     <div id="popup-edit" class="popup">
         <div class="popup-content edit-product-content">
             <h2>Chỉnh sửa sản phẩm</h2>
             <form id="editProductForm">
-                <!-- Tên sản phẩm -->
-                <label for="name-product">Tên sản phẩm:</label>
-                <input type="text" id="name-product" name="name-product" placeholder="Tên sản phẩm">
-                <br>
-                <!-- Thời hạn bảo hành -->
-                <label for="warranty">Thời hạn bảo hành (tháng):</label>
-                <input type="number" id="warranty" name="warranty" placeholder="VD: 12">
-                <br>
+             <div class="content-edit-product">
 
-                <!-- Mô tả ngắn -->
-                <label for="short-desc">Mô tả ngắn:</label>
-                <input type="text" id="short-desc" name="short-desc" placeholder="Mô tả ngắn">
-                <br>
-
-                <!-- Mô tả dài -->
-                <label for="long-desc">Mô tả dài:</label>
-                <textarea id="long-desc" name="long-desc" placeholder="Mô tả chi tiết"></textarea>
-                <br>
-
-                <!-- Hiển thị trên web -->
-                <label>Hiển thị trên website<input style="height: 20px" type="checkbox" name="isVisible" checked>
-
-                </label>
-                <br>
-
-                <!-- Ảnh sản phẩm -->
-                <label>Ảnh sản phẩm:</label>
-                <div class="product-images">
-                    <div class="image-item">
-                        <img src="assets/image/fake_products/item_bcth_1.webp" alt="Ảnh 1">
-                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage" checked>
-                        <button type="button" class="remove-img">Xóa</button>
-                    </div>
-                    <div class="image-item">
-                        <img src="assets/image/fake_products/item_bcth_2.webp" alt="Ảnh 2">
-                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage">
-                        <button type="button" class="remove-img">Xóa</button>
-                    </div>
-                </div>
-                <button type="button" id="addImage">Thêm ảnh mới</button>
-
+             </div>
+                <input type="file" id="addImageInput" accept="image/*" multiple>
+                <div id="editProductPreview" class="edit-product-images"></div>
                 <!-- Nút hành động -->
                 <div class="popup-actions">
                     <button type="submit" id="submit-update-product">Cập nhật</button>
@@ -367,6 +331,8 @@
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_remove.js"></script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product_edit.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product.js"></script>
 </html>

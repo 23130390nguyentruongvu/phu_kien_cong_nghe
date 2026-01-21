@@ -28,24 +28,25 @@ public class GetVariantsServlet extends HttpServlet {
                 new ProductVariantDao(JDBI.getJdbi())
         );
 
-       try {
-           if (user == null)
-               request.getRequestDispatcher("variant-rows.jsp").forward(request, response);
-           else {
-               if (user.getRole() != 1) {
-                   response.sendError(HttpServletResponse.SC_NOT_FOUND, "Trang không tồn tại");
-               }else {
-                   int id = Integer.parseInt(request.getParameter("productId"));
-                   List<ProductVariant> res = productVariantService.getProductVariantsByProdId(id);
+        try {
+            if (user == null)
+                request.getRequestDispatcher("variant-rows.jsp").forward(request, response);
+            else {
+                if (user.getRole() != 1) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Trang không tồn tại");
+                } else {
+                    int id = Integer.parseInt(request.getParameter("productId"));
+                    List<ProductVariant> res = productVariantService.getProductVariantsByProdId(id);
 
-                   System.out.println(Arrays.toString(res.toArray()));
-                   request.setAttribute("variants", res);
-                   request.getRequestDispatcher("/WEB-INF/fragments/variant_row.jsp").forward(request, response);
-               }
-           }
-       }catch (Exception e) {
-           e.printStackTrace();
-       }
+                    request.setAttribute("variants", res);
+                    request.getRequestDispatcher("/WEB-INF/fragments/variant_row.jsp").forward(request, response);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("variants", null);
+            request.getRequestDispatcher("/WEB-INF/fragments/variant_row.jsp").forward(request, response);
+        }
     }
 
     @Override

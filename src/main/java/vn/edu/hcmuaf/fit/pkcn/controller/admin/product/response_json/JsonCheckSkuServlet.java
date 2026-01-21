@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.controller.admin.product;
+package vn.edu.hcmuaf.fit.pkcn.controller.admin.product.response_json;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

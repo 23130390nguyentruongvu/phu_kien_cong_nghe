@@ -15,6 +15,22 @@ public class ProductImageDao {
         this.jdbi = jdbi;
     }
 
+    public List<String> getImagesProduct(int prodId, boolean getMainImage) {
+        String getMain = getMainImage ? "1=1" : "is_main = 0";
+        String sql = """
+                SELECT url_image
+                FROM product_images 
+                WHERE product_variant_id IS NULL AND product_id = :prodId
+                 AND 
+                """ + getMain;
+
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("prodId", prodId)
+                .mapTo(String.class)
+                .list()
+        );
+    }
+
     //Lấy theo các hình ảnh của product chung, nếu getMainImage là false thì chỉ lấy các ảnh phụ
     public HashMap<Integer, List<String>> getImagesProduct(List<Integer> ids, boolean getMainImage) {
         String getMain = getMainImage ? "1=1" : "pi.is_main = 0";
