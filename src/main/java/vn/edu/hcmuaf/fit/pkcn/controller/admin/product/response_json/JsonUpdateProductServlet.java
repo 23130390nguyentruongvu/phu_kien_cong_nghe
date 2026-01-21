@@ -9,19 +9,25 @@ import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "JsonGetFolderIdServlet", value = "/get-folder-id")
-public class JsonGetFolderIdServlet extends HttpServlet {
+@WebServlet(name = "JsonUpdateProductServlet", value = "/update-product")
+public class JsonUpdateProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean hasImageInStorage = false;
-        String folderId = null;
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        boolean success = false;
         String message = "";
         ProductService ps = new ProductService(
                 new ProductDao(JDBI.getJdbi()),
@@ -31,41 +37,28 @@ public class JsonGetFolderIdServlet extends HttpServlet {
                 new CategoryDao(JDBI.getJdbi())
         );
         try {
-            String productId = request.getParameter("productId");
-            String variantId = request.getParameter("variantId");
-            if (productId != null && !productId.isEmpty()) {
-                int prodId = Integer.parseInt(productId);
-                folderId = ps.getFolderIdWithProdId(prodId);
-                if(folderId == null) throw new Exception("Không tìm thấy folder id");
-                message = "OK";
-                hasImageInStorage = true;
-            } else if (variantId != null && !variantId.isEmpty()) {
-                int varId = Integer.parseInt(variantId);
-                folderId = ps.getFolderIdWithVarId(varId);
-                message = "OK";
-                hasImageInStorage = true;
-            } else {
-                throw new IllegalArgumentException("Thiếu productId hoặc variantId");
-            }
+            StringBuilder jsonBuffer = new StringBuilder();
+            String line;
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                jsonBuffer.append(line);
+
+            Gson gson = new Gson();
+            JsonUpdateProduct productDto = gson.fromJson(jsonBuffer.toString(), JsonUpdateProduct.class);
+            success = ps.updateProduct(productDto);
+            message = success ? "update thành công sản phẩm " + productDto.getName() : "update thất bại sản phẩm " + productDto.getName();
         } catch (Exception e) {
             e.printStackTrace();
-            message = e.getMessage();
+            message = "Lỗi xảy ra: " + e.getMessage();
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("folderId", folderId);
-        map.put("hasImageInStorage", hasImageInStorage);
+        map.put("success", success);
         map.put("message", message);
         String jsonRes = new Gson().toJson(map);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonRes);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
-            ServletException, IOException {
-
     }
 }

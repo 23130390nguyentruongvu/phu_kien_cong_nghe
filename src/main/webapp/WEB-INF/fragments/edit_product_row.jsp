@@ -31,6 +31,7 @@
 
     <!-- Hiển thị trên web -->
     <label>Hiển thị trên website<input style="height: 20px" type="checkbox"
+                                       class="edit-isActive"
                                        name="isVisible" ${requestScope.product.active?'checked':''}>
 
     </label>
@@ -40,9 +41,9 @@
     <label>Ảnh sản phẩm:</label>
     <div class="product-images">
         <div class="image-item">
-            <img src="${requestScope.product.mainImage}" alt="Ảnh 1">
+            <img src="${requestScope.product.mainImage}" alt="Ảnh 1" data-url="${requestScope.product.mainImage}">
             <label style="margin-left: 150px">Ảnh chính</label>
-            <input style="height: 20px" type="radio" class="mainImage" name="mainImage" checked>
+            <input style="height: 20px" type="radio" value="${requestScope.product.mainImage}" class="mainImage" name="mainImage" checked>
             <label for="edit-remove-img">Xóa</label>
             <input type="checkbox" name="edit-remove-img"
                    class="edit-remove-img" value="Xóa"
@@ -51,9 +52,9 @@
         <c:if test="${not empty requestScope.product.images}">
             <c:forEach var="image" items="${requestScope.product.images}">
                 <div class="image-item">
-                    <img src="${image}" alt="Ảnh 2">
+                    <img src="${image}" alt="Ảnh 2" data-url="${image}">
                     <label style="margin-left: 150px">Ảnh chính</label>
-                    <input style="height: 20px" type="radio" class="mainImage" name="mainImage">
+                    <input style="height: 20px" type="radio" value="${image}" class="mainImage" name="mainImage">
                     <label for="edit-remove-img">Xóa</label>
                     <input type="checkbox" name="edit-remove-img"
                            class="edit-remove-img" value="Xóa"

@@ -60,12 +60,12 @@ public class ProductImageDao {
     }
 
     //Product variant id co the null
-    public void insertProductImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
+    public int insertProductImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
         String sql = """
                 INSERT INTO product_images(product_variant_id, product_id, url_image, is_main)
                 VALUES(:prodVarId, :prodId, :urlImage, :isMain)
                 """;
-        handle.createUpdate(sql)
+        return handle.createUpdate(sql)
                 .bind("prodVarId", prodVarId)
                 .bind("prodId", productId)
                 .bind("urlImage", urlImage)
@@ -98,4 +98,20 @@ public class ProductImageDao {
                 .bind("isMain", 1)
                 .execute();
     }
+
+    public int deleteUrlsProdWithTransaction(Handle handle, int prodId, List<String> urls) {
+        if (urls == null || urls.isEmpty()) {
+            return 0;
+        }
+        String sql = """
+                DELETE FROM product_images
+                WHERE  product_id = :prodId
+                    AND url_image IN (<urls>)
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodId", prodId)
+                .bindList("urls", urls)
+                .execute();
+    }
+
 }

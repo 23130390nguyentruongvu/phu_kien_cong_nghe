@@ -1,5 +1,5 @@
 import {showPopupVariants} from './admin_product_remove_variant.js';
-import {setEvent} from "./admin_product_edit.js";
+import {setEvent, setEventConfirm} from "./admin_product_edit.js";
 
 
 // Mở popup thêm sản phẩm
@@ -65,6 +65,7 @@ document.querySelectorAll('.edit-product-update').forEach(btn => {
             console.log(container)
             container.innerHTML = html;
             setEvent()
+            setEventConfirm(id)
 
             document.getElementById('popup-edit').style.display = 'block';
         } catch (err) {
