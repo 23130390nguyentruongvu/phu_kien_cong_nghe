@@ -13,6 +13,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
+import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,13 @@ public class ProductService {
         this.sortSql = sortSql;
         this.productImageDao = productImageDao;
         this.productVariantDao = productVariantDao;
+    }
+
+    public ProductService(ProductDao productDao,
+                          SortProductImpl sortSql
+    ) {
+        this.productDao = productDao;
+        this.sortSql = sortSql;
     }
 
     public boolean updateProduct(JsonUpdateProduct product) {
@@ -222,6 +230,23 @@ public class ProductService {
 
     public List<ProductShowAsItem> getRelatedProducts(int productId) {
         return productDao.getRelatedProducts(productId);
+    }
+
+    public List<ProductShowAsItem> searchProducts(String keyword) {
+        return productDao.searchByKeyword(keyword);
+    }
+
+    public List<ProductShowAsItem> searchWithFilter(
+            String keyword,
+            Integer minPrice,
+            Integer maxPrice,
+            String category,
+            String sort,
+            String rating
+    ) {
+        return productDao.searchWithFilter(
+                keyword, minPrice, maxPrice, category, sort, rating
+        );
     }
 
     public boolean addProduct(JSonProduct product) {

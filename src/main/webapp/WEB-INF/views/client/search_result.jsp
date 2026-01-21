@@ -1,556 +1,187 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kết quả tìm kiếm</title>
-    <link rel="stylesheet" href="../../../css/search_result.css" />
-    <link rel="stylesheet" href="../../../shared/product_sidebar.css" />
-    <link rel="stylesheet" href="../../../shared/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="../../../shared/item_product.css" />
-  </head>
-  <body>
-  <jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/item_product.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search_result.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/product_sidebar.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+</head>
+<body>
+<div class="container-header-main-footer">
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <main>
-      <div class="container">
-        <div class="sidebar-product">
-          <aside class="widget widget_search">
-            <h3>DANH MỤC SẢN PHẨM</h3>
-            <div class="search-box">
-              <input type="search" placeholder="Tìm sản phẩm…" />
-              <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="container">
+            <jsp:include page="/WEB-INF/views/common/category_sidebar.jsp" />
+
+            <div class="content">
+                <div class="search-result-page">
+                    <h3>Kết quả tìm kiếm</h3>
+
+                    <c:if test="${not empty requestScope.keyword}">
+                        <p class="result-summary">
+                            Từ khóa: <strong>"${requestScope.keyword}"</strong>
+                        </p>
+                    </c:if>
+
+                    <form method="get" action="${pageContext.request.contextPath}/search">
+                        <input type="hidden" name="keyword" value="${keyword}" />
+
+                        <div class="filter-bar">
+                            <h3>Bộ Lọc Sản Phẩm</h3>
+
+                            <div class="filter-grid">
+                                <div class="filter-item">
+                                    <label for="price">Khoảng giá</label>
+                                    <select name="price" id="price">
+                                        <option value="" ${empty price ? 'selected' : ''}>Tất cả</option>
+                                        <option value="0-100" ${price == '0-100' ? 'selected' : ''}>Dưới 100.000đ</option>
+                                        <option value="100-300" ${price == '100-300' ? 'selected' : ''}>100.000đ - 300.000đ</option>
+                                        <option value="300-500" ${price == '300-500' ? 'selected' : ''}>300.000đ - 500.000đ</option>
+                                        <option value="500-1000" ${price == '500-1000' ? 'selected' : ''}>500.000đ - 1.000.000đ</option>
+                                        <option value="1000-up" ${price == '1000-up' ? 'selected' : ''}>Trên 1.000.000đ</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-item">
+                                    <label for="category">Danh mục</label>
+                                    <select name="category" id="category">
+                                        <option value="" ${empty param.category ? 'selected' : ''}>
+                                            Tất cả
+                                        </option>
+
+                                        <c:forEach var="parent"
+                                                   items="${applicationScope.ParentCategories}">
+
+                                            <option value="${parent.id}"
+                                                ${param.category == parent.id ? 'selected' : ''}>
+                                                    ${parent.nameCategory}
+                                            </option>
+
+                                            <c:forEach var="child"
+                                                       items="${applicationScope.SubCategoryMap[parent.id]}">
+
+                                                <option value="${child.id}"
+                                                    ${param.category == child.id ? 'selected' : ''}>
+                                                    └─ ${child.nameCategory}
+                                                </option>
+
+                                            </c:forEach>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+
+                                <div class="filter-item">
+                                    <label for="sort">Sắp xếp</label>
+                                    <select name="sort" id="sort">
+                                        <option value="" ${empty sort ? 'selected' : ''}>Mặc định</option>
+                                        <option value="price-asc" ${sort == 'price-asc' ? 'selected' : ''}>
+                                            Giá tăng dần
+                                        </option>
+                                        <option value="price-desc" ${sort == 'price-desc' ? 'selected' : ''}>
+                                            Giá giảm dần
+                                        </option>
+                                        <option value="newest" ${sort == 'newest' ? 'selected' : ''}>
+                                            Mới nhất
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="filter-item">
+                                    <label for="rating">Đánh giá</label>
+                                    <select name="rating" id="rating">
+                                        <option value="" ${empty rating ? 'selected' : ''}>Tất cả</option>
+
+                                        <option value="5" ${rating == '5' ? 'selected' : ''}>
+                                            ★★★★★ (5 sao)
+                                        </option>
+
+                                        <option value="4" ${rating == '4' ? 'selected' : ''}>
+                                            ★★★★☆ trở lên
+                                        </option>
+
+                                        <option value="3" ${rating == '3' ? 'selected' : ''}>
+                                            ★★★☆☆ trở lên
+                                        </option>
+
+                                        <option value="2" ${rating == '2' ? 'selected' : ''}>
+                                            ★★☆☆☆ trở lên
+                                        </option>
+
+                                        <option value="1" ${rating == '1' ? 'selected' : ''}>
+                                            ★☆☆☆☆ trở lên
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="filter-item">
+                                    <button type="submit" id="btnFilter">
+                                        <i class="fa-solid fa-filter"></i> Lọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <c:if test="${empty ProductsResult}">
+                        <div class="wrap-center-content">
+                            <div style="text-align: center; padding: 60px 0; font-size: 18px; color: #666;">
+                                <p>
+                                    Không tìm thấy sản phẩm nào cho từ khóa
+                                    <strong>"${keyword}"</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty ProductsResult}">
+                        <div class="wrap-center-content">
+                            <div class="products-grid-5">
+                                <c:forEach var="product" items="${ProductsResult}">
+                                    <div class="container-product-item">
+                                        <div class="item-wrap">
+                                            <div class="container-item">
+                                                <div class="image-product-item">
+                                                    <a
+                                                            href="${pageContext.request.contextPath}/product-detail?id=${product.productId}"
+                                                    >
+                                                        <img src="${product.imageMain}" loading="lazy" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="title-product-item">${product.name}</div>
+
+                                                <div class="price-product-item">
+                                                        ${product.minPriceByFormat}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="wrap-btn-search-similar">
+                                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
             </div>
-          </aside>
-
-          <aside class="widget widget_product_categories">
-            <ul class="product-categories">
-              <li class="category">
-                <a href="#" class="category-title">Bộ Chia Tín Hiệu</a>
-                <ul class="sub-category">
-                  <li><a href="#">Bộ Chia AV</a></li>
-                  <li><a href="#">Bộ Chia HDMI</a></li>
-                  <li><a href="#">Bộ Chia VGA</a></li>
-                  <li><a href="#">Bộ Chia USB</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Bộ Chuyển Đổi Tín Hiệu</a>
-                <ul class="sub-category">
-                  <li><a href="#">Chuyển Đổi Audio Quang</a></li>
-                  <li><a href="#">Chuyển Đổi HDMI</a></li>
-                  <li><a href="#">Chuyển Đổi VGA</a></li>
-                  <li><a href="#">Chuyển Đổi USB</a></li>
-                  <li><a href="#">Cáp DisplayPort</a></li>
-                  <li><a href="#">Đầu Nối HDMI, VGA</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Dây Cáp Tín Hiệu</a>
-                <ul class="sub-category">
-                  <li><a href="#">Cáp Âm Thanh</a></li>
-                  <li><a href="#">Cáp HDMI</a></li>
-                  <li><a href="#">Cáp VGA</a></li>
-                  <li><a href="#">Cáp USB</a></li>
-                  <li><a href="#">Cáp Lập Trình</a></li>
-                  <li><a href="#">Cáp DVI</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Phụ Kiện Điện Thoại</a>
-                <ul class="sub-category">
-                  <li><a href="#">Cáp HDMI Cho Điện Thoại</a></li>
-                  <li><a href="#">Cáp OTG</a></li>
-                  <li><a href="#">Kính 3D VR Shinecon</a></li>
-                  <li><a href="#">Thiết Bị Bluetooth</a></li>
-                  <li><a href="#">Đồ Chơi SmartPhone</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Phụ Kiện Máy Tính</a>
-                <ul class="sub-category">
-                  <li><a href="#">Card Màn Hình</a></li>
-                  <li><a href="#">Card Sound USB</a></li>
-                  <li><a href="#">Card PCI Express</a></li>
-                  <li><a href="#">Chuột Bay, Micro, Webcam</a></li>
-                  <li><a href="#">Đầu Đọc Thẻ</a></li>
-                  <li><a href="#">Túi Chống Sốc</a></li>
-                  <li><a href="#">Đồ Chơi Laptop PC</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Phụ Kiện Xe</a>
-                <ul class="sub-category">
-                  <li><a href="#">Phụ Kiện Xe Đạp</a></li>
-                  <li><a href="#">Phụ Kiện Ô Tô</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Thiết Bị Mạng</a>
-                <ul class="sub-category">
-                  <li><a href="#">Bút Soi Quang</a></li>
-                  <li><a href="#">Dao Cắt Quang</a></li>
-                  <li><a href="#">Kìm Bấm Mạng</a></li>
-                  <li><a href="#">Máy Test Mạng</a></li>
-                  <li><a href="#">Dây Cáp Mạng</a></li>
-                </ul>
-              </li>
-
-              <li class="category">
-                <a href="#" class="category-title">Thiết Bị Ngoại Vi</a>
-                <ul class="sub-category">
-                  <li><a href="#">Máy Trợ Giảng, Bút Trình Chiếu</a></li>
-                  <li><a href="#">Phụ Kiện Đàn Guitar</a></li>
-                  <li><a href="#">Nguồn Sạc</a></li>
-                  <li><a href="#">Thiết Bị Khác</a></li>
-                </ul>
-              </li>
-            </ul>
-          </aside>
         </div>
-
-        <div class="content">
-          <div class="search-result-page">
-            <h3>Kết quả tìm kiếm</h3>
-            <p class="result-summary">Từ khóa: <strong>"cáp"</strong></p>
-
-            <form method="get" action="">
-              <div class="filter-bar">
-                <h3>Bộ Lọc Sản Phẩm</h3>
-
-                <div class="filter-grid">
-                  <div class="filter-item">
-                    <label for="price">Khoảng giá</label>
-                    <select name="price" id="price">
-                      <option value="">Tất cả</option>
-                      <option value="0-100">Dưới 100.000đ</option>
-                      <option value="100-300">100.000đ - 300.000đ</option>
-                      <option value="300-500">300.000đ - 500.000đ</option>
-                      <option value="500-1000">500.000đ - 1.000.000đ</option>
-                      <option value="1000-up">Trên 1.000.000đ</option>
-                    </select>
-                  </div>
-
-                  <div class="filter-item">
-                    <label for="price">Khoảng giá</label>
-                    <select id="prices" id="price">
-                      <option value="">Tất cả</option>
-                      <option value="0-100">Dưới 100.000đ</option>
-                      <option value="100-300">100.000đ - 300.000đ</option>
-                      <option value="300-500">300.000đ - 500.000đ</option>
-                      <option value="500-1000">500.000đ - 1.000.000đ</option>
-                      <option value="1000-up">Trên 1.000.000đ</option>
-                    </select>
-                  </div>
-
-                  <div class="filter-item">
-                    <label for="category">Danh mục</label>
-                    <select name="category" id="category">
-                      <option value="">Tất cả</option>
-                      <option value="pc">Phụ kiện máy tính</option>
-                      <option value="phone">Phụ kiện điện thoại</option>
-                      <option value="cable">Cáp tín hiệu</option>
-                      <option value="network">Thiết bị mạng</option>
-                    </select>
-                  </div>
-
-                  <div class="filter-item">
-                    <label for="sort">Sắp xếp</label>
-                    <select name="sort" id="sort">
-                      <option value="">Mặc định</option>
-                      <option value="price-asc">Giá tăng dần</option>
-                      <option value="price-desc">Giá giảm dần</option>
-                      <option value="newest">Mới nhất</option>
-                    </select>
-                  </div>
-
-                  <div class="filter-item">
-                    <label for="rating">Đánh giá</label>
-                    <select name="rating" id="rating">
-                      <option value="">Tất cả</option>
-                      <option value="5">★★★★★ (5 sao)</option>
-                      <option value="4">★★★★☆ trở lên</option>
-                      <option value="3">★★★☆☆ trở lên</option>
-                      <option value="2">★★☆☆☆ trở lên</option>
-                      <option value="1">★☆☆☆☆ trở lên</option>
-                    </select>
-                  </div>
-
-                  <div class="filter-item">
-                    <button type="submit" id="btnFilter">
-                      <i class="fa-solid fa-filter"></i> Lọc
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <div class="wrap-center-content">
-              <div class="products-grid-5">
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_usb3_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp USB 3.0 AM to AF 1.5m
-                      </div>
-                      <div class="price-product-item">
-                        80.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_typec_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp Type-C sạc nhanh 3A dài 1m
-                      </div>
-                      <div class="price-product-item">
-                        50.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_hdmi_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp HDMI 2.0 4K@60Hz 1.5m
-                      </div>
-                      <div class="price-product-item">
-                        120.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_mang_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp mạng CAT6 bấm sẵn 3m
-                      </div>
-                      <div class="price-product-item">
-                        45.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_audio_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp âm thanh 3.5mm 1m
-                      </div>
-                      <div class="price-product-item">
-                        25.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_usb2_1.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp USB 2.0 nối dài 1m
-                      </div>
-                      <div class="price-product-item">
-                        30.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img
-                          src="../assets/image/cables/cap_displayport.webp"
-                        />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp DisplayPort 1.4 8K
-                      </div>
-                      <div class="price-product-item">
-                        150.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_typec_hdmi.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp chuyển Type-C sang HDMI
-                      </div>
-                      <div class="price-product-item">
-                        180.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_lightning.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp Lightning sạc nhanh 1m
-                      </div>
-                      <div class="price-product-item">
-                        90.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_sata.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp SATA 3 tốc độ cao
-                      </div>
-                      <div class="price-product-item">
-                        35.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img
-                          src="../assets/image/cables/cap_usb3_printer.webp"
-                        />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp USB 3.0 máy in 1.5m
-                      </div>
-                      <div class="price-product-item">
-                        70.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_vga.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp VGA 1.5m chống nhiễu
-                      </div>
-                      <div class="price-product-item">
-                        50.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_otg.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp chuyển OTG Type-C
-                      </div>
-                      <div class="price-product-item">
-                        25.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_loa_rca.webp" />
-                      </div>
-                      <div class="title-product-item">Cáp âm thanh RCA 1m</div>
-                      <div class="price-product-item">
-                        40.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_typec_3a.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp Type-C 3A dây dù 1.2m
-                      </div>
-                      <div class="price-product-item">
-                        60.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_usb_micro.webp" />
-                      </div>
-                      <div class="title-product-item">Cáp Micro USB 1m</div>
-                      <div class="price-product-item">
-                        20.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_power_pc.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Dây nguồn chữ L cho PC
-                      </div>
-                      <div class="price-product-item">
-                        35.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-
-                <div class="container-product-item">
-                  <div class="item-wrap">
-                    <div class="container-item">
-                      <div class="image-product-item">
-                        <img src="../assets/image/cables/cap_mini_hdmi.webp" />
-                      </div>
-                      <div class="title-product-item">
-                        Cáp Mini HDMI sang HDMI
-                      </div>
-                      <div class="price-product-item">
-                        90.000<span class="underline_dong">đ</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wrap-btn-search-similar">
-                    <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
-
-  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-  </body>
-  <script src="../../../js/header.js"></script>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+</div>
+</body>
 </html>
