@@ -93,8 +93,3 @@ for (let item of arr) {
         window.location.href = 'product_category.jsp'
     })
 }
-
-wrapUser = document.getElementsByClassName('wrap-state-user')[0]
-wrapUser.addEventListener('click', (e) => {
-    window.location.href = 'personal_info.jsp'
-})

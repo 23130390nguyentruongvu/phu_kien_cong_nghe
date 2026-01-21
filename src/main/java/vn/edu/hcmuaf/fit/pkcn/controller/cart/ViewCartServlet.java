@@ -21,21 +21,6 @@ public class ViewCartServlet extends HttpServlet {
             cart = (Cart) session.getAttribute("cart");
             if (cart == null) {
                 cart = new Cart((User) session.getAttribute("user"));
-                ProductVariant variant = new ProductVariant(
-                        1,                                  // id
-                        101,                                // productId
-                        "SKU-IP15-PRO-BLUE",                // sku
-                        "iPhone 15 Pro Max - Xanh Titan",   // name
-                        new BigDecimal("30000000"),         // price (30 triệu VNĐ)
-                        50,                                 // stock
-                        221,                                // gram
-                        "Xanh Titan",                       // color
-                        "256GB",                            // size
-                        LocalDateTime.now(),                // create
-                        LocalDateTime.now()                 // update
-                );
-                cart.addCartItem(variant, "", 12);//test
-
             }
             session.setAttribute("cart", cart);
         } catch (Exception e) {
