@@ -178,6 +178,19 @@ public class ProductService {
         return productDao.searchByKeyword(keyword);
     }
 
+    public List<ProductShowAsItem> searchWithFilter(
+            String keyword,
+            Integer minPrice,
+            Integer maxPrice,
+            String category,
+            String sort,
+            String rating
+    ) {
+        return productDao.searchWithFilter(
+                keyword, minPrice, maxPrice, category, sort, rating
+        );
+    }
+
     public boolean addProduct(JSonProduct product) {
         try {
             return JDBI.getJdbi().inTransaction(handle -> {

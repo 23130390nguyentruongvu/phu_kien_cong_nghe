@@ -33,7 +33,9 @@
                         </p>
                     </c:if>
 
-                    <form method="get" action="">
+                    <form method="get" action="${pageContext.request.contextPath}/search">
+                        <input type="hidden" name="keyword" value="${keyword}" />
+
                         <div class="filter-bar">
                             <h3>Bộ Lọc Sản Phẩm</h3>
 
@@ -41,59 +43,88 @@
                                 <div class="filter-item">
                                     <label for="price">Khoảng giá</label>
                                     <select name="price" id="price">
-                                        <option value="">Tất cả</option>
-                                        <option value="0-100">Dưới 100.000đ</option>
-                                        <option value="100-300">100.000đ - 300.000đ</option>
-                                        <option value="300-500">300.000đ - 500.000đ</option>
-                                        <option value="500-1000">500.000đ - 1.000.000đ</option>
-                                        <option value="1000-up">Trên 1.000.000đ</option>
-                                    </select>
-                                </div>
-
-                                <div class="filter-item">
-                                    <label for="price">Khoảng giá</label>
-                                    <select id="prices" id="price">
-                                        <option value="">Tất cả</option>
-                                        <option value="0-100">Dưới 100.000đ</option>
-                                        <option value="100-300">100.000đ - 300.000đ</option>
-                                        <option value="300-500">300.000đ - 500.000đ</option>
-                                        <option value="500-1000">500.000đ - 1.000.000đ</option>
-                                        <option value="1000-up">Trên 1.000.000đ</option>
+                                        <option value="" ${empty price ? 'selected' : ''}>Tất cả</option>
+                                        <option value="0-100" ${price == '0-100' ? 'selected' : ''}>Dưới 100.000đ</option>
+                                        <option value="100-300" ${price == '100-300' ? 'selected' : ''}>100.000đ - 300.000đ</option>
+                                        <option value="300-500" ${price == '300-500' ? 'selected' : ''}>300.000đ - 500.000đ</option>
+                                        <option value="500-1000" ${price == '500-1000' ? 'selected' : ''}>500.000đ - 1.000.000đ</option>
+                                        <option value="1000-up" ${price == '1000-up' ? 'selected' : ''}>Trên 1.000.000đ</option>
                                     </select>
                                 </div>
 
                                 <div class="filter-item">
                                     <label for="category">Danh mục</label>
                                     <select name="category" id="category">
-                                        <option value="">Tất cả</option>
-                                        <option value="pc">Phụ kiện máy tính</option>
-                                        <option value="phone">Phụ kiện điện thoại</option>
-                                        <option value="cable">Cáp tín hiệu</option>
-                                        <option value="network">Thiết bị mạng</option>
+                                        <option value="" ${empty param.category ? 'selected' : ''}>
+                                            Tất cả
+                                        </option>
+
+                                        <c:forEach var="parent"
+                                                   items="${applicationScope.ParentCategories}">
+
+                                            <option value="${parent.id}"
+                                                ${param.category == parent.id ? 'selected' : ''}>
+                                                    ${parent.nameCategory}
+                                            </option>
+
+                                            <c:forEach var="child"
+                                                       items="${applicationScope.SubCategoryMap[parent.id]}">
+
+                                                <option value="${child.id}"
+                                                    ${param.category == child.id ? 'selected' : ''}>
+                                                    └─ ${child.nameCategory}
+                                                </option>
+
+                                            </c:forEach>
+                                        </c:forEach>
                                     </select>
                                 </div>
+
 
                                 <div class="filter-item">
                                     <label for="sort">Sắp xếp</label>
                                     <select name="sort" id="sort">
-                                        <option value="">Mặc định</option>
-                                        <option value="price-asc">Giá tăng dần</option>
-                                        <option value="price-desc">Giá giảm dần</option>
-                                        <option value="newest">Mới nhất</option>
+                                        <option value="" ${empty sort ? 'selected' : ''}>Mặc định</option>
+                                        <option value="price-asc" ${sort == 'price-asc' ? 'selected' : ''}>
+                                            Giá tăng dần
+                                        </option>
+                                        <option value="price-desc" ${sort == 'price-desc' ? 'selected' : ''}>
+                                            Giá giảm dần
+                                        </option>
+                                        <option value="newest" ${sort == 'newest' ? 'selected' : ''}>
+                                            Mới nhất
+                                        </option>
                                     </select>
                                 </div>
+
 
                                 <div class="filter-item">
                                     <label for="rating">Đánh giá</label>
                                     <select name="rating" id="rating">
-                                        <option value="">Tất cả</option>
-                                        <option value="5">★★★★★ (5 sao)</option>
-                                        <option value="4">★★★★☆ trở lên</option>
-                                        <option value="3">★★★☆☆ trở lên</option>
-                                        <option value="2">★★☆☆☆ trở lên</option>
-                                        <option value="1">★☆☆☆☆ trở lên</option>
+                                        <option value="" ${empty rating ? 'selected' : ''}>Tất cả</option>
+
+                                        <option value="5" ${rating == '5' ? 'selected' : ''}>
+                                            ★★★★★ (5 sao)
+                                        </option>
+
+                                        <option value="4" ${rating == '4' ? 'selected' : ''}>
+                                            ★★★★☆ trở lên
+                                        </option>
+
+                                        <option value="3" ${rating == '3' ? 'selected' : ''}>
+                                            ★★★☆☆ trở lên
+                                        </option>
+
+                                        <option value="2" ${rating == '2' ? 'selected' : ''}>
+                                            ★★☆☆☆ trở lên
+                                        </option>
+
+                                        <option value="1" ${rating == '1' ? 'selected' : ''}>
+                                            ★☆☆☆☆ trở lên
+                                        </option>
                                     </select>
                                 </div>
+
 
                                 <div class="filter-item">
                                     <button type="submit" id="btnFilter">
