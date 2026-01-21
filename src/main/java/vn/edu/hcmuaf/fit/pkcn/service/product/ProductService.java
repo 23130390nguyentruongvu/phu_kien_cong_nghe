@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductAdminShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
@@ -45,6 +46,63 @@ public class ProductService {
         this.sortSql = sortSql;
     }
 
+    public boolean updateProduct(JsonUpdateProduct product) {
+        return JDBI.getJdbi().inTransaction(handle -> {
+            //Cập nhật thông tin sản phẩm
+            int updated = productDao.updateProductWithTransaction(handle, product);
+            if (updated <= 0) return false;
+            //Xóa các ảnh dưới dbF
+            if (product.getRemoveUrls() != null && !product.getRemoveUrls().isEmpty()) {
+                productImageDao.deleteUrlsProdWithTransaction(handle, product.getId(), product.getRemoveUrls());
+            }
+            //Thêm các ảnh mới
+            if (product.getNewImages() != null && !product.getNewImages().isEmpty()) {
+                for (String newUrl : product.getNewImages()) {
+                    int inserted = productImageDao.insertProductImageWithTransaction(handle, null, product.getId(), newUrl);
+                    if (inserted <= 0) return false;
+                }
+            }
+            //Cập nhật ảnh chính
+            productImageDao.updateMainImageWithTransaction(handle, null, product.getId(), product.getImageMainUrl());
+
+            return true;
+        });
+    }
+
+    public boolean removeProduct(int prodId) {
+        return productDao.removeProduct(prodId);
+    }
+
+    public boolean removeVarAndUpdatePriceProductWithTransaction(int prodId, int variantId) {
+        return JDBI.getJdbi().inTransaction(handle -> {
+            boolean isSuccess = true;
+            isSuccess = isSuccess && productVariantDao.removeProductVariant(handle, variantId);
+
+            isSuccess = isSuccess && productDao.updatePrice(handle, prodId) > 0;
+
+            return isSuccess;
+        });
+    }
+
+    public ProductAdminShowAsItem getProductAdmin(int prodId) throws Exception {
+        ProductAdminShowAsItem res = productDao.getProductAdmin(prodId);
+        if (res == null) throw new Exception("Lỗi không tìm thấy product");
+        //Đi lấy ảnh phụ
+        res.setImages(productImageDao.getImagesProduct(prodId, false));
+        return res;
+    }
+
+    public String getFolderIdWithVarId(int variantId) throws Exception {
+        int prodId = productVariantDao.getProductId(variantId);
+        if (prodId == -1) throw new Exception("Không tìm thấy product id");
+        String folderId = productDao.getFolderId(prodId);
+        if (folderId == null) throw new Exception("Không tìm thấy folder id");
+        return folderId;
+    }
+
+    public String getFolderIdWithProdId(int productId) throws Exception {
+        return productDao.getFolderId(productId);
+    }
 
     /*
         kiểm tra nếu sortOption là null hoặc empty thì chỉ lấy các dữ liệu lên;

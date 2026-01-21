@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.controller.admin.product;
+package vn.edu.hcmuaf.fit.pkcn.controller.admin.product.response_json;
 
 import com.google.gson.Gson;
 import jakarta.servlet.*;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(name = "AddProductServlet", value = "/add-product")
-public class AddProductServlet extends HttpServlet {
+public class JsonAddProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

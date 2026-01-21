@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
 import java.math.BigDecimal;
@@ -63,6 +64,57 @@ public class ProductDao {
             }
             return lst;
         });
+    }
+
+    public int updateProductWithTransaction(Handle handle, JsonUpdateProduct product) {
+        String sql = """
+                 UPDATE products
+                 SET status = :active,
+                 name = :name,
+                 warranty_period = :warrantyPeriod,
+                 subtitle = :subtitle,
+                 description = :description,
+                 folder_id = :folderId
+                WHERE id = :prodId
+                """;
+        return handle.createUpdate(sql)
+                .bind("name", product.getName())
+                .bind("active", product.isActive())
+                .bind("warrantyPeriod", product.getWarrantyPeriod())
+                .bind("subtitle", product.getSubtitle())
+                .bind("description", product.getDescription())
+                .bind("folderId", product.getFolderId())
+                .bind("prodId", product.getId())
+                .execute();
+    }
+
+    public int updatePrice(Handle handle, int productId) {
+        String sql = """
+                  UPDATE products p
+                     LEFT JOIN (
+                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p
+                         FROM product_variants
+                         WHERE product_id = :productId
+                         GROUP BY product_id
+                     ) pv_stats ON p.id = pv_stats.product_id
+                    SET p.min_price = COALESCE(pv_stats.min_p, 0),
+                    p.max_price = COALESCE(pv_stats.max_p, 0)
+                WHERE p.id = :productId;
+                """;
+        return handle.createUpdate(sql).bind("productId", productId).execute();
+    }
+
+    public ProductAdminShowAsItem getProductAdmin(int prodId) {
+        String sql = "SELECT p.*, pi.url_image " +
+                "FROM products p " +
+                "JOIN product_images pi ON p.id = pi.product_id " +
+                "WHERE p.id = :prodId " +
+                "AND pi.is_main = 1";
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("prodId", prodId)
+                .mapToBean(ProductAdminShowAsItem.class)
+                .findOne()
+                .orElse(null));
     }
 
     public HashMap<Integer, ProductAdminShowAsItem> getProducts(String key) {
@@ -404,5 +456,29 @@ public class ProductDao {
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
                 .one();
+    }
+
+    public String getFolderId(int prodId) {
+        String sql = """
+                SELECT folder_id
+                FROM products
+                WHERE id = :prodId
+                """;
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("prodId", prodId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
+    public boolean removeProduct(int prodId) {
+        String sql = """
+                DELETE 
+                FROM products
+                WHERE id = :prodId
+                """;
+        return jdbi.withHandle(handle -> handle.createUpdate(sql).bind("prodId", prodId).execute() > 0);
     }
 }

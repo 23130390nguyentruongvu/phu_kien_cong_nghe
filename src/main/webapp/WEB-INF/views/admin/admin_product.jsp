@@ -66,7 +66,8 @@
                                 <td>${product.rangePriceFormat}</td>
                                 <td>
                             <span class="edit-product">
-                                <span class="edit-product-remove" data-id="${product.prodId}"><i
+                                <span class="edit-product-remove" data-name="${product.name}"
+                                      data-id="${product.prodId}"><i
                                         class="fa-solid fa-circle-minus"></i></span>
                                 <span class="edit-product-add-var" data-id="${product.prodId}"><i
                                         class="fa-solid fa-circle-plus"></i></span>
@@ -80,28 +81,14 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                        <%--                <div class="wrap-load-more">--%>
-                        <%--                    <input class="load-more" name="change-status" value="Tải thêm">--%>
-                        <%--                </div>--%>
                 </form>
 
             </c:if>
         </div>
     </div>
     <!--    close main content admin-->
+
     <!--    popup-->
-    <!-- Popup xác nhận hành động -->
-    <div id="popup-confirm" style="z-index: 1001" class="popup">
-        <div class="popup-content">
-            <h2>Xác nhận hành động</h2>
-            <p id="confirmMessage"></p>
-            <form id="confirmForm" method="post">
-                <input type="hidden" id="confirmId" name="id">
-                <button type="submit" id="confirmYes">Đồng ý</button>
-                <button type="button" id="confirmNo">Hủy</button>
-            </form>
-        </div>
-    </div>
     <!-- TODO:Popup ADD product -->
     <div id="popup-add-product" class="popup">
         <div class="popup-content">
@@ -109,7 +96,8 @@
             <form id="form-add-product" enctype="multipart/form-data" method="post">
                 <input id="add-prod-name" type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
                 <br>
-                <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input" placeholder="Thời gian bảo hành (tháng)">
+                <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input"
+                       placeholder="Thời gian bảo hành (tháng)">
                 <br>
                 <select id="add-prod-categoryId" class="form-input" name="categoryId">
                     <c:if test="${empty requestScope.categories}">
@@ -124,7 +112,8 @@
                 <br>
                 <textarea id="add-prod-subtitle" name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
                 <br>
-                <textarea id="add-prod-description" name="description" class="form-input" placeholder="Mô tả dài"></textarea>
+                <textarea id="add-prod-description" name="description" class="form-input"
+                          placeholder="Mô tả dài"></textarea>
                 <br>
                 <div class="wrap-status-product">
                     <label for="statusProduct">Hiện lên website</label>
@@ -158,6 +147,7 @@
                         <!-- Chỉ cho phép chọn 1 ảnh biến thể -->
                         <label>Ảnh biến thể:</label>
                         <input type="file" name="add-prod-variantImages" accept="image/*">
+                        <div class="variant-image-preview" style="margin-top: 5px;"></div>
                     </div>
                 </div>
                 <br>
@@ -171,6 +161,30 @@
     </div>
 
     <script>
+        //Sự kiện review ảnh
+        function handleVariantImagePreview(inputElement) {
+            const file = inputElement.files[0];
+            const container = inputElement.closest('.add-prod-variant-item');
+            const previewDiv = container.querySelector('.variant-image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewDiv.innerHTML = '\<' +
+                        'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">'
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewDiv.innerHTML = '';
+            }
+        }
+
+        //Set hiện ảnh cho biến thể đầu tiên
+        document.querySelectorAll('input[name="add-prod-variantImages"]').forEach(input => {
+            input.addEventListener('change', function () {
+                handleVariantImagePreview(this);
+            });
+        });
+
         // Hiển thị preview ảnh sản phẩm và chọn ảnh chính
         document.getElementById('add-prod-productImages').addEventListener('change', function (event) {
             const preview = document.getElementById('productPreview');
@@ -214,11 +228,17 @@
             <br>\
             <label>Ảnh biến thể:</label>\
             <input type="file" name="add-prod-variantImages" accept="image/*">\
+            <div class="variant-image-preview" style="margin-top: 5px;"></div>\
             <button type="button" class="removeVariant">Xóa biến thể</button>\
         `;
 
             // Thêm vào danh sách
             variantList.appendChild(newVariant);
+
+            const fileInput = newVariant.querySelector('input[type="file"]');
+            fileInput.addEventListener('change', function () {
+                handleVariantImagePreview(this);
+            });
 
             // Gắn sự kiện xóa
             newVariant.querySelector('.removeVariant').addEventListener('click', function () {
@@ -227,7 +247,7 @@
         });
     </script>
 
-    <!--  Popup  views product variant-->
+    <!-- TODO: Popup  views product variant-->
     <div id="popup-variants" class="popup" style="display:none;">
         <div class="popup-content">
             <h2>Danh sách biến thể cho Sản phẩm<span id="display-id"></span></h2>
@@ -251,7 +271,7 @@
             <button type="button" id="closeVariants">Đóng</button>
         </div>
     </div>
-    <!--    Popup add/edit product variant-->
+    <!--   TODO: Popup add/edit product variant-->
     <div id="popup-add-edit-variant" class="popup">
         <div class="popup-content">
             <h2>Biến thể sản phẩm</h2>
@@ -281,52 +301,16 @@
         </div>
     </div>
 
-    <!--    edit product-->
+    <!--  TODO:  edit product-->
     <div id="popup-edit" class="popup">
         <div class="popup-content edit-product-content">
             <h2>Chỉnh sửa sản phẩm</h2>
             <form id="editProductForm">
-                <!-- Tên sản phẩm -->
-                <label for="name-product">Tên sản phẩm:</label>
-                <input type="text" id="name-product" name="name-product" placeholder="Tên sản phẩm">
-                <br>
-                <!-- Thời hạn bảo hành -->
-                <label for="warranty">Thời hạn bảo hành (tháng):</label>
-                <input type="number" id="warranty" name="warranty" placeholder="VD: 12">
-                <br>
+             <div class="content-edit-product">
 
-                <!-- Mô tả ngắn -->
-                <label for="short-desc">Mô tả ngắn:</label>
-                <input type="text" id="short-desc" name="short-desc" placeholder="Mô tả ngắn">
-                <br>
-
-                <!-- Mô tả dài -->
-                <label for="long-desc">Mô tả dài:</label>
-                <textarea id="long-desc" name="long-desc" placeholder="Mô tả chi tiết"></textarea>
-                <br>
-
-                <!-- Hiển thị trên web -->
-                <label>Hiển thị trên website<input style="height: 20px" type="checkbox" name="isVisible" checked>
-
-                </label>
-                <br>
-
-                <!-- Ảnh sản phẩm -->
-                <label>Ảnh sản phẩm:</label>
-                <div class="product-images">
-                    <div class="image-item">
-                        <img src="assets/image/fake_products/item_bcth_1.webp" alt="Ảnh 1">
-                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage" checked>
-                        <button type="button" class="remove-img">Xóa</button>
-                    </div>
-                    <div class="image-item">
-                        <img src="assets/image/fake_products/item_bcth_2.webp" alt="Ảnh 2">
-                        Ảnh chính<input style="height: 20px" type="radio" name="mainImage">
-                        <button type="button" class="remove-img">Xóa</button>
-                    </div>
-                </div>
-                <button type="button" id="addImage">Thêm ảnh mới</button>
-
+             </div>
+                <input type="file" id="addImageInput" accept="image/*" multiple>
+                <div id="editProductPreview" class="edit-product-images"></div>
                 <!-- Nút hành động -->
                 <div class="popup-actions">
                     <button type="submit" id="submit-update-product">Cập nhật</button>
@@ -346,5 +330,9 @@
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 
-<script src="${pageContext.request.contextPath}/js/admin_product.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product_remove.js"></script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product_edit.js"></script>
+
+<script type="module" src="${pageContext.request.contextPath}/js/admin_product.js"></script>
 </html>
