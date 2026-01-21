@@ -26,11 +26,6 @@
             <div class="wrap-find-info-user">
                 <form action="search-user" method="get">
                     <input type="text" name="searchName" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng" value="${param.searchName}">
-                    <select name="filter-by" class="filter-by">
-                        <option value="all" selected>Tất cả</option>
-                        <option value="pkmt">Đang hoạt động</option>
-                        <option value="pkdt">Không còn hoạt động</option>
-                    </select>
                     <button type="submit" class="submit-data">Submit</button>
                 </form>
             </div>

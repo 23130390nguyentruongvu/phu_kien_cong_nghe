@@ -21,6 +21,7 @@
     <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
     <!--close account nav-->
         <!--        open main content-->
+    <div id="main-content">
         <div class="address-user-info">
             <div class="title">
                 <h3>Địa chỉ đã lưu</h3>
@@ -73,7 +74,7 @@
                 </table>
             </div>
         </div>
-
+    </div>
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
