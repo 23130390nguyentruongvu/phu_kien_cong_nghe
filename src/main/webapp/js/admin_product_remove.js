@@ -30,7 +30,7 @@ document.querySelectorAll(".edit-product-remove").forEach(function (el) {
     })
 })
 
-async function deleteProductFolder(folderId) {
+export async function deleteProductFolder(folderId) {
     try {
         //Lấy danh sách tất cả file trong folderId (main/ và variants/)
 
@@ -55,3 +55,36 @@ async function deleteProductFolder(folderId) {
         return "Lỗi dọn dẹp Storage: " + error.message;
     }
 }
+
+export const deleteImagesByUrls = async (urls) => {
+    if (!urls || urls.length === 0) {
+        return {success: true, message: "Không có ảnh nào để xóa."};
+    }
+
+    try {
+        const deletePromises = urls.map(async (imageUrl) => {
+            //đảm bảo url đấy phải có định dạng của storage, tránh lỗi
+            if (imageUrl && imageUrl.includes("firebasestorage.googleapis.com")) {
+                try {
+                    const imageRef = ref(storage, imageUrl);
+                    await deleteObject(imageRef);
+                    console.log(`Đã xóa thành công: ${imageUrl}`);
+                } catch (error) {
+                    console.warn(`Lỗi khi xóa file Firebase: ${imageUrl}`, error.code);
+                }
+            } else {
+                console.log(`Bỏ qua URL không phải của Firebase: ${imageUrl}`);
+            }
+        });
+
+        await Promise.all(deletePromises);
+
+        return {
+            success: true,
+            message: "Hoàn tất xử lý dọn dẹp ảnh Storage."
+        };
+    } catch (error) {
+        console.error("Lỗi hệ thống khi xử lý mảng ảnh:", error);
+        return {success: false, message: error.message};
+    }
+};

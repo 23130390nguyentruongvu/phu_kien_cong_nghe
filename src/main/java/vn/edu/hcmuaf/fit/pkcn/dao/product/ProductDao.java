@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
 import java.math.BigDecimal;
@@ -63,6 +64,28 @@ public class ProductDao {
             }
             return lst;
         });
+    }
+
+    public int updateProductWithTransaction(Handle handle, JsonUpdateProduct product) {
+        String sql = """
+                 UPDATE products
+                 SET status = :active,
+                 name = :name,
+                 warranty_period = :warrantyPeriod,
+                 subtitle = :subtitle,
+                 description = :description,
+                 folder_id = :folderId
+                WHERE id = :prodId
+                """;
+        return handle.createUpdate(sql)
+                .bind("name", product.getName())
+                .bind("active", product.isActive())
+                .bind("warrantyPeriod", product.getWarrantyPeriod())
+                .bind("subtitle", product.getSubtitle())
+                .bind("description", product.getDescription())
+                .bind("folderId", product.getFolderId())
+                .bind("prodId", product.getId())
+                .execute();
     }
 
     public int updatePrice(Handle handle, int productId) {

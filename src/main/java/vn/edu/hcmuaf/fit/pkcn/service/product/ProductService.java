@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductAdminShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
@@ -35,6 +36,29 @@ public class ProductService {
         this.sortSql = sortSql;
         this.productImageDao = productImageDao;
         this.productVariantDao = productVariantDao;
+    }
+
+    public boolean updateProduct(JsonUpdateProduct product) {
+        return JDBI.getJdbi().inTransaction(handle -> {
+            //Cập nhật thông tin sản phẩm
+            int updated = productDao.updateProductWithTransaction(handle, product);
+            if (updated <= 0) return false;
+            //Xóa các ảnh dưới dbF
+            if (product.getRemoveUrls() != null && !product.getRemoveUrls().isEmpty()) {
+                productImageDao.deleteUrlsProdWithTransaction(handle, product.getId(), product.getRemoveUrls());
+            }
+            //Thêm các ảnh mới
+            if (product.getNewImages() != null && !product.getNewImages().isEmpty()) {
+                for (String newUrl : product.getNewImages()) {
+                    int inserted = productImageDao.insertProductImageWithTransaction(handle, null, product.getId(), newUrl);
+                    if (inserted <= 0) return false;
+                }
+            }
+            //Cập nhật ảnh chính
+            productImageDao.updateMainImageWithTransaction(handle, null, product.getId(), product.getImageMainUrl());
+
+            return true;
+        });
     }
 
     public boolean removeProduct(int prodId) {
