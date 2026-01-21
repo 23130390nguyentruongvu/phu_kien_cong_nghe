@@ -98,9 +98,6 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <div class="wrap-load-more">
-                            <input type="button" class="load-more" name="change-status" value="Tải thêm">
-                        </div>
                     </form>
                 </div>
             </div>
@@ -208,7 +205,8 @@
                     <label for="avatar-edit">Avatar URL:</label>
                     <input type="text" id="avatar-edit" name="avatar" class="form-input">
                     <br>
-
+                    <label for="file-avatar">Chọn Avatar:</label>
+                        <input type="file" id="file-edit" name="file-avatar" class="form-input" accept="image/*" >
                     <label for="role-edit">Vai trò:</label>
                     <select name="role" id="role-edit" class="form-input">
                         <option value="1">Admin</option>

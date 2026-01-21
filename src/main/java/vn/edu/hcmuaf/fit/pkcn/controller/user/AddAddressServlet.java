@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.user.UserAddressDao;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
@@ -37,7 +35,7 @@ public class AddAddressServlet extends HttpServlet {
         address.setProvinceCity(province);
         address.setDistrict(district);
         address.setAddressDetail(detail);
-        address.setIsSelect(0);
+        address.setIsSelected(0);
 
         AddressService addressService = new AddressService(JDBI.getJdbi());
         boolean re = addressService.addAddressSv(address);

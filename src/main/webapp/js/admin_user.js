@@ -29,6 +29,7 @@ function openUpdatePopup(id, fullName, userName, email, avatar, role) {
     emailInput.style.backgroundColor = "#eeeeee";
 
     document.getElementById('avatar-edit').value = avatar;
+    document.getElementById("file-edit").value = "";
     document.getElementById('role-edit').value = role;
 
     // Hiện popup

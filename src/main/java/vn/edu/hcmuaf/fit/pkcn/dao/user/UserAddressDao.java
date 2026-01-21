@@ -3,6 +3,7 @@ import jakarta.servlet.ServletException;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,5 +22,19 @@ public class UserAddressDao {
                     .execute()>0;
         });
 
+    }
+    public List<Address> getAllAddress(int userId) {
+        String sql = "Select id, user_id, receiver_name, phone_number , address_detail, is_selected , province_city , district from user_address Where user_id=:userId";
+        return jdbi.withHandle(handle -> {
+            List<Address> listAddress = new ArrayList<>();
+            Iterator<Address> iterator = handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToBean(Address.class).stream().iterator();
+            while (iterator.hasNext()) {
+                Address address = iterator.next();
+                listAddress.add(address);
+            }
+            return listAddress;
+        });
     }
 }

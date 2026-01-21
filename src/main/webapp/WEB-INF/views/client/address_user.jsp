@@ -37,22 +37,25 @@
                 <p class="header-address">Địa chỉ</p>
                 <table class="address-content">
                     <tbody>
-                    <tr>
+                    <c:forEach var = "address" items="${listAddress}">
+                        <tr>
                         <td class="content">
                             <div class="name-phone">
-                                <p class="name">Nguyễn Trường Vũ</p> &nbsp; | &nbsp; (+84) <p class="phone">12345678</p>
+                                <p class="name">${address.receiverName}</p> &nbsp; | &nbsp; (+84) <p class="phone">${address.phoneNumber}</p>
                             </div>
                             <div class="address-detail">
-                                số nhà 418
+                               ${address.addressDetail}
                             </div>
                             <div class="district-province">
-                                <p class="district">xã Nhơn Mỹ</p>
+                                <p class="district">${address.district}</p>
                                 ,&nbsp;
-                                <p class="province">tỉnh An Giang</p>
+                                <p class="province">${address.provinceCity}</p>
                             </div>
+                            <c:if test="${address.isSelected == 1}">
                             <div class="status">
                                 Mặc định
                             </div>
+                            </c:if>
                         </td>
                         <td class="btn">
                             <div class="update-delete">
@@ -60,37 +63,12 @@
                                 &nbsp;
                                 <button class="delete">Xóa</button>
                             </div>
+                            <c:if test="${address.isSelected == 0}">
                             <button class="set-status">Thiết lập mặc định</button>
+                            </c:if>
                         </td>
-                    </tr>
-
-                    <tr>
-                        <td class="content">
-                            <div class="name-phone">
-                                <p class="name">Nguyễn Trường Vũ</p> &nbsp; | &nbsp; (+84) <p class="phone">12345678</p>
-                            </div>
-                            <div class="address-detail">
-                                số nhà 418
-                            </div>
-                            <div class="district-province">
-                                <p class="district">xã Trảng Bom</p>
-                                ,&nbsp;
-                                <p class="province">tỉnh Bình Phước</p>
-                            </div>
-                            <div class="status">
-                                Mặc định
-                            </div>
-
-                        </td>
-                        <td class="btn" >
-                            <div class="update-delete">
-                                <button class="update">Cập nhật</button>
-                                &nbsp;
-                                <button class="delete">Xóa</button>
-                            </div>
-                                <button class="set-status">Thiết lập mặc định</button>
-                        </td>
-                    </tr>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
