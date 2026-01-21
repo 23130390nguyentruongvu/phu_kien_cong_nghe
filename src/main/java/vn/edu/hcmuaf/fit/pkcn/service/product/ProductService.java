@@ -52,6 +52,14 @@ public class ProductService {
         });
     }
 
+    public ProductAdminShowAsItem getProductAdmin(int prodId) throws Exception {
+        ProductAdminShowAsItem res = productDao.getProductAdmin(prodId);
+        if (res == null) throw new Exception("Lỗi không tìm thấy product");
+        //Đi lấy ảnh phụ
+        res.setImages(productImageDao.getImagesProduct(prodId, false));
+        return res;
+    }
+
     public String getFolderIdWithVarId(int variantId) throws Exception {
         int prodId = productVariantDao.getProductId(variantId);
         if (prodId == -1) throw new Exception("Không tìm thấy product id");
@@ -63,6 +71,7 @@ public class ProductService {
     public String getFolderIdWithProdId(int productId) throws Exception {
         return productDao.getFolderId(productId);
     }
+
     /*
         kiểm tra nếu sortOption là null hoặc empty thì chỉ lấy các dữ liệu lên;
         Trong trường hợp có thì ta truyền câu sql của SortProduct đã xử lí vào hàm của productDao

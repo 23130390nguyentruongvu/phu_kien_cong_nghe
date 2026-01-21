@@ -81,6 +81,19 @@ public class ProductDao {
         return handle.createUpdate(sql).bind("productId", productId).execute();
     }
 
+    public ProductAdminShowAsItem getProductAdmin(int prodId) {
+        String sql = "SELECT p.*, pi.url_image " +
+                "FROM products p " +
+                "JOIN product_images pi ON p.id = pi.product_id " +
+                "WHERE p.id = :prodId " +
+                "AND pi.is_main = 1";
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("prodId", prodId)
+                .mapToBean(ProductAdminShowAsItem.class)
+                .findOne()
+                .orElse(null));
+    }
+
     public HashMap<Integer, ProductAdminShowAsItem> getProducts(String key) {
         String sql = "SELECT p.*, pi.url_image " +
                 "FROM products p " +

@@ -85,7 +85,7 @@ public class ProductAdminShowAsItem {
         this.productVariants = productVariants;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return isActive;
     }
 
