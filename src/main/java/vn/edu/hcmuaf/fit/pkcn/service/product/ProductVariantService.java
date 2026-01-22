@@ -12,6 +12,10 @@ public class ProductVariantService {
         this.productVariantDao = productVariantDao;
     }
 
+    public int getProductId(int variantId) {
+        return productVariantDao.getProductId(variantId);
+    }
+
     public ProductVariant getProductVariantById(int prodVarId) {
         try {
             return productVariantDao.getProdVarById(prodVarId);
@@ -19,6 +23,12 @@ public class ProductVariantService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getSku(int variantId) throws Exception {
+        String sku = productVariantDao.getSku(variantId);
+        if (sku == null) throw new Exception("Không tìm thấy mã sku");
+        return sku;
     }
 
     public List<ProductVariant> getProductVariantsByProdId(int prodId) {

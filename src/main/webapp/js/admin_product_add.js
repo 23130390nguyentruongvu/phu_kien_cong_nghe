@@ -32,10 +32,10 @@ function showAlert(type, message) {
 
     document.body.appendChild(alertDiv);
 
-    // Tự động xóa sau 3 giây
+    // Tự động xóa sau 5 giây
     setTimeout(() => {
         alertDiv.remove();
-    }, 3000);
+    }, 5000);
 }
 
 //Thằng này sẽ check tính hợp lệ của form popup add product
@@ -130,7 +130,7 @@ async function checkSKUExists(skuList) {
 }
 
 //up ảnh lên firestorage
-async function uploadImageToFirebase(file, folderPath, fileName) {
+export async function uploadImageToFirebase(file, folderPath, fileName) {
     return new Promise((resolve, reject) => {
         // 1. Tạo reference
         const storageRef = ref(storage, `${folderPath}/${fileName}`);

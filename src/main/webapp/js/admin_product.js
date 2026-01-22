@@ -1,23 +1,5 @@
-//set sự kiện ajax cho show popup variants
-const showPopupVariants = async (prodId) => {
-    const container = document.getElementById('variant-data-container');
-    const popup = document.getElementById('popup-variants');
-
-    fetch(`${contextPath}/get-variants?productId=${prodId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Lỗi Server: " + response.status);
-            }
-            return response.text();
-        })
-        .then(html => {
-            container.innerHTML = html;
-        })
-        .catch(err => {
-            console.log(err)
-            container.innerHTML = `<tr><td colspan="7" style="color:red; text-align:center;">Không thể tải dữ liệu</td></tr>`;
-        })
-}
+import {showPopupVariants} from './admin_product_remove_variant.js';
+import {setEvent, setEventConfirm} from "./admin_product_edit.js";
 
 
 // Mở popup thêm sản phẩm
@@ -30,9 +12,19 @@ document.getElementById('closeAddProd').onclick = () => {
 
 // Mở popup xem biến thể
 document.querySelectorAll('.edit-product-show-var').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const productId = e.currentTarget.dataset.id;
-        showPopupVariants(productId).then(r => document.getElementById('popup-variants').style.display = 'block')
+    btn.addEventListener('click', async (e) => {
+        const productId = btn.dataset.id;
+        const popup = document.getElementById('popup-variants');
+        const container = document.getElementById('variant-data-container');
+
+        popup.style.display = 'block';
+        container.innerHTML = `<tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>`;
+        try {
+            await showPopupVariants(productId);
+        } catch (error) {
+            console.error("Lỗi khi mở popup:", error);
+            container.innerHTML = `<tr><td colspan="7" style="color:red; text-align:center;">Lỗi: ${error.message}</td></tr>`;
+        }
     });
 });
 document.getElementById('closeVariants').onclick = () => {
@@ -63,14 +55,29 @@ document.getElementById('closeAddProdVar').onclick = () => {
 
 // Mở popup chỉnh sửa
 document.querySelectorAll('.edit-product-update').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.getElementById('popup-edit').style.display = 'block';
-    });
-});
-document.getElementById('closeEdit').onclick = () => {
-    document.getElementById('popup-edit').style.display = 'none';
-};
+    btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        try {
+            const response = await fetch(`${contextPath}/get-product-edit?productId=${id}`);
+            if (!response.ok) throw new Error("Server error: " + response.status);
+            const html = await response.text();
+            const container = document.querySelector('#popup-edit .content-edit-product');
+            console.log(container)
+            container.innerHTML = html;
+            setEvent()
+            setEventConfirm(id)
 
+            document.getElementById('popup-edit').style.display = 'block';
+        } catch (err) {
+            console.error("Lỗi khi load form edit:", err);
+            alert("Không thể tải form chỉnh sửa sản phẩm");
+        }
+    });
+})
+
+document.getElementById('closeEdit').addEventListener('click', () => {
+    document.getElementById('popup-edit').style.display = 'none';
+});
 // Hàm mở popup add hoặc chỉnh sửa sản phẩm biến thể
 // edit-product-add-var and edit-product-var-update
 function openPopupByActionProdVar(actionCallProdVar, actionServlet, idProdVar) {
