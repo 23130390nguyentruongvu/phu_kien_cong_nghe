@@ -191,6 +191,7 @@ public class ProductService {
         );
     }
 
+
     public boolean addProduct(JSonProduct product) {
         try {
             return JDBI.getJdbi().inTransaction(handle -> {

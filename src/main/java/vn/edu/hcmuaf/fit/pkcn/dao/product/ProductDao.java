@@ -346,39 +346,44 @@ public class ProductDao {
             String rating
     ) {
         String sql = """
-        SELECT
-            p.id,
-            p.name,
-            p.min_price,
+    SELECT
+        p.id,
+        p.name,
+        p.min_price,
+        (
+            SELECT pi.url_image
+            FROM product_images pi
+            WHERE pi.product_id = p.id
+              AND pi.is_main = 1
+            LIMIT 1
+        ) AS url_image
+    FROM products p
+    LEFT JOIN product_categories pc
+        ON pc.product_id = p.id
+    WHERE p.status = 1
+    AND (:keyword IS NULL OR :keyword = ''
+         OR p.name LIKE :keyword)
+    AND (:minPrice IS NULL OR p.min_price >= :minPrice)
+    AND (:maxPrice IS NULL OR p.min_price <= :maxPrice)
+    AND (
+        :categoryId IS NULL
+        OR pc.category_id = :categoryId
+    )
+    AND (
+        :rating IS NULL
+        OR COALESCE(
             (
-                SELECT pi.url_image
-                FROM product_images pi
-                WHERE pi.product_id = p.id
-                  AND pi.is_main = 1
-                LIMIT 1
-            ) AS url_image
-        FROM products p
-        LEFT JOIN product_categories pc
-            ON pc.product_id = p.id
-        WHERE p.status = 1
-        AND (:keyword IS NULL OR :keyword = '' 
-             OR p.name LIKE :keyword)
-        AND (:minPrice IS NULL OR p.min_price >= :minPrice)
-        AND (:maxPrice IS NULL OR p.min_price <= :maxPrice)
-        AND (:categoryId IS NULL OR pc.category_id = :categoryId)
-        AND (
-            :rating IS NULL
-            OR (
                 SELECT AVG(r.num_star)
                 FROM reviews r
                 WHERE r.product_id = p.id
-            ) >= :rating
-        )
-        ORDER BY
-            CASE WHEN :sort = 'price-asc'  THEN p.min_price END ASC,
-            CASE WHEN :sort = 'price-desc' THEN p.min_price END DESC,
-            CASE WHEN :sort = 'newest'     THEN p.create_date END DESC,
-            p.id ASC
+            ), 0
+        ) >= :rating
+    )
+    ORDER BY
+        CASE WHEN :sort = 'price-asc'  THEN p.min_price END ASC,
+        CASE WHEN :sort = 'price-desc' THEN p.min_price END DESC,
+        CASE WHEN :sort = 'newest'     THEN p.create_date END DESC,
+        p.id ASC
     """;
 
         return jdbi.withHandle(handle ->
@@ -387,12 +392,14 @@ public class ProductDao {
                         .bind("minPrice", minPrice)
                         .bind("maxPrice", maxPrice)
                         .bind("categoryId", categoryId)
-                        .bind("sort", sort)
                         .bind("rating", rating)
+                        .bind("sort", sort)
                         .mapToBean(ProductShowAsItem.class)
                         .list()
         );
     }
+
+
 
     public int insertProductWithTransaction(Handle handle, JSonProduct product) {
         String sql = """
