@@ -31,7 +31,7 @@ public class Address {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    @ColumnName("phoneNumber")
+    @ColumnName("phone_number")
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -47,7 +47,7 @@ public class Address {
     public int getUserId() {
         return userId;
     }
-    @ColumnName("userId")
+    @ColumnName("user_id")
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -55,7 +55,7 @@ public class Address {
     public String getReceiverName() {
         return receiverName;
     }
-    @ColumnName("receiverName")
+    @ColumnName("receiver_name")
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
     }
@@ -63,7 +63,7 @@ public class Address {
     public String getProvinceCity() {
         return provinceCity;
     }
-    @ColumnName("provinceCity")
+    @ColumnName("province_city")
     public void setProvinceCity(String provinceCity) {
         this.provinceCity = provinceCity;
     }
@@ -79,7 +79,7 @@ public class Address {
     public String getAddressDetail() {
         return addressDetail;
     }
-    @ColumnName("addressDetail")
+    @ColumnName("address_detail")
     public void setAddressDetail(String addressDetail) {
         this.addressDetail = addressDetail;
     }
@@ -87,8 +87,8 @@ public class Address {
     public int getIsSelected() {
         return isSelected;
     }
-    @ColumnName("isSelected")
-    public void setIsSelect(int isSelected) {
+    @ColumnName("is_selected")
+    public void setIsSelected(int isSelected) {
         this.isSelected = isSelected;
     }
 
