@@ -1,15 +1,8 @@
-html {
-    overflow-y: scroll;
-}
 * {
     padding: 0;
     margin: 0;
 }
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+
 ul {
     list-style: none;
 }
@@ -98,10 +91,12 @@ a {
     text-decoration: none;
     color: black;
 }
+
 .item-nav-link-admin.selected a {
     color: rgb(4, 107, 210);
     text-decoration: none;
 }
+
 .item-nav-link-admin:hover {
     color: rgb(4, 107, 210);
     width: 100%;

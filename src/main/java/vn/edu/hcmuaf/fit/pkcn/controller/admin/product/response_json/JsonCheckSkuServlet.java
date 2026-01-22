@@ -22,20 +22,19 @@ import java.util.Map;
 public class JsonCheckSkuServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     /*
-    Request: {
-        "skus": ["SKU001", "SKU002", "SKU003"]
-    }
+Request: {
+ "skus": ["SKU001", "SKU002", "SKU003"]
+}
 
 
-    Response: {
-         "exists": false,  // true nếu có SKU trùng
-         "duplicateSKUs": [] // Danh sách SKU bị trùng
-    }
-     */
+Response: {
+  "exists": false,  // true nếu có SKU trùng
+  "duplicateSKUs": [] // Danh sách SKU bị trùng
+}
+*/
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -57,7 +56,7 @@ public class JsonCheckSkuServlet extends HttpServlet {
             JsonObject obj = new Gson().fromJson(json, JsonObject.class);
             JsonArray skus = obj.getAsJsonArray("skus"); //Lấy các mã sku của key là skus
             List<String> skusRequest = new ArrayList<>();
-            for(JsonElement tmp: skus.asList()) skusRequest.add(tmp.getAsString());
+            for (JsonElement tmp : skus.asList()) skusRequest.add(tmp.getAsString());
             List<String> res = productVariantService.getSkusBySkus(skusRequest);
 
             response.setContentType("application/json");
@@ -74,7 +73,13 @@ public class JsonCheckSkuServlet extends HttpServlet {
             response.getWriter().write(jsonResponse);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+            Map<String, Object> respObj = new HashMap<>();
+            respObj.put("exists", false);
+            respObj.put("duplicateSKUs", new ArrayList<>());
 
+            //tạo response json
+            String jsonResponse = new Gson().toJson(respObj);
+            response.getWriter().write(jsonResponse);
+        }
     }
 }

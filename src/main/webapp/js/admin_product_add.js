@@ -107,7 +107,7 @@ function validateFormData() {
 //Xuống servlet kiểm tra các sku biến thể đã tồn tại chưa, nếu có thì không cho phép thêm sp
 async function checkSKUExists(skuList) {
     try {
-        const response = await fetch('check-sku', {
+        const response = await fetch(contextPath + '/check-sku', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

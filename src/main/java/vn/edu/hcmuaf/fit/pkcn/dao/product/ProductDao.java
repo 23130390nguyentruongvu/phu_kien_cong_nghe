@@ -7,7 +7,6 @@ import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -88,17 +87,18 @@ public class ProductDao {
                 .execute();
     }
 
-    public int updatePrice(Handle handle, int productId) {
+    public int updatePriceAndStock(Handle handle, int productId) {
         String sql = """
                   UPDATE products p
                      LEFT JOIN (
-                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p
+                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p, SUM(stock) as total_stock
                          FROM product_variants
                          WHERE product_id = :productId
                          GROUP BY product_id
                      ) pv_stats ON p.id = pv_stats.product_id
                     SET p.min_price = COALESCE(pv_stats.min_p, 0),
-                    p.max_price = COALESCE(pv_stats.max_p, 0)
+                    p.max_price = COALESCE(pv_stats.max_p, 0),
+                    p.stock = COALESCE(pv_stats.total_stock, 0)
                 WHERE p.id = :productId;
                 """;
         return handle.createUpdate(sql).bind("productId", productId).execute();
@@ -365,21 +365,21 @@ public class ProductDao {
     public List<ProductShowAsItem> searchByKeyword(String keyword) {
 
         String sql = """
-        SELECT
-            p.id,
-            p.name,
-            p.min_price,
-            (
-                SELECT pi.url_image
-                FROM product_images pi
-                WHERE pi.product_id = p.id
-                  AND pi.is_main = 1
-                LIMIT 1
-            ) AS url_image
-        FROM products p
-        WHERE p.name LIKE :keyword
-        AND p.status = 1
-    """;
+                    SELECT
+                        p.id,
+                        p.name,
+                        p.min_price,
+                        (
+                            SELECT pi.url_image
+                            FROM product_images pi
+                            WHERE pi.product_id = p.id
+                              AND pi.is_main = 1
+                            LIMIT 1
+                        ) AS url_image
+                    FROM products p
+                    WHERE p.name LIKE :keyword
+                    AND p.status = 1
+                """;
 
         return jdbi.withHandle(handle ->
                 handle.createQuery(sql)
@@ -398,40 +398,40 @@ public class ProductDao {
             String rating
     ) {
         String sql = """
-        SELECT
-            p.id,
-            p.name,
-            p.min_price,
-            (
-                SELECT pi.url_image
-                FROM product_images pi
-                WHERE pi.product_id = p.id
-                  AND pi.is_main = 1
-                LIMIT 1
-            ) AS url_image
-        FROM products p
-        LEFT JOIN product_categories pc
-            ON pc.product_id = p.id
-        WHERE p.status = 1
-        AND (:keyword IS NULL OR :keyword = '' 
-             OR p.name LIKE :keyword)
-        AND (:minPrice IS NULL OR p.min_price >= :minPrice)
-        AND (:maxPrice IS NULL OR p.min_price <= :maxPrice)
-        AND (:categoryId IS NULL OR pc.category_id = :categoryId)
-        AND (
-            :rating IS NULL
-            OR (
-                SELECT AVG(r.num_star)
-                FROM reviews r
-                WHERE r.product_id = p.id
-            ) >= :rating
-        )
-        ORDER BY
-            CASE WHEN :sort = 'price-asc'  THEN p.min_price END ASC,
-            CASE WHEN :sort = 'price-desc' THEN p.min_price END DESC,
-            CASE WHEN :sort = 'newest'     THEN p.create_date END DESC,
-            p.id ASC
-    """;
+                    SELECT
+                        p.id,
+                        p.name,
+                        p.min_price,
+                        (
+                            SELECT pi.url_image
+                            FROM product_images pi
+                            WHERE pi.product_id = p.id
+                              AND pi.is_main = 1
+                            LIMIT 1
+                        ) AS url_image
+                    FROM products p
+                    LEFT JOIN product_categories pc
+                        ON pc.product_id = p.id
+                    WHERE p.status = 1
+                    AND (:keyword IS NULL OR :keyword = '' 
+                         OR p.name LIKE :keyword)
+                    AND (:minPrice IS NULL OR p.min_price >= :minPrice)
+                    AND (:maxPrice IS NULL OR p.min_price <= :maxPrice)
+                    AND (:categoryId IS NULL OR pc.category_id = :categoryId)
+                    AND (
+                        :rating IS NULL
+                        OR (
+                            SELECT AVG(r.num_star)
+                            FROM reviews r
+                            WHERE r.product_id = p.id
+                        ) >= :rating
+                    )
+                    ORDER BY
+                        CASE WHEN :sort = 'price-asc'  THEN p.min_price END ASC,
+                        CASE WHEN :sort = 'price-desc' THEN p.min_price END DESC,
+                        CASE WHEN :sort = 'newest'     THEN p.create_date END DESC,
+                        p.id ASC
+                """;
 
         return jdbi.withHandle(handle ->
                 handle.createQuery(sql)
@@ -480,5 +480,17 @@ public class ProductDao {
                 WHERE id = :prodId
                 """;
         return jdbi.withHandle(handle -> handle.createUpdate(sql).bind("prodId", prodId).execute() > 0);
+    }
+
+    public int updateFolderIdWithTransaction(Handle handle, int prodId, String folderId) {
+        String sql = """
+                UPDATE products
+                SET folder_id = :folderId
+                WHERE id = :prodId
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodId", prodId)
+                .bind("folderId", folderId)
+                .execute();
     }
 }
