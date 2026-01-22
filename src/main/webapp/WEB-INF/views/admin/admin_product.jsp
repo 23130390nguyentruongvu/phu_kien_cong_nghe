@@ -28,6 +28,7 @@
         <div class="wrap-find-info-product">
             <form>
                 <input type="text" name="keySearch" class="input-product-id"
+                       value="${empty requestScope.keySearch?'':requestScope.keySearch}"
                        placeholder="Tìm kiếm theo mã sản phẩm hoặc tên sản phẩm">
                 <button type="submit" class="submit-data">Tìm kiếm</button>
             </form>
@@ -322,6 +323,10 @@
         });
     </script>
 
+    <!-- TODO: edit variant-->
+    <div id="popup-edit-variant" class="popup">
+
+    </div>
     <!--  TODO:  edit product-->
     <div id="popup-edit" class="popup">
         <div class="popup-content edit-product-content">

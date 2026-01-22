@@ -19,7 +19,10 @@ public class ProductVariantDao {
     }
 
     public ProductVariant getProdVarById(int prodVarId) {
-        String sql = "SELECT * FROM product_variants WHERE id = :prodVarId";
+        String sql = "SELECT pv.*, pi.url_image " +
+                "FROM product_variants pv " +
+                "JOIN product_images pi ON pi.product_variant_id = pv.id " +
+                "WHERE pv.id = :prodVarId";
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("prodVarId", prodVarId)
                 .mapToBean(ProductVariant.class)

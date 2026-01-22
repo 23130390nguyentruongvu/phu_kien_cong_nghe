@@ -70,37 +70,6 @@ document.getElementById('closeEdit').addEventListener('click', () => {
     document.getElementById('popup-edit').style.display = 'none';
 });
 
-
-// Hàm mở popup với message động
-function openConfirmPopup(message, id, actionServlet, onConfirm) {
-    //Thiết lập actionServlet trong form của popup-confirm
-    const popup = document.getElementById('popup-confirm');
-    const msg = document.getElementById('confirmMessage');
-    msg.textContent = message;
-    popup.style.display = 'block';
-    popup.formAction = actionServlet;
-
-    // Xử lý nút Hủy
-    document.getElementById('confirmNo').onclick = () => {
-        console.log("confirm no");
-        popup.style.display = 'none';
-    };
-}
-
-//mở popup xác nhận hành động
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('remove-img')) {
-        console.log(e.target);
-        openConfirmPopup("Bạn có chắc chắn muốn xóa ảnh này?", 1, '', () => {
-            // Logic xóa ảnh
-            e.target.parentElement.remove();
-            console.log("Ảnh đã bị xóa!");
-        });
-    } else if (e.target.classList.contains('')) {
-        console.log(e.target);
-    }
-});
-
 //thêm các url cho sản phẩm
 document.getElementById('addImageUrl').onclick = () => {
     const list = document.getElementById('imageUrlList');

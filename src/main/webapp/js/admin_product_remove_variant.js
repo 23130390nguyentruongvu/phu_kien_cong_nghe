@@ -1,5 +1,40 @@
 import {storage, ref, deleteObject} from "./firebase.js";
 
+//popup chỉnh sửa biến thể
+export const popupEditVar = () => {
+    document.querySelectorAll('.edit-product-var-update').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+            const varId = btn.dataset.id
+            const responseGetVar = await fetch(contextPath + `/get-variant-edit?variantId=${varId}`)
+            const popupEditVar = document.getElementById('popup-edit-variant')
+            popupEditVar.innerHTML = await responseGetVar.text()
+            popupEditVar.style.display = 'block'
+
+            //Nút đóng
+            document.getElementById('closeEditProdVar').addEventListener('click', () => {
+                document.getElementById('popup-edit-variant').style.display = 'none';
+            })
+            document.querySelector('input[name="editVariantImage"]').addEventListener('change', (event) => {
+                const preview = document.getElementById('editVariantPreview');
+                preview.innerHTML = ''; // clear cũ
+
+                Array.from(event.target.files).forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const div = document.createElement('div');
+                        div.classList.add('preview-item');
+                        div.innerHTML = '\<' +
+                            'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
+                    ';
+                        preview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        })
+    })
+}
+
 export async function deleteSkuImage(folderId, sku) {
     // Nếu không có SKU thì không cần xóa
     if (!sku) return {success: false, message: "Không tìm thấy mã SKU để xóa ảnh."};
@@ -101,9 +136,10 @@ export const showPopupVariants = async (prodId) => {
         })
         .then(html => {
             container.innerHTML = html;
+
             const sizeVariants = document.querySelectorAll(".product-variant-item").length
             setEventRemoveVariant(sizeVariants, prodId)
-
+            popupEditVar()
         })
         .catch(err => {
             console.log(err)
