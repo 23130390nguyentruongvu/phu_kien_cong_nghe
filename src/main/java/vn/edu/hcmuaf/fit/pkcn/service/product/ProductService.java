@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.service.product;
 
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
@@ -69,6 +70,10 @@ public class ProductService {
         });
     }
 
+    public void updatePriceAndStockProductWithTransaction(Handle handle, int prodId) {
+        productDao.updatePriceAndStock(handle, prodId);
+    }
+
     public boolean removeProduct(int prodId) {
         return productDao.removeProduct(prodId);
     }
@@ -78,7 +83,7 @@ public class ProductService {
             boolean isSuccess = true;
             isSuccess = isSuccess && productVariantDao.removeProductVariant(handle, variantId);
 
-            isSuccess = isSuccess && productDao.updatePrice(handle, prodId) > 0;
+            isSuccess = isSuccess && productDao.updatePriceAndStock(handle, prodId) > 0;
 
             return isSuccess;
         });
@@ -247,6 +252,10 @@ public class ProductService {
         return productDao.searchWithFilter(
                 keyword, minPrice, maxPrice, category, sort, rating
         );
+    }
+
+    public int updateFolderIdWithTransaction(Handle handle, int prodId, String folderId) {
+        return productDao.updateFolderIdWithTransaction(handle, prodId, folderId);
     }
 
     public boolean addProduct(JSonProduct product) {

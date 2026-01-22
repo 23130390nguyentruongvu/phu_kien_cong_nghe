@@ -1,5 +1,6 @@
 import {showPopupVariants} from './admin_product_remove_variant.js';
 import {setEvent, setEventConfirm} from "./admin_product_edit.js";
+import {setupAddProductVar} from "./admin_product_add_variant.js";
 
 
 // Mở popup thêm sản phẩm
@@ -35,22 +36,12 @@ document.getElementById('closeVariants').onclick = () => {
 //thêm
 document.querySelectorAll('.edit-product-add-var').forEach(btn => {
     btn.addEventListener('click', () => {
-        openPopupByActionProdVar('', '', undefined)
+        setupAddProductVar(btn.dataset.id)
     });
 });
 
 document.getElementById('closeAddProdVar').onclick = () => {
-    document.getElementById('popup-add-edit-variant').style.display = 'none';
-};
-//chỉnh
-document.querySelectorAll('.edit-product-var-update').forEach(btn => {
-    btn.addEventListener('click', () => {
-        openPopupByActionProdVar('', '', 1)
-    });
-});
-
-document.getElementById('closeAddProdVar').onclick = () => {
-    document.getElementById('popup-add-edit-variant').style.display = 'none';
+    document.getElementById('popup-add-variant').style.display = 'none';
 };
 
 // Mở popup chỉnh sửa
@@ -78,43 +69,6 @@ document.querySelectorAll('.edit-product-update').forEach(btn => {
 document.getElementById('closeEdit').addEventListener('click', () => {
     document.getElementById('popup-edit').style.display = 'none';
 });
-// Hàm mở popup add hoặc chỉnh sửa sản phẩm biến thể
-// edit-product-add-var and edit-product-var-update
-function openPopupByActionProdVar(actionCallProdVar, actionServlet, idProdVar) {
-    /*
-    Hàm này dùng ajax gọi api từ actionCallProdVar (servlet) để lấy về json của đối
-    tượng idProdVar và fill vào form nếu nó có
-     */
-    const popup = document.getElementById('popup-add-edit-variant');
-    const form = document.getElementById('variantForm');
-
-    // Reset form trước khi mở
-    form.reset();
-
-    if (!idProdVar) {
-        // Trường hợp chỉnh sửa biến thể
-        // Gọi AJAX để lấy dữ liệu biến thể từ server theo idProdVar
-        fetch(`${actionCallProdVar}?idProdVar=${idProdVar}`)
-            .then(response => response.json())
-            .then(data => {
-                // Fill dữ liệu vào form
-                form.querySelector('[name="variantNames"]').value = data.variantNames;
-                form.querySelector('[name="sku"]').value = data.sku;
-                form.querySelector('[name="variantPrices"]').value = data.variantPrices;
-                form.querySelector('[name="variantStocks"]').value = data.variantStocks;
-                form.querySelector('[name="gram"]').value = data.gram;
-                form.querySelector('[name="color"]').value = data.color;
-                form.querySelector('[name="size"]').value = data.size;
-                form.querySelector('[name="variantImage"]').value = data.variantImage;
-            })
-            .catch(err => console.error("Lỗi load dữ liệu biến thể:", err));
-
-    }
-    form.formAction = actionServlet
-
-    // Hiển thị popup
-    popup.style.display = 'block';
-}
 
 
 // Hàm mở popup với message động
