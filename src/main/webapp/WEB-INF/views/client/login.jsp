@@ -46,7 +46,6 @@
                     <br>
                     <input type="password" name="password" required="required" placeholder="Mật khẩu">
                     <br>
-                    <a class="forgot-pass" href="#" id="forgot-password-link">Quên mật khẩu?</a>
                     <input class="submit" name="submit" type="submit" value="Đăng Nhập">
                     <br>
                     <a class="new-account" href="${pageContext.request.contextPath}/register">Đăng

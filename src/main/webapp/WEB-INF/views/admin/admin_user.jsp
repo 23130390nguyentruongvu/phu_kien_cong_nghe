@@ -12,7 +12,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_user.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_user.css?v=1.1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
 </head>
 <body>
@@ -108,35 +108,69 @@
 <!--            </div>-->
 <!--        </div>-->
 
-        <div id="popup-add-user" class="popup">
+<%--        <div id="popup-add-user" class="popup">--%>
+<%--            <div class="popup-content">--%>
+<%--                <h2>Thêm User mới</h2>--%>
+<%--                <form action="add-user" method="post">--%>
+<%--                    <input type="text" name="name" class="form-input" placeholder="Tên người dùng">--%>
+<%--                    <br>--%>
+<%--                    <input type="text" name="userName" class="form-input" placeholder="Username">--%>
+<%--                    <br>--%>
+<%--                    <input type="email" name="email" class="form-input" placeholder="Email">--%>
+<%--                    <br>--%>
+<%--                    <input type="password" name="password" class="form-input" placeholder="Password">--%>
+<%--                    <br>--%>
+<%--                    <input type="password" name="re-password" class="form-input" placeholder="Nhập lại Password">--%>
+<%--                    <br>--%>
+<%--                    <input type="text" name="avatar" class="form-input" placeholder="Url hình ảnh">--%>
+<%--                    <br>--%>
+<%--                    <select name="role" class="form-input">--%>
+<%--                        <option value="#" disabled selected>Chọn vai trò</option>--%>
+<%--                        <option value="1" ${user.role == 1 ? 'selected' : ''}>Admin</option>--%>
+<%--                        <option value="2" ${user.role == 2 ? 'selected' : ''}>Customer</option>--%>
+<%--                    </select>--%>
+<%--                    <div class="wrap-button-cancel-submit">--%>
+<%--                        <button id="submitAddProd" type="submit" class="submit">Thêm</button>--%>
+<%--                        <button id="closeAddProd" type="button" class="close">Đóng</button>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+        <div id="popup-user" class="popup">
             <div class="popup-content">
-                <h2>Thêm User mới</h2>
-                <form action="add-user" method="post">
-                    <input type="text" name="name" class="form-input" placeholder="Tên người dùng">
+                <h2 id="popup-title">Thêm User mới</h2>
+                <form id="user-form" action="add-user" method="post" enctype="multipart/form-data">
+                    <input type="hidden" id="user-id" name="id">
+
+                    <input type="text" id="user-fullname" name="name" class="form-input" placeholder="Tên người dùng" required>
                     <br>
-                    <input type="text" name="userName" class="form-input" placeholder="Username">
+                    <input type="text" id="user-username" name="userName" class="form-input" placeholder="Username" required>
                     <br>
-                    <input type="email" name="email" class="form-input" placeholder="Email">
+                    <input type="email" id="user-email" name="email" class="form-input" placeholder="Email" required>
                     <br>
-                    <input type="password" name="password" class="form-input" placeholder="Password">
+                    <div id="password-group">
+                        <input type="password" id="user-password" name="password" class="form-input" placeholder="Password">
+                        <br>
+                        <input type="password" id="user-repassword" name="re-password" class="form-input" placeholder="Nhập lại Password">
+                        <br>
+                    </div>
+
+                    <label for="user-file">Chọn Avatar:</label>
+                    <input type="file" id="user-file" name="avatar-file" class="form-input" accept="image/*">
                     <br>
-                    <input type="password" name="re-password" class="form-input" placeholder="Nhập lại Password">
-                    <br>
-                    <input type="text" name="avatar" class="form-input" placeholder="Url hình ảnh">
-                    <br>
-                    <select name="role" class="form-input">
-                        <option value="#" disabled selected>Chọn vai trò</option>
-                        <option value="1" ${user.role == 1 ? 'selected' : ''}>Admin</option>
-                        <option value="2" ${user.role == 2 ? 'selected' : ''}>Customer</option>
+
+                    <select id="user-role" name="role" class="form-input">
+                        <option value="1">Admin</option>
+                        <option value="2">Customer</option>
                     </select>
+
                     <div class="wrap-button-cancel-submit">
-                        <button id="submitAddProd" type="submit" class="submit">Thêm</button>
-                        <button id="closeAddProd" type="button" class="close">Đóng</button>
+                        <button type="submit" class="submit">Xác nhận</button>
+                        <button type="button" class="close" onclick="closePopup()">Đóng</button>
                     </div>
                 </form>
             </div>
         </div>
-
         <div id="popup-view-user" class="popup">
             <div class="popup-content">
                 <h2>Chi tiết user</h2>

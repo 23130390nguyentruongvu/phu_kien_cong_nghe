@@ -51,7 +51,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
                     <input type="submit" value="Đăng Ký" class="btn-register">
                     <br>
-                    <a href="/phu_kien_cong_nghe/pages/trong_tin/page_login/login.html" class="have-account">Đã có tài khoản?</a>
+                    <a href="${pageContext.request.contextPath}/login" class="have-account">Đã có tài khoản?</a>
                 </form>
                 </div>
             </div>
