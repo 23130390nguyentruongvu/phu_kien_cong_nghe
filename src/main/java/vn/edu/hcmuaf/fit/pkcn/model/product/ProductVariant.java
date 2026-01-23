@@ -78,6 +78,10 @@ public class ProductVariant implements Serializable {
         return price;
     }
 
+    public String getPriceByPlainStr() {
+        return price.stripTrailingZeros().toPlainString();
+    }
+
     @ColumnName("price")
     public void setPrice(BigDecimal price) {
         this.price = price;

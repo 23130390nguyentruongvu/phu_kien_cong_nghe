@@ -4,10 +4,9 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
-import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -88,17 +87,18 @@ public class ProductDao {
                 .execute();
     }
 
-    public int updatePrice(Handle handle, int productId) {
+    public int updatePriceAndStock(Handle handle, int productId) {
         String sql = """
                   UPDATE products p
                      LEFT JOIN (
-                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p
+                         SELECT product_id, MIN(price) as min_p, MAX(price) as max_p, SUM(stock) as total_stock
                          FROM product_variants
                          WHERE product_id = :productId
                          GROUP BY product_id
                      ) pv_stats ON p.id = pv_stats.product_id
                     SET p.min_price = COALESCE(pv_stats.min_p, 0),
-                    p.max_price = COALESCE(pv_stats.max_p, 0)
+                    p.max_price = COALESCE(pv_stats.max_p, 0),
+                    p.stock = COALESCE(pv_stats.total_stock, 0)
                 WHERE p.id = :productId;
                 """;
         return handle.createUpdate(sql).bind("productId", productId).execute();
@@ -495,5 +495,17 @@ public class ProductDao {
                 WHERE id = :prodId
                 """;
         return jdbi.withHandle(handle -> handle.createUpdate(sql).bind("prodId", prodId).execute() > 0);
+    }
+
+    public int updateFolderIdWithTransaction(Handle handle, int prodId, String folderId) {
+        String sql = """
+                UPDATE products
+                SET folder_id = :folderId
+                WHERE id = :prodId
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodId", prodId)
+                .bind("folderId", folderId)
+                .execute();
     }
 }

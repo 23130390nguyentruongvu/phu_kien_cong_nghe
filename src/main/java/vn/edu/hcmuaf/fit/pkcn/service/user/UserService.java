@@ -24,13 +24,17 @@ public class UserService {
         return userDao.register(user);
     }
 
-    public User loginUser(String usernameoremail, String password) {
+    public User loginUser(String usernameoremail, String password) throws Exception {
         User user = userDao.login(usernameoremail);
 
         if (user != null) {
             String md5Pass = HashMD5.MD5(password);
             if (user.getPassword().equalsIgnoreCase(md5Pass)) {
-                return user;
+                if("active".equalsIgnoreCase(user.getStatus())) {
+                    return user;
+                }else{
+                    throw new Exception("Tài khoản đã bị khóa");
+                }
             }
         }
         return null;

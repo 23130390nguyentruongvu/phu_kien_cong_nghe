@@ -29,7 +29,7 @@
                 <i class="fa-solid fa-house"></i> <a href="${pageContext.request.contextPath}/">Quay lại trang chủ</a>
             </li>
             <li class="item-nav-link-admin">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i> <a href="${pageContext.request.contextPath}/">Đăng xuất</a>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
             </li>
         </ul>
     </div>

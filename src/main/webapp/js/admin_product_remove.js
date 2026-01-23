@@ -1,11 +1,14 @@
 import {storage, ref, deleteObject, listAll} from "./firebase.js";
+import {hideLoading, showLoading} from "./overlay_processing.js";
 
 document.querySelectorAll(".edit-product-remove").forEach(function (el) {
-    el.addEventListener('click', (ev) => {
+    el.addEventListener('click', async (ev) => {
         const id = el.dataset.id
         const name = el.dataset.name
         const isDelete = confirm(`Bạn có chắc muốn xóa sản phẩm ${name} không?`)
         if (!isDelete) return;
+        showLoading()
+        await new Promise(res => requestAnimationFrame(res));
         fetch(contextPath + "/remove-product", {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -21,12 +24,18 @@ document.querySelectorAll(".edit-product-remove").forEach(function (el) {
                         storageMsg = await deleteProductFolder(map.folderId);
                     }
 
+                    hideLoading()
                     alert(`Thành công: ${map.message}. \nHệ thống: ${storageMsg}`);
                     location.reload(); // Reload để cập nhật giao diện
-                } else
+                } else {
+                    hideLoading()
                     alert(map.message)
+                }
             })
-            .catch(err => alert(err))
+            .catch(err => {
+                hideLoading()
+                alert(err)
+            })
     })
 })
 

@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.fit.pkcn.dao.product;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonAddVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
 import java.util.ArrayList;
@@ -18,7 +20,10 @@ public class ProductVariantDao {
     }
 
     public ProductVariant getProdVarById(int prodVarId) {
-        String sql = "SELECT * FROM product_variants WHERE id = :prodVarId";
+        String sql = "SELECT pv.*, pi.url_image " +
+                "FROM product_variants pv " +
+                "JOIN product_images pi ON pi.product_variant_id = pv.id " +
+                "WHERE pv.id = :prodVarId";
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("prodVarId", prodVarId)
                 .mapToBean(ProductVariant.class)
@@ -102,6 +107,25 @@ public class ProductVariantDao {
                 .one();
     }
 
+    public int insertProductVariantWithTransaction(Handle handle, int prodId, JSonAddVariant variant) {
+        String sql = """
+                INSERT INTO product_variants (product_id, sku, name, price, stock, gram, color, size)
+                VALUES(:prodId, :sku, :name, :price, :stock, :gram, :color, :size)
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodId", prodId) // Tham số id sản phẩm cha
+                .bind("sku", variant.getSku())
+                .bind("name", variant.getName())
+                .bind("price", variant.getPrice())
+                .bind("stock", variant.getStock())
+                .bind("gram", variant.getGram())
+                .bind("color", variant.getColor())
+                .bind("size", variant.getSize())
+                .executeAndReturnGeneratedKeys()
+                .mapTo(Integer.class)
+                .one();
+    }
+
     public boolean removeProductVariant(Handle handle, int variantId) {
         String sql = """
                 DELETE FROM product_variants
@@ -137,5 +161,27 @@ public class ProductVariantDao {
                         .mapTo(String.class)
                         .findOne()
                         .orElse(null));
+    }
+
+    public int updateVariantWithTransaction(Handle handle, JsonUpdateVariant variant) {
+        String sql = """
+                UPDATE product_variants
+                SET name = :name,
+                    price = :price,
+                    stock = :stock,
+                    gram = :gram,
+                    color = :color,
+                    size = :size
+                WHERE id = :variantId
+                """;
+        return handle.createUpdate(sql)
+                .bind("name", variant.getName())
+                .bind("price", variant.getPrice())
+                .bind("stock", variant.getStock())
+                .bind("gram", variant.getGram())
+                .bind("color", variant.getColor())
+                .bind("size", variant.getSize())
+                .bind("variantId", variant.getVariantId())
+                .execute();
     }
 }

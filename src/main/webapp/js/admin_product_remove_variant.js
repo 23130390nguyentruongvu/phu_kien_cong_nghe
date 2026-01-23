@@ -1,4 +1,23 @@
 import {storage, ref, deleteObject} from "./firebase.js";
+import {setupEvent} from "./admin_product_edit_variant.js"
+import {hideLoading, showLoading} from "./overlay_processing.js";
+
+//popup chỉnh sửa biến thể
+export const popupEditVar = () => {
+    document.querySelectorAll('.edit-product-var-update').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+            const varId = btn.dataset.id
+            const prodId = btn.dataset.productId
+            const responseGetVar = await fetch(contextPath + `/get-variant-edit?variantId=${varId}`)
+            const popupEditVar = document.getElementById('popup-edit-variant')
+            popupEditVar.innerHTML = await responseGetVar.text()
+            popupEditVar.style.display = 'block'
+
+            //Thiết lập sự kiện cho popup
+            setupEvent(varId, prodId)
+        })
+    })
+}
 
 export async function deleteSkuImage(folderId, sku) {
     // Nếu không có SKU thì không cần xóa
@@ -55,6 +74,8 @@ export const setEventRemoveVariant = (sizeVariants, prodId) => {
             } else {
                 const isDelete = confirm("Bạn có chắc chắn muốn xóa biến thể mang mã: " + id + " không?")
                 if (isDelete) {
+                    showLoading()
+                    await new Promise(res => requestAnimationFrame(res));
                     try {
                         // lấy thông tin folderId và SKU trước khi xóa trong DB
                         const folderRes = await fetch(`${contextPath}/get-folder-id?variantId=${id}`);
@@ -73,11 +94,15 @@ export const setEventRemoveVariant = (sizeVariants, prodId) => {
                             // Reload lại danh sách biến thể sau khi xóa thành công
                             await showPopupVariants(prodId);
                         } else {
+                            hideLoading()
                             alert("Lỗi xóa DB: " + res.message);
                         }
                     } catch (err) {
                         console.error(err);
+                        hideLoading()
                         alert("Lỗi hệ thống: " + err.message);
+                    } finally {
+                        hideLoading()
                     }
 
                 }
@@ -101,9 +126,10 @@ export const showPopupVariants = async (prodId) => {
         })
         .then(html => {
             container.innerHTML = html;
+
             const sizeVariants = document.querySelectorAll(".product-variant-item").length
             setEventRemoveVariant(sizeVariants, prodId)
-
+            popupEditVar()
         })
         .catch(err => {
             console.log(err)

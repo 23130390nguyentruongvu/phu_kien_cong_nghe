@@ -23,18 +23,27 @@ import java.io.IOException;
         String password = request.getParameter("password");
 
         UserService userService = new UserService(JDBI.getJdbi());
-        User user = userService.loginUser(loginInfo, password);
+        try {
+            User user = userService.loginUser(loginInfo, password);
 
-        if(user!=null){
-            HttpSession session = request.getSession();
-            session.setAttribute("user",user);
-           if(user.getRole()==1){
-               response.sendRedirect(request.getContextPath()+"/view-user");
-           }else if(user.getRole()==2){
-               response.sendRedirect(request.getContextPath()+"/");
-           }
-        }else{
-            request.setAttribute("error","Tài khoản hoặc mật khẩu không đúng");
+            if (user != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                if (user.getRole() == 1) {
+                    response.sendRedirect(request.getContextPath() + "/view-user");
+                } else if (user.getRole() == 2) {
+                    response.sendRedirect(request.getContextPath() + "/");
+                }
+            } else {
+                request.setAttribute("error", "Tài khoản hoặc mật khẩu không đúng");
+                request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);
+            }
+        }catch(Exception e){
+            if("tài khoản đã bị khóa".equals(e.getMessage())){
+                request.setAttribute("error","Tài khoản đã bị khóa. Liên hệ Admin để mở!");
+            }else{
+                request.setAttribute("error",e.getMessage());
+            }
             request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);
         }
     }

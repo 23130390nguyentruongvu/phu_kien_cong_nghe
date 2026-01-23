@@ -28,6 +28,7 @@
         <div class="wrap-find-info-product">
             <form>
                 <input type="text" name="keySearch" class="input-product-id"
+                       value="${empty requestScope.keySearch?'':requestScope.keySearch}"
                        placeholder="Tìm kiếm theo mã sản phẩm hoặc tên sản phẩm">
                 <button type="submit" class="submit-data">Tìm kiếm</button>
             </form>
@@ -250,13 +251,14 @@
     <!-- TODO: Popup  views product variant-->
     <div id="popup-variants" class="popup" style="display:none;">
         <div class="popup-content">
-            <h2>Danh sách biến thể cho Sản phẩm<span id="display-id"></span></h2>
+            <h2>Danh sách biến thể sản phẩm<span id="display-id"></span></h2>
             <div class="board-res-product">
                 <table class="table-prod-variants">
                     <thead>
                     <tr>
                         <th>Ảnh</th>
                         <th>Mã</th>
+                        <th>SKU</th>
                         <th>Loại</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
@@ -271,8 +273,8 @@
             <button type="button" id="closeVariants">Đóng</button>
         </div>
     </div>
-    <!--   TODO: Popup add/edit product variant-->
-    <div id="popup-add-edit-variant" class="popup">
+    <!--   TODO: Popup add product variant-->
+    <div id="popup-add-variant" class="popup">
         <div class="popup-content">
             <h2>Biến thể sản phẩm</h2>
             <form id="variantForm" method="post">
@@ -290,7 +292,8 @@
                 <br>
                 <input type="text" class="form-input" name="size" placeholder="Kích thước">
                 <br>
-                <input type="text" class="form-input" name="variantImage" placeholder="URL hình ảnh">
+                <input type="file" class="form-input" name="variantImage" accept="image/*">
+                <div id="variantPreview"></div>
                 <br>
 
                 <div class="wrap-button-cancel-submit">
@@ -301,14 +304,38 @@
         </div>
     </div>
 
+    <script>
+        document.querySelector('input[name="variantImage"]').addEventListener('change', (event) => {
+            const preview = document.getElementById('variantPreview');
+            preview.innerHTML = ''; // clear cũ
+
+            Array.from(event.target.files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const div = document.createElement('div');
+                    div.classList.add('preview-item');
+                    div.innerHTML = '\<' +
+                        'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
+                    ';
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+
+    <!-- TODO: edit variant-->
+    <div id="popup-edit-variant" class="popup">
+
+    </div>
     <!--  TODO:  edit product-->
     <div id="popup-edit" class="popup">
         <div class="popup-content edit-product-content">
             <h2>Chỉnh sửa sản phẩm</h2>
             <form id="editProductForm">
-             <div class="content-edit-product">
+                <div class="content-edit-product">
 
-             </div>
+                </div>
                 <input type="file" id="addImageInput" accept="image/*" multiple>
                 <div id="editProductPreview" class="edit-product-images"></div>
                 <!-- Nút hành động -->
