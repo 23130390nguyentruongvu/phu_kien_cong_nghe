@@ -64,10 +64,19 @@
                                 <div class="item-wrap">
                                     <div class="container-item">
                                         <div class="image-product-item">
+                                            <a
+                                                    href="${pageContext.request.contextPath}/product-detail?id=${product.productId}"
+                                            >
                                             <img src="${product.imageMain}" loading="lazy"
                                                  decoding="async">
+                                            </a>
                                         </div>
-                                        <div class="title-product-item">${product.name}</div>
+                                        <div class="title-product-item">
+                                            <a
+                                                    href="${pageContext.request.contextPath}/product-detail?id=${product.productId}"
+                                            >${product.name}
+                                            </a>
+                                        </div>
                                         <div class="price-product-item">${product.minPriceByFormat}</div>
                                     </div>
                                 </div>

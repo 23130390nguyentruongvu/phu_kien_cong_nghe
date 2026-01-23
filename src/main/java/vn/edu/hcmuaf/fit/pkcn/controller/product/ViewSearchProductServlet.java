@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.pkcn.controller.product;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
@@ -11,7 +13,7 @@ import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 @WebServlet(name = "SearchProductServlet", value = "/search")
 public class ViewSearchProductServlet extends HttpServlet {
@@ -20,21 +22,22 @@ public class ViewSearchProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String keyword = request.getParameter("keyword");
-        String price = request.getParameter("price");
+        String keyword  = request.getParameter("keyword");
+        String price    = request.getParameter("price");
         String category = request.getParameter("category");
-        String sort = request.getParameter("sort");
-        String rating = request.getParameter("rating");
+        String sort     = request.getParameter("sort");
+        String rating   = request.getParameter("rating");
 
-
-        if (keyword == null || keyword.trim().isEmpty()) {
-            keyword = "";
-        }
+        keyword  = (keyword == null) ? "" : keyword.trim();
+        price    = (price == null || price.isBlank()) ? null : price;
+        category = (category == null || category.isBlank()) ? null : category;
+        sort     = (sort == null || sort.isBlank()) ? null : sort;
+        rating   = (rating == null || rating.isBlank()) ? null : rating;
 
         Integer minPrice = null;
         Integer maxPrice = null;
 
-        if (price != null && !price.isEmpty()) {
+        if (price != null) {
             if ("1000-up".equals(price)) {
                 minPrice = 1_000_000;
             } else {
@@ -44,6 +47,12 @@ public class ViewSearchProductServlet extends HttpServlet {
             }
         }
 
+        boolean hasFilter =
+                price != null ||
+                        category != null ||
+                        rating != null ||
+                        sort != null;
+
         ProductService productService = new ProductService(
                 new ProductDao(JDBI.getJdbi()),
                 new SortProductImpl()
@@ -51,12 +60,11 @@ public class ViewSearchProductServlet extends HttpServlet {
 
         List<ProductShowAsItem> results;
 
-        if (price == null && category == null && sort == null && rating == null) {
-            results = productService.searchProducts(keyword.trim());
-        }
-        else {
+        if (!hasFilter) {
+            results = productService.searchProducts(keyword);
+        } else {
             results = productService.searchWithFilter(
-                    keyword.trim(),
+                    keyword,
                     minPrice,
                     maxPrice,
                     category,
@@ -73,10 +81,7 @@ public class ViewSearchProductServlet extends HttpServlet {
         request.setAttribute("sort", sort);
         request.setAttribute("rating", rating);
 
-
         request.getRequestDispatcher("/WEB-INF/views/client/search_result.jsp")
                 .forward(request, response);
-
     }
 }
-

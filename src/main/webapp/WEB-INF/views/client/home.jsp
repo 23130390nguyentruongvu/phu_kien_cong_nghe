@@ -50,15 +50,28 @@
                         <div class="item-wrap">
                             <div class="container-item">
                                 <div class="image-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
+                                    >
                                     <img src="${newProduct.imageMain}" loading="lazy"
                                          decoding="async">
+                                    </a>
                                 </div>
-                                <div class="title-product-item">${newProduct.name}</div>
+                                <div class="title-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
+                                    >
+                                        ${newProduct.name}
+                                    </a>
+                                </div>
                                 <div class="price-product-item">${newProduct.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
-                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                            <button class="search-similar"
+                                    onclick="location.href='${pageContext.request.contextPath}/product-category?id=${newProduct.categoryId}'">
+                                SẢN PHẨM TƯƠNG TỰ
+                            </button>
                         </div>
                     </div>
                 </c:forEach>
@@ -77,15 +90,27 @@
                             <div class="item-wrap">
                                 <div class="container-item">
                                     <div class="image-product-item">
+                                        <a
+                                                href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
+                                        >
                                         <img src="${featuredProduct.imageMain}" loading="lazy"
                                              decoding="async">
+                                        </a>
                                     </div>
-                                    <div class="title-product-item">${featuredProduct.name}</div>
+                                    <div class="title-product-item">
+                                        <a
+                                                href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
+                                        >${featuredProduct.name}
+                                        </a>
+                                    </div>
                                     <div class="price-product-item">${featuredProduct.minPriceByFormat}</div>
                                 </div>
                             </div>
                             <div class="wrap-btn-search-similar">
-                                <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                                <button class="search-similar"
+                                        onclick="location.href='${pageContext.request.contextPath}/product-category?id=${featuredProduct.categoryId}'">
+                                    SẢN PHẨM TƯƠNG TỰ
+                                </button>
                             </div>
                         </div>
                     </c:forEach>
@@ -103,15 +128,27 @@
                         <div class="item-wrap">
                             <div class="container-item">
                                 <div class="image-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${vga.productId}"
+                                    >
                                     <img src="${vga.imageMain}" loading="lazy"
                                          decoding="async">
+                                    </a>
                                 </div>
-                                <div class="title-product-item">${vga.name}</div>
+                                <div class="title-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${vga.productId}"
+                                    >${vga.name}
+                                    </a>
+                                </div>
                                 <div class="price-product-item">${vga.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
-                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                            <button class="search-similar"
+                                    onclick="location.href='${pageContext.request.contextPath}/product-category?id=${vga.categoryId}'">
+                                SẢN PHẨM TƯƠNG TỰ
+                            </button>
                         </div>
                     </div>
                 </c:forEach>
@@ -135,15 +172,27 @@
                         <div class="item-wrap">
                             <div class="container-item">
                                 <div class="image-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${keyboard.productId}"
+                                    >
                                     <img src="${keyboard.imageMain}" loading="lazy"
                                          decoding="async">
+                                    </a>
                                 </div>
-                                <div class="title-product-item">${keyboard.name}</div>
+                                <div class="title-product-item">
+                                    <a
+                                            href="${pageContext.request.contextPath}/product-detail?id=${keyboard.productId}"
+                                    >${keyboard.name}
+                                    </a>
+                                </div>
                                 <div class="price-product-item">${keyboard.minPriceByFormat}</div>
                             </div>
                         </div>
                         <div class="wrap-btn-search-similar">
-                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                            <button class="search-similar"
+                                    onclick="location.href='${pageContext.request.contextPath}/product-category?id=${keyboard.categoryId}'">
+                                SẢN PHẨM TƯƠNG TỰ
+                            </button>
                         </div>
                     </div>
                 </c:forEach>

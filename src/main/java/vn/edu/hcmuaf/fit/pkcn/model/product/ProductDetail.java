@@ -10,6 +10,7 @@ public class ProductDetail {
     private int id;
     private String name;
     private List<Image> images;
+    private Integer categoryId;
     private String categoryName;
     private BigDecimal minPrice;
     private int warranty;
@@ -37,6 +38,13 @@ public class ProductDetail {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    @ColumnName("category_id")
+    public void setCategoryId(Integer categoryId) {this.categoryId = categoryId;}
 
     public String getCategoryName() {
         return categoryName;

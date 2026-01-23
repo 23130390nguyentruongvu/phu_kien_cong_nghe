@@ -10,7 +10,7 @@ public class ProductShowAsItem {
     private String name;
     private String imageMain;
     private BigDecimal minPrice;
-
+    private Integer categoryId;
 
     public ProductShowAsItem() {
     }
@@ -20,6 +20,7 @@ public class ProductShowAsItem {
         this.name = name;
         this.imageMain = imageMain;
         this.minPrice = minPrice;
+        this.categoryId = categoryId;
     }
 
     public int getProductId() {
@@ -62,7 +63,15 @@ public class ProductShowAsItem {
         return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, minPrice);
     }
 
-    @Override
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    @ColumnName("category_id")
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public String toString() {
         return "ProductShowAsItem{" +
                 "productId=" + productId +

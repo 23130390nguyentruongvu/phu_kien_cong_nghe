@@ -77,7 +77,7 @@
                         <ul>
                             <li id="menuHome"
                                 class="menu-item ${requestScope.activeHeader == 1 ? 'active' : ''}"><a
-                                    href="">TRANG CHỦ</a></li>
+                                    href="${pageContext.request.contextPath}/">TRANG CHỦ</a></li>
                             <li id="menuIntroduce" class="menu-item ${requestScope.activeHeader == 2 ? 'active' : ''}">
                                 <a href="introduction.jsp">GIỚI
                                     THIỆU</a></li>

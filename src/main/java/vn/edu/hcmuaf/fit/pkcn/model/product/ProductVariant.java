@@ -150,7 +150,7 @@ public class ProductVariant implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public String getPriceByFormat() {
+    public String getMinPriceByFormat() {
         return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
     }
 

@@ -163,6 +163,7 @@ body {
 
 .price-product .current-price {
   font-weight: bold;
+    color: #cc0000;
 }
 
 .variant-section {
