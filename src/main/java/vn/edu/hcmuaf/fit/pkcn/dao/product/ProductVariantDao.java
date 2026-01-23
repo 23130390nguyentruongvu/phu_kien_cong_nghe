@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonAddVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProductVariant;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ public class ProductVariantDao {
     }
 
     public ProductVariant getProdVarById(int prodVarId) {
-        String sql = "SELECT * FROM product_variants WHERE id = :prodVarId";
+        String sql = "SELECT pv.*, pi.url_image " +
+                "FROM product_variants pv " +
+                "JOIN product_images pi ON pi.product_variant_id = pv.id " +
+                "WHERE pv.id = :prodVarId";
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("prodVarId", prodVarId)
                 .mapToBean(ProductVariant.class)
@@ -157,5 +161,27 @@ public class ProductVariantDao {
                         .mapTo(String.class)
                         .findOne()
                         .orElse(null));
+    }
+
+    public int updateVariantWithTransaction(Handle handle, JsonUpdateVariant variant) {
+        String sql = """
+                UPDATE product_variants
+                SET name = :name,
+                    price = :price,
+                    stock = :stock,
+                    gram = :gram,
+                    color = :color,
+                    size = :size
+                WHERE id = :variantId
+                """;
+        return handle.createUpdate(sql)
+                .bind("name", variant.getName())
+                .bind("price", variant.getPrice())
+                .bind("stock", variant.getStock())
+                .bind("gram", variant.getGram())
+                .bind("color", variant.getColor())
+                .bind("size", variant.getSize())
+                .bind("variantId", variant.getVariantId())
+                .execute();
     }
 }

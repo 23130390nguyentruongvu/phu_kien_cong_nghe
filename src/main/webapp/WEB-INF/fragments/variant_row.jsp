@@ -10,6 +10,7 @@
         <tr class="product-variant-item">
             <td><img class="img-product-var" src="${v.urlImage}" width="50"></td>
             <td>${v.id}</td>
+            <td>${v.sku}</td>
             <td>${v.name}</td>
             <td>${v.priceByFormat}</td>
             <td>${v.stock}</td>
@@ -17,7 +18,7 @@
             <td>
          <span class="edit-product">
                 <span class="edit-product-var-remove" data-id="${v.id}"><i class="fa-solid fa-circle-minus"></i></span>
-                <span class="edit-product-var-update" data-id="${v.id}"><i class="fa-solid fa-pen-to-square"></i></span>
+                <span class="edit-product-var-update" data-product-id="${v.productId}" data-id="${v.id}"><i class="fa-solid fa-pen-to-square"></i></span>
             </span>
             </td>
         </tr>

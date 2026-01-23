@@ -1,4 +1,5 @@
 import {uploadImageToFirebase} from "./admin_product_add.js";
+import {hideLoading, showLoading} from "./overlay_processing.js";
 
 const validateVariantForm = (form) => {
     const name = form.variantNames.value.trim();
@@ -86,6 +87,9 @@ const processBtnSubmit = (prodId) => {
             submit.disabled = true
             submit.textContent = 'Đang thêm...'
             closePopup.disabled = true
+            showLoading()
+
+            await new Promise(res => requestAnimationFrame(res));
 
             //Tiếp theo check xem product chứa biến thể sẽ được add này đã có folder id chưa
             //Nếu chưa thì tạo và đem xuống cập nhật cho product, nếu rồi thì lấy folder id đó đi lưu ảnh biến thể
@@ -116,11 +120,12 @@ const processBtnSubmit = (prodId) => {
 
             const resultAdd = await fetch(contextPath + '/add-product-variant', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(variantData)
             })
 
             const resultAddJson = await resultAdd.json()
+            hideLoading()
             alert(`${resultAddJson.message}`)
             submit.disabled = false
             submit.textContent = 'Cập nhật'
@@ -129,7 +134,9 @@ const processBtnSubmit = (prodId) => {
             closePopup.click()
             location.reload()
         } catch (e) {
+            hideLoading()
             alert(`Lỗi ${e}`)
+
             submit.disabled = false
             submit.textContent = 'Cập nhật'
             closePopup.disabled = false

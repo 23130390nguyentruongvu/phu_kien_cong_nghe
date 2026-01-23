@@ -49,6 +49,7 @@ public class ViewAdminProductServlet extends HttpServlet {
                 request.setAttribute("categories", categories);
                 request.setAttribute("products", res);
                 request.setAttribute("navLink", 3);
+                request.setAttribute("keySearch", key);
                 request.getRequestDispatcher("/WEB-INF/views/admin/admin_product.jsp").forward(request, response);
             }
         }

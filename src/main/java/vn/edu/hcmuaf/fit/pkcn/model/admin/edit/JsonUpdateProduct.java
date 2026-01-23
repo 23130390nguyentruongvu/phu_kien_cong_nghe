@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.model.admin.add;
+package vn.edu.hcmuaf.fit.pkcn.model.admin.edit;
 
 import java.util.List;
 

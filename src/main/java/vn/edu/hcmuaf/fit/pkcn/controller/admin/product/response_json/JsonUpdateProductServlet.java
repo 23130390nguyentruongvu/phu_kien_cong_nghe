@@ -9,7 +9,7 @@ import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
-import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 

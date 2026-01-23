@@ -1,4 +1,5 @@
 import { storage, ref, uploadBytesResumable, getDownloadURL } from "./firebase.js";
+import {hideLoading, showLoading} from "./overlay_processing.js";
 
 const contextPath = window.contextPath
 
@@ -198,8 +199,6 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
 
     const submitBtn = document.getElementById('submitAddProd');
     const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Đang xử lý...';
 
     try {
         //TODO: Validate form
@@ -215,6 +214,11 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
             showAlert('error', `Mã SKU đã tồn tại: ${skuCheck.duplicateSKUs.join(', ')}`);
             return;
         }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Đang xử lý...';
+        showLoading()
+        await new Promise(res => requestAnimationFrame(res));
 
         //TODO: Upload ảnh sản phẩm lên Firebase Storage
         //Thêm ảnh của sản phẩm chung
@@ -306,6 +310,7 @@ document.getElementById('form-add-product').addEventListener('submit', async (ev
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
+        hideLoading()
     }
 })
 

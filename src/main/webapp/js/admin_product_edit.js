@@ -1,5 +1,6 @@
 import {uploadImageToFirebase} from "./admin_product_add.js";
 import {deleteImagesByUrls} from "./admin_product_remove.js"
+import {hideLoading, showLoading} from "./overlay_processing.js";
 
 // Khi chọn file thì hiển thị preview
 document.getElementById('addImageInput').addEventListener('change', function (event) {
@@ -162,6 +163,9 @@ export const setEventConfirm = (prodId) => {
                 btnCancel.disabled = true
                 btnSubmit.textContent = 'Đang xử lí...'
                 btnSubmit.disabled = true
+                showLoading()
+
+                await new Promise(res => requestAnimationFrame(res));
 
                 try {
                     const files = document.getElementById('addImageInput').files
@@ -230,15 +234,17 @@ export const setEventConfirm = (prodId) => {
 
                     const res = await fetch(contextPath + "/update-product", {
                         method: 'POST',
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(productData)
                     })
 
                     const resFinal = await res.json()
+                    hideLoading()
                     alert(`Thông báo: ${resFinal.message}`)
                     btnCancel.disabled = false
                     btnSubmit.textContent = 'Cập nhật'
                     btnSubmit.disabled = false
+
                     const btnClose = document.getElementById('closeEdit');
                     if (btnClose) btnClose.click();
                     location.reload();
@@ -246,6 +252,7 @@ export const setEventConfirm = (prodId) => {
                     btnCancel.disabled = false
                     btnSubmit.textContent = 'Cập nhật'
                     btnSubmit.disabled = false
+                    hideLoading()
                     alert(`Thông báo: ${e}`)
                 }
             }
