@@ -1,82 +1,94 @@
-// document.querySelector('.head-edit .edit-user-add-user').onclick = () => {
-//     const popup = document.getElementById('popup-add-user');
-//     popup.querySelector('form').reset();
-//     popup.style.display = 'block';
-// };
-//
-// document.getElementById('closeAddProd').onclick = () => {
-//     document.getElementById('popup-add-user').style.display = 'none';
-// };
-//
-// function openUpdatePopup(id, fullName, userName, email, avatar, role) {
-//     const popup = document.getElementById('popup-update-user');
-//
-//     document.getElementById('edit-id').value = id;
-//     document.getElementById('name-user').value = fullName;
-//
-//     const roleSelect = document.getElementById("role-edit");
-//     if(roleSelect){
-//         roleSelect.value = role;
-//     }
-//     const userNameInput = document.getElementById('user-name');
-//     userNameInput.value = userName;
-//     userNameInput.readOnly = true;
-//     userNameInput.style.backgroundColor = "#eeeeee"; // Tạo hiệu ứng bị khóa
-//
-//     const emailInput = document.getElementById('email-edit');
-//     emailInput.value = email;
-//     emailInput.readOnly = true;
-//     emailInput.style.backgroundColor = "#eeeeee";
-//
-//     document.getElementById('avatar-edit').value = avatar;
-//     document.getElementById("file-edit").value = "";
-//     document.getElementById('role-edit').value = role;
-//
-//     // Hiện popup
-//     popup.style.display = 'block';
-//
-//     document.getElementById('closeUpdate').onclick = () => {
-//         document.getElementById('popup-update-user').style.display = 'none';
-//     };
-// }
-const popup = document.getElementById('popup-user');
-const form = document.getElementById('user-form');
-const title = document.getElementById('popup-title');
-const passGroup = document.getElementById('password-group');
+import {setupEvent} from "./admin_user_add.js";
+import {deleteObject, getDownloadURL, ref, storage, uploadBytesResumable} from "./firebase.js";
 
+//delete
+export async function deleteImageByPath(filePath) {
+    if (!filePath || typeof filePath !== 'string') {
+        return {
+            success: false,
+            message: "Đường dẫn file không hợp lệ hoặc trống."
+        };
+    }
 
-document.querySelector('.edit-user-add-user').onclick = () => {
-    form.reset();
-    form.action = "add-user";
-    title.innerText = "Thêm User mới";
-    document.getElementById('user-id').value = "";
-    document.getElementById('user-username').readOnly = false;
-    document.getElementById('user-username').style.backgroundColor = "#fff";
-    passGroup.style.display = "block"; // Hiện mật khẩu khi thêm
-    popup.style.display = 'block';
-};
+    try {
+        const fileRef = ref(storage, filePath);
+        if (filePath.startsWith("http")) {
+            return {
+                success: false,
+                message: "Vui lòng truyền path (ví dụ: folder/image.jpg), không phải URL."
+            };
+        }
 
-function openUpdatePopup(id, fullName, userName, email, role) {
-    form.reset();
-    form.action = "edit-user";
-    title.innerText = "Chỉnh sửa người dùng";
+        await deleteObject(fileRef);
 
-    document.getElementById('user-id').value = id;
-    document.getElementById('user-fullname').value = fullName;
-    document.getElementById('user-username').value = userName;
-    document.getElementById('user-email').value = email;
-    document.getElementById('user-role').value = role;
+        return {
+            success: true,
+            message: `Đã xóa ảnh thành công tại đường dẫn: ${filePath}`
+        };
 
-    document.getElementById('user-username').readOnly = true;
-    document.getElementById('user-username').style.backgroundColor = "#eeeeee";
-    document.getElementById("user-email").readOnly = true;
-    document.getElementById('user-email').style.backgroundColor = "#eeeeee";
+    } catch (error) {
+        console.error('Lỗi khi xóa file Firebase:', error);
 
-    passGroup.style.display = "none";
+        let errorMsg = "Lỗi hệ thống khi xóa ảnh.";
+        if (error.code === 'storage/object-not-found') {
+            errorMsg = "File không tồn tại trên hệ thống (có thể đã bị xóa trước đó).";
+        } else if (error.code === 'storage/unauthorized') {
+            errorMsg = "Bạn không có quyền xóa file này.";
+        }
 
-    popup.style.display = 'block';
+        return {
+            success: false,
+            message: errorMsg
+        };
+    }
 }
 
-function closePopup() {
-    popup.style.display = 'none';
+//up ảnh lên firestorage
+export async function uploadImageToFirebase(file, folderPath, fileName) {
+    return new Promise((resolve, reject) => {
+        // 1. Tạo reference
+        const storageRef = ref(storage, `${folderPath}/${fileName}`);
+
+        const metadata = {
+            contentType: file.type
+        };
+
+        // 2. Bắt đầu upload
+        const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Đang upload ${fileName}: ${progress.toFixed(2)}%`);
+            },
+            (error) => {
+                console.error('Lỗi upload Firebase:', error);
+                reject(error);
+            },
+            async () => {
+                // 3. Lấy URL (Cách mới: getDownloadURL(task.snapshot.ref))
+                try {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    resolve(downloadURL);
+                } catch (err) {
+                    reject(err);
+                }
+            }
+        );
+    });
 }
+
+const popupAdd = document.getElementById('popup-user');
+
+//Show popup thêm user
+document.querySelector('.edit-user .edit-user-add-user').addEventListener('click', () => {
+    popupAdd.style.display = 'block'
+    const form = document.getElementById('user-form')
+    form.reset()
+    setupEvent(form)
+})
+
+document.getElementById('closeAddUser').addEventListener('click', () => {
+    popupAdd.style.display = 'none'
+    document.getElementById('addUserImagePreview').innerHTML = ''
+})
