@@ -73,6 +73,21 @@ public class ProductImageDao {
                 .execute();
     }
 
+    public int updateProductImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
+        String sql = """
+               UPDATE product_images
+               SET url_image = :url
+               WHERE product_id = :prodId
+                AND (:prodVarId IS NULL || product_variant_id = :prodVarId)
+                """;
+        return handle.createUpdate(sql)
+                .bind("prodVarId", prodVarId)
+                .bind("prodId", productId)
+                .bind("url", urlImage)
+                .bind("isMain", 0)
+                .execute();
+    }
+
     public void updateMainImageWithTransaction(Handle handle, Integer prodVarId, int productId, String urlImage) {
         String sql1 = """
                 UPDATE product_images

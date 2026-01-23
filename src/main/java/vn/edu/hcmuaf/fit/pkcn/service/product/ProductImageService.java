@@ -14,4 +14,8 @@ public class ProductImageService {
     public int insertProductImageWithTransaction(Handle handle, int varId, int prodId, String url) {
         return productImageDao.insertProductImageWithTransaction(handle, varId, prodId, url);
     }
+
+    public int updateProductImageWithTransaction(Handle handle, Integer varId, int prodId, String url) {
+        return productImageDao.updateProductImageWithTransaction(handle, varId, prodId, url);
+    }
 }

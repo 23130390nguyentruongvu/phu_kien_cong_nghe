@@ -13,26 +13,35 @@
     <div class="popup-content">
         <h2>Biến thể sản phẩm</h2>
         <form id="editVariantForm" method="post">
+            <input type="hidden" name="variantSku" value="${requestScope.variant.sku}">
+            <label>Tên biến thể: </label>
             <input type="text" class="form-input" value="${requestScope.variant.name}" name="variantNames"
                    placeholder="Tên biến thể" required>
             <br>
+            <label>Giá: </label>
             <input type="number" class="form-input" value="${requestScope.variant.priceByPlainStr}" name="variantPrices"
                    placeholder="Giá" required>
             <br>
+            <label>Số lượng trong kho: </label>
             <input type="number" class="form-input" value="${requestScope.variant.stock}" name="variantStocks"
                    placeholder="Số lượng" required>
             <br>
+            <label>Trọng lượng (gram): </label>
             <input type="number" class="form-input" value="${requestScope.variant.gram}" name="gram"
                    placeholder="Trọng lượng (gram)">
             <br>
+            <label>Màu sắc: </label>
             <input type="text" class="form-input" value="${requestScope.variant.color}" name="color"
                    placeholder="Màu sắc">
             <br>
+            <label>Kích thước: </label>
             <input type="text" class="form-input" value="${requestScope.variant.size}" name="size"
                    placeholder="Kích thước">
             <br>
             <span>Ảnh ban đầu: </span>
-            <img src="${requestScope.variant.urlImage}" loading="lazy" style="width: 80px; height: 80px">
+            <img class="old-variant-img" data-url="${requestScope.variant.urlImage}"
+                 src="${requestScope.variant.urlImage}" loading="lazy"
+                 style="width: 80px; height: 80px">
             <br>
             <label>Thay đổi ảnh: </label>
             <input type="file" class="form-input" name="editVariantImage" accept="image/*">

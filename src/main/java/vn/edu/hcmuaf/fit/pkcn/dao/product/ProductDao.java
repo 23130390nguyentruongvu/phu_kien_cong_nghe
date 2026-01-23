@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonProduct;
-import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonUpdateProduct;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateProduct;
 import vn.edu.hcmuaf.fit.pkcn.model.product.*;
 
 import java.util.ArrayList;

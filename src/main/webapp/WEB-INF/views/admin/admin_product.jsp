@@ -258,6 +258,7 @@
                     <tr>
                         <th>Ảnh</th>
                         <th>Mã</th>
+                        <th>SKU</th>
                         <th>Loại</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
