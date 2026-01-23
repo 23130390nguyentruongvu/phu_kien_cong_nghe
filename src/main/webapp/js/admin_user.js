@@ -92,3 +92,5 @@ document.getElementById('closeAddUser').addEventListener('click', () => {
     popupAdd.style.display = 'none'
     document.getElementById('addUserImagePreview').innerHTML = ''
 })
+
+//show popup chỉnh sửa user

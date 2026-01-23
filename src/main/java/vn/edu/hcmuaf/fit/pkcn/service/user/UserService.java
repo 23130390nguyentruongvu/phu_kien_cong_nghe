@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.pkcn.service.user;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonAddUser;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateUser;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.utils.HashMD5;
 import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
@@ -49,6 +51,10 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public int updateUserWithTransaction(Handle handle, JsonUpdateUser user) {
+        return userDao.updateUserWithTransaction(handle, user);
     }
 
     public void updateUserInfo(int id, String fullName, String plainPassword) {

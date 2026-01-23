@@ -218,6 +218,17 @@ img{
     background-color: green;
     margin-left: 10%;
 }
+
+#submitEditUser {
+    color: white;
+    border-radius: 10px;
+    border: 1px solid green;
+    width: 100px;
+    height: 40px;
+    margin-right: 30px;
+    background-color: green;
+    margin-left: 10%;
+}
 .wrap-button-cancel-submit .close {
     color: white;
     border-radius: 10px;
@@ -265,7 +276,7 @@ img{
     align-items: center;
     justify-content: center;
 }
-#closeUpdate {
+#closeEditUser {
     color: white;
     border-radius: 10px;
     border: 1px solid red;

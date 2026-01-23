@@ -71,6 +71,7 @@ Response: {
             //tạo response json
             String jsonResponse = new Gson().toJson(respObj);
             response.getWriter().write(jsonResponse);
+            response.getWriter().flush();
         } catch (Exception e) {
             e.printStackTrace();
             Map<String, Object> respObj = new HashMap<>();
@@ -80,6 +81,7 @@ Response: {
             //tạo response json
             String jsonResponse = new Gson().toJson(respObj);
             response.getWriter().write(jsonResponse);
+            response.getWriter().flush();
         }
     }
 }
