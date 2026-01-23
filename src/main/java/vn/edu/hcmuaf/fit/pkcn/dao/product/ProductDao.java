@@ -161,9 +161,10 @@ public class ProductDao {
     }
 
     public List<ProductShowAsItem> getNewProducts(int limit) {
-        String sql = "SELECT p.*, pi.url_image " +
+        String sql = "SELECT p.*, pi.url_image, pc.category_id " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
+                "JOIN product_categories pc ON pc.product_id = p.id " +
                 "WHERE pi.product_variant_id IS NULL AND pi.is_main = 1 AND p.status = 1 " +
                 "ORDER BY p.create_date DESC " +
                 "LIMIT :limit";
@@ -171,9 +172,10 @@ public class ProductDao {
     }
 
     public List<ProductShowAsItem> getFeatureProductsByOne(int limit) {
-        String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
+        String sql = "SELECT p.name, pi.url_image, p.min_price, p.id, pc.category_id " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
+                "JOIN product_categories pc ON pc.product_id = p.id " +
                 "WHERE p.is_featured = 1 AND p.status = 1 " +
                 "AND pi.product_variant_id IS NULL AND pi.is_main = 1 " +
                 "ORDER BY p.create_date DESC " +
@@ -187,9 +189,10 @@ public class ProductDao {
     public List<ProductShowAsItem> getFeaturedProductsByReview(int limit, int avgStar) {
         try {
             if (avgStar > 5 || avgStar < 0) return null;
-            String sql = "SELECT p.name, pi.url_image, p.min_price, p.id " +
+            String sql = "SELECT p.name, pi.url_image, p.min_price, p.id, pc.category_id " +
                     "FROM products p " +
                     "JOIN product_images pi ON pi.product_id = p.id " +
+                    "JOIN product_categories pc ON pc.product_id = p.id " +
                     "JOIN reviews r ON r.product_id = p.id " +
                     "WHERE p.status = 1 " +
                     "AND pi.product_variant_id IS NULL AND pi.is_main = 1 " +
@@ -250,7 +253,7 @@ public class ProductDao {
     }
 
     public List<ProductShowAsItem> getProductsByCategoryId(int categoryId, String sqlSort) {
-        String sql = (sqlSort == null) ? "SELECT p.name, pi.url_image, p.min_price, p.id " +
+        String sql = (sqlSort == null) ? "SELECT p.name, pi.url_image, p.min_price, p.id, pc.category_id " +
                 "FROM products p " +
                 "JOIN product_images pi ON pi.product_id = p.id " +
                 "JOIN product_categories pc ON pc.product_id = p.id " +
@@ -277,7 +280,7 @@ public class ProductDao {
             // Load product thông tin chung + category
             String productSql = ""
                     + "SELECT p.id, p.name, p.subtitle AS subtitle, p.description, "
-                    + "       p.warranty_period AS warranty_period, c.category_name "
+                    + "       p.warranty_period AS warranty_period, c.category_name, pc.category_id "
                     + "FROM products p "
                     + "LEFT JOIN product_categories pc ON pc.product_id = p.id "
                     + "LEFT JOIN categories c ON c.id = pc.category_id "
@@ -335,6 +338,7 @@ public class ProductDao {
                         p.id,
                         p.name AS name,
                         p.min_price,
+                        pc.category_id,
                         (
                             SELECT pi.url_image
                             FROM product_images pi
@@ -369,6 +373,7 @@ public class ProductDao {
             p.id,
             p.name,
             p.min_price,
+            pc.category_id,
             (
                 SELECT pi.url_image
                 FROM product_images pi
@@ -377,6 +382,8 @@ public class ProductDao {
                 LIMIT 1
             ) AS url_image
         FROM products p
+        LEFT JOIN product_categories pc
+        ON pc.product_id = p.id
         WHERE p.name LIKE :keyword
         AND p.status = 1
     """;
@@ -402,6 +409,7 @@ public class ProductDao {
         p.id,
         p.name,
         p.min_price,
+        pc.category_id,
         (
             SELECT pi.url_image
             FROM product_images pi

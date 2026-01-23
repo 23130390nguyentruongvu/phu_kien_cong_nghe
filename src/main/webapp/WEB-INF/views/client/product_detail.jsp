@@ -56,7 +56,7 @@
 
                       <div class="price-product">
                         <span class="current-price">
-                            ${product.defaultVariant.price}
+                            ${product.defaultVariant.minPriceByFormat}
                         </span>
                       </div>
 
@@ -115,7 +115,7 @@
                                           name="quantity"
                                           value="1"
                                           min="1"
-                                          max="${product.defaultVariant.stock}"
+                                          max="100"
                                           class="quantity-input"
                                   />
 
@@ -240,16 +240,22 @@
                                           <div class="container-item">
 
                                               <div class="image-product-item">
+                                                  <a
+                                                          href="${pageContext.request.contextPath}/product-detail?id=${p.productId}"
+                                                  >
                                                   <img
                                                           src="${p.imageMain}"
                                                           loading="lazy"
                                                           decoding="async"
                                                           alt="${p.name}"
                                                   />
+                                                  </a>
                                               </div>
 
                                               <div class="title-product-item">
-                                                      ${p.name}
+                                                  <a href="${pageContext.request.contextPath}/product-detail?id=${p.productId}">
+                                                          ${p.name}
+                                                  </a>
                                               </div>
 
                                               <div class="price-product-item">
@@ -260,12 +266,10 @@
                                       </div>
 
                                       <div class="wrap-btn-search-similar">
-                                          <a
-                                                  href="${pageContext.request.contextPath}/product-detail?id=${p.productId}"
-                                                  class="search-similar"
-                                          >
+                                          <button class="search-similar"
+                                                  onclick="location.href='${pageContext.request.contextPath}/product-category?id=${product.categoryId}'">
                                               SẢN PHẨM TƯƠNG TỰ
-                                          </a>
+                                          </button>
                                       </div>
                                   </div>
                               </c:forEach>

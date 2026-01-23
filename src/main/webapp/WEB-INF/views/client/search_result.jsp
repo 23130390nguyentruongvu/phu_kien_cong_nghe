@@ -161,7 +161,10 @@
                                                     </a>
                                                 </div>
 
-                                                <div class="title-product-item">${product.name}</div>
+                                                <div class="title-product-item">
+                                                    <a href="${pageContext.request.contextPath}/product-detail?id=${product.productId}">
+                                                        ${product.name}
+                                                </a></div>
 
                                                 <div class="price-product-item">
                                                         ${product.minPriceByFormat}
@@ -170,7 +173,10 @@
                                         </div>
 
                                         <div class="wrap-btn-search-similar">
-                                            <button class="search-similar">SẢN PHẨM TƯƠNG TỰ</button>
+                                            <button class="search-similar"
+                                                    onclick="location.href='${pageContext.request.contextPath}/product-category?id=${product.categoryId}'">
+                                                SẢN PHẨM TƯƠNG TỰ
+                                            </button>
                                         </div>
                                     </div>
                                 </c:forEach>

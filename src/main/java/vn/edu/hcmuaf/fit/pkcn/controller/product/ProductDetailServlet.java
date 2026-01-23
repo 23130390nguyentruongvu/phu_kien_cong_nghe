@@ -26,7 +26,7 @@ public class ProductDetailServlet extends HttpServlet {
 
         String paramId = request.getParameter("id");
         if (paramId == null || paramId.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendRedirect(request.getContextPath() + "/");
             return;
         }
 
@@ -44,6 +44,11 @@ public class ProductDetailServlet extends HttpServlet {
 
             ProductDetail product = productService.getProductDetailById(productId);
 
+            if (product == null) {
+                response.sendRedirect(request.getContextPath() + "/");
+                return;
+            }
+
             List<ProductShowAsItem> relatedProducts =
                     productService.getRelatedProducts(productId);
 
@@ -55,7 +60,7 @@ public class ProductDetailServlet extends HttpServlet {
                     .forward(request, response);
 
         } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

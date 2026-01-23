@@ -30,6 +30,12 @@
     font-size: 1em;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none;
+    color: #000000;
+}
+
+.title-product-item a:visited {
+    color: #000000;
 }
 
 .item-wrap .container-item .price-product-item {
