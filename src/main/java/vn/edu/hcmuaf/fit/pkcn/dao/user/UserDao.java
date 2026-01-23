@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.user;
 
 import jakarta.servlet.ServletException;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonAddUser;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateUser;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 
 import java.io.IOException;
@@ -191,5 +193,28 @@ public class UserDao {
                 .findOne()
                 .orElse(null)
         );
+    }
+
+    public int updateUserWithTransaction(Handle handle, JsonUpdateUser user) {
+        String updateUrl = user.isHasImage() ? " avatar = :url " : " avatar = avatar ";
+        String sql = """
+                UPDATE users
+                SET role_id = :role,
+                    full_name = :name,
+                    folder_id = :folderId,
+                """
+                +
+                updateUrl
+                + """
+                WHERE id = :userId
+                AND (:url IS NULL OR :url IS NOT NULL)
+                """;
+        return handle.createUpdate(sql)
+                .bind("role", user.getRole())
+                .bind("name", user.getFullName())
+                .bind("url", user.getUrl())
+                .bind("userId", user.getUserId())
+                .bind("folderId", user.getFolderId())
+                .execute();
     }
 }

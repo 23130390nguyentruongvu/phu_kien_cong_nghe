@@ -27,7 +27,7 @@
             <form action="search-user" method="get">
                 <input type="text" name="searchName" class="input-user-id" placeholder="Tìm kiếm theo tên người dùng"
                        value="${param.searchName}">
-                <button type="submit" class="submit-data">Submit</button>
+                <button type="submit" class="submit-data">Tìm kiếm</button>
             </form>
         </div>
         <div class="edit-user head-edit">
@@ -38,6 +38,7 @@
                 <table>
                     <thead>
                     <tr>
+                        <th>Vai trò</th>
                         <th>Mã người dùng</th>
                         <th>Avatar</th>
                         <th>Tên người dùng</th>
@@ -49,6 +50,7 @@
                     <tbody>
                     <c:forEach var="user" items="${users}" varStatus="loop">
                         <tr>
+                            <td>${user.role == 2?'Customer':"Admin"}</td>
                             <td>${user.id}</td>
                             <td>
                                 <img class="avatar-img"
@@ -89,7 +91,8 @@
                                     <span class="edit-user-remove" data-id="${user.id}"
                                           data-username="${user.userName}"><i
                                             class="fa-solid fa-circle-minus"></i></span>
-
+                                </c:if>
+                                <c:if test="${user.role == 2 || user.id == sessionScope.user.id}">
                                     <span class="edit-user-update" style="cursor: pointer;" data-id="${user.id}"
                                           data-username="${user.userName}">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -171,38 +174,7 @@
     </script>
 
     <div id="popup-update-user" class="popup">
-        <div class="popup-content">
-            <h2>Chỉnh sửa thông tin người dùng</h2>
-            <form id="editUserForm" action="${pageContext.request.contextPath}/edit-user" method="post">
-                <input type="hidden" id="edit-id" name="id">
 
-                <label for="name-user">Tên người dùng:</label>
-                <input type="text" id="name-user" name="name" class="form-input">
-                <br>
-                <label for="user-name">User Name:</label>
-                <input type="text" id="user-name" name="userName" class="form-input" readonly style="background: #eee;">
-                <br>
-                <label for="email">Email:</label>
-                <input type="text" id="email-edit" name="email" class="form-input" readonly style="background: #eee;">
-                <br>
-                <label for="avatar-edit">Avatar URL:</label>
-                <input type="text" id="avatar-edit" name="avatar" class="form-input">
-                <br>
-                <label for="file-avatar">Chọn Avatar:</label>
-                <input type="file" id="file-edit" name="file-avatar" class="form-input" accept="image/*">
-                <label for="role-edit">Vai trò:</label>
-                <select name="role" id="role-edit" class="form-input">
-                    <option value="1">Admin</option>
-                    <option value="2">Customer</option>
-                </select>
-                <br>
-
-                <div class="popup-actions">
-                    <button type="submit" id="submit-update-user" class="submit">Cập nhật</button>
-                    <button type="button" id="closeUpdate" class="close">Đóng</button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 <div id="popup-confirm" style="z-index: 1001" class="popup">
@@ -222,4 +194,5 @@
 </script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin_user.js"></script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin_remove_user.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_user_edit.js"></script>
 </html>
