@@ -65,26 +65,28 @@
                                         </c:choose>
                                     </td>
                                     <td>
-                                        <c:choose>
-                                            <c:when test="${user.status == 'active'}">
-                                                <a href="${pageContext.request.contextPath}/lock-unlock-user?action=lock&id=${user.id}"
-                                                onclick="return confirm('Đồng ý khóa người dùng này?')">
-                                                    <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
-                                                </a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="${pageContext.request.contextPath}/lock-unlock-user?action=unlock&id=${user.id}"
-                                                   onclick="return confirm('Đồng ý mở khóa người dùng này?')">
-                                                    <span class="edit-user-unlock"><i class="fa-solid fa-unlock" style="color: orange;"></i></span>
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <c:if test="${user.role == 2}">
+                                            <c:choose>
+                                                <c:when test="${user.status == 'active'}">
+                                                    <a href="${pageContext.request.contextPath}/lock-unlock-user?action=lock&id=${user.id}"
+                                                       onclick="return confirm('Đồng ý khóa người dùng này?')">
+                                                        <span class="edit-user-lock"><i class="fa-solid fa-lock"></i></span>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="${pageContext.request.contextPath}/lock-unlock-user?action=unlock&id=${user.id}"
+                                                       onclick="return confirm('Đồng ý mở khóa người dùng này?')">
+                                                        <span class="edit-user-unlock"><i class="fa-solid fa-unlock" style="color: orange;"></i></span>
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+
                                         <a href="${pageContext.request.contextPath}/delete-user?action=delete&id=${user.id}"
                                            onclick="return confirm('Đồng ý xóa người dùng này?')">
                                             <span class="edit-user-remove"><i class="fa-solid fa-circle-minus"></i></span>
                                         </a>
-                                        <span class="edit-user-update"
-                                              style="cursor: pointer;"
+                                        <span class="edit-user-update" style="cursor: pointer;"
                                               onclick="openUpdatePopup('${user.id}', '${user.fullName}', '${user.userName}', '${user.email}', '${user.avatar}', '${user.role}')">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </span>

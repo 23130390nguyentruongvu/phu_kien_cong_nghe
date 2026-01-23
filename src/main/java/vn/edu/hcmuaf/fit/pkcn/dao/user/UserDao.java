@@ -54,7 +54,7 @@
         }
         //  danh sach user
         public List<User> getAllUsers() {
-            String sql = "SELECT id, avatar, full_name , user_name , status FROM users";
+            String sql = "SELECT id, avatar, full_name , user_name , status,role_id FROM users";
             return jdbi.withHandle(handle -> {
                 List<User> listUser = new ArrayList<>();
                 Iterator<User> iter = handle.createQuery(sql)
