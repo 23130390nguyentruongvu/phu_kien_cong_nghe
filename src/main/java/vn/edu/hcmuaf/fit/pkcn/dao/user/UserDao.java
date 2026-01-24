@@ -232,4 +232,18 @@ public class UserDao {
                 .orElse(null)
         );
     }
+
+    public User findByEmail(String email) {
+        String sql = """
+                SELECT *
+                FROM users
+                WHERE email = :email
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("email", email)
+                .mapToBean(User.class)
+                .findOne()
+                .orElse(null)
+        );
+    }
 }
