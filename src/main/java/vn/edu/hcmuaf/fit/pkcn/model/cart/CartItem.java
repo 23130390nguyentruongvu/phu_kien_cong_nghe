@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.model.cart;
 
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -69,7 +69,7 @@ public class CartItem implements Serializable {
     }
 
     public String getPriceByFormat() {
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, price);
     }
 
     @Override

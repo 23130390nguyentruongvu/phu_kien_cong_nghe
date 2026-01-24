@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.model.review;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
+import vn.edu.hcmuaf.fit.pkcn.utils.DateFormatUtils;
 
 import java.time.LocalDateTime;
 
@@ -88,6 +89,6 @@ public class ReviewProduct {
 
     public String getFormattedDate() {
         if (this.evaluateDate == null) return "";
-        return this.evaluateDate.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return DateFormatUtils.formatDate(DateFormatUtils.PATTERN_DATETIME, evaluateDate);
     }
 }
