@@ -70,10 +70,8 @@
                             </c:if>
                         </ul>
 
-                        <form method="POST" action="${pageContext.request.contextPath}/add-cart">
-
-                            <input type="hidden" name="id" value="${product.defaultVariant.id}"/>
-
+                        <form method="POST" id="formAddCart" action="${pageContext.request.contextPath}/add-cart">
+                            <input type="hidden" name="idVar">
                             <input type="hidden" name="name" value="${product.name}"/>
 
                             <c:if test="${not empty product.variants}">
@@ -92,6 +90,9 @@
 
                                             <label class="variant-item ${v.id == product.defaultVariant.id ? 'active' : ''}">
                                                 <input
+                                                        data-price="${v.priceByFormat}"
+                                                        data-sku="${v.sku}"
+                                                        class="dataVariant"
                                                         type="radio"
                                                         name="id"
                                                         value="${v.id}"
@@ -129,7 +130,7 @@
                         </form>
 
                         <ul class="product-info">
-                            <li>SKU: ${product.defaultVariant.sku}</li>
+                            <li class="skuCurrent">SKU: ${product.defaultVariant.sku}</li>
                             <li>Danh mục: ${product.categoryName}</li>
                             <li><strong>Free ship HCM cho đơn &gt;500k &amp; &lt;5km</strong></li>
                             <li>&gt; Giao hàng nhanh toàn quốc 2–4 ngày</li>
