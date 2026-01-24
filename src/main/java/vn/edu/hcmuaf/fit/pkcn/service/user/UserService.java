@@ -98,4 +98,8 @@ public class UserService {
     public String getUid(int id) {
         return userDao.getUid(id);
     }
+
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
 }

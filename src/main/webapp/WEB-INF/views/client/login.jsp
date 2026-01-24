@@ -21,7 +21,7 @@
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="home">
-                        <a href="#" class="home_text">Trang Chủ</a>
+                        <a href="${pageContext.request.contextPath}/" class="home_text">Trang Chủ</a>
                     </li>
                     <li class="step">/</li>
                     <li class="account">
@@ -37,7 +37,8 @@
             <div class="form-login">
                 <p class="title_login">Đăng Nhập</p>
                 <c:if test="${not empty error}">
-                    <div class="alert-error" style="color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; background-color: #fff2f2;">
+                    <div class="alert-error"
+                         style="color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; background-color: #fff2f2;">
                             ${error}
                     </div>
                 </c:if>
@@ -50,6 +51,8 @@
                     <br>
                     <a class="new-account" href="${pageContext.request.contextPath}/register">Đăng
                         ký</a>
+                    <br>
+                    <a href="javascript:void(0)" class="forgot-pass">Quên mật khẩu?</a>
                 </form>
             </div>
         </div>
@@ -59,45 +62,49 @@
 
 </div>
 
-<div id="forgot-password-modal" class="modal hidden">
+<%--<div id="forgot-password-modal" class="modal hidden">--%>
 
-    <div class="modal-backdrop"></div>
+<%--    <div class="modal-backdrop"></div>--%>
 
-    <div class="modal-content">
+<%--    <div class="modal-content">--%>
 
-        <span class="close-btn">&times;</span>
+<%--        <span class="close-btn">&times;</span>--%>
 
-        <h2>Khôi phục Mật khẩu</h2>
-        <p>Vui lòng nhập email hoặc số điện thoại của bạn:</p>
+<%--        <h2>Khôi phục Mật khẩu</h2>--%>
+<%--        <p>Vui lòng nhập email hoặc số điện thoại của bạn:</p>--%>
 
-        <form id="recovery-form" action="#" method="post">
-            <input type="text" id="recovery-input" name="recovery_info" placeholder="Email hoặc SĐT" required>
-            <button type="submit">Gửi Mã Xác Minh</button>
-        </form>
+<%--        <form id="recovery-form" action="#" method="post">--%>
+<%--            <input type="text" id="recovery-input" name="recovery_info" placeholder="Email hoặc SĐT" required>--%>
+<%--            <button type="submit">Gửi Mã Xác Minh</button>--%>
+<%--        </form>--%>
 
-    </div>
-</div>
+<%--    </div>--%>
+<%--</div>--%>
 
-<div id="verify-code-modal" class="modal hidden">
+<%--<div id="verify-code-modal" class="modal hidden">--%>
 
-    <div class="modal-backdrop"></div>
+<%--    <div class="modal-backdrop"></div>--%>
 
-    <div class="modal-content">
+<%--    <div class="modal-content">--%>
 
-        <span class="close-btn" data-modal-target="verify">&times;</span>
+<%--        <span class="close-btn" data-modal-target="verify">&times;</span>--%>
 
-        <h2>Nhập Mã Xác Minh</h2>
-        <p>Mã xác minh đã được gửi đến Email/SĐT của bạn. Vui lòng kiểm tra và nhập mã:</p>
+<%--        <h2>Nhập Mã Xác Minh</h2>--%>
+<%--        <p>Mã xác minh đã được gửi đến Email/SĐT của bạn. Vui lòng kiểm tra và nhập mã:</p>--%>
 
-        <form id="verify-form" action="#" method="post">
-            <input type="text" id="verification-code" name="code" placeholder="Nhập mã xác minh (6 chữ số)" required>
+<%--        <form id="verify-form" action="#" method="post">--%>
+<%--            <input type="text" id="verification-code" name="code" placeholder="Nhập mã xác minh (6 chữ số)" required>--%>
 
-            <button type="submit">Xác Minh</button>
-            <p class="resend-link">
-                <a href="#" id="resend-code">Gửi lại mã</a>
-            </p>
-        </form>
-    </div>
-</div>
+<%--            <button type="submit">Xác Minh</button>--%>
+<%--            <p class="resend-link">--%>
+<%--                <a href="#" id="resend-code">Gửi lại mã</a>--%>
+<%--            </p>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
+<script type="module" src="${pageContext.request.contextPath}/js/forgot_password.js"></script>
 </html>
