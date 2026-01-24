@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @WebServlet(name = "ForgotPasswordServlet", value = "/forgot-email")
-public class ForgotPasswordServlet extends HttpServlet {
+public class JsonForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -82,7 +82,6 @@ public class ForgotPasswordServlet extends HttpServlet {
         map.put("success", isSuccess);
         map.put("message", msg);
         String jsonRes = new Gson().toJson(map);
-        System.out.println(jsonRes);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonRes);

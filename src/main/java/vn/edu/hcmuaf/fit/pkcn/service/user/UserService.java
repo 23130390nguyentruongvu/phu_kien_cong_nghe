@@ -102,4 +102,8 @@ public class UserService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
+
+    public int updatePasswordWithTransaction(Handle handle, String email, String newPassword) {
+        return userDao.updatePasswordWithTransaction(handle, email, HashMD5.MD5(newPassword));
+    }
 }

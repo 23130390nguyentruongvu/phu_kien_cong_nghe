@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.service.reset_password;
 
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.reset_password.ResetPasswordDao;
 
@@ -19,5 +20,13 @@ public class ResetPasswordService {
 
             return resetPasswordDao.insertPasswordWithTransaction(handle, email, token, expiry) > 0;
         });
+    }
+
+    public String getEmailByToken(String token) {
+        return resetPasswordDao.getEmailByToken(token);
+    }
+
+    public int deleteTokenWithTransaction(Handle handle, String email) {
+        return resetPasswordDao.deleteTokenWithTransaction(handle, email);
     }
 }

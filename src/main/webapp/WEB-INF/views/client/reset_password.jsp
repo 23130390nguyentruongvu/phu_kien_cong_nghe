@@ -11,48 +11,46 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="card">
-        <h2>Thiết lập mật khẩu mới</h2>
-        <p>Vui lòng nhập mật khẩu mới để tiếp tục truy cập hệ thống.</p>
-
-        <form action="update-password-servlet" method="POST" id="resetForm">
-            <input type="hidden" name="token" value="LẤY_TOKEN_TỪ_URL_Ở_ĐÂY">
-
-            <div class="input-group">
-                <label for="password">Mật khẩu mới</label>
-                <input type="password" id="password" name="newPassword" required
-                       placeholder="Nhập ít nhất 6 ký tự">
-            </div>
-
-            <div class="input-group">
-                <label for="confirmPassword">Xác nhận mật khẩu</label>
-                <input type="password" id="confirmPassword" required
-                       placeholder="Nhập lại mật khẩu mới">
-            </div>
-
-            <div id="error-message" class="error"></div>
-
-            <button type="submit" class="btn-submit">Cập nhật mật khẩu</button>
-        </form>
+<c:if test="${empty requestScope.token}">
+    <div class="container">
+        <div class="card">
+            <h2>${requestScope.message}</h2>
+        </div>
     </div>
-</div>
+</c:if>
+<c:if test="${not empty requestScope.token}">
+    <div class="container">
+        <div class="card">
+            <h2>Thiết lập mật khẩu mới</h2>
+            <p>Vui lòng nhập mật khẩu mới để tiếp tục truy cập hệ thống.</p>
 
+            <form action="update-password-servlet" method="POST" id="resetForm">
+                <input type="hidden" name="token" value="${requestScope.token}">
+
+                <div class="input-group">
+                    <label for="password">Mật khẩu mới</label>
+                    <input type="password" id="password" name="newPassword" required
+                           placeholder="Mật khẩu 8-16 ký tự, có chữ hoa, số và ký tự đặc biệt">
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmPassword" required
+                           placeholder="Nhập lại mật khẩu mới">
+                </div>
+
+                <div id="error-message" class="error"></div>
+
+                <button type="submit" class="btn-submit">Cập nhật mật khẩu</button>
+            </form>
+        </div>
+    </div>
+
+</c:if>
 <script>
-    // Kiểm tra mật khẩu khớp nhau trước khi submit
-    document.getElementById('resetForm').onsubmit = function(e) {
-        const pass = document.getElementById('password').value;
-        const confirm = document.getElementById('confirmPassword').value;
-        const error = document.getElementById('error-message');
-
-        if (pass !== confirm) {
-            error.innerText = "Mật khẩu xác nhận không khớp!";
-            e.preventDefault(); // Chặn gửi form
-        } else if (pass.length < 6) {
-            error.innerText = "Mật khẩu phải từ 6 ký tự trở lên!";
-            e.preventDefault();
-        }
-    };
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/js/reset_password.js" type="module">
 </script>
 </body>
 </html>

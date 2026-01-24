@@ -246,4 +246,16 @@ public class UserDao {
                 .orElse(null)
         );
     }
+
+    public int updatePasswordWithTransaction(Handle handle, String email, String newPass) {
+        String sql = """
+                UPDATE users
+                SET password = :newPass
+                WHERE email = :email
+                """;
+        return handle.createUpdate(sql)
+                .bind("email", email)
+                .bind("newPass", newPass)
+                .execute();
+    }
 }
