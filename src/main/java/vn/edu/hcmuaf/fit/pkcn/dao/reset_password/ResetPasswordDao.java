@@ -47,4 +47,33 @@ public class ResetPasswordDao {
                 .bind("expiry", expiry)
                 .execute();
     }
+
+    /*
+    Kiểm tra token có tồn tại và còn hạn dưới 15p không? Nếu có trả về email tương
+     */
+    public String getEmailByToken(String token) {
+        String sql = """
+                SELECT email
+                FROM password_resets
+                WHERE token = :token
+                  AND expiry_date > NOW();
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("token", token)
+                .mapTo(String.class)
+                .findOne()
+                .orElse(null)
+        );
+    }
+
+    public int deleteTokenWithTransaction(Handle handle, String email) {
+        String sql = """
+                DELETE
+                FROM password_resets
+                WHERE email = :email
+                """;
+        return handle.createUpdate(sql)
+                .bind("email", email)
+                .execute();
+    }
 }
