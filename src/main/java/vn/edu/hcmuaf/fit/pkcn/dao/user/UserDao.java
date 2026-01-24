@@ -232,4 +232,13 @@ public class UserDao {
                 .orElse(null)
         );
     }
+    public boolean updatePassword(int id, String password) {
+        String sql = "UPDATE users SET password = :password WHERE id = :id";
+        return jdbi.withHandle(handle -> {
+            return handle.createUpdate(sql)
+                    .bind("password", password)
+                    .bind("id", id)
+                    .execute() > 0;
+        });
+    }
 }

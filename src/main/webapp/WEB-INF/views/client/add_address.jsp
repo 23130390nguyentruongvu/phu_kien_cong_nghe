@@ -13,22 +13,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_edit_address.css" />
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <main id="main" class="main">
-        <div class="nav-account">
-            <div class="wrap-base-info-user">
-                <span class="img-user-account"><img src="../../../assets/image/logo.webp" loading="lazy"></span>
-                <span class="user-name-account"><strong>MyUserName</strong></span>
-            </div>
-            <div class="wrap-nav-link">
-                <ul>
-                    <li class="nav-link-item "><i class="fa-solid fa-user"></i>Tài khoản</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-clock-rotate-left"></i>Lịch sử đơn hàng</li>
-                    <li class="nav-link-item link-selected"><i class="fa-solid fa-location-dot"></i>Địa chỉ</li>
-                    <li class="nav-link-item"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</li>
-                </ul>
-            </div>
-        </div>
+        <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
         <!--    close account nav-->
         <!--        open main content-->
         <div class="main-container">

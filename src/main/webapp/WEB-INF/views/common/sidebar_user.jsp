@@ -20,6 +20,12 @@
                 <i class="fa-solid fa-location-dot"></i>
                 <a href="${pageContext.request.contextPath}/address-user">Địa chỉ</a>
             </li>
+            <c:if test="${not empty sessionScope.user and sessionScope.user.role == 1}">
+                <li class="nav-link-item">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <a href="${pageContext.request.contextPath}/return-overview">Trang quản trị</a>
+                </li>
+            </c:if>
             <li class="nav-link-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <a href="${pageContext.request.contextPath}/logout" onclick="return confirm("Bạn có thực sự muốn đăng xuất")">Đăng xuất</a>

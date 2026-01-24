@@ -28,21 +28,26 @@
             <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
           <div class="main-content">
             <h2 class="title-account">Thông tin tài khoản</h2>
-
-            <form class="form-account-info">
+              <c:if test="${not empty error}">
+                  <p style="color: red;">${error}</p>
+              </c:if>
+              <c:if test="${not empty suc}">
+                  <p style="color: green;">${suc}</p>
+              </c:if>
+            <form class="form-account-info" action="${pageContext.request.contextPath}/change-password" method="post">
               <div class="row-2">
                 <div class="form-group">
                   <label for="firstName"
-                    >Tên</label
+                    >Email</label
                   >
-                  <input type="text" id="firstName" placeholder="Tên của bạn" />
+                  <input type="text" id="firstName" value="${sessionScope.user.email}" readonly class="input-readonly"/>
                 </div>
 
                 <div class="form-group">
                   <label for="lastName"
-                    >Họ</label
+                    >User Name</label
                   >
-                  <input type="text" id="lastName" placeholder="Họ của bạn" />
+                  <input type="text" id="lastName" value="${sessionScope.user.userName}" readonly class="input-readonly"/>
                 </div>
               </div>
 
@@ -62,27 +67,27 @@
 <!--                </p>-->
 <!--              </div>-->
 
-<!--              <div class="form-group full-width">-->
-<!--                <label for="email"-->
-<!--                  >Địa chỉ email <span class="required">*</span></label-->
-<!--                >-->
-<!--                <input-->
-<!--                  type="email"-->
-<!--                  id="email"-->
-<!--                  value="khachhang113@gmail.com"-->
-<!--                />-->
-<!--              </div>-->
+<%--<!--              <div class="form-group full-width">-->--%>
+<%--<!--                <label for="email"-->--%>
+<%--<!--                  >Địa chỉ email <span class="required">*</span></label-->--%>
+<%--<!--                >-->--%>
+<%--<!--                <input-->--%>
+<%--<!--                  type="email"-->--%>
+<%--<!--                  id="email"-->--%>
+<%--<!--                  value="khachhang113@gmail.com"-->--%>
+<%--<!--                />-->--%>
+<%--<!--              </div>-->--%>
 
               <h3 class="change-pass-title">Thay đổi mật khẩu</h3>
 
               <div class="form-group full-width">
                 <label for="currentPass"
-                  >Mật khẩu hiện tại</label
+                  >Nhập mật khẩu hiện tại</label
                 >
                 <input
                   type="password"
                   id="currentPass"
-                  placeholder="••••••••••••••"
+                  name = "currentPass" required
                 />
               </div>
 
@@ -91,16 +96,16 @@
                   <label for="newPass"
                     >Mật khẩu mới</label
                   >
-                  <input type="password" id="newPass" />
+                  <input type="password" id="newPass" name="newPass" required />
                 </div>
 
                 <div class="form-group">
                   <label for="confirmPass">Xác nhận mật khẩu mới <span class="required">*</span></label>
-                  <input type="password" id="confirmPass" />
+                  <input type="password" id="confirmPass" name="confirmPass" required />
                 </div>
               </div>
 
-              <button class="btn-save-changes">Lưu thay đổi</button>
+              <button type="submit" class="btn-save-changes">Lưu thay đổi</button>
             </form>
           </div>
         </div>

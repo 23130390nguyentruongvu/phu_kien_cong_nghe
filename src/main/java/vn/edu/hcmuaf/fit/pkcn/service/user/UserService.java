@@ -98,4 +98,8 @@ public class UserService {
     public String getUid(int id) {
         return userDao.getUid(id);
     }
+    public boolean changePassword(int id, String newPassword) {
+        String md5Pass = HashMD5.MD5(newPassword);
+        return userDao.updatePassword(id, md5Pass);
+    }
 }
