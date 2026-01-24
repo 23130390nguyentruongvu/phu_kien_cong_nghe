@@ -21,34 +21,34 @@
     <div id="content" class="site-content">
         <div class="container">
             <div class="row">
-                <c:if test="${not empty error}">
+                <c:if test="${not empty requestScope.error}">
                     <div class="alert alert-danger" style="color: red; background: #fee2e2; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-                        <i class="fa-solid fa-circle-exclamation"></i> ${error}
+                        <i class="fa-solid fa-circle-exclamation"></i> ${requestScope.error}
                     </div>
                 </c:if>
                 <form name="checkout" method="post" class="checkout" action="${pageContext.request.contextPath}/checkout">
-                    <c:if test="${not empty defaultAddress}">
+                    <c:if test="${not empty requestScope.defaultAddress}">
                         <input type="hidden" name="selectedAddressId"
-                               value="${defaultAddress.id}">
+                               value="${requestScope.defaultAddress.id}">
                     </c:if>
                     <div id="customer_details">
                         <h3>Địa chỉ nhận hàng</h3>
                         <div class="address">
                             <c:choose>
-                                <c:when test="${not empty defaultAddress}">
+                                <c:when test="${not empty requestScope.defaultAddress}">
                                     <table class="user-address">
                                         <tr>
                                             <td>
                                                 <p>
                                                     <strong>
-                                                        <span class="name-user">${defaultAddress.receiverName}</span>
-                                                        <span class="phone-number">(+84) ${defaultAddress.phoneNumber}</span>
+                                                        <span class="name-user">${requestScope.defaultAddress.receiverName}</span>
+                                                        <span class="phone-number">(+84) ${requestScope.defaultAddress.phoneNumber}</span>
                                                     </strong>
                                                 </p>
                                                 <p>
-                                                    <span class="address-detail">${defaultAddress.addressDetail}</span>,
-                                                    <span class="district">${defaultAddress.district}</span>,
-                                                    <span class="province">${defaultAddress.provinceCity}</span>
+                                                    <span class="address-detail">${requestScope.defaultAddress.addressDetail}</span>,
+                                                    <span class="district">${requestScope.defaultAddress.district}</span>,
+                                                    <span class="province">${requestScope.defaultAddress.provinceCity}</span>
                                                 </p>
                                                 <p class="focus">Mặc định</p>
                                                 <button type="button" class="change-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thay đổi</button>
@@ -175,7 +175,7 @@
 </body>
 <script src="../../../js/payment.js"></script>
 <script src="../../../js/header.js"></script>
-<c:if test="${not empty successMessage}">
-    <script>alert("${successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
+<c:if test="${not empty requestScope.successMessage}">
+    <script>alert("${requestScope.successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
 </c:if>
 </html>

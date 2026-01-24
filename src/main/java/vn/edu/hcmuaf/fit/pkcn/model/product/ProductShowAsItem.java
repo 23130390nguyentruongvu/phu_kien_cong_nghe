@@ -20,7 +20,7 @@ public class ProductShowAsItem {
         this.name = name;
         this.imageMain = imageMain;
         this.minPrice = minPrice;
-        this.categoryId = categoryId;
+//        this.categoryId = categoryId;
     }
 
     public int getProductId() {

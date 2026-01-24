@@ -56,7 +56,7 @@
 
                       <div class="price-product">
                         <span class="current-price">
-                            ${product.defaultVariant.minPriceByFormat}
+                            ${product.defaultVariant.priceByFormat}
                         </span>
                       </div>
 
