@@ -116,7 +116,7 @@
                                 <div class="go-to-checkout">
                                     <button id="btnGotoCheckout" class="submit-checkout">
                                         <!--                                    mai mốt bỏ a đi-->
-                                        <a href="payment.jsp" style="color: white">TIẾN HÀNH THANH TOÁN</a>
+                                        <a href="${pageContext.request.contextPath}/view-payment" style="color: white">TIẾN HÀNH THANH TOÁN</a>
 
                                     </button>
                                 </div>

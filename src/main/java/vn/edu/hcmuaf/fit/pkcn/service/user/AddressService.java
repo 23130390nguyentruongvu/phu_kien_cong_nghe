@@ -21,4 +21,10 @@ public class AddressService {
     public List<Address> getAllAddress(int userId) {
         return addressDao.getAllAddress(userId);
     }
+    public boolean updateStatusAddress(int userId, int addressId) {
+        return addressDao.upDateStatusAddress(userId, addressId);
+    }
+    public Address getAddressDefault(int addressId) {
+        return addressDao.getAddressDefault(addressId);
+    }
 }

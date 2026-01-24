@@ -7,7 +7,7 @@
 <script src="${pageContext.request.contextPath}/js/header.js"></script>
 <html>
     <head>
-      <meta charset="UTF-8" />
+      <meta charset="UTF-8"/>
       <title>Thông tin cá nhân</title>
       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/personal_info.css" />
       <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
