@@ -17,11 +17,12 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <main id="main" class="main">
+  <div class="main-content">
         <!--    open account nav-->
     <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
     <!--close account nav-->
         <!--        open main content-->
-    <div id="main-content">
+
         <div class="address-user-info">
             <div class="title">
                 <h3>Địa chỉ đã lưu</h3>
@@ -60,9 +61,17 @@
                         </td>
                         <td class="btn">
                             <div class="update-delete">
-                                <button class="update">Cập nhật</button>
+                                <button type="button" class="update"
+                                        onclick="window.location.href='${pageContext.request.contextPath}/update-address?id=${address.id}'">
+                                    Cập nhật
+                                </button>
                                 &nbsp;
-                                <button class="delete">Xóa</button>
+                                <button class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')">
+                                    <a href="${pageContext.request.contextPath}/delete-address?id=${address.id}"
+                                       style="text-decoration: none; color: inherit;">
+                                        Xóa
+                                    </a>
+                                </button>
                             </div>
                             <c:if test="${address.isSelected == 0}">
                                 <button class="set-status">
@@ -80,6 +89,7 @@
             </div>
         </div>
     </div>
+
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

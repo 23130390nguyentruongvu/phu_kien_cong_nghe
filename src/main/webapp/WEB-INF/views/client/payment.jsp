@@ -51,14 +51,13 @@
                                                     <span class="province">${requestScope.defaultAddress.provinceCity}</span>
                                                 </p>
                                                 <p class="focus">Mặc định</p>
-                                                <button type="button" class="change-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thay đổi</button>
                                             </td>
                                         </tr>
                                     </table>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="no-address">
-                                        <p>Bạn chưa có địa chỉ nhận hàng mặc định. <a href="${pageContext.request.contextPath}/address-user">Thêm ngay</a></p>
+                                        <p>Bạn chưa có địa chỉ nhận hàng. <a href="${pageContext.request.contextPath}/add-address?from=checkout">Thêm ngay</a></p>
                                     </div>
                                 </c:otherwise>
                             </c:choose>
@@ -66,9 +65,7 @@
                             <div class="btn-add">
                                 <button type="button" class="btn-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thêm/Quản lý địa chỉ</button>
                             </div>
-
-                            <%-- SỬA: Thêm name="note" để Servlet nhận được dữ liệu --%>
-                            <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng (Ví dụ: Giao giờ hành chính...)" class="note"></textarea>
+                            <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng..." class="note"></textarea>
                         </div>
                     </div>
                     <div class="products">
@@ -102,7 +99,7 @@
                                         </td>
                                         <td class="product-total">
                                      <span class="price-amount">
-                                         <bdi>${item.priceByFormat}</bdi>
+                                        <fmt:formatNumber value="${item.productVariant.price * item.quantity}" pattern="#,###"/>₫
                                 </span>
                                         </td>
                                     </tr>
@@ -113,18 +110,16 @@
                                     <th>Tạm tính</th>
                                     <td>
                                             <span class="price-amount">
-                                                <bdi>${sessionScope.cart.priceByFormat}</bdi>
+                                                <fmt:formatNumber value="${subTotal}" pattern="#,###"/>₫
                                             </span>
                                     </td>
                                 </tr>
                                 <tr class="ship-fee">
                                     <th>Phí ship</th>
                                     <td>
-                                            <span class="price-amount">
-                                                <bdi>30.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
-                                            </span>
+                                     <span class="price-amount">
+                                     <fmt:formatNumber value="${shipFee}" pattern="#,###"/>₫
+                                     </span>
                                     </td>
                                 </tr>
                                 <tr class="order-total">
@@ -132,7 +127,7 @@
                                     <td>
                                         <strong>
                                                 <span class="price-amount">
-                                                <bdi>${sessionScope.cart.priceByFormat}</bdi>
+                                                <fmt:formatNumber value="${totalOrder}" pattern="#,###"/>₫
                                             </span>
                                         </strong>
                                     </td>
@@ -141,20 +136,20 @@
                             </table>
                             <div id="payment" class="checkout-payment">
                                 <ul class="payment-methods">
-                                    <li class="method-cod">
-                                        <input id="payment-method-cod" type="radio" class="input-radio" name="payment_method" checked="checked">
-                                        <label for="payment-method-cod">Thanh toán khi nhận hàng</label>
-                                        <div class="cod-sub">
-                                            <p>Trả tiền mặt khi giao hàng</p>
-                                        </div>
-                                    </li>
-                                    <li class="method-bank">
-                                        <input id="payment-method-bank" type="radio" class="input-radio" name="payment_method">
-                                        <label for="payment-method-bank">Chuyển khoản ngân hàng trực tiếp</label>
-                                        <div class="bank-sub">
-                                            <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
-                                        </div>
-                                    </li>
+                                    <c:forEach var="method" items="${requestScope.paymentMethods}" varStatus="loop">
+                                        <li class="method-item">
+                                            <input id="payment-method-${method.id}" type="radio" class="input-radio"
+                                                   name="paymentMethodId" value="${method.id}"
+                                                ${loop.first ? 'checked="checked"' : ''}>
+                                            <label for="payment-method-${method.id}">
+                                                <strong>${method.nameMethod}</strong>
+                                            </label>
+                                            <div class="payment-box" id="box-${method.id}"
+                                                 style="${loop.first ? '' : 'display:none;'}">
+                                                <p>${method.subtitle}</p>
+                                            </div>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                                 <div class="place-order">
                                     <div class="term-and-conditions">
@@ -162,7 +157,15 @@
                                             <a href="#">chính sách riêng tư</a> của chúng tôi.</p>
                                     </div>
                                 </div>
-                                <button type="submit" class="button_order" id="place-order">Đặt hàng</button>
+                                <button type="submit" class="button_order" id="place-order"
+                                        <c:if test="${empty defaultAddress}">
+                                            disabled
+                                            style="background-color: #cccccc; cursor: not-allowed;"
+                                            title="Vui lòng thêm địa chỉ giao hàng"
+                                        </c:if>
+                                >
+                                    Đặt hàng
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -178,4 +181,11 @@
 <c:if test="${not empty requestScope.successMessage}">
     <script>alert("${requestScope.successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
 </c:if>
+<script>
+    var APP_CONFIG = {
+        hasAddress: ${not empty defaultAddress ? 'true' : 'false'},
+        addressUrl: "${pageContext.request.contextPath}/address-user"
+    };
+</script>
+<script type="module" src="${pageContext.request.contextPath}/js/payment.js"></script>
 </html>

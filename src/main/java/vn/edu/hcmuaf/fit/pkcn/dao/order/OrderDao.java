@@ -44,14 +44,16 @@ public class OrderDao {
                 .mapTo(Integer.class)
                 .one();
     }
-    public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note) {
+    public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
         String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
-                "VALUES (:userId, :addressOrderId, :total, 'PENDING', 30000, 1, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
+                "VALUES (:userId, :addressOrderId, :total, 'PENDING', :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
 
         return handle.createUpdate(sql)
                 .bind("userId", userId)
                 .bind("addressOrderId", addressOrderId)
                 .bind("total", total)
+                .bind("shipFee", shipFee)
+                .bind("paymentMethodId", paymentMethodId)
                 .bind("note", note)
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)

@@ -14,7 +14,20 @@ public class UserAddressDao {
     public UserAddressDao(Jdbi jdbi) {
         this.jdbi = jdbi;
     }
+
+    public int countAddressByUserId(int userId) {
+        String sql = "SELECT COUNT(*) FROM user_address WHERE user_id = :userId";
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("userId", userId)
+                        .mapTo(Integer.class)
+                        .one()
+        );
+    }
     public boolean addAddress(Address address) {
+        if (address.getDistrict() != null && address.getDistrict().trim().isEmpty()) {
+            address.setDistrict(null);
+        }
         String sql = "INSERT INTO user_address (user_id, receiver_name, phone_number, province_city, district, address_detail, is_selected) VALUES (:userId, :receiverName, :phoneNumber, :provinceCity, :district, :addressDetail, :isSelected)";
         return jdbi.withHandle(handle -> {
             return handle.createUpdate(sql)
@@ -66,5 +79,50 @@ public class UserAddressDao {
             e.printStackTrace();
             return false;
         }
+    }
+    public boolean deleteAddress(int addressId) {
+        String sql = "DELETE FROM user_address WHERE id = :id";
+        return jdbi.withHandle(handle -> handle.createUpdate(sql)
+                .bind("id",addressId)
+                .execute()>0);
+    }
+    public boolean updateAddress(Address address) {
+        String sql = "UPDATE user_address SET receiver_name = :receiverName, " +
+                "phone_number = :phoneNumber, province_city = :provinceCity, " +
+                "address_detail = :addressDetail WHERE id = :id";
+
+        return jdbi.withHandle(handle -> {
+            return handle.createUpdate(sql)
+                    .bindBean(address)
+                    .execute() > 0;
+        });
+    }
+    public Address getAddressById(int addressId) {
+        String sql = "SELECT * FROM user_address WHERE id = :id";
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("id",addressId)
+                        .mapToBean(Address.class)
+                        .findOne()
+                        .orElse(null));
+    }
+    public void setDefaultAddress(int addressId, int userId) {
+        String sql = "UPDATE user_address SET is_selected = 1 WHERE id = :id AND user_id = :userId";
+        jdbi.useHandle(handle ->
+                handle.createUpdate(sql)
+                        .bind("id", addressId)
+                        .bind("userId", userId)
+                        .execute()
+        );
+    }
+    public Integer getTopAddressIdByUserId(int userId) {
+        String sql = "SELECT id FROM user_address WHERE user_id = :userId LIMIT 1";
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("userId", userId)
+                        .mapTo(Integer.class)
+                        .findOne()
+                        .orElse(null)
+        );
     }
     }
