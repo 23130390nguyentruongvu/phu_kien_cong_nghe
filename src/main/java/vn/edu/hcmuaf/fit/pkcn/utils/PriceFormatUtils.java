@@ -1,10 +1,8 @@
 package vn.edu.hcmuaf.fit.pkcn.utils;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 
-public abstract class FormatUtils {
+public abstract class PriceFormatUtils {
     public static final String PATTERN_VND = "#,### VND";
     public static final String PATTERN_NONE_UNIT = "#,###";
     private static DecimalFormat df = new DecimalFormat();

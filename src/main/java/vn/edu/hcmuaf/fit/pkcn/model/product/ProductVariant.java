@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.model.product;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -151,7 +151,7 @@ public class ProductVariant implements Serializable {
     }
 
     public String getPriceByFormat() {
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, price);
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, price);
     }
 
     public String getSpecific() {

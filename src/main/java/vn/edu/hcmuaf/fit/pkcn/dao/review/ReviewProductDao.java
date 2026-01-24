@@ -13,13 +13,15 @@ public class ReviewProductDao {
     }
 
     public List<ReviewProduct> getReviewProducts(int productId) {
+        String status = "ACTIVE";
         String sql = """
                 SELECT *
                 FROM reviews
-                WHERE product_id = :prodId
+                WHERE product_id = :prodId AND status = :status
                 """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("prodId", productId)
+                .bind("status", status)
                 .mapToBean(ReviewProduct.class)
                 .list()
         );

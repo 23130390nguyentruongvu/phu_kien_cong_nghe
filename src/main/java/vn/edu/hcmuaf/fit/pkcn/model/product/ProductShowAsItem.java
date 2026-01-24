@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.model.product;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.math.BigDecimal;
 
@@ -60,7 +60,7 @@ public class ProductShowAsItem {
     }
 
     public String getMinPriceByFormat() {
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, minPrice);
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, minPrice);
     }
 
     public Integer getCategoryId() {
