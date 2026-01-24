@@ -31,7 +31,8 @@ public class UserDao {
     }
 
     public boolean register(User user) {
-        String sql = "INSERT INTO users (avatar,email,full_name,id,password,role_id,status,user_name) values (:avatar,:email,:fullName,:id,:password,:role,:status,:userName) ";
+        String sql = "INSERT INTO users (uid, avatar,email,full_name,id,password,role_id,status,user_name) " +
+                "values (:uid, :avatar,:email,:fullName,:id,:password,:role,:status,:userName) ";
         return jdbi.withHandle(handle -> {
             return handle.createUpdate(sql)
                     .bindBean(user)
@@ -216,5 +217,19 @@ public class UserDao {
                 .bind("userId", user.getUserId())
                 .bind("folderId", user.getFolderId())
                 .execute();
+    }
+
+    public String getUid(int id) {
+        String sql = """
+                SELECT uid
+                FROM users
+                WHERE id = :id
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("id", id)
+                .mapTo(String.class)
+                .findOne()
+                .orElse(null)
+        );
     }
 }

@@ -58,7 +58,7 @@
                                     </a>
                                 </div>
                                 <div class="title-product-item">
-                                    <a
+                                    <a style="text-decoration: none; color: black"
                                             href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
                                     >
                                         ${newProduct.name}
@@ -98,10 +98,10 @@
                                         </a>
                                     </div>
                                     <div class="title-product-item">
-                                        <a
+                                        <a style="text-decoration: none; color: black"
                                                 href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
                                         >${featuredProduct.name}
-                                        </a>
+                                        </>
                                     </div>
                                     <div class="price-product-item">${featuredProduct.minPriceByFormat}</div>
                                 </div>
@@ -136,8 +136,9 @@
                                     </a>
                                 </div>
                                 <div class="title-product-item">
-                                    <a
-                                            href="${pageContext.request.contextPath}/product-detail?id=${vga.productId}"
+                                    <a style="text-decoration: none; color: black"
+
+                                       href="${pageContext.request.contextPath}/product-detail?id=${vga.productId}"
                                     >${vga.name}
                                     </a>
                                 </div>
@@ -180,8 +181,9 @@
                                     </a>
                                 </div>
                                 <div class="title-product-item">
-                                    <a
-                                            href="${pageContext.request.contextPath}/product-detail?id=${keyboard.productId}"
+                                    <a style="text-decoration: none; color: black"
+
+                                       href="${pageContext.request.contextPath}/product-detail?id=${keyboard.productId}"
                                     >${keyboard.name}
                                     </a>
                                 </div>

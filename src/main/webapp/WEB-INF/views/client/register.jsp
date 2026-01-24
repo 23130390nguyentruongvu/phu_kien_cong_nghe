@@ -57,6 +57,9 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
             </div>
         </div>
     </main>
-    <script src="${pageContext.request.contextPath}/js/register.js"></script>
+    <script type="module" src="${pageContext.request.contextPath}/js/register.js"></script>
+    <script>
+        window.contextPath = "${pageContext.request.contextPath}";
+    </script>
 </body>
 </html>

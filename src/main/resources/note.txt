@@ -1,0 +1,2 @@
+serviceAccountKey.json được tạo từ console firebase -> account service nhằm dùng firebase admin sdk hỗ trợ
+xóa người dùng đã xác thực và có uid từ firebase

@@ -1,4 +1,5 @@
 package vn.edu.hcmuaf.fit.pkcn.model.user;
+
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.io.Serializable;
@@ -6,6 +7,7 @@ import java.util.Objects;
 
 public class User implements Serializable {
     private int id;
+    private String uid;
     private String userName;
     private String email;
     private String password;
@@ -18,7 +20,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String userName, String email, String password, String fullName, String status, String avatar, int role) {
+    public User(int id, String uid, String userName, String email, String password, String fullName, String status, String avatar, int role) {
         this.id = id;
         this.userName = userName;
         this.email = email;
@@ -27,11 +29,13 @@ public class User implements Serializable {
         this.status = status;
         this.avatar = avatar;
         this.role = role;
+        this.uid = uid;
     }
 
     public int getId() {
         return id;
     }
+
     @ColumnName("id")
     public void setId(int id) {
         this.id = id;
@@ -40,6 +44,7 @@ public class User implements Serializable {
     public String getUserName() {
         return userName;
     }
+
     @ColumnName("user_name")
     public void setUserName(String userName) {
         this.userName = userName;
@@ -48,6 +53,7 @@ public class User implements Serializable {
     public String getEmail() {
         return email;
     }
+
     @ColumnName("email")
     public void setEmail(String email) {
         this.email = email;
@@ -56,6 +62,7 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
+
     @ColumnName("password")
     public void setPassword(String password) {
         this.password = password;
@@ -64,6 +71,7 @@ public class User implements Serializable {
     public String getFullName() {
         return fullName;
     }
+
     @ColumnName("full_name")
     public void setFullName(String fullName) {
         this.fullName = fullName;
@@ -72,6 +80,7 @@ public class User implements Serializable {
     public String getStatus() {
         return status;
     }
+
     @ColumnName("status")
     public void setStatus(String status) {
         this.status = status;
@@ -80,6 +89,7 @@ public class User implements Serializable {
     public String getAvatar() {
         return avatar;
     }
+
     @ColumnName("avatar")
     public void setAvatar(String avatar) {
         this.avatar = avatar;
@@ -88,9 +98,18 @@ public class User implements Serializable {
     public int getRole() {
         return role;
     }
+
     @ColumnName("role_id")
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     @Override

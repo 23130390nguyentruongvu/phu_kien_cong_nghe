@@ -72,8 +72,8 @@
                                             </a>
                                         </div>
                                         <div class="title-product-item">
-                                            <a
-                                                    href="${pageContext.request.contextPath}/product-detail?id=${product.productId}"
+                                            <a style="text-decoration: none; color: black"
+                                               href="${pageContext.request.contextPath}/product-detail?id=${product.productId}"
                                             >${product.name}
                                             </a>
                                         </div>

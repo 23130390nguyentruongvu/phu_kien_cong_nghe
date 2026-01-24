@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.controller.admin.user.response_json;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -26,6 +27,16 @@ public class JsonDeleteUserServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("userId"));
             UserService userService = new UserService(JDBI.getJdbi());
+
+            String uid = userService.getUid(id);
+
+            if (uid != null && !uid.isEmpty()) {
+                try {
+                    FirebaseAuth.getInstance().deleteUser(uid);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
             isSuccess = userService.deleteUser(id);
             msg = isSuccess ? "Xóa user thành công!" : "Xóa user thất bại";
