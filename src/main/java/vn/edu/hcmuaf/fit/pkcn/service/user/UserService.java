@@ -94,4 +94,8 @@ public class UserService {
     public List<User> getUserByName(String fullName) {
         return userDao.getUserByName(fullName);
     }
+
+    public String getUid(int id) {
+        return userDao.getUid(id);
+    }
 }

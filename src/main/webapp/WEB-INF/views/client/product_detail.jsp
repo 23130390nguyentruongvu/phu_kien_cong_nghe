@@ -253,7 +253,9 @@
                                               </div>
 
                                               <div class="title-product-item">
-                                                  <a href="${pageContext.request.contextPath}/product-detail?id=${p.productId}">
+                                                  <a style="text-decoration: none; color: black"
+
+                                                     href="${pageContext.request.contextPath}/product-detail?id=${p.productId}">
                                                           ${p.name}
                                                   </a>
                                               </div>

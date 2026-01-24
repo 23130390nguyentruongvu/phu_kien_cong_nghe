@@ -71,3 +71,4 @@ src/main/webapp/uploads/*
 keystore.jks
 
 src/main/webapp/js/firebase.js
+src/main/resources/serviceAccountKey.json
