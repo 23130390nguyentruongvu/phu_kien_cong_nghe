@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Thanh Toán</title>
-    <link rel="stylesheet" href="../../../css/payment.css">
-    <link rel="stylesheet" href="../../../shared/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -21,39 +21,54 @@
     <div id="content" class="site-content">
         <div class="container">
             <div class="row">
-                <form name="checkout" method="post" class="checkout">
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger" style="color: red; background: #fee2e2; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-circle-exclamation"></i> ${error}
+                    </div>
+                </c:if>
+                <form name="checkout" method="post" class="checkout" action="${pageContext.request.contextPath}/checkout">
+                    <c:if test="${not empty defaultAddress}">
+                        <input type="hidden" name="selectedAddressId"
+                               value="${defaultAddress.id}">
+                    </c:if>
                     <div id="customer_details">
                         <h3>Địa chỉ nhận hàng</h3>
                         <div class="address">
-                            <table class="user-address">
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <strong>
-                                                <span class="name-user">Nguyễn Trường Vũ</span>
-                                                <span class="phone-number">(+84) 385018300</span>
-                                            </strong>
-                                        </p>
-                                        <p>
-                                            <span class="address-detail">
-                                                Số nhà 418
-                                            </span>
-                                            <span class="district">
-                                                Nhơn Mỹ
-                                            </span>
-                                            <span class="province">
-                                                An Giang
-                                            </span>
-                                        </p>
-                                        <p class="focus">Mặc định</p>
-                                        <button type="button" class="change-address">Thay đổi</button>
-                                    </td>
-                                </tr>
-                            </table>
+                            <c:choose>
+                                <c:when test="${not empty defaultAddress}">
+                                    <table class="user-address">
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    <strong>
+                                                        <span class="name-user">${defaultAddress.receiverName}</span>
+                                                        <span class="phone-number">(+84) ${defaultAddress.phoneNumber}</span>
+                                                    </strong>
+                                                </p>
+                                                <p>
+                                                    <span class="address-detail">${defaultAddress.addressDetail}</span>,
+                                                    <span class="district">${defaultAddress.district}</span>,
+                                                    <span class="province">${defaultAddress.provinceCity}</span>
+                                                </p>
+                                                <p class="focus">Mặc định</p>
+                                                <button type="button" class="change-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thay đổi</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="no-address">
+                                        <p>Bạn chưa có địa chỉ nhận hàng mặc định. <a href="${pageContext.request.contextPath}/address-user">Thêm ngay</a></p>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+
                             <div class="btn-add">
-                                <button class="btn-address">Thêm</button>
+                                <button type="button" class="btn-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thêm/Quản lý địa chỉ</button>
                             </div>
-                            <textarea rows="5" placeholder="Ghi chú sản phẩm" class="note"></textarea>
+
+                            <%-- SỬA: Thêm name="note" để Servlet nhận được dữ liệu --%>
+                            <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng (Ví dụ: Giao giờ hành chính...)" class="note"></textarea>
                         </div>
                     </div>
                     <div class="products">
@@ -72,32 +87,33 @@
 
                                 </thead>
                                 <tbody>
-                                <tr class="cart-item">
-                                    <td class="product-name">
-                                        <div class="product-image">
-                                            <div class="ast-product-name">
-                                                Củ sạc Xiaomi 90W chính hãng
-                                            </div>
-                                        </div>&nbsp;
-                                        <strong class="product-quantity">&nbsp;x1</strong>
-                                    </td>
-                                    <td class="product-total">
-                                <span class="price-amount">
-                                                <bdi>100.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
-                                            </span>
-                                    </td>
-                                </tr>
+
+                                <c:forEach var="item" items="${sessionScope.cart.cartItems}">
+                                    <tr class="cart-item">
+                                        <td class="product-name">
+                                            <div class="product-image">
+                                                <div class="ast-product-name">
+                                                        ${item.nameProduct}
+                                                    <br>
+                                                    <small>(Loại: ${item.productVariant.name})</small>
+                                                </div>
+                                            </div>&nbsp;
+                                            <strong class="product-quantity">&nbsp;x${item.quantity}</strong>
+                                        </td>
+                                        <td class="product-total">
+                                     <span class="price-amount">
+                                         <bdi>${item.priceByFormat}</bdi>
+                                </span>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                                 <tfoot>
                                 <tr class="cart-subtotal">
                                     <th>Tạm tính</th>
                                     <td>
                                             <span class="price-amount">
-                                                <bdi>100.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
+                                                <bdi>${sessionScope.cart.priceByFormat}</bdi>
                                             </span>
                                     </td>
                                 </tr>
@@ -111,20 +127,12 @@
                                             </span>
                                     </td>
                                 </tr>
-                                <tr class="voucher">
-                                    <th>Chiết khấu</th>
-                                    <td><p class="price-voucher">
-                                        -10.000 </span>₫</bdi>
-                                    </p></td>
-                                </tr>
                                 <tr class="order-total">
                                     <th>Tổng</th>
                                     <td>
                                         <strong>
                                                 <span class="price-amount">
-                                                <bdi>120.000&nbsp;
-                                                <span class="current-price">
-                                                </span>₫</bdi>
+                                                <bdi>${sessionScope.cart.priceByFormat}</bdi>
                                             </span>
                                         </strong>
                                     </td>
@@ -154,7 +162,7 @@
                                             <a href="#">chính sách riêng tư</a> của chúng tôi.</p>
                                     </div>
                                 </div>
-                                <button type="submit" class="button_order" name="checkout-place-order" id="place-order" value="Đặt hàng">Đặt hàng</button>
+                                <button type="submit" class="button_order" id="place-order">Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -167,4 +175,7 @@
 </body>
 <script src="../../../js/payment.js"></script>
 <script src="../../../js/header.js"></script>
+<c:if test="${not empty successMessage}">
+    <script>alert("${successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
+</c:if>
 </html>

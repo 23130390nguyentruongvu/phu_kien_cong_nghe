@@ -52,7 +52,7 @@
                                 ,&nbsp;
                                 <p class="province">${address.provinceCity}</p>
                             </div>
-                            <c:if test="${address.isSelected == 1}">
+                            <c:if test= "${address.isSelected == 1}">
                             <div class="status">
                                 Mặc định
                             </div>
@@ -65,7 +65,12 @@
                                 <button class="delete">Xóa</button>
                             </div>
                             <c:if test="${address.isSelected == 0}">
-                            <button class="set-status">Thiết lập mặc định</button>
+                                <button class="set-status">
+                                    <a href="${pageContext.request.contextPath}/set-address-default?id=${address.id}"
+                                       style="text-decoration: none; color: inherit;">
+                                        Thiết lập mặc định
+                                    </a>
+                                </button>
                             </c:if>
                         </td>
                         </tr>

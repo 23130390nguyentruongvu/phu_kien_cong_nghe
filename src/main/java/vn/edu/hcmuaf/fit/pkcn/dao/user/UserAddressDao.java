@@ -37,4 +37,34 @@ public class UserAddressDao {
             return listAddress;
         });
     }
-}
+    public Address getAddressDefault(int userId) {
+        String sql = "SELECT * FROM user_address WHERE user_id = :userId AND is_selected = 1";
+        return jdbi.withHandle(handle ->
+               handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToBean(Address.class)
+                    .findOne()
+                    .orElse(null)
+        );
+    }
+    public boolean upDateStatusAddress(int userId, int addressId) {
+        try {
+            return jdbi.inTransaction(handle -> {
+                handle.createUpdate("UPDATE user_address SET is_selected = 0 WHERE user_id = :userId")
+                        .bind("userId", userId)
+                        .execute();
+
+
+                int rows = handle.createUpdate("UPDATE user_address SET is_selected = 1 WHERE user_id = :userId AND id = :addressId")
+                        .bind("userId", userId)
+                        .bind("addressId", addressId)
+                        .execute();
+
+                return rows > 0;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    }
