@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     variantItems.forEach(item => {
         item.addEventListener("click", function () {
+            const dataVariant = item.querySelector('.dataVariant')
+            const price = dataVariant.dataset.price
+            const sku = dataVariant.dataset.sku
+            const currentPrice = document.querySelector('.current-price')
+            const skuCurrent = document.querySelector('.skuCurrent')
+
+            currentPrice.innerText = price
+            skuCurrent.innerText = sku
 
             const imageUrl = this.dataset.image;
 
@@ -50,4 +58,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+});
+
+//SỰ kiện thêm cart
+document.getElementById('formAddCart').addEventListener('submit', () => {
+    const dataVariants = document.querySelectorAll('.dataVariant')
+    const idForm = document.getElementById('formAddCart').idVar
+    dataVariants.forEach(btn => {
+        if (btn.checked) {
+            idForm.value = btn.dataset.id
+        }
+    });
 });
