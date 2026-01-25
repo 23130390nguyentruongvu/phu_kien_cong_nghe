@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.pkcn.dao.order;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
@@ -150,5 +151,40 @@ public class OrderDao {
                 })
                 .list();
         return res;
+    }
+
+    public int getQuantityOrderDelivered() {
+        String sql = """
+                SELECT COUNT(*)
+                FROM orders
+                WHERE status_order = 'completed'
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Integer.class).findOne().orElse(0));
+    }
+
+    public double getRevenue() {
+        String sql = """
+                SELECT COALESCE(SUM(total_must_pay), 0)
+                FROM orders
+                WHERE status_order = 'completed'
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Double.class).findOne().orElse(0.0));
+    }
+
+    public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {
+        String sql = """
+            SELECT o.id as order_id, u.id as user_id, o.total_must_pay, o.order_date, o.status_order, o.delivery_date
+            FROM orders o
+            JOIN users u ON u.id = o.user_id
+            WHERE (:isFilter = false) OR (YEARWEEK(o.order_date, 1) = YEARWEEK(DATE_SUB(NOW(), INTERVAL :week WEEK), 1))
+            """;
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("isFilter", isFilter)
+                        .bind("week", week)
+                        .mapToBean(OrderOverView.class)
+                        .list()
+        );
     }
 }

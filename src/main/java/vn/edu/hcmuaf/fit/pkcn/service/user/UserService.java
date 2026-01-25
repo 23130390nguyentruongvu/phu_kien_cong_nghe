@@ -111,4 +111,8 @@ public class UserService {
     public int updatePasswordWithTransaction(Handle handle, String email, String newPassword) {
         return userDao.updatePasswordWithTransaction(handle, email, HashMD5.MD5(newPassword));
     }
+
+    public int getQuantityUser() {
+        return userDao.getQuantityUser();
+    }
 }

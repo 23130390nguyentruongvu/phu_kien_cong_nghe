@@ -61,4 +61,8 @@ public class ProductVariantService {
         }
         return rowEffect;
     }
+
+    public int getQuantityVariants() {
+        return productVariantDao.getQuantityVariant();
+    }
 }

@@ -5,6 +5,7 @@ import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
@@ -72,8 +73,8 @@ public class OrderService {
             }
 
             int addressOrderId = orderDao.insertAddressOrder(handle, addressId, note);
-            double totalMustPay =  cart.priceTotal() + shipFee;
-            int orderId = orderDao.insertOrder(handle, userId, addressOrderId, totalMustPay, note, shipFee,paymentMethodId);
+            double totalMustPay = cart.priceTotal() + shipFee;
+            int orderId = orderDao.insertOrder(handle, userId, addressOrderId, totalMustPay, note, shipFee, paymentMethodId);
 
             for (CartItem item : cart.getCartItems()) {
                 orderDao.insertOrderDetail(handle, orderId, item);
@@ -98,5 +99,17 @@ public class OrderService {
     //Map có key là mã biến thể và value là quantity của order detail
     public HashMap<Integer, Integer> getVariantIdsAndQuantitiesByOrderIdWithTransaction(Handle handle, int orderId) {
         return orderDao.getVariantIdsAndQuantitiesByOrderIdWithTransaction(handle, orderId);
+    }
+
+    public int getOrderDelivered() {
+        return orderDao.getQuantityOrderDelivered();
+    }
+
+    public double getRevenue() {
+        return orderDao.getRevenue();
+    }
+
+    public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {
+        return orderDao.getOrderOverView(isFilter, week);
     }
 }
