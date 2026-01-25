@@ -196,4 +196,12 @@ public class ProductVariantDao {
                 .bind("stock", stock)
                 .execute();
     }
+
+    public int getQuantityVariant() {
+        String sql = """
+                SELECT COUNT(*)
+                FROM product_variants
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Integer.class).findOne().orElse(0));
+    }
 }

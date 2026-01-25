@@ -232,6 +232,7 @@ public class UserDao {
                 .orElse(null)
         );
     }
+
     public boolean updatePassword(int id, String password) {
         String sql = "UPDATE users SET password = :password WHERE id = :id";
         return jdbi.withHandle(handle -> {
@@ -266,5 +267,13 @@ public class UserDao {
                 .bind("email", email)
                 .bind("newPass", newPass)
                 .execute();
+    }
+
+    public int getQuantityUser() {
+        String sql = """
+                SELECT COUNT(*)
+                FROM users
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Integer.class).findOne().orElse(0));
     }
 }

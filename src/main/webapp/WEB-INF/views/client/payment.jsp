@@ -9,11 +9,13 @@
     <title>Thanh Toán</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main id="main" class="thanh-toan">
     <div class="header-page">
         <h1 class="entry-title">Thanh Toán</h1>
@@ -22,11 +24,12 @@
         <div class="container">
             <div class="row">
                 <c:if test="${not empty requestScope.error}">
-                    <div class="alert alert-danger" style="color: red; background: #fee2e2; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                    <div class="alert alert-danger"
+                         style="color: red; background: #fee2e2; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
                         <i class="fa-solid fa-circle-exclamation"></i> ${requestScope.error}
                     </div>
                 </c:if>
-                <form name="checkout" method="post" class="checkout" action="${pageContext.request.contextPath}/checkout">
+                <form id="formCheckout" name="checkout" method="post" class="checkout">
                     <c:if test="${not empty requestScope.defaultAddress}">
                         <input type="hidden" name="selectedAddressId"
                                value="${requestScope.defaultAddress.id}">
@@ -57,13 +60,18 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="no-address">
-                                        <p>Bạn chưa có địa chỉ nhận hàng. <a href="${pageContext.request.contextPath}/add-address?from=checkout">Thêm ngay</a></p>
+                                        <p>Bạn chưa có địa chỉ nhận hàng. <a
+                                                href="${pageContext.request.contextPath}/add-address?from=checkout">Thêm
+                                            ngay</a></p>
                                     </div>
                                 </c:otherwise>
                             </c:choose>
 
                             <div class="btn-add">
-                                <button type="button" class="btn-address" onclick="window.location.href='${pageContext.request.contextPath}/address-user'">Thêm/Quản lý địa chỉ</button>
+                                <button type="button" class="btn-address"
+                                        onclick="window.location.href='${pageContext.request.contextPath}/address-user'">
+                                    Thêm/Quản lý địa chỉ
+                                </button>
                             </div>
                             <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng..." class="note"></textarea>
                         </div>
@@ -99,7 +107,8 @@
                                         </td>
                                         <td class="product-total">
                                      <span class="price-amount">
-                                        <fmt:formatNumber value="${item.productVariant.price * item.quantity}" pattern="#,###"/>₫
+                                        <fmt:formatNumber value="${item.productVariant.price * item.quantity}"
+                                                          pattern="#,###"/>₫
                                 </span>
                                         </td>
                                     </tr>
@@ -153,8 +162,10 @@
                                 </ul>
                                 <div class="place-order">
                                     <div class="term-and-conditions">
-                                        <p>Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong
-                                            <a href="#">chính sách riêng tư</a> của chúng tôi.</p>
+                                        <p>Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm
+                                            sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong
+                                            <a href="${pageContext.request.contextPath}/view-privacy-policy">chính sách
+                                                bảo mật</a> của chúng tôi.</p>
                                     </div>
                                 </div>
                                 <button type="submit" class="button_order" id="place-order"
@@ -174,17 +185,21 @@
         </div>
     </div>
 </main>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 
 <c:if test="${not empty requestScope.successMessage}">
-    <script>alert("${requestScope.successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
+    <script>alert("${requestScope.successMessage}");
+    window.location.href = "${pageContext.request.contextPath}/";</script>
 </c:if>
 <script>
     var APP_CONFIG = {
         hasAddress: ${not empty defaultAddress ? 'true' : 'false'},
         addressUrl: "${pageContext.request.contextPath}/address-user"
     };
+</script>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script type="module" src="${pageContext.request.contextPath}/js/payment.js"></script>
 </html>

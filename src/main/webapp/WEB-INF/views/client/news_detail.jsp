@@ -79,62 +79,62 @@
             </div>
 
             <!-- Bình luận -->
-            <div class="comment-section">
-                <h3>Để lại một bình luận</h3>
+<%--            <div class="comment-section">--%>
+<%--                <h3>Để lại một bình luận</h3>--%>
 
-                <p class="comment-note">
-                    Email của bạn sẽ không được hiển thị công khai.
-                    Các trường bắt buộc được đánh dấu
-                    <span class="required">*</span>
-                </p>
+<%--&lt;%&ndash;                <p class="comment-note">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    Email của bạn sẽ không được hiển thị công khai.&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    Các trường bắt buộc được đánh dấu&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <span class="required">*</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                </p>&ndash;%&gt;--%>
 
-                <form class="comment-form"
-                      action="${pageContext.request.contextPath}/comment"
-                      method="post">
+<%--&lt;%&ndash;                <form class="comment-form"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                      action="${pageContext.request.contextPath}/comment"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                      method="post">&ndash;%&gt;--%>
 
-                    <input type="hidden"
-                           name="articleId"
-                           value="${article.id}"/>
+<%--&lt;%&ndash;                    <input type="hidden"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                           name="articleId"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                           value="${article.id}"/>&ndash;%&gt;--%>
 
-                    <div class="form-group">
-                        <label for="comment">Nhập vào đây...</label>
-                        <textarea id="comment"
-                                  name="content"
-                                  rows="6"
-                                  placeholder="Viết bình luận của bạn..."
-                                  required></textarea>
-                    </div>
+<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label for="comment">Nhập vào đây...</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <textarea id="comment"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                  name="content"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                  rows="6"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                  placeholder="Viết bình luận của bạn..."&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                  required></textarea>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
 
-                    <div class="form-row">
+<%--&lt;%&ndash;                    <div class="form-row">&ndash;%&gt;--%>
 
-                        <div class="form-group">
-                            <label for="name">
-                                Tên <span class="required">*</span>
-                            </label>
-                            <input type="text"
-                                   id="name"
-                                   name="name"
-                                   required>
-                        </div>
+<%--&lt;%&ndash;                        <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <label for="name">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                Tên <span class="required">*</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <input type="text"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   id="name"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   name="name"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </div>&ndash;%&gt;--%>
 
-                        <div class="form-group">
-                            <label for="email">
-                                Email <span class="required">*</span>
-                            </label>
-                            <input type="email"
-                                   id="email"
-                                   name="email"
-                                   required>
-                        </div>
+<%--&lt;%&ndash;                        <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <label for="email">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                Email <span class="required">*</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <input type="email"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   id="email"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   name="email"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                   required>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </div>&ndash;%&gt;--%>
 
-                    </div>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
 
-                    <button type="submit" class="btn-submit">
-                        Gửi bình luận
-                    </button>
+<%--&lt;%&ndash;                    <button type="submit" class="btn-submit">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        Gửi bình luận&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </button>&ndash;%&gt;--%>
 
-                </form>
-            </div>
+<%--&lt;%&ndash;                </form>&ndash;%&gt;--%>
+<%--            </div>--%>
 
         </c:if>
 

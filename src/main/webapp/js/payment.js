@@ -1,6 +1,8 @@
-import { showLoading, hideLoading } from './overlay_proccing.js';
+import {showLoading, hideLoading} from './overlay_processing.js';
 
-document.addEventListener("DOMContentLoaded", function() {
+const contextPath = window.contextPath
+
+document.addEventListener("DOMContentLoaded", function () {
     const btnChangeAddress = document.getElementsByClassName('change-address')[0];
     if (btnChangeAddress) {
         btnChangeAddress.addEventListener('click', (e) => {
@@ -11,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const orderBtn = document.getElementById("place-order");
     const config = window.APP_CONFIG || {};
     if (orderBtn && !config.hasAddress) {
-        orderBtn.addEventListener("click", function(e) {
+        orderBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (confirm("Bạn chưa có địa chỉ giao hàng mặc định. Bạn có muốn đi thêm địa chỉ không?")) {
                 window.location.href = config.addressUrl;
@@ -19,16 +21,32 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 4. Xử lý hiệu ứng Loading khi Submit form
-    const formCheckout = document.querySelector('form[name="checkout"]');
+    // Xử lý hiệu ứng Loading khi Submit form
+    const formCheckout = document.getElementById('formCheckout');
     if (formCheckout) {
-        formCheckout.addEventListener("submit", function(e) {
-            // Kiểm tra lại một lần nữa trước khi hiện loading
-            if (config.hasAddress) {
-                showLoading();
-            } else {
-                e.preventDefault();
-                alert("Vui lòng thêm địa chỉ trước khi thanh toán!");
+        formCheckout.addEventListener("submit", async function (e) {
+            e.preventDefault()
+            try {
+                showLoading()
+                const response = await fetch(`${contextPath}/checkout`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: new URLSearchParams({
+                        selectedAddressId: formCheckout.selectedAddressId.value,
+                        note: formCheckout.note.value,
+                        paymentMethodId: formCheckout.paymentMethodId.value
+                    })
+                });
+
+                const result = await response.json()
+                alert(result.message)
+                if (result.success) {
+                    window.location.href = contextPath + '/'
+                }
+            } catch (e) {
+                alert(e)
+            } finally {
+                hideLoading()
             }
         });
     }
