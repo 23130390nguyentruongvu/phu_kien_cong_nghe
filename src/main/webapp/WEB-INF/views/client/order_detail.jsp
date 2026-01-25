@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="order-buttons">
-                    <button class="cancel-btn">Hủy đơn</button>
+                    <button class="cancel-btn" data-id="${requestScope.orderDetail.orderId}">Hủy đơn</button>
                     <button class="close-btn">Đóng</button>
                 </div>
             </div>
@@ -100,15 +100,35 @@
 </c:if>
 </body>
 <script>
+    //close
+    document.querySelector('.close-btn').addEventListener('click', () => {
+        location.href = '${pageContext.request.contextPath}/order-history'
+    })
+
     //cancel order
     const cancelOrder = document.querySelector('.cancel-btn');
     const isPending = ${requestScope.orderDetail.isStatusPending};
+
     // Set thuộc tính disabled (boolean)
     cancelOrder.disabled = !isPending;
     cancelOrder.innerText = isPending ? 'Hủy đơn' : 'Không thể hủy đơn';
-    //close
-    document.querySelector('.close-btn').addEventListener('click', () => {
-        location.href = '${pageContext.request.contextPath}/personal_info'
-    })
+    //click hủy đơn
+    cancelOrder.addEventListener('click', async () => {
+        if (!confirm('Bạn có chắc muốn hủy đơn hàng này chứ?')) return;
+
+        try {
+            const response = await fetch('${pageContext.request.contextPath}/cancel-order', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams({'orderId': cancelOrder.dataset.id})
+            });
+
+            const responseJson = await response.json()
+            alert(responseJson.message)
+            window.location.reload()
+        } catch (e) {
+            alert(e)
+        }
+    });
 </script>
 </html>

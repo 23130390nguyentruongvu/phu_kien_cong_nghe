@@ -62,6 +62,7 @@ public class OrderDao {
                 .mapTo(Integer.class)
                 .one();
     }
+
     public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
         String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
                 "VALUES (:userId, :addressOrderId, :total, 'PENDING', :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
@@ -118,6 +119,19 @@ public class OrderDao {
                 .mapToBean(OrderDetail.class)
                 .findOne()
                 .orElse(null)
+        );
+    }
+
+    public int setStatusOrder(int orderId, String status) {
+        String sql = """
+                UPDATE orders
+                SET status_order = :status
+                WHERE id = :orderId
+                """;
+        return jdbi.withHandle(handle -> handle.createUpdate(sql)
+                .bind("status", status)
+                .bind("orderId", orderId)
+                .execute()
         );
     }
 }

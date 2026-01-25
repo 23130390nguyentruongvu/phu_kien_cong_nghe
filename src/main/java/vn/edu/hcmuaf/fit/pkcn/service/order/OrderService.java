@@ -89,4 +89,8 @@ public class OrderService {
             }
         });
     }
+
+    public boolean cancelOrder(int orderId) {
+        return orderDao.setStatusOrder(orderId, "cancel") > 0;
+    }
 }

@@ -41,13 +41,13 @@
                     </form>
                 </span>
             <c:if test="${empty requestScope.orders}">
-                <div class="wrap-content-order">
+                <div class="wrap-content-order" data-id="${-1}">
                     <h3>Không tìm thấy đơn hàng nào</h3>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.orders}">
                 <c:forEach var="order" items="${requestScope.orders}">
-                    <div class="wrap-content-order">
+                    <div class="wrap-content-order" data-id="${order.orderId}">
                         <div class="header-order">
                         <span class="status-order"><strong>Trạng thái:
                             <em class="${order.status}">${order.status}</em>
@@ -83,6 +83,8 @@
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
-<script src="../../../js/header.js"></script>
-<script src="../../../js/order_history.js"></script>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/js/order_history.js"></script>
 </html>

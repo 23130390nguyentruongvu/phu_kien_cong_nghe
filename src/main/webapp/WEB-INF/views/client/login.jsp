@@ -61,47 +61,6 @@
 <div class="footer">
 
 </div>
-
-<%--<div id="forgot-password-modal" class="modal hidden">--%>
-
-<%--    <div class="modal-backdrop"></div>--%>
-
-<%--    <div class="modal-content">--%>
-
-<%--        <span class="close-btn">&times;</span>--%>
-
-<%--        <h2>Khôi phục Mật khẩu</h2>--%>
-<%--        <p>Vui lòng nhập email hoặc số điện thoại của bạn:</p>--%>
-
-<%--        <form id="recovery-form" action="#" method="post">--%>
-<%--            <input type="text" id="recovery-input" name="recovery_info" placeholder="Email hoặc SĐT" required>--%>
-<%--            <button type="submit">Gửi Mã Xác Minh</button>--%>
-<%--        </form>--%>
-
-<%--    </div>--%>
-<%--</div>--%>
-
-<%--<div id="verify-code-modal" class="modal hidden">--%>
-
-<%--    <div class="modal-backdrop"></div>--%>
-
-<%--    <div class="modal-content">--%>
-
-<%--        <span class="close-btn" data-modal-target="verify">&times;</span>--%>
-
-<%--        <h2>Nhập Mã Xác Minh</h2>--%>
-<%--        <p>Mã xác minh đã được gửi đến Email/SĐT của bạn. Vui lòng kiểm tra và nhập mã:</p>--%>
-
-<%--        <form id="verify-form" action="#" method="post">--%>
-<%--            <input type="text" id="verification-code" name="code" placeholder="Nhập mã xác minh (6 chữ số)" required>--%>
-
-<%--            <button type="submit">Xác Minh</button>--%>
-<%--            <p class="resend-link">--%>
-<%--                <a href="#" id="resend-code">Gửi lại mã</a>--%>
-<%--            </p>--%>
-<%--        </form>--%>
-<%--    </div>--%>
-<%--</div>--%>
 </body>
 <script>
     window.contextPath = "${pageContext.request.contextPath}";
