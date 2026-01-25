@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class OrderDao {
     private Jdbi jdbi;
@@ -65,7 +66,7 @@ public class OrderDao {
 
     public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
         String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
-                "VALUES (:userId, :addressOrderId, :total, 'PENDING', :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
+                "VALUES (:userId, :addressOrderId, :total, 'pending', :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
 
         return handle.createUpdate(sql)
                 .bind("userId", userId)
@@ -122,16 +123,32 @@ public class OrderDao {
         );
     }
 
-    public int setStatusOrder(int orderId, String status) {
+    public int setStatusOrder(Handle handle, int orderId, String status) {
         String sql = """
                 UPDATE orders
                 SET status_order = :status
                 WHERE id = :orderId
                 """;
-        return jdbi.withHandle(handle -> handle.createUpdate(sql)
+        return handle.createUpdate(sql)
                 .bind("status", status)
                 .bind("orderId", orderId)
-                .execute()
-        );
+                .execute();
+    }
+
+    public HashMap<Integer, Integer> getVariantIdsAndQuantitiesByOrderIdWithTransaction(Handle handle, int orderId) {
+        String sql = """
+                SELECT product_variant_id, quantity
+                FROM order_details
+                WHERE order_id = :orderId
+                """;
+        HashMap<Integer, Integer> res = new HashMap<>();
+        handle.createQuery(sql)
+                .bind("orderId", orderId)
+                .map((rs, ctx) -> {
+                    res.put(rs.getInt("product_variant_id"), rs.getInt("quantity"));
+                    return null;
+                })
+                .list();
+        return res;
     }
 }

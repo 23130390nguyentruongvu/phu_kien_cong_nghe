@@ -6,7 +6,9 @@ import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JSonAddVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductVariantService {
     private ProductVariantDao productVariantDao;
@@ -48,5 +50,15 @@ public class ProductVariantService {
 
     public List<String> getSkusBySkus(List<String> skus) {
         return productVariantDao.getSkusBySkus(skus);
+    }
+
+    //Map này có key là mã biến thể và value là số lượng
+    public int appendStockVariantWithTransaction(Handle handle, HashMap<Integer, Integer> map) {
+        if (map == null || map.isEmpty()) return 0;
+        int rowEffect = 0;
+        for (Map.Entry<Integer, Integer> tmp : map.entrySet()) {
+            rowEffect += productVariantDao.appendStockVariantWithTransaction(handle, tmp.getKey(), tmp.getValue());
+        }
+        return rowEffect;
     }
 }

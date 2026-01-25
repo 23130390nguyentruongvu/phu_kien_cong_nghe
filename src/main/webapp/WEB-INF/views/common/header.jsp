@@ -65,7 +65,7 @@
                 </div>
                 <div class="center shopping-cart">
                     <a href="${pageContext.request.contextPath}/view-cart"><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
-                                                                  class="badge">0</span></i></a>
+                                                                  class="badge">${requestScope.cartBadgeCount}</span></i></a>
                 </div>
             </div>
             <!--        close header-center-->

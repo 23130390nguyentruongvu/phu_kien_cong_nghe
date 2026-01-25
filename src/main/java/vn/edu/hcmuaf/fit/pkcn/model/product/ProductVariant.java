@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ProductVariant implements Serializable {
     private int id;
@@ -156,5 +157,17 @@ public class ProductVariant implements Serializable {
 
     public String getSpecific() {
         return gram + "g, " + size + ", màu: " + color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductVariant that = (ProductVariant) o;
+        return id == that.id && productId == that.productId && stock == that.stock && gram == that.gram && Objects.equals(sku, that.sku) && Objects.equals(urlImage, that.urlImage) && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(color, that.color) && Objects.equals(size, that.size) && Objects.equals(create, that.create) && Objects.equals(update, that.update);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, productId, sku, urlImage, name, price, stock, gram, color, size, create, update);
     }
 }

@@ -184,4 +184,16 @@ public class ProductVariantDao {
                 .bind("variantId", variant.getVariantId())
                 .execute();
     }
+
+    public int appendStockVariantWithTransaction(Handle handle, Integer varId, Integer stock) {
+        String sql = """
+                UPDATE product_variants
+                SET stock = stock + :stock
+                WHERE id = :varId
+                """;
+        return handle.createUpdate(sql)
+                .bind("varId", varId)
+                .bind("stock", stock)
+                .execute();
+    }
 }

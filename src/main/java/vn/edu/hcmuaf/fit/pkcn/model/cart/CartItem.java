@@ -23,7 +23,7 @@ public class CartItem implements Serializable {
 
     public boolean plusOneQuantity() {
         this.quantity++;
-        this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+        updatePrice();
         return true;
     }
 
@@ -31,16 +31,20 @@ public class CartItem implements Serializable {
         this.quantity--;
         if (this.quantity <= 0) {
             this.quantity = 1;
-            this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+            updatePrice();
             return false;
         }
-        this.price = this.quantity * this.productVariant.getPrice().doubleValue();
+        updatePrice();
         return true;
     }
 
     public void updateQuantity(int quantity) {
         if (quantity < 1) quantity = 1;
         this.quantity = quantity;
+        updatePrice();
+    }
+
+    public void updatePrice() {
         this.price = this.quantity * this.productVariant.getPrice().doubleValue();
     }
 
@@ -76,11 +80,13 @@ public class CartItem implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CartItem cartItem = (CartItem) o;
-        return productVariantId == cartItem.productVariantId;
+        return productVariantId == cartItem.productVariantId && quantity == cartItem.quantity
+                && Double.compare(price, cartItem.price) == 0 && Objects.equals(nameProduct, cartItem.nameProduct)
+                && Objects.equals(productVariant, cartItem.productVariant);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(productVariantId);
+        return Objects.hash(productVariantId, quantity, nameProduct, productVariant, price);
     }
 }
