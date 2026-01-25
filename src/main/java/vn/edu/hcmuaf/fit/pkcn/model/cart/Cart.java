@@ -31,7 +31,8 @@ public class Cart implements Serializable {
     public void addCartItem(ProductVariant prodVar, String nameProd, int quantity) {
         if (nameProd == null || prodVar == null) return;
         CartItem cartItem = cart.get(prodVar.getId());
-        if (cartItem == null)
+        boolean isExist = cartItem != null;
+        if (!isExist)
             cartItem = new CartItem(
                     prodVar.getId(),
                     quantity,
@@ -39,6 +40,7 @@ public class Cart implements Serializable {
                     0,
                     prodVar
             );
+        quantity = isExist ? cartItem.getQuantity() + quantity : quantity;
         cartItem.updateQuantity(quantity);
         cart.put(prodVar.getId(), cartItem);
     }

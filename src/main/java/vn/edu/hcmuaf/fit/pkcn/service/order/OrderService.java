@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.service.order;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
@@ -90,7 +91,12 @@ public class OrderService {
         });
     }
 
-    public boolean cancelOrder(int orderId) {
-        return orderDao.setStatusOrder(orderId, "cancel") > 0;
+    public boolean cancelOrderWithTransaction(Handle handle, int orderId) {
+        return orderDao.setStatusOrder(handle, orderId, "cancel") > 0;
+    }
+
+    //Map có key là mã biến thể và value là quantity của order detail
+    public HashMap<Integer, Integer> getVariantIdsAndQuantitiesByOrderIdWithTransaction(Handle handle, int orderId) {
+        return orderDao.getVariantIdsAndQuantitiesByOrderIdWithTransaction(handle, orderId);
     }
 }

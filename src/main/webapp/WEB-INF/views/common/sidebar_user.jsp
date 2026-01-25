@@ -23,7 +23,7 @@
             <c:if test="${not empty sessionScope.user and sessionScope.user.role == 1}">
                 <li class="nav-link-item">
                     <i class="fa-solid fa-user-shield"></i>
-                    <a href="${pageContext.request.contextPath}/return-overview">Trang quản trị</a>
+                    <a href="${pageContext.request.contextPath}/overview">Trang quản trị</a>
                 </li>
             </c:if>
             <li class="nav-link-item">
