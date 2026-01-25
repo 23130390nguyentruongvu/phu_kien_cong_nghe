@@ -10,12 +10,16 @@ import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
+import vn.edu.hcmuaf.fit.pkcn.model.order.PaymentMethod;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.service.order.PaymentMethodService;
+import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductVariantService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ViewPayment", value = "/view-payment")
 public class ViewPaymentServlet extends HttpServlet {
@@ -36,6 +40,22 @@ public class ViewPaymentServlet extends HttpServlet {
             return;
         }
         Address defaultAddress = addressService.getAddressDefault(user.getId());
+        ShippingFeeService shippingFeeService = new ShippingFeeService(JDBI.getJdbi());
+        PaymentMethodService paymentMethodService = new PaymentMethodService(JDBI.getJdbi());
+        List<PaymentMethod> methods = paymentMethodService.getAllPaymentMethods();
+        double shipFee = 0;
+        if(defaultAddress!=null){
+            shipFee = shippingFeeService.getPriceShipByAddress(defaultAddress.getProvinceCity());
+        }else{
+            request.setAttribute("error","Bạn chưa thiết lập địa chỉ nhận hàng. Vui lòng thêm địa chỉ để tiến hành thanh toán");
+        }
+
+        double totalPrice = cart.priceTotal();
+        double totalOrder = totalPrice + shipFee;
+        request.setAttribute("paymentMethods", methods);
+        request.setAttribute("subTotal", totalPrice);
+        request.setAttribute("shipFee", shipFee);
+        request.setAttribute("totalOrder",totalOrder);
         request.setAttribute("defaultAddress", defaultAddress);
         request.getRequestDispatcher("/WEB-INF/views/client/payment.jsp").forward(request, response);
     }

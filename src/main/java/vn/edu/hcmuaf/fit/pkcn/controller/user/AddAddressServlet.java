@@ -21,6 +21,7 @@ public class AddAddressServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/login");
             return;
         }
+        String from = request.getParameter("from");
         String receiverName = request.getParameter("receiverName");
         String phoneNumber = request.getParameter("phone");
         String province = request.getParameter("province");
@@ -37,10 +38,15 @@ public class AddAddressServlet extends HttpServlet {
         address.setAddressDetail(detail);
         address.setIsSelected(0);
 
+        address.setIsSelected(0);
         AddressService addressService = new AddressService(JDBI.getJdbi());
         boolean re = addressService.addAddressSv(address);
         if(re){
-            response.sendRedirect(request.getContextPath()+"/address-user");
+            if("checkout".equals(from)){
+                response.sendRedirect(request.getContextPath()+"/view-payment");
+            }else{
+                response.sendRedirect(request.getContextPath()+"/address-user");
+            }
         }else{
             request.setAttribute("error","Không thể thêm địa chỉ mới, vui lòng thử lại!");
             request.getRequestDispatcher("/WEB-INF/views/client/add_address.jsp").forward(request, response);

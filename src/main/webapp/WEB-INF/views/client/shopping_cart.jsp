@@ -114,10 +114,8 @@
                             </table>
                             <div class="process-checkout">
                                 <div class="go-to-checkout">
-                                    <button id="btnGotoCheckout" class="submit-checkout">
-                                        <!--                                    mai mốt bỏ a đi-->
-                                        <a href="${pageContext.request.contextPath}/view-payment" style="color: white">TIẾN HÀNH THANH TOÁN</a>
-
+                                    <button id="btnGotoCheckout" class="submit-checkout" data-url="${pageContext.request.contextPath}/view-payment">
+                                        TIẾN HÀNH THANH TOÁN
                                     </button>
                                 </div>
                             </div>
@@ -131,5 +129,5 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
-<script src="${pageContext.request.contextPath}/js/shopping_cart.js"></script>
+<script src="${pageContext.request.contextPath}/js/shopping_cart.js?v=1.1"></script>
 </html>

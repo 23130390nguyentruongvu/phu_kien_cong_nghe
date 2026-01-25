@@ -45,3 +45,14 @@ function handleDelete(id, name, path) {
         removeCartItem(id, result, path)
     }
 }
+// su kien nhan thanh toan
+document.addEventListener("DOMContentLoaded", function () {
+    const btnCheckOut = document.getElementById('btnGotoCheckout');
+    if (btnCheckOut) {
+        btnCheckOut.addEventListener('click', function () {
+            // Lấy URL đã được JSP tính toán sẵn
+            const targetUrl = btnCheckOut.getAttribute('data-url');
+            window.location.href = targetUrl;
+        });
+    }
+});

@@ -44,6 +44,7 @@ public class OrderService {
 
         return res.values().stream().toList();
     }
+    public void checkOut(int userId, int addressId, String note, Cart cart,double shipFee, int paymentMethodId) throws Exception {
 
     public OrderDetail getOrderDetailByOrderId(int orderId) throws Exception {
         OrderDetail orderDetail = orderDao.getOrderDetail(orderId);
@@ -70,8 +71,8 @@ public class OrderService {
             }
 
             int addressOrderId = orderDao.insertAddressOrder(handle, addressId, note);
-
-            int orderId = orderDao.insertOrder(handle, userId, addressOrderId, cart.priceTotal(), note);
+            double totalMustPay =  cart.priceTotal() + shipFee;
+            int orderId = orderDao.insertOrder(handle, userId, addressOrderId, totalMustPay, note, shipFee,paymentMethodId);
 
             for (CartItem item : cart.getCartItems()) {
                 orderDao.insertOrderDetail(handle, orderId, item);
