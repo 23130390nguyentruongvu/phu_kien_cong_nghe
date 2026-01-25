@@ -2,7 +2,7 @@ package vn.edu.hcmuaf.fit.pkcn.model.order;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariantWrapOrder;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class OrderShowAsItem {
     }
 
     public String getPriceFormat() {
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, totalPrice);
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, totalPrice);
     }
 
     @Override

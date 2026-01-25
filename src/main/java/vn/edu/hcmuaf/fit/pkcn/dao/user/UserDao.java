@@ -240,5 +240,30 @@ public class UserDao {
                     .bind("id", id)
                     .execute() > 0;
         });
+
+    public User findByEmail(String email) {
+        String sql = """
+                SELECT *
+                FROM users
+                WHERE email = :email
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("email", email)
+                .mapToBean(User.class)
+                .findOne()
+                .orElse(null)
+        );
+    }
+
+    public int updatePasswordWithTransaction(Handle handle, String email, String newPass) {
+        String sql = """
+                UPDATE users
+                SET password = :newPass
+                WHERE email = :email
+                """;
+        return handle.createUpdate(sql)
+                .bind("email", email)
+                .bind("newPass", newPass)
+                .execute();
     }
 }

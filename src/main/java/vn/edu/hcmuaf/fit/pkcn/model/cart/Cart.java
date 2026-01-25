@@ -1,9 +1,8 @@
 package vn.edu.hcmuaf.fit.pkcn.model.cart;
 
-import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -94,7 +93,11 @@ public class Cart implements Serializable {
         return priceTotal;
     }
 
+    public User getUserOfCart() {
+        return user;
+    }
+
     public String getPriceByFormat() {
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, priceTotal());
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, priceTotal());
     }
 }

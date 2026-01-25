@@ -6,6 +6,8 @@ import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
+import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
+import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariantWrapOrder;
 
@@ -26,6 +28,10 @@ public class OrderService {
         this.orderDao = new OrderDao(orderDao);
     }
 
+    public int getUserIdByOrderId(int orderId) {
+        return orderDao.getUserIdByOrderId(orderId);
+    }
+
     public List<OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         HashMap<Integer, OrderShowAsItem> res = orderDao.getOrdersShowAsItem(userId, status);
         if (res.isEmpty()) return null;
@@ -39,6 +45,20 @@ public class OrderService {
         return res.values().stream().toList();
     }
     public void checkOut(int userId, int addressId, String note, Cart cart,double shipFee, int paymentMethodId) throws Exception {
+
+    public OrderDetail getOrderDetailByOrderId(int orderId) throws Exception {
+        OrderDetail orderDetail = orderDao.getOrderDetail(orderId);
+        if (orderDetail == null) throw new Exception("Không tìm thấy order detail với order id = " + orderId);
+        //Lấy các detail item
+        List<OrderDetailItem> items = orderDao.getOrderDetailItems(orderId);
+        if (items == null || items.isEmpty())
+            throw new Exception("Không tìm thấy các order item với order id = " + orderId);
+
+        orderDetail.setItems(items);
+        return orderDetail;
+    }
+
+    public void checkOut(int userId, int addressId, String note, Cart cart) throws Exception {
         JDBI.getJdbi().useTransaction(handle -> {
             for (CartItem item : cart.getCartItems()) {
                 Integer currentStock = handle.createQuery("SELECT stock FROM product_variants WHERE id = :id FOR UPDATE")

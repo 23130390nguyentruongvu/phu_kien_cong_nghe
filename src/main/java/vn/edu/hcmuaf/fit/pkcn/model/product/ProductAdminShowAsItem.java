@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.model.product;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
-import vn.edu.hcmuaf.fit.pkcn.utils.FormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -128,8 +128,8 @@ public class ProductAdminShowAsItem {
     }
 
     public String getRangePriceFormat() {
-        if (maxPrice == null) return FormatUtils.formatPrice(FormatUtils.PATTERN_VND, minPrice);
-        return FormatUtils.formatPrice(FormatUtils.PATTERN_NONE_UNIT, minPrice)
-                + " - " + FormatUtils.formatPrice(FormatUtils.PATTERN_VND, maxPrice);
+        if (maxPrice == null) return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, minPrice);
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_NONE_UNIT, minPrice)
+                + " - " + PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, maxPrice);
     }
 }

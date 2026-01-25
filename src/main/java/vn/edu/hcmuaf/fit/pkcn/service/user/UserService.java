@@ -101,5 +101,12 @@ public class UserService {
     public boolean changePassword(int id, String newPassword) {
         String md5Pass = HashMD5.MD5(newPassword);
         return userDao.updatePassword(id, md5Pass);
+
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
+
+    public int updatePasswordWithTransaction(Handle handle, String email, String newPassword) {
+        return userDao.updatePasswordWithTransaction(handle, email, HashMD5.MD5(newPassword));
     }
 }

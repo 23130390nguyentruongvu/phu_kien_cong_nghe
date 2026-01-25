@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.controller.auth;
+package vn.edu.hcmuaf.fit.pkcn.controller.admin.user;
 
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 

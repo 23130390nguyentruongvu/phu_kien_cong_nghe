@@ -9,9 +9,12 @@ import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.review.ReviewProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.review.ReviewProduct;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
+import vn.edu.hcmuaf.fit.pkcn.service.review.ReviewProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.io.IOException;
@@ -41,7 +44,14 @@ public class ProductDetailServlet extends HttpServlet {
                     new CategoryDao(JDBI.getJdbi())
             );
 
+            ReviewProductService reviewProductService = new ReviewProductService(
+                    new ReviewProductDao(JDBI.getJdbi())
+            );
 
+            //Load đánh giá sản phẩm
+            List<ReviewProduct> reviews = reviewProductService.getReviewProducts(productId);
+
+            //Load sản phẩm chi tiết bao gồm cả biến thể
             ProductDetail product = productService.getProductDetailById(productId);
 
             if (product == null) {
@@ -49,12 +59,14 @@ public class ProductDetailServlet extends HttpServlet {
                 return;
             }
 
+            //Load sản phẩm liên quan
             List<ProductShowAsItem> relatedProducts =
                     productService.getRelatedProducts(productId);
 
 
             request.setAttribute("product", product);
             request.setAttribute("relatedProducts", relatedProducts);
+            request.setAttribute("reviews", reviews);
 
             request.getRequestDispatcher("/WEB-INF/views/client/product_detail.jsp")
                     .forward(request, response);

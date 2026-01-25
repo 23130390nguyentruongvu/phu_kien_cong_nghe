@@ -72,3 +72,5 @@ keystore.jks
 
 src/main/webapp/js/firebase.js
 src/main/resources/serviceAccountKey.json
+src/main/java/vn/edu/hcmuaf/fit/pkcn/utils/EmailUtils.java
+src/main/java/vn/edu/hcmuaf/fit/pkcn/FirebaseInitializer.java
