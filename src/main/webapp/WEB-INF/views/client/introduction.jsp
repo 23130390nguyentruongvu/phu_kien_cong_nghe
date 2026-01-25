@@ -7,8 +7,6 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Giới Thiệu</title>
-    <link rel="stylesheet" href="../../../css/introdution.css"/>
-    <link rel="stylesheet" href="../../../shared/main.css"/>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -16,49 +14,31 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/introdution.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main>
     <div class="container">
-        <div id="sidebar"><div class="sidebar-main">
-            <aside id="block-31" class="widget widget_block">
-                <h3 class="wp-block-heading">DANH MỤC TRANG</h3>
-            </aside>
-            <aside id="nav_menu-9" class="widget widget_nav_menu">
-                <nav class="menu-danh-muc-trang-container" aria-label="Menu">
-                    <ul id="menu-danh-muc-trang" class="menu">
-                        <li><a href="home.jsp">Trang Chủ</a></li>
-                        <li><a href="introdution.html">Giới Thiệu</a></li>
-                        <li><a href="contact.jsp">Liên Hệ</a></li>
-                        <li><a href="news.jsp">Tin Tức</a></li>
-                        <li><a href="personal_info.jsp">Tài Khoản Của Tôi</a></li>
-                        <li><a href="shipping_method.jsp">Phương Thức Giao Hàng</a></li>
-                        <li><a href="payment_method.jsp">Phương Thức Thanh Toán</a></li>
-                        <li><a href="warranty_policy.jsp">Chính Sách Bảo Hành</a></li>
-                        <li><a href="privacy_policy.jsp">Chính Sách Bảo Mật</a></li>
-                        <li><a href="term_of_service.jsp">Điều Khoản Dịch Vụ</a></li>
-                    </ul>
-                </nav>
-            </aside>
-        </div></div>
+        <jsp:include page="/WEB-INF/views/common/sidebar_category_page.jsp"/>
+
         <div class="content">
             <h2>Giới Thiệu</h2>
             <p>
-                – Phụ Kiện Công Nghệ chuyên cung cấp Phụ kiện Máy tính, Phụ kiện
+                – ${contactShop.shopName} chuyên cung cấp Phụ kiện Máy tính, Phụ kiện
                 Điện thoại, Thiết bị Mạng, Phụ kiện Xe đạp, Pk Ô tô. Phục vụ nhu cầu
                 của khách hàng trên cả nước.
             </p>
 
             <p>
-                – Phukiencongnghe.com.vn là một cửa hàng trực tuyến, được thành lập
-                từ năm 2015 bởi một đội ngũ đam mê công nghệ, cửa hàng tọa lạc tại
-                Giáp Nhị – Hoàng Mai – Hà Nội.
+                – ${contactShop.shopName} là một cửa hàng trực tuyến, được thành lập
+                từ năm 2015 bởi một đội ngũ đam mê công nghệ, cửa hàng tọa lạc tại ${contactShop.shopAddress}
             </p>
 
             <p>
-                – Người tiêu dùng chọn Phụ kiện công nghệ nhờ vào chất lượng sản
+                – Người tiêu dùng chọn ${contactShop.shopName} nhờ vào chất lượng sản
                 phẩm tốt, giá cả hợp lý và dịch vụ khách hàng tận tâm. Với nhiều năm
                 kinh nghiệm trong lĩnh vực, cửa hàng cam kết mang đến những sản phẩm
                 công nghệ mới nhất đến tay người tiêu dùng, chúng tôi chỉ cung cấp
@@ -66,7 +46,7 @@
             </p>
 
             <p>
-                – Nhiều người cũng biết đến Phụ kiện công nghệ bởi sự giới thiệu của
+                – Nhiều người cũng biết đến ${contactShop.shopName} bởi sự giới thiệu của
                 bạn bè, người thân, họ là những khách hàng quen thuộc của chúng tôi.
             </p>
 
@@ -76,19 +56,7 @@
             </p>
 
             <p>
-                Chuyên cung cấp: Phụ kiện Máy tính – Phụ kiện Điện thoại – Thiết bị
-                Mạng – Phụ kiện Xe đạp, Phụ kiện Ô tô.
-            </p>
-
-            <p>
-                – Dây Cáp tín hiệu HDMI, VGA, Displayport, Type-C, Lightning, cáp
-                HDMI cho điện thoại, thiết bị thi công mạng internet cáp Quang, Máy
-                trợ giảng, Phụ kiện xe đạp, Phụ kiện Ô tô, …
-            </p>
-
-            <p>
-                – Bộ chia tín hiệu, bộ chuyển đổi tín hiệu VGA, chia HDMI,
-                Displayport, Lightning, cáp Type-C, …
+                Chuyên cung cấp: Các phụ kiện tối tân, giá hợp lí
             </p>
 
             <p>
@@ -98,28 +66,16 @@
                 thoại, Máy tính PC, Laptop, Máy ảnh, TV…
             </p>
 
-            <h3>Cửa hàng Phụ Kiện Công Nghệ:</h3>
-            <p>– Website:</p>
-            <p>– Địa chỉ: VQCR+GP6, khu phố 6, Thủ Đức, Thành phố Hồ Chí Minh</p>
-            <p>– Điện thoại: 0123 456 789</p>
-            <p>– Hỗ trợ kỹ thuật: 0963 369 336</p>
-            <p>– Hotline & bán hàng: 0963 369 336</p>
-            <p>– Email: phukiencongnghenonglam@gmail.com</p>
-
-            <p>Người đại diện: Nguyễn Trường Vũ</p>
-
-            <h3>Thời gian làm việc tại Shop</h3>
-            <p>– Từ Thứ 2 đến thứ 7:</p>
-            <p>
-                Sáng: 8h00 – 12h30.<br/>
-                Chiều: 13h30 – 20h00.
-            </p>
-            <p>– Chủ nhật & ngày Lễ: vui lòng liên hệ trước.</p>
+            <h3>Cửa hàng ${contactShop.shopName}:</h3>
+            <p>– Địa chỉ: ${contactShop.shopAddress}</p>
+            <p>– Điện thoại: ${contactShop.phoneNumber}</p>
+            <p>– Hotline & bán hàng: ${contactShop.hotline}</p>
+            <p>– Email: ${contactShop.email}</p>
         </div>
     </div>
 </main>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script src="../../../js/header.js"></script>
 </html>

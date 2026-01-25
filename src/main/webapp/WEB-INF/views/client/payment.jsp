@@ -176,8 +176,7 @@
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
-<script src="../../../js/payment.js"></script>
-<script src="../../../js/header.js"></script>
+
 <c:if test="${not empty requestScope.successMessage}">
     <script>alert("${requestScope.successMessage}"); window.location.href="${pageContext.request.contextPath}/";</script>
 </c:if>

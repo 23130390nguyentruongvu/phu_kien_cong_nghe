@@ -17,21 +17,26 @@ public class ArticleDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
 
-        ArticleService service = new ArticleService(
-                new ArticleDao(JDBI.getJdbi())
-        );
+            ArticleService service = new ArticleService(
+                    new ArticleDao(JDBI.getJdbi())
+            );
 
-        ArticleDetail article = service.getArticleDetail(id);
+            ArticleDetail article = service.getArticleDetail(id);
 
-        if (article == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
+            if (article == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+            request.setAttribute("article", article);
+            request.getRequestDispatcher("/WEB-INF/views/client/news_detail.jsp")
+                    .forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/news");
         }
-
-        request.setAttribute("article", article);
-        request.getRequestDispatcher("/WEB-INF/views/client/news_detail.jsp")
-                .forward(request, response);
     }
 }

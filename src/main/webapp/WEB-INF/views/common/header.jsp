@@ -79,7 +79,7 @@
                                 class="menu-item ${requestScope.activeHeader == 1 ? 'active' : ''}"><a
                                     href="${pageContext.request.contextPath}/">TRANG CHỦ</a></li>
                             <li id="menuIntroduce" class="menu-item ${requestScope.activeHeader == 2 ? 'active' : ''}">
-                                <a href="introduction.jsp">GIỚI
+                                <a href="${pageContext.request.contextPath}/view-introduce">GIỚI
                                     THIỆU</a></li>
                             <li id="menuProducts" class="menu-item ${requestScope.activeHeader == 3 ? 'active' : ''}">
 
@@ -107,7 +107,7 @@
                             <li id="menuNews" class="menu-item ${requestScope.activeHeader == 4 ? 'active' : ''}" ><a
                                     href="${pageContext.request.contextPath}/news">TIN TỨC</a></li>
                             <li id="menuContact" class="menu-item ${requestScope.activeHeader == 5 ? 'active' : ''}" ><a
-                                    href="contact.jsp">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                                    href="${pageContext.request.contextPath}/view-contact-shop">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
                         </ul>
                     </div>
                 </div>
