@@ -46,6 +46,8 @@ public class ChangePasswordServlet extends HttpServlet {
                 error = "Lỗi thay đổi, vui lòng thử lại!";
             }
         }
+
+        request.setAttribute("linkNav", 1);
         request.setAttribute("suc", suc);
         request.setAttribute("error", error);
         request.getRequestDispatcher("/WEB-INF/views/client/personal_info.jsp").forward(request, response);
