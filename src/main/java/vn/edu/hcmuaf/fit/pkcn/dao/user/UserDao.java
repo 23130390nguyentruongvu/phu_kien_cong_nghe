@@ -240,6 +240,7 @@ public class UserDao {
                     .bind("id", id)
                     .execute() > 0;
         });
+    }
 
     public User findByEmail(String email) {
         String sql = """

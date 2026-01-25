@@ -44,7 +44,7 @@ public class OrderService {
 
         return res.values().stream().toList();
     }
-    public void checkOut(int userId, int addressId, String note, Cart cart,double shipFee, int paymentMethodId) throws Exception {
+
 
     public OrderDetail getOrderDetailByOrderId(int orderId) throws Exception {
         OrderDetail orderDetail = orderDao.getOrderDetail(orderId);
@@ -58,7 +58,7 @@ public class OrderService {
         return orderDetail;
     }
 
-    public void checkOut(int userId, int addressId, String note, Cart cart) throws Exception {
+    public void checkOut(int userId, int addressId, String note, Cart cart, double shipFee, int paymentMethodId) throws Exception {
         JDBI.getJdbi().useTransaction(handle -> {
             for (CartItem item : cart.getCartItems()) {
                 Integer currentStock = handle.createQuery("SELECT stock FROM product_variants WHERE id = :id FOR UPDATE")
