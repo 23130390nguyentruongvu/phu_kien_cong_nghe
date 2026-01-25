@@ -188,81 +188,81 @@
                         </div>
                     </c:if>
                     <br/>
-                    <p>
-                       Các trường bắt
-                        buộc được đánh dấu <span class="required">*</span>
-                    </p>
-                    <br/>
-                    <form class="review-form" method="POST" action="/submit-review">
-                        <!-- RATING -->
-                        <label for="rating"
-                        >Đánh giá của bạn <span class="required">*</span></label
-                        >
+<%--                    <p>--%>
+<%--                       Các trường bắt--%>
+<%--                        buộc được đánh dấu <span class="required">*</span>--%>
+<%--                    </p>--%>
+<%--                    <br/>--%>
+<%--                    <form class="review-form" method="POST" action="/submit-review">--%>
+<%--                        <!-- RATING -->--%>
+<%--                        <label for="rating"--%>
+<%--                        >Đánh giá của bạn <span class="required">*</span></label--%>
+<%--                        >--%>
 
-                        <div class="rating-stars">
-                            <input
-                                    type="radio"
-                                    name="rating"
-                                    id="star1"
-                                    value="1"
-                                    required
-                            />
-                            <label for="star1" title="1 sao">&#9733;</label>
+<%--                        <div class="rating-stars">--%>
+<%--                            <input--%>
+<%--                                    type="radio"--%>
+<%--                                    name="rating"--%>
+<%--                                    id="star1"--%>
+<%--                                    value="1"--%>
+<%--                                    required--%>
+<%--                            />--%>
+<%--                            <label for="star1" title="1 sao">&#9733;</label>--%>
 
-                            <input type="radio" name="rating" id="star2" value="2"/>
-                            <label for="star2" title="2 sao">&#9733;</label>
+<%--                            <input type="radio" name="rating" id="star2" value="2"/>--%>
+<%--                            <label for="star2" title="2 sao">&#9733;</label>--%>
 
-                            <input type="radio" name="rating" id="star3" value="3"/>
-                            <label for="star3" title="3 sao">&#9733;</label>
+<%--                            <input type="radio" name="rating" id="star3" value="3"/>--%>
+<%--                            <label for="star3" title="3 sao">&#9733;</label>--%>
 
-                            <input type="radio" name="rating" id="star4" value="4"/>
-                            <label for="star4" title="4 sao">&#9733;</label>
+<%--                            <input type="radio" name="rating" id="star4" value="4"/>--%>
+<%--                            <label for="star4" title="4 sao">&#9733;</label>--%>
 
-                            <input type="radio" name="rating" id="star5" value="5"/>
-                            <label for="star5" title="5 sao">&#9733;</label>
-                        </div>
+<%--                            <input type="radio" name="rating" id="star5" value="5"/>--%>
+<%--                            <label for="star5" title="5 sao">&#9733;</label>--%>
+<%--                        </div>--%>
 
-                        <label for="comment"
-                        >Nhận xét <span class="required">*</span></label
-                        >
-                        <textarea
-                                id="comment"
-                                name="comment"
-                                class="review-textarea"
-                                rows="5"
-                                required
-                        ></textarea>
+<%--                        <label for="comment"--%>
+<%--                        >Nhận xét <span class="required">*</span></label--%>
+<%--                        >--%>
+<%--                        <textarea--%>
+<%--                                id="comment"--%>
+<%--                                name="comment"--%>
+<%--                                class="review-textarea"--%>
+<%--                                rows="5"--%>
+<%--                                required--%>
+<%--                        ></textarea>--%>
 
-                        <div class="form-row-container">
-                            <div class="form-row">
-                                <label for="name">Tên <span class="required">*</span></label>
-                                <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        class="review-input"
-                                        required
-                                />
-                            </div>
+<%--                        <div class="form-row-container">--%>
+<%--                            <div class="form-row">--%>
+<%--                                <label for="name">Tên <span class="required">*</span></label>--%>
+<%--                                <input--%>
+<%--                                        type="text"--%>
+<%--                                        id="name"--%>
+<%--                                        name="name"--%>
+<%--                                        class="review-input"--%>
+<%--                                        required--%>
+<%--                                />--%>
+<%--                            </div>--%>
 
-                            <div class="form-row">
-                                <label for="email"
-                                >Email <span class="required">*</span></label
-                                >
-                                <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        class="review-input"
-                                        required
-                                />
-                            </div>
-                        </div>
+<%--                            <div class="form-row">--%>
+<%--                                <label for="email"--%>
+<%--                                >Email <span class="required">*</span></label--%>
+<%--                                >--%>
+<%--                                <input--%>
+<%--                                        type="email"--%>
+<%--                                        id="email"--%>
+<%--                                        name="email"--%>
+<%--                                        class="review-input"--%>
+<%--                                        required--%>
+<%--                                />--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <button type="submit" class="submit-review-btn">
-                            GỬI ĐÁNH GIÁ
-                        </button>
-                    </form>
+<%--                        <button type="submit" class="submit-review-btn">--%>
+<%--                            GỬI ĐÁNH GIÁ--%>
+<%--                        </button>--%>
+<%--                    </form>--%>
                 </div>
 
                 <div class="related-container">

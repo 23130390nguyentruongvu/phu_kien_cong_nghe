@@ -6,10 +6,6 @@
 
     <aside class="widget widget_search">
         <h3>DANH MỤC SẢN PHẨM</h3>
-        <div class="search-box">
-            <input type="search" placeholder="Tìm sản phẩm…" />
-            <button><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
     </aside>
 
     <aside class="widget widget_product_categories">

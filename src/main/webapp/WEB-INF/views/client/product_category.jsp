@@ -96,16 +96,16 @@
             </div>
             <!--            close wrap-center-content-->
             <!--            open wrap-below-content-->
-            <c:if test="${not empty requestScope.ProductsResult}">
-                <div class="wrap-below-content">
-                    <div class="show-more-product">
-                        <form>
-                            <button type="button" class="btn-show-more" name="show-more-product">Xem thêm sản phẩm
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </c:if>
+<%--            <c:if test="${not empty requestScope.ProductsResult}">--%>
+<%--                <div class="wrap-below-content">--%>
+<%--                    <div class="show-more-product">--%>
+<%--                        <form>--%>
+<%--                            <button type="button" class="btn-show-more" name="show-more-product">Xem thêm sản phẩm--%>
+<%--                            </button>--%>
+<%--                        </form>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </c:if>--%>
         </div>
     </div>
 </main>

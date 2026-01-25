@@ -8,8 +8,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chính sách bảo mật</title>
-    <link rel="stylesheet" href="../../../css/privacy_policy.css" />
-    <link rel="stylesheet" href="../../../shared/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -17,33 +15,16 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/privacy_policy.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
 
   </head>
   <body>
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <main>
       <div class="container">
-        <div class="sidebar-main">
-          <aside id="block-31" class="widget widget_block">
-            <h3 class="wp-block-heading">DANH MỤC TRANG</h3>
-          </aside>
-          <aside id="nav_menu-9" class="widget widget_nav_menu">
-            <nav class="menu-danh-muc-trang-container" aria-label="Menu">
-                <ul id="menu-danh-muc-trang" class="menu">
-                    <li><a href="home.jsp">Trang Chủ</a></li>
-                    <li><a href="introduction.jsp">Giới Thiệu</a></li>
-                    <li><a href="contact.jsp">Liên Hệ</a></li>
-                    <li><a href="news.jsp">Tin Tức</a></li>
-                    <li><a href="personal_info.jsp">Tài Khoản Của Tôi</a></li>
-                    <li><a href="shipping_method.jsp">Phương Thức Giao Hàng</a></li>
-                    <li><a href="payment_method.jsp">Phương Thức Thanh Toán</a></li>
-                    <li><a href="warranty_policy.jsp">Chính Sách Bảo Hành</a></li>
-                    <li><a href="privacy_policy.html">Chính Sách Bảo Mật</a></li>
-                    <li><a href="term_of_service.jsp">Điều Khoản Dịch Vụ</a></li>
-                </ul>
-            </nav>
-          </aside>
-        </div>
+          <jsp:include page="/WEB-INF/views/common/sidebar_category_page.jsp"/>
 
         <div class="content">
           <h2>CHÍNH SÁCH BẢO MẬT</h2>
@@ -54,7 +35,7 @@
           <h3>1. Mục đích và phạm vi thu thập thông tin khách hàng:</h3>
           <ul>
             <li>
-              – Để truy cập và sử dụng dịch vụ trên phukiencongnghe.com.vn quý
+              – Để truy cập và sử dụng dịch vụ trên ${contactShop.shopName} quý
               khách có thể được yêu cầu cung cấp cho chúng tôi một số thông tin
               cá nhân như: Họ tên, Mail, số điện thoại liên lạc, địa chỉ liên
               hệ.
@@ -63,7 +44,7 @@
           <h3>2. Phạm vi sử dụng thông tin:</h3>
           <ul>
             <li>
-              Phukiencongnghe.com.vn sử dụng dữ liệu mà khách hàng cung cấp để:
+                ${contactShop.shopName} sử dụng dữ liệu mà khách hàng cung cấp để:
             </li>
             <li>
               – Hỗ trợ khách hàng khi mua sản phẩm – Giải đáp mọi thắc mắc khách
@@ -85,8 +66,7 @@
               – Dữ liệu thông tin cá nhân của khách hàng sẽ được lưu trữ cho đến
               khi khách hàng có yêu cầu hủy bỏ hoặc tự khách hàng đăng nhập và
               thực hiện hủy bỏ. Còn lại trong mọi trường hợp thông tin cá nhân
-              khách hàng sẽ được bảo mật trên hệ thống máy chủ của Phụ Kiện Công
-              Nghệ.
+              khách hàng sẽ được bảo mật trên hệ thống máy chủ của ${contactShop.shopName}.
             </li>
             <li>
               – Trong trường hợp có yêu cầu của pháp luật: Shop có trách nhiệm
@@ -99,13 +79,12 @@
           </ul>
           <h3>4. Địa chỉ của đơn vị thu thập và quản lý thông tin cá nhân:</h3>
           <ul>
-            <li>– Phụ Kiện Công Nghệ</li>
-            <li>– Người đại diện: Nguyễn Trường Vũ</li>
-            <li>– Địa chỉ:Địa chỉ: Kios 8 giang, phường Linh Trung, Thủ Đức</li>
+            <li>– ${contactShop.shopName}</li>
+            <li>– Địa chỉ:Địa chỉ: ${contactShop.shopAddress}</li>
             <li>
               Đối với các thắc mắc về hoạt động thu thập, xử lý thông tin liên
               quan đến cá nhân người tiêu dùng, khách hàng có thể liên hệ:
-              0677xxxx
+                ${contactShop.hotline}
             </li>
           </ul>
           <h3>
@@ -114,9 +93,9 @@
           </h3>
           <ul>
             <li>
-              – Khách hàng có quyền yêu cầu Phụ Kiện Công Nghệ cập nhật, điều
+              – Khách hàng có quyền yêu cầu ${contactShop.shopName} cập nhật, điều
               chỉnh hoặc hủy thông tin cá nhân của mình bằng cách liên hệ trực
-              tiếp đến Ban quản trị hoặc thông qua địa chỉ pkcn@sp.love
+              tiếp đến Ban quản trị hoặc thông qua địa chỉ ${contactShop.email}
             </li>
           </ul>
           <h3>6. Cam kết bảo mật thông tin cá nhân khách hàng:</h3>
@@ -139,13 +118,13 @@
             </li>
             <li>
               – Trong trường hợp vì lý do bất kỳ mà thông tin khách hàng bị mất
-              hoặc rò rỉ ra ngoài <strong>Phụ kiện công nghệ</strong> có trách
+              hoặc rò rỉ ra ngoài <strong>${contactShop.shopName}</strong> có trách
               nhiệm thông báo vụ việc cho cơ quan chức năng điều tra xử lý kịp
               thời và thông báo cho khách hàng được biết.
             </li>
             <li>
               – Quý khách hàng chịu trách nhiệm hoàn toàn về tính pháp lý của
-              những thông tin khi cung cấp cho Phukiencongnghe.com.vn và nên đọc
+              những thông tin khi cung cấp cho ${contactShop.shopName} và nên đọc
               kỹ nội dung trang Chính Sách Bảo Mật này trước khi truy cập các
               nội dung khác trên website.
             </li>
@@ -156,5 +135,4 @@
     </main>
   <jsp:include page="/WEB-INF/views/common/footer.jsp" />
   </body>
-  <script src="../../../js/header.js"></script>
 </html>

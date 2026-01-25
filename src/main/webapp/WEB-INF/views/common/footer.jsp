@@ -16,23 +16,34 @@
                 </div>
                 <div class="footer-column second nav">
                     <ul>
-                        <li><a href="payment_method.jsp" class="text-hover"><i class="fa-solid fa-money-bill"></i> Phương thức thanh
+                        <li><a href="${pageContext.request.contextPath}/view-payment-method" class="text-hover"><i
+                                class="fa-solid fa-money-bill"></i>
+                            Phương thức thanh
                             toán</a>
                         </li>
-                        <li><a href="shipping_method.jsp" class="text-hover"><i class="fa-solid fa-truck"></i> Phương thức giao hàng</a>
+                        <li><a href="${pageContext.request.contextPath}/view-shipping-method" class="text-hover"><i
+                                class="fa-solid fa-truck"></i> Phương
+                            thức giao hàng</a>
                         </li>
-                        <li><a href="warranty_policy.jsp" class="text-hover"><i class="fa-solid fa-award"></i> Chính sách bảo hành</a>
+                        <li><a href="${pageContext.request.contextPath}/view-warranty-policy" class="text-hover"><i
+                                class="fa-solid fa-award"></i> Chính
+                            sách bảo hành</a>
                         </li>
-                        <li><a href="privacy_policy.jsp" class="text-hover"><i class="fa-solid fa-lock"></i> Chính sách bảo mật</a>
+                        <li><a href="${pageContext.request.contextPath}/view-privacy-policy" class="text-hover"><i
+                                class="fa-solid fa-lock"></i> Chính sách
+                            bảo mật</a>
                         </li>
-                        <li><a href="term_of_service.jsp" class="text-hover"><i class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a>
+                        <li><a href="${pageContext.request.contextPath}/view-term-service" class="text-hover"><i
+                                class="fa-solid fa-pen-nib"></i> Điều khoản dịch vụ</a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-column third social-media">
                     <ul>
-                        <li><a href="${contactShop.getUrlFb()}" class="text-hover"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
-                        <li><a href="${contactShop.getUrlIns()}" class="text-hover"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                        <li><a href="${contactShop.getUrlFb()}" class="text-hover"><i class="fa-brands fa-facebook"></i>
+                            Facebook</a></li>
+                        <li><a href="${contactShop.getUrlIns()}" class="text-hover"><i
+                                class="fa-brands fa-instagram"></i> Instagram</a></li>
                     </ul>
                 </div>
                 <div class="footer-column 4th logo">
