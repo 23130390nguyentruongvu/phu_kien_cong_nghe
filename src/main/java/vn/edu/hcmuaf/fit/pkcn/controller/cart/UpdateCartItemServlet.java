@@ -18,15 +18,16 @@ public class UpdateCartItemServlet extends HttpServlet {
     // update lại số lượng của 1 cart item
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int prodVarId = Integer.parseInt(request.getParameter("id"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        HttpSession session = request.getSession();
-        System.out.println("OK " + prodVarId);
         try {
+            int prodVarId = Integer.parseInt(request.getParameter("id"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            HttpSession session = request.getSession();
+            System.out.println("OK " + prodVarId);
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart == null) {
                 cart = new Cart((User) session.getAttribute("user"));
                 session.setAttribute("cart", cart);
+                response.sendRedirect(request.getContextPath() + "/view-cart");
                 return;
             }
             if (quantity == -1 || quantity == 1) {

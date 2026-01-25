@@ -32,7 +32,7 @@
                     <div class="title-shopping-cart"><h2>Giỏ hàng</h2></div>
                     <div class="info-flex">
                         <div class="info-items">
-                            <form class="items-form">
+                            <div class="items-form">
                                 <table class="items-table">
                                     <!--open header table-->
                                     <thead>
@@ -53,7 +53,7 @@
                                             <td class="icon-remove"
                                                 onclick="handleDelete(
                                                     ${cartItem.productVariantId},
-                                                    '${cartItem.nameDetail}',
+                                                        '${cartItem.nameDetail}',
                                                         '${pageContext.request.contextPath}/delete-cart-item'
                                                         )">
                                                 <i class="fa-regular fa-circle-xmark"></i></td>
@@ -78,7 +78,17 @@
                                                            class="btn-dec-item-quantity btn">
                                                             -
                                                         </a>
-                                                        <span class="num-quantity-item">${cartItem.quantity}</span>
+                                                        <span class="num-quantity-item">
+<%--                                                                ${cartItem.quantity}--%>
+                                                        <form method="post"
+                                                              action="${pageContext.request.contextPath}/update-cart-item">
+                                                            <input type="number" name="quantity"
+                                                                   value="${cartItem.quantity}"
+                                                                   style="width: 40px; height: 40px">
+                                                            <input type="hidden" name="id"
+                                                                   value="${cartItem.productVariantId}">
+                                                        </form>
+                                                        </span>
 
                                                         <a href="javascript:void(0)" id="quantityIncItemCart"
                                                            onclick="updateCartItem(${cartItem.productVariantId}, 1, '${pageContext.request.contextPath}/update-cart-item')"
@@ -99,7 +109,7 @@
                                     </tbody>
                                     <!--close body table-->
                                 </table>
-                            </form>
+                            </div>
                         </div>
                         <!--open bill-->
                         <div class="bill-products">
@@ -114,7 +124,8 @@
                             </table>
                             <div class="process-checkout">
                                 <div class="go-to-checkout">
-                                    <button id="btnGotoCheckout" class="submit-checkout" data-url="${pageContext.request.contextPath}/view-payment">
+                                    <button id="btnGotoCheckout" class="submit-checkout"
+                                            data-url="${pageContext.request.contextPath}/view-payment">
                                         TIẾN HÀNH THANH TOÁN
                                     </button>
                                 </div>
