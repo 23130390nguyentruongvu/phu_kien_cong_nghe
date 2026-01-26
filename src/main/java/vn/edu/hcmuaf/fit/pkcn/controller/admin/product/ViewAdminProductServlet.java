@@ -14,6 +14,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.category.CategoryService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,9 +37,9 @@ public class ViewAdminProductServlet extends HttpServlet {
                 new CategoryDao(JDBI.getJdbi())
         );
 
-        if (user == null)
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/login");
-        else {
+        } else {
             if (user.getRole() != 1) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Trang không tồn tại");
             } else {

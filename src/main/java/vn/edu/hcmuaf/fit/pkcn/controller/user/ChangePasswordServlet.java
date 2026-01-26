@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 import vn.edu.hcmuaf.fit.pkcn.utils.HashMD5;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class ChangePasswordServlet extends HttpServlet {
         UserService service = new UserService(JDBI.getJdbi());
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if(user == null){
-            response.sendRedirect(request.getContextPath()+"/login");
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
         String currentPassword = request.getParameter("currentPass");

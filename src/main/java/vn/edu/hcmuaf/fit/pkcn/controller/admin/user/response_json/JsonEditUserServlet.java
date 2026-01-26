@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonAddUser;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.edit.JsonUpdateUser;
+import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
 
 import java.io.BufferedReader;

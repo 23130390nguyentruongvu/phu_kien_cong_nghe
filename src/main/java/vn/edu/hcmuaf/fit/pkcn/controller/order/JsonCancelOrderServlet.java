@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductVariantService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class JsonCancelOrderServlet extends HttpServlet {
             //Lấy ra user id từ user session rồi check order có tồn tại và có thuộc về user đó hay không
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            if (user == null) {
+            if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
                 throw new Exception("Bạn chưa đăng nhập!");
             }
             int orderId = Integer.parseInt(request.getParameter("orderId"));

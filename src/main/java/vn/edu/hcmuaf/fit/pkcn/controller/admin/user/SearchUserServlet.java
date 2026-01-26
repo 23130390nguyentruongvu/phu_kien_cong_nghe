@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,13 +18,19 @@ public class SearchUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         String searchName = request.getParameter("searchName");
-        UserService  userService = new UserService(JDBI.getJdbi());
+        UserService userService = new UserService(JDBI.getJdbi());
         List<User> users;
-        if(searchName!=null &&  !searchName.isEmpty()){
+        if (searchName != null && !searchName.isEmpty()) {
             users = userService.getUserByName(searchName);
-        }else{
+        } else {
             users = userService.getAllUsers();
         }
         request.setAttribute("users", users);

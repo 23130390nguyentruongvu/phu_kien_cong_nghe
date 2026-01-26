@@ -202,7 +202,7 @@
             </div>
             <div class="show-more-section">
                 <form action="product-category" method="get">
-                    <button id="showMorePhoneProducts" name="id" value="${requestScope.CategoryIdVga}"
+                    <button id="showMorePhoneProducts" name="id" value="${requestScope.CategoryIdKeyboard}"
                             class="showMoreSection" type="submit">
                         Xem thêm
                     </button>

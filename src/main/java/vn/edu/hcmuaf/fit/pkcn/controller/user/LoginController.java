@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 
@@ -14,7 +15,8 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("user") != null) {
+        User user = (User) session.getAttribute("user");
+        if (user != null && !CheckUserHelper.checkUserLocked(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }

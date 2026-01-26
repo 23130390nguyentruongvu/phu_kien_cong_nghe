@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,9 +23,10 @@ public class ViewAdminUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null)
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/login");
-        else {
+            return;
+        } else {
             if (user.getRole() != 1) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Trang không tồn tại");
             } else {

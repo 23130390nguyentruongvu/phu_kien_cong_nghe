@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class PersonalController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null) {
+        if (user != null && !CheckUserHelper.checkUserLocked(user.getId())) {
             request.setAttribute("user", user);
             request.setAttribute("linkNav", 1);
             request.getRequestDispatcher("/WEB-INF/views/client/personal_info.jsp").forward(request, response);

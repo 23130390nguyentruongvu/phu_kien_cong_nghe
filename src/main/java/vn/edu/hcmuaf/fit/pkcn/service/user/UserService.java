@@ -118,4 +118,10 @@ public class UserService {
     public int updateAvatarAndFolderId(int userId, String url, String folderId) {
         return userDao.updateAvatarAndFolderId(userId, url, folderId);
     }
+    public boolean isUserLocked(int userId) {
+        return userDao.isUserLocked(userId);
+    }
+    public boolean isUserExist(int userId) {
+        return userDao.isUserExist(userId);
+    }
 }

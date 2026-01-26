@@ -15,11 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
-
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 
 import java.io.IOException;
-
 
 
 @WebServlet(name = "LockUnLockUser", value = "/lock-unlock-user")
@@ -29,19 +28,25 @@ public class LockUnLockServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         int id = Integer.parseInt(request.getParameter("id"));
         User userSession = (User) request.getSession().getAttribute("user");
+        if (userSession == null || CheckUserHelper.checkUserInValid(userSession.getId())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         UserService userService = new UserService(JDBI.getJdbi());
         User target = userService.getUserById(id);
-        if(target != null && userSession !=null){
-            if(id!=userSession.getId() && target.getRole() == 2){
-                if("lock".equals(action)) {
-                    userService.updateStatusSv(id,"locked");
-                }else if("unlock".equals(action)) {
-                    userService.updateStatusSv(id,"active");
+        if (target != null && userSession != null) {
+            if (id != userSession.getId() && target.getRole() == 2) {
+                if ("lock".equals(action)) {
+                    userService.updateStatusSv(id, "locked");
+                } else if ("unlock".equals(action)) {
+                    userService.updateStatusSv(id, "active");
                 }
+                request.setAttribute("user", userSession);
             }
         }
         response.sendRedirect(request.getContextPath() + "/view-user");
