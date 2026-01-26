@@ -85,6 +85,7 @@
                                                             <input type="number" name="quantity"
                                                                    value="${cartItem.quantity}"
                                                                    style="width: 40px; height: 40px">
+                                                            <input type="hidden" name="isOne" value="false">
                                                             <input type="hidden" name="id"
                                                                    value="${cartItem.productVariantId}">
                                                         </form>

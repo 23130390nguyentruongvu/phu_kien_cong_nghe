@@ -1,10 +1,11 @@
 
-.main-content{
+.main-content {
     display: flex;
     flex-direction: row;
     min-height: 100%;
     flex: 1;
 }
+
 .address-user-info {
     flex: 1;
     background-color: #fff;
@@ -26,7 +27,7 @@
     height: 35px;
     width: auto;
     padding: 0 15px;
-    background-color:#FFB300;
+    background-color: #FFB300;
     color: white;
     font-weight: normal;
     border-radius: 4px;
@@ -35,9 +36,10 @@
     justify-content: center;
     font-size: 14px;
     border: none;
-    box-shadow: rgba(0,0,0,0.4) 2px 2px 2px;
+    box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px;
 
 }
+
 .add-address:hover {
     background-color: #d14421;
     cursor: pointer;
@@ -90,6 +92,7 @@ table.address-content td {
     color: #555;
     margin-bottom: 2px;
 }
+
 .district-province {
     display: flex;
     flex-direction: row;
@@ -98,6 +101,7 @@ table.address-content td {
 .status {
     display: none;
 }
+
 table.address-content tr:first-child .status {
     display: inline-block;
     margin-top: 10px;
@@ -155,7 +159,49 @@ table.address-content tr:first-child .status {
     text-align: center;
     border-radius: 3px;
 }
+
 .set-status:hover {
     background-color: #f0f0f0;
     cursor: pointer;
+}
+
+/* Lớp phủ toàn màn hình */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Màu đen mờ */
+    z-index: 9999; /* Z-index cao theo yêu cầu */
+    display: none; /* Mặc định ẩn */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Hiệu ứng xoay loading (tùy chọn để đẹp hơn) */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.product-total {
+    padding-right: 5px;
 }

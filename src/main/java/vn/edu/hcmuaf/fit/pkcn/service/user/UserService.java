@@ -115,4 +115,7 @@ public class UserService {
     public int getQuantityUser() {
         return userDao.getQuantityUser();
     }
+    public int updateAvatarAndFolderId(int userId, String url, String folderId) {
+        return userDao.updateAvatarAndFolderId(userId, url, folderId);
+    }
 }

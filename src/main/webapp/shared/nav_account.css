@@ -70,3 +70,20 @@ a{
     text-decoration: none;
     color: rgb(4, 107, 210);
 }
+
+.avatar-label {
+    display: block;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+}
+
+.avatar-edit-overlay {
+    /* ... các style cũ của bạn ... */
+    pointer-events: none; /* Rất quan trọng: để cú click xuyên qua lớp phủ vào label */
+}
+
+.avatar-edit-overlay i {
+    pointer-events: none; /* Chắc chắn icon không chặn click */
+}

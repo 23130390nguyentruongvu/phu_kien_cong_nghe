@@ -131,7 +131,7 @@
     background-color: #D8FCE8;
 }
 
-.status-order.processing {
+.status-order.pending {
     color: blue;
     background-color: #DBEAFF;
 }

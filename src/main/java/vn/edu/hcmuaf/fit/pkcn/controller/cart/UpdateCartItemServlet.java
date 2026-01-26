@@ -19,6 +19,7 @@ public class UpdateCartItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            boolean isOne = Boolean.parseBoolean(request.getParameter("isOne"));
             int prodVarId = Integer.parseInt(request.getParameter("id"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             HttpSession session = request.getSession();
@@ -30,7 +31,7 @@ public class UpdateCartItemServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/view-cart");
                 return;
             }
-            if (quantity == -1 || quantity == 1) {
+            if (isOne) {
                 cart.plusOrMinusOneQuantity(prodVarId, quantity == 1);
             } else {
                 cart.updateCartItem(prodVarId, quantity);
