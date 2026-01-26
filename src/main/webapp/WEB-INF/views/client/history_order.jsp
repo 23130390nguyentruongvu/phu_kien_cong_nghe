@@ -87,4 +87,5 @@
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/order_history.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/sidebar_account_change_avatar.js"></script>
 </html>

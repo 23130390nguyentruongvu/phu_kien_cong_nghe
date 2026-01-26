@@ -53,7 +53,10 @@ public class ViewProductsByCategory extends HttpServlet {
                 int id = Integer.parseInt(paramId);
                 categoryName = categoryService.getNameCategoryById(id);
                 boolean isParentId = categoryService.isCategoryParent(id);
+
                 productsByParentCate = productService.getProductByCategory(id, isParentId, orderBy);
+                for (ProductShowAsItem prod : productsByParentCate)
+                    prod.setCategoryId(id);
             }
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();

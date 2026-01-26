@@ -53,15 +53,15 @@
                                     <a
                                             href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
                                     >
-                                    <img src="${newProduct.imageMain}" loading="lazy"
-                                         decoding="async">
+                                        <img src="${newProduct.imageMain}" loading="lazy"
+                                             decoding="async">
                                     </a>
                                 </div>
                                 <div class="title-product-item">
                                     <a style="text-decoration: none; color: black"
-                                            href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
+                                       href="${pageContext.request.contextPath}/product-detail?id=${newProduct.productId}"
                                     >
-                                        ${newProduct.name}
+                                            ${newProduct.name}
                                     </a>
                                 </div>
                                 <div class="price-product-item">${newProduct.minPriceByFormat}</div>
@@ -93,15 +93,16 @@
                                         <a
                                                 href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
                                         >
-                                        <img src="${featuredProduct.imageMain}" loading="lazy"
-                                             decoding="async">
+                                            <img src="${featuredProduct.imageMain}" loading="lazy"
+                                                 decoding="async">
                                         </a>
                                     </div>
                                     <div class="title-product-item">
                                         <a style="text-decoration: none; color: black"
-                                                href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
-                                        >${featuredProduct.name}
-                                        </>
+                                           href="${pageContext.request.contextPath}/product-detail?id=${featuredProduct.productId}"
+                                        >
+                                                ${featuredProduct.name}
+                                        </a>
                                     </div>
                                     <div class="price-product-item">${featuredProduct.minPriceByFormat}</div>
                                 </div>
@@ -131,8 +132,8 @@
                                     <a
                                             href="${pageContext.request.contextPath}/product-detail?id=${vga.productId}"
                                     >
-                                    <img src="${vga.imageMain}" loading="lazy"
-                                         decoding="async">
+                                        <img src="${vga.imageMain}" loading="lazy"
+                                             decoding="async">
                                     </a>
                                 </div>
                                 <div class="title-product-item">
@@ -176,8 +177,8 @@
                                     <a
                                             href="${pageContext.request.contextPath}/product-detail?id=${keyboard.productId}"
                                     >
-                                    <img src="${keyboard.imageMain}" loading="lazy"
-                                         decoding="async">
+                                        <img src="${keyboard.imageMain}" loading="lazy"
+                                             decoding="async">
                                     </a>
                                 </div>
                                 <div class="title-product-item">
@@ -225,8 +226,9 @@
                             </div>
                             <div class="read-more-article">
                                 <em>
-                                <a href="${pageContext.request.contextPath}/news-detail?id=${article.id}">Đọc thêm</a>
-                            </em>
+                                    <a href="${pageContext.request.contextPath}/news-detail?id=${article.id}">Đọc
+                                        thêm</a>
+                                </em>
                             </div>
                             <div class="wrap-footer-article">
                                 <hr>

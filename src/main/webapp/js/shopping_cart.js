@@ -15,7 +15,13 @@ const updateCartItem = (id, change, path) => {
     qtyInput.name = 'quantity';
     qtyInput.value = change;
 
+    const isOne = document.createElement('input');
+    isOne.type = 'hidden';
+    isOne.name = 'isOne';
+    isOne.value = 'true';
+
     form.appendChild(idInput);
+    form.appendChild(isOne);
     form.appendChild(qtyInput);
     document.body.appendChild(form);
     form.submit();
@@ -45,6 +51,7 @@ function handleDelete(id, name, path) {
         removeCartItem(id, result, path)
     }
 }
+
 // su kien nhan thanh toan
 document.addEventListener("DOMContentLoaded", function () {
     const btnCheckOut = document.getElementById('btnGotoCheckout');

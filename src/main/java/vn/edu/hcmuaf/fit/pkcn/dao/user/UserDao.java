@@ -276,4 +276,18 @@ public class UserDao {
                 """;
         return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Integer.class).findOne().orElse(0));
     }
+
+    public int updateAvatarAndFolderId(int userId, String url, String folderId) {
+        String sql = """
+                UPDATE users
+                SET avatar = :url, folder_id = :folderId
+                WHERE id = :userId
+                """;
+        return jdbi.withHandle(handle -> handle.createUpdate(sql)
+                .bind("userId", userId)
+                .bind("url", url)
+                .bind("folderId", folderId)
+                .execute()
+        );
+    }
 }

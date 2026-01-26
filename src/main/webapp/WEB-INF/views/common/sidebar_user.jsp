@@ -3,8 +3,22 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <div class="nav-account">
     <div class="wrap-base-info-user">
-        <span class="img-user-account"><img src="${empty sessionScope.user?'':sessionScope.user.avatar}" loading="lazy"></span>
-        <span class="user-name-account"><strong>${empty sessionScope.user?'':sessionScope.user.fullName}</strong></span>
+        <div class="avatar-upload">
+            <label for="avatarInput" class="avatar-label">
+        <span class="img-user-account">
+            <img id="avatarPreview" src="${sessionScope.user.avatar}" loading="lazy">
+        </span>
+                <div class="avatar-edit-overlay">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </label>
+
+            <input type="file" id="avatarInput" name="avatar" accept="image/*"
+                   style="display: none;"
+                   data-id="${sessionScope.user.id}"
+                   data-userName="${sessionScope.user.userName}">
+        </div>
+        <span class="user-name-account"><strong>${empty sessionScope.user ? '' : sessionScope.user.fullName}</strong></span>
     </div>
     <div class="wrap-nav-link">
         <ul>
@@ -28,7 +42,7 @@
             </c:if>
             <li class="nav-link-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                <a href="${pageContext.request.contextPath}/logout" onclick="return confirm("Bạn có thực sự muốn đăng xuất")">Đăng xuất</a>
+                <a href="${pageContext.request.contextPath}/logout" onclick="">Đăng xuất</a>
             </li>
         </ul>
     </div>

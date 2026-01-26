@@ -92,6 +92,9 @@
 
 </main>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
 
-</body>  <script src="../../../js/header.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/sidebar_account_change_avatar.js"></script>
 </html>
