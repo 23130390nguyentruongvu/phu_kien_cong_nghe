@@ -20,6 +20,7 @@ import vn.edu.hcmuaf.fit.pkcn.service.slidershow.SliderShowService;
 import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/")
@@ -30,13 +31,25 @@ public class HomeViewServlet extends HttpServlet {
         ArticleService aService = new ArticleService(
                 new ArticleDao(JDBI.getJdbi())
         );
-        List<ArticleShowAsItem> articleItems = aService.getArticleItems(4);
+        List<ArticleShowAsItem> articleItems;
+        try {
+            articleItems = aService.getArticleItems(4);
+        } catch (Exception e) {
+            e.printStackTrace();
+            articleItems = new ArrayList<>();
+        }
 
         //Lay du lieu slidershows
         SliderShowService ssService = new SliderShowService(
                 new SliderShowDao(JDBI.getJdbi())
         );
-        List<SliderShow> sliderShows = ssService.getSliderShowByStatus(1, true);
+        List<SliderShow> sliderShows;
+        try {
+            sliderShows = ssService.getSliderShowByStatus(1, true);
+        } catch (Exception e) {
+            sliderShows = new ArrayList<>();
+        }
+
 
         //Lay du lieu cho cac section san pham
         ProductService ps = new ProductService(
@@ -53,10 +66,37 @@ public class HomeViewServlet extends HttpServlet {
         int limit = 12;
         int categoryIdVGA = 12;
         int categoryIdKeyboard = 16;
-        List<ProductShowAsItem> newProducts = ps.getNewProducts(limit);
-        List<ProductShowAsItem> featuredProducts = ps.getFeaturedProducts(limit, 4);
-        List<ProductShowAsItem> vgaProducts = ps.getProductsByChildCategory(6, categoryIdVGA);
+        List<ProductShowAsItem> newProducts;
+        try {
+            newProducts = ps.getNewProducts(limit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            newProducts = new ArrayList<>();
+        }
+
+        List<ProductShowAsItem> featuredProducts;
+        try {
+            featuredProducts = ps.getFeaturedProducts(limit, 4);
+        } catch (Exception e) {
+            e.printStackTrace();
+            featuredProducts = new ArrayList<>();
+        }
+
+        List<ProductShowAsItem> vgaProducts;
+        try {
+            vgaProducts = ps.getProductsByChildCategory(6, categoryIdVGA);
+        } catch (Exception e) {
+            e.printStackTrace();
+            vgaProducts = new ArrayList<>();
+        }
+
         List<ProductShowAsItem> accessoriesKeyboard = ps.getProductsByChildCategory(6, categoryIdKeyboard);
+        try {
+            accessoriesKeyboard = ps.getProductsByChildCategory(6, categoryIdKeyboard);
+        } catch (Exception e) {
+            e.printStackTrace();
+            accessoriesKeyboard = new ArrayList<>();
+        }
 
         //thiet lap cac du lieu vao request
         //sections
@@ -71,8 +111,18 @@ public class HomeViewServlet extends HttpServlet {
         //articleItems
         request.setAttribute("ArticleItems", articleItems);
 
-        request.setAttribute("NameVGA", cs.getNameCategoryById(categoryIdVGA));
-        request.setAttribute("KeyboardName", cs.getNameCategoryById(categoryIdKeyboard));
+        try {
+            request.setAttribute("NameVGA", cs.getNameCategoryById(categoryIdVGA));
+        } catch (Exception e) {
+            request.setAttribute("NameVGA", "Không thấy name vga");
+        }
+
+        try {
+            request.setAttribute("KeyboardName", cs.getNameCategoryById(categoryIdKeyboard));
+        } catch (Exception e) {
+            request.setAttribute("KeyboardName", "Không thấy name keyboard");
+        }
+
         request.setAttribute("CategoryIdVga", categoryIdVGA);
         request.setAttribute("CategoryIdKeyboard", categoryIdKeyboard);
         // thiet lap active cho header

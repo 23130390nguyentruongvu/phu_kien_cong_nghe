@@ -9,6 +9,7 @@ import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,7 @@ public class OrderHistoryServlet extends HttpServlet {
         );
         String status = request.getParameter("filter-by");
         try {
-            if (user == null)
+            if (user == null || CheckUserHelper.checkUserInValid(user.getId()))
                 response.sendRedirect(request.getContextPath() + "/login");
             else {
                 if (status != null)

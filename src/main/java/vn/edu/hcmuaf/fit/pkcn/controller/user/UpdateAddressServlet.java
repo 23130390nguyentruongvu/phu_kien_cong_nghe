@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 
@@ -31,13 +33,19 @@ public class UpdateAddressServlet extends HttpServlet {
         boolean suc = service.updateAddress(address);
         if (suc) {
             response.sendRedirect("address-user");
-        }else{
+        } else {
             request.setAttribute("error", "Cập nhật thất bại!");
             request.setAttribute("address", address);
             request.getRequestDispatcher("WEB-INF/views/client/edit_address.jsp").forward(request, response);
         }
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         String idRaw = request.getParameter("id");
         if (idRaw == null) {
             response.sendRedirect(request.getContextPath() + "/address-user");

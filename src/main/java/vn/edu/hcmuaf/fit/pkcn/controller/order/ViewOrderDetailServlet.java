@@ -4,11 +4,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
-import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 
@@ -24,7 +23,7 @@ public class ViewOrderDetailServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            if(user == null) {
+            if(user == null || CheckUserHelper.checkUserInValid(user.getId())) {
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }

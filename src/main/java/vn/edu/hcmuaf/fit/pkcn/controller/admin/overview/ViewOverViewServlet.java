@@ -4,18 +4,13 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
-import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.service.product.ProductVariantService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
-import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
 
 import java.io.IOException;
@@ -28,7 +23,7 @@ public class ViewOverViewServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            if (user == null) {
+            if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             } else {

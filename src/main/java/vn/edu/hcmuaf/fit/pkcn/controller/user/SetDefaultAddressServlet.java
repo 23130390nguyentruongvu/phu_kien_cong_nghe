@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ public class SetDefaultAddressServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null) {
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

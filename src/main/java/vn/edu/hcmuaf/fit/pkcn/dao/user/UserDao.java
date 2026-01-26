@@ -290,4 +290,32 @@ public class UserDao {
                 .execute()
         );
     }
+
+    public boolean isUserLocked(int userId) {
+        String sql = """
+                SELECT status
+                FROM users
+                WHERE id = :userId
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("userId", userId)
+                .mapTo(String.class)
+                .findOne()
+                .orElse("")
+        ).equalsIgnoreCase("locked");
+    }
+
+    public boolean isUserExist(int userId) {
+        String sql = """
+                SELECT COUNT(*)
+                FROM users
+                WHERE id = :userId
+                """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("userId", userId)
+                .mapTo(Integer.class)
+                .findOne()
+                .orElse(-1)
+        ) > 0;
+    }
 }

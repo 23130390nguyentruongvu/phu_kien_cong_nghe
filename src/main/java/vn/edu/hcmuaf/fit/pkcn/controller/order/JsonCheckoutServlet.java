@@ -14,6 +14,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,6 +30,10 @@ public class JsonCheckoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Cart cart = (Cart) session.getAttribute("cart");
+        if (user == null || CheckUserHelper.checkUserInValid(user.getId())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         //params
         String addressId1 = request.getParameter("selectedAddressId");
         String note = request.getParameter("note");

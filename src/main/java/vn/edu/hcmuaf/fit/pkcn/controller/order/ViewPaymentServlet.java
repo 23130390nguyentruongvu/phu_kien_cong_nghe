@@ -8,15 +8,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.order.PaymentMethod;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.service.order.PaymentMethodService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
-import vn.edu.hcmuaf.fit.pkcn.service.product.ProductVariantService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +34,7 @@ public class ViewPaymentServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/view-cart");
             return;
         }
-        if(user==null){
+        if(user==null || CheckUserHelper.checkUserInValid(user.getId())){
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
