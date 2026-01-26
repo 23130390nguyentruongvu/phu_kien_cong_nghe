@@ -19,7 +19,7 @@ public class PersonalController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null && !CheckUserHelper.checkUserLocked(user.getId())) {
+        if (user != null && !CheckUserHelper.checkUserInValid(user.getId())) {
             request.setAttribute("user", user);
             request.setAttribute("linkNav", 1);
             request.getRequestDispatcher("/WEB-INF/views/client/personal_info.jsp").forward(request, response);
