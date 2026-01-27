@@ -149,7 +149,10 @@ export const setEvent = () => {
 
 
 export const setEventConfirm = (prodId) => {
-    document.getElementById("submit-update-product")
+    const btnSubmit = document.getElementById("submit-update-product");
+    const newBtnSubmit = btnSubmit.cloneNode(true);
+    btnSubmit.parentNode.replaceChild(newBtnSubmit, btnSubmit);
+    newBtnSubmit
         .addEventListener('click', async (e) => {
                 e.preventDefault()
 

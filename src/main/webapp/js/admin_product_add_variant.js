@@ -62,11 +62,14 @@ const validateVariantForm = (form) => {
 
 const processBtnSubmit = (prodId) => {
     const form = document.getElementById('variantForm');
-    const submit = document.getElementById('submitAddProdVar')
     const closePopup = document.getElementById('closeAddProdVar')
+    let submit = document.getElementById('submitAddProdVar')
+    const newSubmit = submit.cloneNode(true);
+    submit.parentNode.replaceChild(newSubmit, submit);
+    submit = newSubmit;
 
-    const buttonSubmit = document.getElementById('submitAddProdVar')
-    buttonSubmit.addEventListener('click', async (ev) => {
+    // const buttonSubmit = document.getElementById('submitAddProdVar')
+    submit.addEventListener('click', async (ev) => {
         ev.preventDefault();
         try {
             if (!validateVariantForm(form)) return;

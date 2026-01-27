@@ -34,6 +34,7 @@ public class SearchUserServlet extends HttpServlet {
             users = userService.getAllUsers();
         }
         request.setAttribute("users", users);
+        request.setAttribute("navLink", 2);
         request.getRequestDispatcher("/WEB-INF/views/admin/admin_user.jsp").forward(request, response);
     }
 }
