@@ -80,7 +80,7 @@ public class UserDao {
 
     // tim kiem theo ten user
     public List<User> getUserByName(String fullName) {
-        String sql = "SELECT id, avatar, full_name , user_name , status FROM users WHERE full_name LIKE :fullName";
+        String sql = "SELECT * FROM users WHERE full_name LIKE :fullName";
         return jdbi.withHandle(handle -> {
             List<User> listUser = new ArrayList<>();
             Iterator<User> Iter = handle.createQuery(sql)

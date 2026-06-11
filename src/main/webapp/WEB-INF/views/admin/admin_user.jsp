@@ -48,9 +48,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="user" items="${users}" varStatus="loop">
+                    <c:forEach var="user" items="${requestScope.users}" varStatus="loop">
                         <tr>
-                            <td>${user.role == 2?'Customer':"Admin"}</td>
+                            <td>${user.role == 2?'Customer':'Admin'}</td>
                             <td>${user.id}</td>
                             <td>
                                 <img class="avatar-img"

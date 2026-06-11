@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const skuCurrent = document.querySelector('.skuCurrent')
 
             currentPrice.innerText = price
-            skuCurrent.innerText = sku
+            skuCurrent.innerText = 'SKU: '+sku
 
             const imageUrl = this.dataset.image;
 

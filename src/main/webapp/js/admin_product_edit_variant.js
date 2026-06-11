@@ -49,14 +49,26 @@ const validateVariantForm = (form) => {
 };
 
 export const setupEvent = (varId, prodId) => {
-    const close = document.getElementById('closeEditProdVar')
-    const submit = document.getElementById('submitEditProdVar')
+    let close = document.getElementById('closeEditProdVar');
+    const newClose = close.cloneNode(true);
+    close.parentNode.replaceChild(newClose, close);
+    close = newClose;
+
+    let submit = document.getElementById('submitEditProdVar')
+    const newSubmit = submit.cloneNode(true);
+    submit.parentNode.replaceChild(newSubmit, submit);
+    submit = newSubmit;
+
     //Close
     close.addEventListener('click', () => {
         document.getElementById('popup-edit-variant').style.display = 'none';
     })
+    let imgInput = document.querySelector('input[name="editVariantImage"]');
+    const newImgInput = imgInput.cloneNode(true);
+    imgInput.parentNode.replaceChild(newImgInput, imgInput);
+    imgInput = newImgInput;
 
-    document.querySelector('input[name="editVariantImage"]').addEventListener('change', (ev) => {
+    imgInput.addEventListener('change', (ev) => {
         const preview = document.getElementById('editVariantPreview');
         const inputFile = ev.target; // Lấy chính input đang chọn file
         preview.innerHTML = '';

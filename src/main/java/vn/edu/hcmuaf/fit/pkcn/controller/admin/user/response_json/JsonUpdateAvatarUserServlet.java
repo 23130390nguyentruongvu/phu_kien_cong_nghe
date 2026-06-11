@@ -35,7 +35,10 @@ public class JsonUpdateAvatarUserServlet extends HttpServlet {
             map.put("message", success ? "Cập nhật ảnh thành công" : "Cập nhật ảnh thất bại");
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            if (user != null) user.setAvatar(success ? newImage : user.getAvatar());
+            if (user != null) {
+                user.setAvatar(success ? newImage : user.getAvatar());
+                session.setAttribute("user", user);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             map.put("success", false);

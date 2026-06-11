@@ -16,9 +16,12 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null && !CheckUserHelper.checkUserLocked(user.getId())) {
+        if (user != null && !CheckUserHelper.checkUserInValid(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/");
             return;
+        }
+        if (user != null && CheckUserHelper.checkUserInValid(user.getId())) {
+            session.setAttribute("user", null);
         }
         request.getRequestDispatcher("/WEB-INF/views/client/login.jsp").forward(request, response);
     }
