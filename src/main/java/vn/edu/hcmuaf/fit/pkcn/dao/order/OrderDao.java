@@ -8,10 +8,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderDao {
     private Jdbi jdbi;
@@ -25,9 +22,10 @@ public class OrderDao {
         String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
-                "WHERE o.user_id = :userId AND " + filter;
+                "WHERE o.user_id = :userId AND " + filter + " " +
+                "ORDER BY o.order_date DESC";
         return jdbi.withHandle(handle -> {
-            HashMap<Integer, OrderShowAsItem> res = new HashMap<>();
+            LinkedHashMap<Integer, OrderShowAsItem> res = new LinkedHashMap<>();
             Iterator<OrderShowAsItem> iter = handle.createQuery(sql)
                     .bind("userId", userId)
                     .bind("status", status)
