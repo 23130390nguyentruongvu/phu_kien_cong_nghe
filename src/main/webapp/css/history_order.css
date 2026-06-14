@@ -13,6 +13,49 @@
 
 }
 
+.status-order {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.status-description {
+    font-size: 13px;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+/* pending */
+.status-description.pending {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+/* shipping */
+.status-description.shipping {
+    color: #004085;
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+}
+
+/* completed */
+.status-description.completed {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+/* cancel */
+.status-description.cancel {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
 .status-order em.completed {
     color: green;
 }
@@ -35,6 +78,7 @@
 }
 
 .wrap-content-order {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin: 40px 80px 40px 40px;
@@ -74,6 +118,7 @@
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+    min-height: 40px;
 }
 
 .address-shipping em {
@@ -170,4 +215,77 @@
 }
 .product-total{
     padding-right: 5px;
+}
+
+/* signing */
+.status-description.pending_signature {
+    color: #6b21a8;
+    background-color: #f3e8ff;
+    border: 1px solid #e9d5ff;
+}
+
+.status-order em.pending_signature {
+    color: #7c3aed;
+}
+
+.btn-sign-order {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background: #ffffff;
+    color: #7c3aed;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0;
+    border: 2.5px solid #7c3aed;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 12px rgba(124, 58, 237, 0.2);
+    z-index: 10;
+    overflow: hidden;
+}
+
+.btn-sign-order i {
+    font-size: 20px;
+    color: #7c3aed;
+    transition: transform 0.3s ease;
+}
+
+.btn-sign-order .btn-sign-text {
+    display: none;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.btn-sign-order:hover {
+    width: auto;
+    height: auto;
+    padding: 10px 18px 10px 14px;
+    border-radius: 24px;
+    gap: 7px;
+    background: #7c3aed;
+    color: #fff;
+    border-color: #7c3aed;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+    transform: translateY(-3px);
+}
+
+.btn-sign-order:hover i {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.btn-sign-order:hover .btn-sign-text {
+    display: inline;
+}
+
+.btn-sign-order:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
 }

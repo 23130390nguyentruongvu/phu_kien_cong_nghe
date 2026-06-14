@@ -54,9 +54,16 @@
                 <c:forEach var="order" items="${requestScope.orders}">
                     <div class="wrap-content-order" data-id="${order.orderId}">
                         <div class="header-order">
+                        <c:if test="${order.status == 'pending_signature'}">
+                            <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
+                                <i class="fa-solid fa-file-signature"></i>
+                                <span class="btn-sign-text">Ký đơn hàng</span>
+                            </button>
+                        </c:if>
                         <span class="status-order"><strong>Trạng thái:
-                            <em class="${order.status}">${order.status}</em>
+                            <em class="${order.status}">${order.statusDisplay}</em>
                         </strong>
+                            <span class="status-description ${order.status}">${order.statusDisplay}</span>
                         </span>
                             <span class="address-shipping"><em><i
                                     class="fa-regular fa-truck"></i> ${order.address}</em></span>

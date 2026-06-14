@@ -30,11 +30,12 @@ public class OrderHistoryServlet extends HttpServlet {
             if (user == null || CheckUserHelper.checkUserInValid(user.getId()))
                 response.sendRedirect(request.getContextPath() + "/login");
             else {
-                if (status != null && !status.isEmpty()) {
+                 if (status != null && !status.isEmpty()) {
                         OrderStatus.fromCode(status);
                 } else if (status != null && status.isEmpty()) {
                     status = null;
                 }
+
                 List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId(), status);
                 request.setAttribute("orders", res);
                 request.setAttribute("filterBy", status);

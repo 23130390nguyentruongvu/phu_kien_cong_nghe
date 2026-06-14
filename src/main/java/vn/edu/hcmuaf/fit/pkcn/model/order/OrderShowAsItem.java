@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.model.order;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariantWrapOrder;
 import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,15 @@ public class OrderShowAsItem {
 
     public void setOrderDetails(List<ProductVariantWrapOrder> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public String getStatusDisplay() {
+        if (status == null) return "";
+        try {
+            return OrderStatus.fromCode(status).getDisplayName();
+        } catch (IllegalArgumentException e) {
+            return status;
+        }
     }
 
     public String getPriceFormat() {

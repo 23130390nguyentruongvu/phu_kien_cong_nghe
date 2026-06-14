@@ -25,6 +25,9 @@
             <li class="item-nav-link-admin ${requestScope.navLink == 3?'selected':''}">
                 <i class="fa-solid fa-box"></i> <a href="${pageContext.request.contextPath}/product-manager">Quản lí sản phẩm</a>
             </li>
+            <li class="item-nav-link-admin ${requestScope.navLink == 4?'selected':''}">
+                <i class="fa-solid fa-truck"></i> <a href="${pageContext.request.contextPath}/admin-order">Quản lí đơn hàng</a>
+            </li>
             <li class="item-nav-link-admin">
                 <i class="fa-solid fa-house"></i> <a href="${pageContext.request.contextPath}/">Quay lại trang chủ</a>
             </li>

@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.pkcn.dao.order;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
@@ -169,6 +170,26 @@ public class OrderDao {
                 WHERE status_order = 'completed'
                 """;
         return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Double.class).findOne().orElse(0.0));
+    }
+
+    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key) {
+        String sql = """
+            SELECT o.id as order_id, u.id as user_id, o.total_must_pay,
+                   o.order_date, o.status_order, o.delivery_date,
+                   ao.receiver_name, ao.phone_number, ao.address_detail
+            FROM orders o
+            JOIN users u ON u.id = o.user_id
+            JOIN address_order ao ON ao.id = o.address_order_id
+            WHERE (:key IS NULL OR :key = '' OR o.id LIKE :keyPattern OR ao.receiver_name LIKE :keyPattern OR u.full_name LIKE :keyPattern)
+            ORDER BY o.order_date DESC
+            """;
+        return jdbi.withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("key", key)
+                        .bind("keyPattern", "%" + (key != null ? key : "") + "%")
+                        .mapToBean(AdminOrderShowAsItem.class)
+                        .list()
+        );
     }
 
     public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {

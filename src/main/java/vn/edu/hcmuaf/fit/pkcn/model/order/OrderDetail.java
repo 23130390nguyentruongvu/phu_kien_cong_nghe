@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.model.order;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import vn.edu.hcmuaf.fit.pkcn.utils.DateFormatUtils;
 import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -147,5 +148,14 @@ public class OrderDetail {
 
     public boolean getIsStatusPending() {
         return statusOrder.trim().equalsIgnoreCase("pending");
+    }
+
+    public String getStatusDisplay() {
+        if (statusOrder == null) return "";
+        try {
+            return OrderStatus.fromCode(statusOrder).getDisplayName();
+        } catch (IllegalArgumentException e) {
+            return statusOrder;
+        }
     }
 }
