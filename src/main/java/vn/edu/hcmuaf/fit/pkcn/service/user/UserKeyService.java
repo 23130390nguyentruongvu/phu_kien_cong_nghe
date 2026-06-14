@@ -18,4 +18,11 @@ public class UserKeyService {
             return false;
         return userKeyDao.addUserKey(userKeyDTO);
     }
+
+    public boolean revokeUserKeyById(Integer userId, Integer id) {
+        if(!userDao.isUserExist(userId))
+            return false;
+
+        return userKeyDao.revokedUserKeyById(userId, id);
+    }
 }
