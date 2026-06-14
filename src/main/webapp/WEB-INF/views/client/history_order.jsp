@@ -36,6 +36,7 @@
                             <option value="completed" ${requestScope.filterBy == 'completed' ? 'selected' : ''}>Đã giao</option>
                             <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
                             <option value="shipping" ${requestScope.filterBy == 'shipping' ? 'selected' : ''}>Đang giao hàng</option>
+                            <option value="pending_signature" ${requestScope.filterBy == 'pending_signature' ? 'selected' : ''}>Chờ ký số</option>
                             <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
                     </form>
@@ -49,8 +50,14 @@
                 <c:forEach var="order" items="${requestScope.orders}">
                     <div class="wrap-content-order" data-id="${order.orderId}">
                         <div class="header-order">
+                        <c:if test="${order.status == 'pending_signature'}">
+                            <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
+                                <i class="fa-solid fa-file-signature"></i>
+                                <span class="btn-sign-text">Ký đơn hàng</span>
+                            </button>
+                        </c:if>
                         <span class="status-order"><strong>Trạng thái:
-                            <em class="${order.status}">${order.status}</em>
+                            <em class="${order.status}">${order.statusDisplay}</em>
                         </strong>
                             <span class="status-description ${order.status}">${order.statusDisplay}</span>
                         </span>

@@ -32,7 +32,7 @@
                         <p><strong>Ngày giao:</strong> ${requestScope.orderDetail.deliveryDateFormat}</p>
                     </div>
                     <div class="order-status">
-                        <span>${requestScope.orderDetail.statusOrder}</span>
+                        <span>${requestScope.orderDetail.statusDisplay}</span>
                     </div>
                 </div>
 

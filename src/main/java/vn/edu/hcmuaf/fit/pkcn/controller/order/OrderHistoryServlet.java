@@ -32,6 +32,7 @@ public class OrderHistoryServlet extends HttpServlet {
                 if (status != null)
                     if (status.isEmpty() || (
                             !status.equalsIgnoreCase("pending")
+                                    && !status.equalsIgnoreCase("pending_signature")
                                     && !status.equalsIgnoreCase("completed")
                                     && !status.equalsIgnoreCase("shipping")
                                     && !status.equalsIgnoreCase("cancel"))
