@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
+import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,14 +30,11 @@ public class OrderHistoryServlet extends HttpServlet {
             if (user == null || CheckUserHelper.checkUserInValid(user.getId()))
                 response.sendRedirect(request.getContextPath() + "/login");
             else {
-                if (status != null)
-                    if (status.isEmpty() || (
-                            !status.equalsIgnoreCase("pending")
-                                    && !status.equalsIgnoreCase("completed")
-                                    && !status.equalsIgnoreCase("shipping")
-                                    && !status.equalsIgnoreCase("cancel"))
-                    ) status = null;
-
+                if (status != null && !status.isEmpty()) {
+                        OrderStatus.fromCode(status);
+                } else if (status != null && status.isEmpty()) {
+                    status = null;
+                }
                 List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId(), status);
                 request.setAttribute("orders", res);
                 request.setAttribute("filterBy", status);

@@ -39,10 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 const result = await response.json()
-                alert(result.message)
-                if (result.success) {
-                    window.location.href = contextPath + '/'
+                hideLoading();
+                if(result.success){
+                    alert(result.message)
+                    if(confirm("Bạn có muốn ký đơn hàng?")){
+                        window.location.href = contextPath + '/order-history'
+                    }else{
+                        window.location.href = contextPath + '/'
+                    }
+                }else{
+                    alert(result.message)
                 }
+
             } catch (e) {
                 alert(e)
             } finally {
