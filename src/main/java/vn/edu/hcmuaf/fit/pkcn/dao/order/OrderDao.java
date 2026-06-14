@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.util.*;
 
@@ -66,12 +67,13 @@ public class OrderDao {
 
     public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
         String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
-                "VALUES (:userId, :addressOrderId, :total, 'pending', :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
+                "VALUES (:userId, :addressOrderId, :total, :status, :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
 
         return handle.createUpdate(sql)
                 .bind("userId", userId)
                 .bind("addressOrderId", addressOrderId)
                 .bind("total", total)
+                .bind("status", OrderStatus.PENDING_SIGNATURE.getCode())
                 .bind("shipFee", shipFee)
                 .bind("paymentMethodId", paymentMethodId)
                 .bind("note", note)

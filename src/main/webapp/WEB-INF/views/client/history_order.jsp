@@ -33,10 +33,14 @@
                           onchange="this.submit()">
                         <select name="filter-by" class="filter-by">
                             <option value="" ${empty requestScope.filterBy ? 'selected' : ''}>Tất cả trạng thái</option>
+                            <option value="pending_signature" ${requestScope.filterBy == 'pending_signature' ? 'selected' : ''}>Chờ khách hàng ký số</option>
+                            <option value="signed" ${requestScope.filterBy == 'signed' ? 'selected' : ''}>Đã ký số - Chờ Admin duyệt</option>
+                            <option value="waiting_re_sign" ${requestScope.filterBy == 'waiting_re_sign' ? 'selected' : ''}>Đơn bị sửa - Chờ khách ký lại</option>
+                            <option value="approved" ${requestScope.filterBy == 'approved' ? 'selected' : ''}>Admin đã duyệt đơn</option>
+                            <option value="rejected" ${requestScope.filterBy == 'rejected' ? 'selected' : ''}>Admin từ chối duyệt</option>
+                            <option value="security_alert" ${requestScope.filterBy == 'security_alert' ? 'selected' : ''}>CẢNH BÁO: Vi phạm tính toàn vẹn!</option>
                             <option value="completed" ${requestScope.filterBy == 'completed' ? 'selected' : ''}>Đã giao</option>
                             <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
-                            <option value="shipping" ${requestScope.filterBy == 'shipping' ? 'selected' : ''}>Đang giao hàng</option>
-                            <option value="pending_signature" ${requestScope.filterBy == 'pending_signature' ? 'selected' : ''}>Chờ ký số</option>
                             <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
                     </form>
