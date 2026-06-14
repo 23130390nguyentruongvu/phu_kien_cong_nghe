@@ -34,6 +34,10 @@
                 <i class="fa-solid fa-location-dot"></i>
                 <a href="${pageContext.request.contextPath}/address-user">Địa chỉ</a>
             </li>
+            <li class="nav-link-item ${requestScope.linkNav == 4?'link-selected':''}">
+                <i class="fa-solid fa-key"></i>
+                <a href="${pageContext.request.contextPath}/user-key">Quản lý khóa số</a>
+            </li>
             <c:if test="${not empty sessionScope.user and sessionScope.user.role == 1}">
                 <li class="nav-link-item">
                     <i class="fa-solid fa-user-shield"></i>

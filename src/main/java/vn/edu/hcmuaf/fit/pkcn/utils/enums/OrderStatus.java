@@ -10,6 +10,7 @@ public enum OrderStatus {
     SECURITY_ALERT("security_alert", "CẢNH BÁO: Vi phạm tính toàn vẹn!"),
 
     PENDING("pending", "Đang xử lý đóng gói / Giao hàng"),
+    SHIPPING("shipping", "Đơn hàng đang được vận chuyển"),
     COMPLETED("completed", "Hoàn thành đơn hàng"),
     CANCEL("cancel", "Đã hủy bởi người dùng");
 

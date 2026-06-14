@@ -5,6 +5,7 @@ import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
@@ -107,6 +108,10 @@ public class OrderService {
 
     public double getRevenue() {
         return orderDao.getRevenue();
+    }
+
+    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key) {
+        return orderDao.getOrdersForAdmin(key);
     }
 
     public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {

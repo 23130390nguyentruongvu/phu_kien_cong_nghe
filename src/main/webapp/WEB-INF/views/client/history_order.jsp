@@ -52,6 +52,7 @@
                         <span class="status-order"><strong>Trạng thái:
                             <em class="${order.status}">${order.status}</em>
                         </strong>
+                            <span class="status-description ${order.status}">${order.statusDisplay}</span>
                         </span>
                             <span class="address-shipping"><em><i
                                     class="fa-regular fa-truck"></i> ${order.address}</em></span>

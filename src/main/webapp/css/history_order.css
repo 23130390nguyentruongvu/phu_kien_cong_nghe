@@ -13,6 +13,49 @@
 
 }
 
+.status-order {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.status-description {
+    font-size: 13px;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+/* pending */
+.status-description.pending {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+/* shipping */
+.status-description.shipping {
+    color: #004085;
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+}
+
+/* completed */
+.status-description.completed {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+/* cancel */
+.status-description.cancel {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
 .status-order em.completed {
     color: green;
 }
