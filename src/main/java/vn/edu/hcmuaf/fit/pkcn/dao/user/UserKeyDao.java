@@ -13,7 +13,7 @@ public class UserKeyDao {
         this.jdbi = jdbi;
     }
 
-    public boolean revokedUserKey(UserKeyDTO userKeyDTO) {
+    public boolean revokedAllUserKey(UserKeyDTO userKeyDTO) {
         String sql = """
                 UPDATE user_keys
                 SET status = :status, revoked_at = :revokedAt
@@ -25,6 +25,23 @@ public class UserKeyDao {
                    .bind("status", StatusUserKey.REVOKED.name())
                    .bind("userId", userKeyDTO.getUserId())
                    .execute() > 0;
+        });
+    }
+
+    public boolean revokedUserKeyById(Integer userId, Integer id) {
+        String sql = """
+                UPDATE user_keys
+                SET status = :status, revoked_at = :revokedAt
+                WHERE user_id = :userId AND status = 'ACTIVE' AND id = :id
+                """;
+
+        return jdbi.withHandle(handle ->{
+            return handle.createUpdate(sql)
+                    .bind("revokedAt", LocalDateTime.now())
+                    .bind("status", StatusUserKey.REVOKED.name())
+                    .bind("userId", userId)
+                    .bind("id", id)
+                    .execute() > 0;
         });
     }
 
