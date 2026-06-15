@@ -38,9 +38,7 @@
                     <h1 class="key-title">Khóa số cá nhân</h1>
                     <p class="key-subtitle">Quản lý khóa công khai dùng để xác thực và ký số đơn hàng</p>
                 </div>
-                <a href="javascript:void(0)" class="btn-download-tool" onclick="alert('Chức năng tải tool ký số sẽ sớm được cập nhật!');">
-                    Tải tool kí đơn hàng về
-                </a>
+                <a href="${pageContext.request.contextPath}/download-tool" class="btn-download-tool">Tải Tool kí điện tử</a>
             </div>
 
             <div class="key-grid">
