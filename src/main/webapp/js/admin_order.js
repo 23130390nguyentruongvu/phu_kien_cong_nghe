@@ -2,105 +2,138 @@
 document.querySelectorAll('.edit-order-view').forEach(btn => {
     btn.addEventListener('click', async () => {
         const orderId = btn.dataset.id;
-        const popup = document.getElementById('popup-order-detail');
         const container = document.getElementById('order-detail-container');
 
-        popup.style.display = 'block';
+        popupCommon.open('popup-order-detail');
         document.getElementById('display-order-id').textContent = orderId;
-        container.innerHTML = '<p>Đang tải dữ liệu...</p>';
+        popupCommon.showLoading('order-detail-container');
 
         try {
-            // TODO: Gọi API lấy chi tiết đơn hàng
-            // const response = await fetch(`${contextPath}/get-order-detail?orderId=${orderId}`);
-            // const html = await response.text();
-            // container.innerHTML = html;
-
-            // Dữ liệu mẫu tạm thời
-            container.innerHTML = `
-                <div class="order-detail-info">
-                    <div class="info-item">
-                        <div class="info-label">Mã đơn hàng</div>
-                        <div class="info-value">#${orderId}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Người nhận</div>
-                        <div class="info-value">Đang tải...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Số điện thoại</div>
-                        <div class="info-value">Đang tải...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Địa chỉ</div>
-                        <div class="info-value">Đang tải...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Trạng thái</div>
-                        <div class="info-value">Đang tải...</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Tổng tiền</div>
-                        <div class="info-value">Đang tải...</div>
-                    </div>
-                </div>
-                <table class="order-items-table">
-                    <thead>
-                        <tr>
-                            <th>Sản phẩm</th>
-                            <th>Biến thể</th>
-                            <th>Số lượng</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td colspan="5">Chức năng đang phát triển...</td></tr>
-                    </tbody>
-                </table>
-            `;
+            const response = await fetch(window.contextPath + '/get-order-detail?orderId=' + orderId);
+            if (!response.ok) throw new Error('Server error: ' + response.status);
+            const html = await response.text();
+            container.innerHTML = html;
         } catch (error) {
-            console.error("Lỗi khi tải chi tiết đơn hàng:", error);
-            container.innerHTML = `<p style="color:red;">Lỗi: ${error.message}</p>`;
+            console.error('Lỗi khi tải chi tiết đơn hàng:', error);
+            popupCommon.showError('order-detail-container', 'Lỗi: ' + error.message);
         }
     });
 });
 
-document.getElementById('closeOrderDetail').onclick = () => {
-    document.getElementById('popup-order-detail').style.display = 'none';
-};
+document.getElementById('closeOrderDetail').onclick = () => popupCommon.close('popup-order-detail');
 
 // Popup sửa thông tin đơn hàng
 document.querySelectorAll('.edit-order-update').forEach(btn => {
     btn.addEventListener('click', async () => {
         const orderId = btn.dataset.id;
         document.getElementById('edit-order-id').textContent = orderId;
-        document.getElementById('popup-edit-order').style.display = 'block';
+        popupCommon.open('popup-edit-order');
+        popupCommon.showLoading('content-edit-order');
 
-        // TODO: Load form sửa đơn hàng
+        try {
+            const response = await fetch(window.contextPath + '/get-order-edit?orderId=' + orderId);
+            if (!response.ok) throw new Error('Server error: ' + response.status);
+            const html = await response.text();
+            document.getElementById('content-edit-order').innerHTML = html;
+        } catch (err) {
+            console.error('Lỗi khi load form edit:', err);
+            popupCommon.showError('content-edit-order', 'Không thể tải form chỉnh sửa đơn hàng');
+        }
     });
 });
 
-document.getElementById('closeEditOrder').addEventListener('click', () => {
-    document.getElementById('popup-edit-order').style.display = 'none';
+document.getElementById('editOrderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {};
+    const orderDetailIds = [];
+    const variantIds = [];
+    const quantities = [];
+
+    formData.forEach((value, key) => {
+        if (key === 'orderDetailId') {
+            orderDetailIds.push(value);
+        } else if (key === 'variantId') {
+            variantIds.push(value);
+        } else if (key === 'quantity') {
+            quantities.push(value);
+        } else {
+            data[key] = value;
+        }
+    });
+    data['orderDetailIds'] = orderDetailIds;
+    data['variantIds'] = variantIds;
+    data['quantities'] = quantities;
+
+    if (!confirm('Sau khi chỉnh sửa, đơn hàng sẽ chuyển trạng thái chờ người dùng ký lại. Tiếp tục?')) return;
+
+    try {
+        const response = await fetch(window.contextPath + '/update-order', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        alert(result.message);
+        if (result.success) {
+            popupCommon.close('popup-edit-order');
+            window.location.reload();
+        }
+    } catch (err) {
+        console.error('Lỗi khi cập nhật đơn hàng:', err);
+        alert('Lỗi: ' + err.message);
+    }
 });
+
+document.getElementById('closeEditOrder').addEventListener('click', () => popupCommon.close('popup-edit-order'));
 
 // Popup thêm sản phẩm vào đơn
 document.querySelectorAll('.edit-order-add-item').forEach(btn => {
     btn.addEventListener('click', () => {
         const orderId = btn.dataset.id;
         document.getElementById('add-item-order-id').textContent = orderId;
-        document.getElementById('popup-add-order-item').style.display = 'block';
+        document.getElementById('add-item-order-id-hidden').value = orderId;
+        document.getElementById('add-item-variant-id').value = '';
+        document.getElementById('add-item-quantity').value = 1;
+        popupCommon.open('popup-add-order-item');
     });
 });
 
-document.getElementById('closeAddOrderItem').onclick = () => {
-    document.getElementById('popup-add-order-item').style.display = 'none';
-};
+document.getElementById('closeAddOrderItem').onclick = () => popupCommon.close('popup-add-order-item');
 
-document.getElementById('addOrderItemForm').addEventListener('submit', (e) => {
+document.getElementById('addOrderItemForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    // TODO: Xử lý thêm sản phẩm vào đơn hàng
-    alert('Chức năng đang phát triển!');
+    const formData = new FormData(e.target);
+    const data = {};
+    formData.forEach((value, key) => { data[key] = value; });
+
+    if (!data.variantId || !data.quantity || parseInt(data.quantity) <= 0) {
+        alert('Vui lòng nhập mã biến thể và số lượng hợp lệ');
+        return;
+    }
+
+    if (!confirm('Sau khi thêm sản phẩm, đơn hàng sẽ chuyển trạng thái chờ người dùng ký lại. Tiếp tục?')) return;
+
+    try {
+        const response = await fetch(window.contextPath + '/add-order-item', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                orderId: parseInt(data.orderId),
+                variantId: parseInt(data.variantId),
+                quantity: parseInt(data.quantity)
+            })
+        });
+        const result = await response.json();
+        alert(result.message);
+        if (result.success) {
+            popupCommon.close('popup-add-order-item');
+            window.location.reload();
+        }
+    } catch (err) {
+        console.error('Lỗi khi thêm sản phẩm:', err);
+        alert('Lỗi: ' + err.message);
+    }
 });
 
 // Popup xóa đơn hàng
@@ -108,29 +141,32 @@ document.querySelectorAll('.edit-order-remove').forEach(btn => {
     btn.addEventListener('click', () => {
         const orderId = btn.dataset.id;
         document.getElementById('confirmMessage').textContent =
-            `Bạn có chắc chắn muốn xóa đơn hàng #${orderId}?`;
-        document.getElementById('confirmForm').dataset.orderId = orderId;
-        document.getElementById('popup-confirm').style.display = 'block';
+            'Bạn có chắc chắn muốn xóa đơn hàng #' + orderId + '?';
+        document.getElementById('confirm-order-id').value = orderId;
+        popupCommon.open('popup-confirm');
     });
 });
 
-document.getElementById('confirmNo').onclick = () => {
-    document.getElementById('popup-confirm').style.display = 'none';
-};
+document.getElementById('confirmNo').onclick = () => popupCommon.close('popup-confirm');
 
-document.getElementById('confirmForm').addEventListener('submit', (e) => {
+document.getElementById('confirmForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const orderId = e.target.dataset.orderId;
-    // TODO: Gọi API xóa đơn hàng
-    alert(`Chức năng xóa đơn hàng #${orderId} đang phát triển!`);
-    document.getElementById('popup-confirm').style.display = 'none';
-});
+    const orderId = document.getElementById('confirm-order-id').value;
 
-// Đóng popup khi click ra ngoài
-document.querySelectorAll('.popup').forEach(popup => {
-    popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            popup.style.display = 'none';
+    try {
+        const response = await fetch(window.contextPath + '/remove-order', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({orderId: orderId})
+        });
+        const result = await response.json();
+        alert(result.message);
+        if (result.success) {
+            popupCommon.close('popup-confirm');
+            window.location.reload();
         }
-    });
+    } catch (err) {
+        console.error('Lỗi khi xóa đơn hàng:', err);
+        alert('Lỗi: ' + err.message);
+    }
 });

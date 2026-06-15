@@ -65,6 +65,12 @@
                         </strong>
                             <span class="status-description ${order.status}">${order.statusDisplay}</span>
                         </span>
+                        <c:if test="${not empty order.description}">
+                            <div class="order-note">
+                                <i class="fa-solid fa-note-sticky"></i>
+                                <span>${order.description}</span>
+                            </div>
+                        </c:if>
                             <span class="address-shipping"><em><i
                                     class="fa-regular fa-truck"></i> ${order.address}</em></span>
 

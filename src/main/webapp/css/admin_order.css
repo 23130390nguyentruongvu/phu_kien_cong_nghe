@@ -49,6 +49,15 @@
     border: 1px solid rgb(0, 0, 0, 0.2);
 }
 
+.wrap-find-info-order form .filter-status-select {
+    height: 36px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .wrap-find-info-order form .submit-data {
     height: 36px;
     width: 100px;
@@ -145,6 +154,42 @@
 .status-order.cancel {
     color: #b3001e;
     background-color: #FBE1E4;
+}
+
+.status-order.pending_signature {
+    color: #7c3aed;
+    background-color: #f3e8ff;
+}
+
+.status-order.signed {
+    color: #2563eb;
+    background-color: #dbeafe;
+}
+
+.status-order.waiting_re_sign {
+    color: #ea580c;
+    background-color: #fff7ed;
+}
+
+.status-order.approved {
+    color: #16a34a;
+    background-color: #dcfce7;
+}
+
+.status-order.rejected {
+    color: #dc2626;
+    background-color: #fef2f2;
+}
+
+.status-order.security_alert {
+    color: #dc2626;
+    background-color: #fef2f2;
+    animation: pulse-alert 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-alert {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
 }
 
 /* Action icons */

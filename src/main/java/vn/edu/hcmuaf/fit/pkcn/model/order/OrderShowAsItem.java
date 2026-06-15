@@ -14,6 +14,7 @@ public class OrderShowAsItem {
     private String status;
     private String address;
     private double totalPrice;
+    private String description;
     private List<ProductVariantWrapOrder> orderDetails;
 
     public OrderShowAsItem() {
@@ -45,6 +46,15 @@ public class OrderShowAsItem {
     @ColumnName("address_detail")
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @ColumnName("note")
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getTotalPrice() {

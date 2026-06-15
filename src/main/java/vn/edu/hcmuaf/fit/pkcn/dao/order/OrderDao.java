@@ -21,7 +21,7 @@ public class OrderDao {
 
     public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         String filter = status == null ? ":status IS NULL" : "o.status_order = :status";
-        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail " +
+        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
                 "WHERE o.user_id = :userId AND " + filter + " " +
@@ -172,24 +172,38 @@ public class OrderDao {
         return jdbi.withHandle(handle -> handle.createQuery(sql).mapTo(Double.class).findOne().orElse(0.0));
     }
 
-    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key) {
-        String sql = """
+    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key, String status) {
+        StringBuilder sql = new StringBuilder("""
             SELECT o.id as order_id, u.id as user_id, o.total_must_pay,
                    o.order_date, o.status_order, o.delivery_date,
                    ao.receiver_name, ao.phone_number, ao.address_detail
             FROM orders o
             JOIN users u ON u.id = o.user_id
             JOIN address_order ao ON ao.id = o.address_order_id
-            WHERE (:key IS NULL OR :key = '' OR o.id LIKE :keyPattern OR ao.receiver_name LIKE :keyPattern OR u.full_name LIKE :keyPattern)
-            ORDER BY o.order_date DESC
-            """;
-        return jdbi.withHandle(handle ->
-                handle.createQuery(sql)
-                        .bind("key", key)
-                        .bind("keyPattern", "%" + (key != null ? key : "") + "%")
-                        .mapToBean(AdminOrderShowAsItem.class)
-                        .list()
-        );
+            WHERE 1=1
+            """);
+
+        if (key != null && !key.isEmpty()) {
+            sql.append(" AND (o.id LIKE :keyPattern OR ao.receiver_name LIKE :keyPattern OR u.full_name LIKE :keyPattern)");
+        }
+
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND o.status_order = :status");
+        }
+
+        sql.append(" ORDER BY o.order_date DESC");
+
+        String finalSql = sql.toString();
+        return jdbi.withHandle(handle -> {
+            var query = handle.createQuery(finalSql);
+            if (key != null && !key.isEmpty()) {
+                query.bind("keyPattern", "%" + key + "%");
+            }
+            if (status != null && !status.isEmpty()) {
+                query.bind("status", status);
+            }
+            return query.mapToBean(AdminOrderShowAsItem.class).list();
+        });
     }
 
     public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {

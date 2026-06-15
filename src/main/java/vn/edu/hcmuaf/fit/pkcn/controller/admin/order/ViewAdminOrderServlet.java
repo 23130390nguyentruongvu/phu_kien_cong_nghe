@@ -32,10 +32,15 @@ public class ViewAdminOrderServlet extends HttpServlet {
         try {
             OrderService orderService = new OrderService(JDBI.getJdbi());
             String key = request.getParameter("keySearch");
-            List<AdminOrderShowAsItem> orders = orderService.getOrdersForAdmin(key);
+            String statusFilter = request.getParameter("statusFilter");
+            if (statusFilter != null && statusFilter.isEmpty()) {
+                statusFilter = null;
+            }
+            List<AdminOrderShowAsItem> orders = orderService.getOrdersForAdmin(key, statusFilter);
 
             request.setAttribute("orders", orders);
             request.setAttribute("keySearch", key);
+            request.setAttribute("statusFilter", statusFilter);
             request.setAttribute("navLink", 4);
         } catch (Exception e) {
             e.printStackTrace();

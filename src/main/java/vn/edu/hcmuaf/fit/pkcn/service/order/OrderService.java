@@ -110,8 +110,8 @@ public class OrderService {
         return orderDao.getRevenue();
     }
 
-    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key) {
-        return orderDao.getOrdersForAdmin(key);
+    public List<AdminOrderShowAsItem> getOrdersForAdmin(String key, String status) {
+        return orderDao.getOrdersForAdmin(key, status);
     }
 
     public List<OrderOverView> getOrderOverView(boolean isFilter, int week) {

@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.pkcn.model.admin.order;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import vn.edu.hcmuaf.fit.pkcn.utils.DateFormatUtils;
 import vn.edu.hcmuaf.fit.pkcn.utils.PriceFormatUtils;
+import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -113,12 +114,10 @@ public class AdminOrderShowAsItem {
 
     public String getStatusDisplay() {
         if (statusOrder == null) return "";
-        return switch (statusOrder.toLowerCase()) {
-            case "pending" -> "Chờ xác nhận";
-            case "shipping" -> "Đang giao";
-            case "completed" -> "Đã giao";
-            case "cancel" -> "Đã hủy";
-            default -> statusOrder;
-        };
+        try {
+            return OrderStatus.fromCode(statusOrder).getDisplayName();
+        } catch (IllegalArgumentException e) {
+            return statusOrder;
+        }
     }
 }
