@@ -110,28 +110,27 @@
                                         </td>
                                     </tr>
                                 </c:when>
-
                                 <c:otherwise>
                                     <c:forEach var="key" items="${requestScope.userKeys}">
                                         <tr class="key-row ${key.status != 'ACTIVE' ? 'key-row-revoked' : ''}">
                                             <td class="key-name-cell">
-                <span class="key-display-name ${key.status != 'ACTIVE' ? 'key-display-name-revoked' : ''}">
-                    <c:out value="${key.keyName}"/>
-                </span>
+                    <span class="key-display-name ${key.status != 'ACTIVE' ? 'key-display-name-revoked' : ''}">
+                        <c:out value="${key.keyName}"/>
+                    </span>
                                             </td>
 
                                             <td>
-                <span class="algo-badge ${key.nameAlgorithm}">
-                    <c:out value="${key.nameAlgorithm}"/>
-                </span>
+                    <span class="algo-badge ${key.nameAlgorithm}">
+                        <c:out value="${key.nameAlgorithm}"/>
+                    </span>
                                             </td>
 
                                             <td class="key-date">
                                                 <c:choose>
-                                                    <c:when test="${key.getCreatedAt() != null}">
-                                                        <c:set var="cDt" value="${key.getCreatedAt()}"/>
-                                                        <c:out value="${cDt.getDayOfMonth() < 10 ? '0'.concat(cDt.getDayOfMonth()) : cDt.getDayOfMonth()}"/>/<c:out value="${cDt.getMonthValue() < 10 ? '0'.concat(cDt.getMonthValue()) : cDt.getMonthValue()}"/>/<c:out value="${cDt.getYear()}"/><br>
-                                                        <c:out value="${cDt.getHour() < 10 ? '0'.concat(cDt.getHour()) : cDt.getHour()}"/>:<c:out value="${cDt.getMinute() < 10 ? '0'.concat(cDt.getMinute()) : cDt.getMinute()}"/>:<c:out value="${cDt.getSecond() < 10 ? '0'.concat(cDt.getSecond()) : cDt.getSecond()}"/>
+                                                    <c:when test="${key.createdAt != null}">
+                                                        <c:set var="cDt" value="${key.createdAt}"/>
+                                                        <fmt:formatNumber value="${cDt.dayOfMonth}" pattern="00"/>/<fmt:formatNumber value="${cDt.monthValue}" pattern="00"/>/${cDt.year}<br>
+                                                        <fmt:formatNumber value="${cDt.hour}" pattern="00"/>:<fmt:formatNumber value="${cDt.minute}" pattern="00"/>:<fmt:formatNumber value="${cDt.second}" pattern="00"/>
                                                     </c:when>
                                                     <c:otherwise>---</c:otherwise>
                                                 </c:choose>
@@ -140,16 +139,16 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${key.status == 'ACTIVE'}">
-                        <span class="status-badge status-active">
-                            <span class="status-indicator status-indicator-active"></span>
-                            Đang hoạt động
-                        </span>
+                            <span class="status-badge status-active">
+                                <span class="status-indicator status-indicator-active"></span>
+                                Đang hoạt động
+                            </span>
                                                     </c:when>
                                                     <c:otherwise>
-                        <span class="status-badge status-inactive">
-                            <span class="status-indicator status-indicator-inactive"></span>
-                            Đã hủy bỏ
-                        </span>
+                            <span class="status-badge status-inactive">
+                                <span class="status-indicator status-indicator-inactive"></span>
+                                Đã hủy bỏ
+                            </span>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
@@ -157,15 +156,15 @@
                                             <td class="text-center">
                                                 <c:choose>
                                                     <c:when test="${key.status == 'ACTIVE'}">
-                                                        <button onclick="openRevokeModal()" class="btn-revoke">Thu hồi</button>
+                                                        <button onclick="executeRevokeModal(${key.id})" class="btn-revoke">Báo mất khóa</button>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:choose>
-                                                            <c:when test="${key.getRevokedAt() != null}">
-                                                                <c:set var="rDt" value="${key.getRevokedAt()}"/>
+                                                            <c:when test="${key.revokedAt != null}">
+                                                                <c:set var="rDt" value="${key.revokedAt}"/>
                                                                 <span class="key-revoked-note">
-                                    Đã hủy <c:out value="${rDt.getDayOfMonth() < 10 ? '0'.concat(rDt.getDayOfMonth()) : rDt.getDayOfMonth()}"/>/<c:out value="${rDt.getMonthValue() < 10 ? '0'.concat(rDt.getMonthValue()) : rDt.getMonthValue()}"/>/<c:out value="${rDt.getYear()}"/> <c:out value="${rDt.getHour() < 10 ? '0'.concat(rDt.getHour()) : rDt.getHour()}"/>:<c:out value="${rDt.getMinute() < 10 ? '0'.concat(rDt.getMinute()) : rDt.getMinute()}"/>:<c:out value="${rDt.getSecond() < 10 ? '0'.concat(rDt.getSecond()) : rDt.getSecond()}"/>
-                                </span>
+                                        Đã hủy <fmt:formatNumber value="${rDt.dayOfMonth}" pattern="00"/>/<fmt:formatNumber value="${rDt.monthValue}" pattern="00"/>/${rDt.year} <fmt:formatNumber value="${rDt.hour}" pattern="00"/>:<fmt:formatNumber value="${rDt.minute}" pattern="00"/>:<fmt:formatNumber value="${rDt.second}" pattern="00"/>
+                                    </span>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <span class="key-revoked-note">Đã hủy</span>
@@ -215,7 +214,7 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script>
-    const CURRENT_USER_ID = ${sessionScope.user.id};
+    const CURRENT_USER_ID = ${empty sessionScope.user ? 'null' : sessionScope.user.id};
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script type="module" src="${pageContext.request.contextPath}/js/user_key.js"></script>
