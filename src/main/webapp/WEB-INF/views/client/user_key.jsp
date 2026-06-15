@@ -38,7 +38,8 @@
                     <h1 class="key-title">Khóa số cá nhân</h1>
                     <p class="key-subtitle">Quản lý khóa công khai dùng để xác thực và ký số đơn hàng</p>
                 </div>
-                <a href="${pageContext.request.contextPath}/download-tool" class="btn-download-tool">Tải Tool kí điện tử</a>
+                <a href="${pageContext.request.contextPath}/download-tool" class="btn-download-tool">Tải Tool kí điện
+                    tử</a>
             </div>
 
             <div class="key-grid">
@@ -67,7 +68,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="publicKey">Public Key (Base64) <span class="required">*</span></label>
+                            <label class="form-label" for="publicKey">Public Key (Base64) <span
+                                    class="required">*</span></label>
                             <textarea id="publicKey" name="publicKey" rows="5" required
                                       placeholder="Dán chuỗi Public Key tại đây..."
                                       class="form-textarea"></textarea>
@@ -100,38 +102,82 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="key-row">
-                                <td class="key-name-cell">
-                                    <span class="key-display-name">Laptop ASUS - Làm việc</span>
-                                    <span class="key-id">ID: pub_83492...</span>
-                                </td>
-                                <td><span class="algo-badge algo-rsa">RSA-3072</span></td>
-                                <td class="key-date">13/06/2026<br>15:30:12</td>
-                                <td>
-                                    <span class="status-badge status-active">
-                                        <span class="status-indicator status-indicator-active"></span>
-                                        Đang hoạt động
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <button onclick="openRevokeModal()" class="btn-revoke">Thu hồi</button>
-                                </td>
-                            </tr>
-                            <tr class="key-row key-row-revoked">
-                                <td class="key-name-cell">
-                                    <span class="key-display-name key-display-name-revoked">PC Đồ Án Học Tập (Cũ)</span>
-                                    <span class="key-id">ID: pub_19482...</span>
-                                </td>
-                                <td><span class="algo-badge algo-dsa">DSA-2048</span></td>
-                                <td class="key-date">10/05/2026<br>09:15:44</td>
-                                <td>
-                                    <span class="status-badge status-inactive">
-                                        <span class="status-indicator status-indicator-inactive"></span>
-                                        Đã hủy bỏ
-                                    </span>
-                                </td>
-                                <td class="text-center key-revoked-note">Đã hủy 13/06/2026</td>
-                            </tr>
+                            <c:choose>
+                                <c:when test="${empty requestScope.userKeys}">
+                                    <tr>
+                                        <td colspan="5" class="text-center" style="padding: 20px; color: #888;">
+                                            Bạn chưa kích hoạt khóa công khai nào.
+                                        </td>
+                                    </tr>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <c:forEach var="key" items="${requestScope.userKeys}">
+                                        <tr class="key-row ${key.status != 'ACTIVE' ? 'key-row-revoked' : ''}">
+                                            <td class="key-name-cell">
+                <span class="key-display-name ${key.status != 'ACTIVE' ? 'key-display-name-revoked' : ''}">
+                    <c:out value="${key.keyName}"/>
+                </span>
+                                            </td>
+
+                                            <td>
+                <span class="algo-badge ${key.nameAlgorithm}">
+                    <c:out value="${key.nameAlgorithm}"/>
+                </span>
+                                            </td>
+
+                                            <td class="key-date">
+                                                <c:choose>
+                                                    <c:when test="${key.getCreatedAt() != null}">
+                                                        <c:set var="cDt" value="${key.getCreatedAt()}"/>
+                                                        <c:out value="${cDt.getDayOfMonth() < 10 ? '0'.concat(cDt.getDayOfMonth()) : cDt.getDayOfMonth()}"/>/<c:out value="${cDt.getMonthValue() < 10 ? '0'.concat(cDt.getMonthValue()) : cDt.getMonthValue()}"/>/<c:out value="${cDt.getYear()}"/><br>
+                                                        <c:out value="${cDt.getHour() < 10 ? '0'.concat(cDt.getHour()) : cDt.getHour()}"/>:<c:out value="${cDt.getMinute() < 10 ? '0'.concat(cDt.getMinute()) : cDt.getMinute()}"/>:<c:out value="${cDt.getSecond() < 10 ? '0'.concat(cDt.getSecond()) : cDt.getSecond()}"/>
+                                                    </c:when>
+                                                    <c:otherwise>---</c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${key.status == 'ACTIVE'}">
+                        <span class="status-badge status-active">
+                            <span class="status-indicator status-indicator-active"></span>
+                            Đang hoạt động
+                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                        <span class="status-badge status-inactive">
+                            <span class="status-indicator status-indicator-inactive"></span>
+                            Đã hủy bỏ
+                        </span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <c:choose>
+                                                    <c:when test="${key.status == 'ACTIVE'}">
+                                                        <button onclick="openRevokeModal()" class="btn-revoke">Thu hồi</button>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:choose>
+                                                            <c:when test="${key.getRevokedAt() != null}">
+                                                                <c:set var="rDt" value="${key.getRevokedAt()}"/>
+                                                                <span class="key-revoked-note">
+                                    Đã hủy <c:out value="${rDt.getDayOfMonth() < 10 ? '0'.concat(rDt.getDayOfMonth()) : rDt.getDayOfMonth()}"/>/<c:out value="${rDt.getMonthValue() < 10 ? '0'.concat(rDt.getMonthValue()) : rDt.getMonthValue()}"/>/<c:out value="${rDt.getYear()}"/> <c:out value="${rDt.getHour() < 10 ? '0'.concat(rDt.getHour()) : rDt.getHour()}"/>:<c:out value="${rDt.getMinute() < 10 ? '0'.concat(rDt.getMinute()) : rDt.getMinute()}"/>:<c:out value="${rDt.getSecond() < 10 ? '0'.concat(rDt.getSecond()) : rDt.getSecond()}"/>
+                                </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="key-revoked-note">Đã hủy</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
                             </tbody>
                         </table>
                     </div>
@@ -151,7 +197,9 @@
             <div class="modal-warning">
                 <p class="modal-warning-title">Sau khi thu hồi:</p>
                 <ul>
-                    <li>Khóa sẽ <strong>mất hiệu lực ngay lập tức</strong>, không ai có thể dùng nó để ký đơn hàng giả mạo.</li>
+                    <li>Khóa sẽ <strong>mất hiệu lực ngay lập tức</strong>, không ai có thể dùng nó để ký đơn hàng giả
+                        mạo.
+                    </li>
                     <li>Hệ thống vẫn giữ Public Key này để đối chiếu lịch sử đơn hàng cũ.</li>
                 </ul>
             </div>
