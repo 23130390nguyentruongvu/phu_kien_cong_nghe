@@ -16,6 +16,7 @@ public class UserKeyService {
     public boolean addUserKey(UserKeyDTO userKeyDTO) {
         if(!userDao.isUserExist(userKeyDTO.getUserId()))
             return false;
+        userKeyDao.revokedAllUserKey(userKeyDTO);
         return userKeyDao.addUserKey(userKeyDTO);
     }
 

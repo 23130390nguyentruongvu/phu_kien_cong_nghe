@@ -45,7 +45,7 @@
                 <div class="key-register-card">
                     <h2 class="card-title">Đăng ký khóa mới</h2>
 
-                    <form id="registerKeyForm" onsubmit="return registerKey(event)">
+                    <form id="registerKeyForm">
                         <div class="form-group">
                             <label class="form-label" for="keyName">Tên gợi nhớ <span class="required">*</span></label>
                             <input type="text" id="keyName" name="keyName" class="form-input"
@@ -167,8 +167,9 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script>
+    const CURRENT_USER_ID = ${sessionScope.user.id};
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
-<script src="${pageContext.request.contextPath}/js/user_key.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/user_key.js"></script>
 <script type="module" src="${pageContext.request.contextPath}/js/sidebar_account_change_avatar.js"></script>
 </html>
