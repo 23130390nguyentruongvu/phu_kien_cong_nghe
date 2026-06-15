@@ -5,6 +5,7 @@ import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import java.time.LocalDateTime;
 
 public class UserKeyDTO {
+    private Integer id;
     private Integer userId;
     private String keyName;
     private String nameAlgorithm;
@@ -25,6 +26,15 @@ public class UserKeyDTO {
         this.status = status;
         this.createAt = createAt;
         this.revokedAt = revokedAt;
+    }
+
+    @ColumnName("id")
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @ColumnName("user_id")
