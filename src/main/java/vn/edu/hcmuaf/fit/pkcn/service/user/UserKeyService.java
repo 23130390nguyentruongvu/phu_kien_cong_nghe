@@ -4,6 +4,8 @@ import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.user.UserKeyDao;
 import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
 
+import java.util.List;
+
 public class UserKeyService {
     private UserKeyDao userKeyDao;
     private UserDao userDao;
@@ -21,6 +23,10 @@ public class UserKeyService {
 
         userKeyDao.revokedAllUserKey(userKeyDTO);
         return userKeyDao.addUserKey(userKeyDTO);
+    }
+
+    public List<UserKeyDTO> getAllUserKeyByUserId(Integer userId) {
+        return userKeyDao.getAllUserKeyByUserId(userId);
     }
 
     public boolean revokeUserKeyById(Integer userId, Integer id) {
