@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            const isConfirmed = confirm("Xác nhận kích hoạt khóa? Hành động này sẽ thay thế khóa cũ (nếu có)!");
+            const isConfirmed = confirm("Xác nhận kích hoạt khóa?");
             if(!isConfirmed) return
             showLoading()
 

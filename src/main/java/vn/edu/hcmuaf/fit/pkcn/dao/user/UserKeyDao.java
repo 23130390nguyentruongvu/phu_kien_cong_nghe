@@ -28,6 +28,22 @@ public class UserKeyDao {
         });
     }
 
+    public boolean isAnyUserKeyActive(Integer userId) {
+        String sql = """
+            SELECT *
+            FROM user_keys
+            WHERE user_id = :userId AND status = 'ACTIVE'
+            """;
+
+        return jdbi.withHandle(handle -> {
+            return handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToMap()
+                    .findFirst()
+                    .isPresent();
+        });
+    }
+
     public boolean revokedUserKeyById(Integer userId, Integer id) {
         String sql = """
                 UPDATE user_keys

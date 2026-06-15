@@ -13,9 +13,12 @@ public class UserKeyService {
         this.userDao = userDao;
     }
 
-    public boolean addUserKey(UserKeyDTO userKeyDTO) {
+    public boolean addUserKey(UserKeyDTO userKeyDTO) throws Exception {
         if(!userDao.isUserExist(userKeyDTO.getUserId()))
             return false;
+        if(userKeyDao.isAnyUserKeyActive(userKeyDTO.getUserId()))
+            throw new Exception("Bạn đang có 1 khóa đang hoạt động, vui lòng thu hồi khóa đó nếu muốn thêm khóa mới");
+
         userKeyDao.revokedAllUserKey(userKeyDTO);
         return userKeyDao.addUserKey(userKeyDTO);
     }
