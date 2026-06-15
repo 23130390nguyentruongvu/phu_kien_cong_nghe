@@ -38,55 +38,67 @@ public class JsonAddUserKeyServlet extends HttpServlet {
             }
         }
 
-        Gson gson = GsonProvider.getGson();
-        UserKeyDTO userKeyDTO = gson.fromJson(stringBuilder.toString(), UserKeyDTO.class);
+        try {
+            Gson gson = GsonProvider.getGson();
+            UserKeyDTO userKeyDTO = gson.fromJson(stringBuilder.toString(), UserKeyDTO.class);
 
-        if(!userKeyDTO.getNameAlgorithm().equals(SignatureAlgorithm.DSA.name())
-                && !userKeyDTO.getNameAlgorithm().equals(SignatureAlgorithm.RSA.name())) {
+            if (!userKeyDTO.getNameAlgorithm().equals(SignatureAlgorithm.DSA.name())
+                    && !userKeyDTO.getNameAlgorithm().equals(SignatureAlgorithm.RSA.name())) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("success", false);
+                map.put("message", "Không hỗ trợ thuật toán này");
+                String jsonRes = new Gson().toJson(map);
+
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(jsonRes);
+                response.getWriter().flush();
+                return;
+            }
+
+            boolean isValidKey = KeyValidator.isValidPublicKey(userKeyDTO.getPublicKey(), userKeyDTO.getNameAlgorithm());
+            if (!isValidKey) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("success", false);
+                map.put("message", "Khóa công khai không hợp lệ");
+                String jsonRes = new Gson().toJson(map);
+
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(jsonRes);
+                response.getWriter().flush();
+                return;
+            }
+
+            //DAO
+            UserKeyDao userKeyDao = new UserKeyDao(JDBI.getJdbi());
+            UserDao userDao = new UserDao(JDBI.getJdbi());
+            //Service
+            UserKeyService userKeyService = new UserKeyService(userKeyDao, userDao);
+
+            boolean result = userKeyService.addUserKey(userKeyDTO);
+
             Map<String, Object> map = new HashMap<>();
-            map.put("success", false);
-            map.put("message", "Không hỗ trợ thuật toán này");
+            map.put("success", result);
+            map.put("message", result ? "Lưu thành công" : "Lưu thất bại");
             String jsonRes = new Gson().toJson(map);
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(jsonRes);
             response.getWriter().flush();
-            return;
-        }
 
-        boolean isValidKey = KeyValidator.isValidPublicKey(userKeyDTO.getPublicKey(), userKeyDTO.getNameAlgorithm());
-        if(!isValidKey) {
+        } catch (Exception e) {
+            e.printStackTrace();
             Map<String, Object> map = new HashMap<>();
-            map.put("success", false);
-            map.put("message", "Khóa công khai không hợp lệ");
-            String jsonRes = new Gson().toJson(map);
 
+            map.put("success", false);
+            map.put("message", e.getMessage());
+            String jsonRes = new Gson().toJson(map);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(jsonRes);
             response.getWriter().flush();
-            return;
         }
-
-        //DAO
-        UserKeyDao userKeyDao = new UserKeyDao(JDBI.getJdbi());
-        UserDao userDao = new UserDao(JDBI.getJdbi());
-        //Service
-        UserKeyService userKeyService = new UserKeyService(userKeyDao, userDao);
-
-        boolean result = userKeyService.addUserKey(userKeyDTO);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("success", result);
-        map.put("message", result?"Lưu thành công":"Lưu thất bại");
-        String jsonRes = new Gson().toJson(map);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonRes);
-        response.getWriter().flush();
     }
-
-
 }
