@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.pkcn.controller.user;
+package vn.edu.hcmuaf.fit.pkcn.controller.user.user_key;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
