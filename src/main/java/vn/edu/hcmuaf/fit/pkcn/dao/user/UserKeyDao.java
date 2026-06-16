@@ -92,4 +92,16 @@ public class UserKeyDao {
                     .execute() > 0;
         });
     }
+    public UserKeyDTO getActiveUserKey(int userId) {
+        String sql = """
+                SELECT * FROM user_keys  
+                WHERE user_id = :userId  AND status = 'ACTIVE'
+                LIMIT 1;
+        """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("userId",userId)
+                .mapToBean(UserKeyDTO.class)
+                .findFirst()
+                .orElse(null));
+    }
 }
