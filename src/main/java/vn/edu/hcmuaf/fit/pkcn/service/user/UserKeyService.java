@@ -25,6 +25,9 @@ public class UserKeyService {
         if(userKeyDao.isAnyUserKeyActive(userKeyDTO.getUserId()))
             throw new Exception("Bạn đang có 1 khóa đang hoạt động, vui lòng thu hồi khóa đó nếu muốn thêm khóa mới");
 
+        if(userKeyDao.isDbHasPublicKey(userKeyDTO.getPublicKey()))
+            throw new Exception("Khóa này đã có trong hệ thống, vui lòng thử lại khóa khác");
+
         userKeyDao.revokedAllUserKey(userKeyDTO);
         return userKeyDao.addUserKey(userKeyDTO);
     }
