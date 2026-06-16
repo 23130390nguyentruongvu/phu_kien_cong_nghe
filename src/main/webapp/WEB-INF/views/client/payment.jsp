@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Thanh Toán</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment.css?v2">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
           integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -54,6 +54,10 @@
                                                     <span class="province">${requestScope.defaultAddress.provinceCity}</span>
                                                 </p>
                                                 <p class="focus">Mặc định</p>
+                                                <button type="button" class="btn-address"
+                                                        onclick="window.location.href='${pageContext.request.contextPath}/address-user'">
+                                                    Thêm/Quản lý địa chỉ
+                                                </button>
                                             </td>
                                         </tr>
                                     </table>
@@ -66,12 +70,32 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
-
-                            <div class="btn-add">
-                                <button type="button" class="btn-address"
-                                        onclick="window.location.href='${pageContext.request.contextPath}/address-user'">
-                                    Thêm/Quản lý địa chỉ
-                                </button>
+                            <h3>Khóa số</h3>
+                            <div class="address">
+                                <c:choose>
+                                    <c:when test="${not empty requestScope.activeKey}">
+                                        <table class="user-address">
+                                            <tr>
+                                                <td>
+                                                    <p><strong>${requestScope.activeKey.keyName}</strong></p>
+                                                    <p>Thuật toán: ${requestScope.activeKey.nameAlgorithm}</p>
+                                                    <p class="focus">Đang hoạt động</p>
+                                                    <button type="button" class="btn-address"
+                                                            onclick="window.location.href='${pageContext.request.contextPath}/user-key'">
+                                                        Đổi khóa
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="no-address">
+                                            <p>Bạn chưa có khóa số đang hoạt động.
+                                                <a href="${pageContext.request.contextPath}/user-key">Thêm ngay</a>
+                                            </p>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng..." class="note"></textarea>
                         </div>

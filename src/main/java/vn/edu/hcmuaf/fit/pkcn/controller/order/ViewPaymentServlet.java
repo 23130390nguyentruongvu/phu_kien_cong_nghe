@@ -8,13 +8,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.user.UserKeyDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.order.PaymentMethod;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
 import vn.edu.hcmuaf.fit.pkcn.service.order.PaymentMethodService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
+import vn.edu.hcmuaf.fit.pkcn.service.user.UserKeyService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
@@ -41,6 +45,7 @@ public class ViewPaymentServlet extends HttpServlet {
         Address defaultAddress = addressService.getAddressDefault(user.getId());
         ShippingFeeService shippingFeeService = new ShippingFeeService(JDBI.getJdbi());
         PaymentMethodService paymentMethodService = new PaymentMethodService(JDBI.getJdbi());
+        UserKeyService userKeyService = new UserKeyService(new UserKeyDao(JDBI.getJdbi()),new UserDao(JDBI.getJdbi()));
         List<PaymentMethod> methods = paymentMethodService.getAllPaymentMethods();
         double shipFee = 0;
         if(defaultAddress!=null){
@@ -48,7 +53,10 @@ public class ViewPaymentServlet extends HttpServlet {
         }else{
             request.setAttribute("error","Bạn chưa thiết lập địa chỉ nhận hàng. Vui lòng thêm địa chỉ để tiến hành thanh toán");
         }
-
+        UserKeyDTO activeKey = userKeyService.getActiveUserKeyByIdUser(user.getId());
+        if(activeKey!=null){
+            request.setAttribute("activeKey",activeKey);
+        }
         double totalPrice = cart.priceTotal();
         double totalOrder = totalPrice + shipFee;
         request.setAttribute("paymentMethods", methods);
