@@ -15,6 +15,10 @@ public class UserKeyService {
         this.userDao = userDao;
     }
 
+    public boolean isNotFoundUserKeyACTIVE(Integer userId) {
+        return !userKeyDao.isAnyUserKeyActive(userId);
+    }
+
     public boolean addUserKey(UserKeyDTO userKeyDTO) throws Exception {
         if(!userDao.isUserExist(userKeyDTO.getUserId()))
             return false;

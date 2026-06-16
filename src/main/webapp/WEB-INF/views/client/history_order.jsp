@@ -54,23 +54,23 @@
                 <c:forEach var="order" items="${requestScope.orders}">
                     <div class="wrap-content-order" data-id="${order.orderId}">
                         <div class="header-order">
-                        <c:if test="${order.status == 'pending_signature'}">
-                            <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
-                                <i class="fa-solid fa-file-signature"></i>
-                                <span class="btn-sign-text">Ký đơn hàng</span>
-                            </button>
-                        </c:if>
-                        <span class="status-order"><strong>Trạng thái:
+                            <c:if test="${order.status == 'pending_signature'}">
+                                <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
+                                    <i class="fa-solid fa-file-signature"></i>
+                                    <span class="btn-sign-text">Ký đơn hàng</span>
+                                </button>
+                            </c:if>
+                            <span class="status-order"><strong>Trạng thái:
                             <em class="${order.status}">${order.statusDisplay}</em>
                         </strong>
                             <span class="status-description ${order.status}">${order.statusDisplay}</span>
                         </span>
-                        <c:if test="${not empty order.description}">
-                            <div class="order-note">
-                                <i class="fa-solid fa-note-sticky"></i>
-                                <span>${order.description}</span>
-                            </div>
-                        </c:if>
+                            <c:if test="${not empty order.description}">
+                                <div class="order-note">
+                                    <i class="fa-solid fa-note-sticky"></i>
+                                    <span>${order.description}</span>
+                                </div>
+                            </c:if>
                             <span class="address-shipping"><em><i
                                     class="fa-regular fa-truck"></i> ${order.address}</em></span>
 
@@ -102,6 +102,7 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script>
+    const CURRENT_USER_ID = ${sessionScope.user.id != null ? sessionScope.user.id : "null"};
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/order_history.js"></script>
