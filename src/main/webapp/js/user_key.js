@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            const isConfirmed = confirm("Xác nhận kích hoạt khóa?");
+            const isConfirmed = confirm("Xác nhận kích hoạt khóa? Hành động này sẽ thay thế khóa cũ (nếu có)!");
             if(!isConfirmed) return
             showLoading()
 
@@ -71,56 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function executeRevokeModal(userKeyId) {
-    if (!userKeyId) {
-        alert('Không tìm thấy thông tin khóa cần thu hồi!');
-        return;
-    }
-
-    if (!CURRENT_USER_ID) {
-        alert('Vui lòng đăng nhập để thực hiện chức năng này!');
-        return;
-    }
-
-    const isConfirmed = confirm("Xác nhận thu hồi khóa này? Sau khi thu hồi, khóa sẽ không thể tiếp tục sử dụng!");
-    if (!isConfirmed) return;
-
-
-    showLoading();
-
-    const data = {
-        id: ""+userKeyId,
-        userId: ""+CURRENT_USER_ID
-    };
-
-    fetch(window.contextPath + '/json-revoke-user-key', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            if (!response.ok) {
-                hideLoading();
-                throw new Error('Lỗi Server!');
-            }
-            return response.json();
-        })
-        .then(res => {
-            hideLoading();
-            if (res.success === true || res.status === 'success') {
-                alert('Thu hồi khóa thành công!');
-                window.location.reload();
-            } else {
-                alert(res.message || 'Có lỗi xảy ra khi thu hồi khóa.');
-            }
-        })
-        .catch(error => {
-            hideLoading();
-            console.error('Error:', error);
-            alert('Lỗi hệ thống! Không thể kết nối tới máy chủ.');
-        });
+function openRevokeModal() {
+    const modal = document.getElementById('revokeModal');
+    if (modal) modal.classList.remove('hidden');
 }
 
 function closeRevokeModal() {
@@ -150,5 +103,3 @@ document.addEventListener('click', function (e) {
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeRevokeModal();
 });
-
-window.executeRevokeModal = executeRevokeModal;
