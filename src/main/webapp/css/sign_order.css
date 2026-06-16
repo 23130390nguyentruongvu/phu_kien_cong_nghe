@@ -1,0 +1,207 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.sign-container {
+    width: 100%;
+    max-width: 850px;
+}
+
+.sign-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: rgb(4, 107, 210);
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-header h1 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.alert-box {
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    border-left: 5px solid rgb(4, 107, 210);
+    color: #0d47a1;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-left: 5px solid #d32f2f;
+    color: #c62828;
+    text-align: center;
+}
+
+.alert-danger h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+.data-display-box {
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 20px;
+    max-height: 320px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #212529;
+}
+
+.hash-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.hash-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: #e9ecef;
+    font-family: monospace;
+    font-size: 15px;
+    color: #495057;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: rgb(4, 107, 210);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0356a6;
+}
+
+.btn-success {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #1b5e20;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    margin-top: 15px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 15px 30px;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.footer-note {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.verification-group {
+    border-top: 1px dashed #dee2e6;
+    padding-top: 20px;
+    margin-top: 25px;
+}
+
+.signature-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.signature-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.signature-textarea:focus {
+    border-color: rgb(4, 107, 210);
+    box-shadow: 0 0 0 3px rgba(4, 107, 210, 0.15);
+}
+
+.btn-submit-sig {
+    background-color: #e65100;
+    color: white;
+    padding: 12px 24px;
+    font-size: 15px;
+    align-self: flex-end;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-submit-sig:hover {
+    background-color: #ef6c00;
+}
