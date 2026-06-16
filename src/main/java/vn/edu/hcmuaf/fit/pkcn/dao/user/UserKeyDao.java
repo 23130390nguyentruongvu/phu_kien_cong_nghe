@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.StatusUserKey;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserKeyDao {
     private Jdbi jdbi;
@@ -25,6 +26,37 @@ public class UserKeyDao {
                    .bind("status", StatusUserKey.REVOKED.name())
                    .bind("userId", userKeyDTO.getUserId())
                    .execute() > 0;
+        });
+    }
+
+    public List<UserKeyDTO> getAllUserKeyByUserId(Integer userId) {
+        String sql = """
+                 SELECT *
+                 FROM user_keys
+                 WHERE user_id = :userId
+                 ORDER BY created_at DESC
+                """;
+        return jdbi.withHandle(handle -> {
+            return handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToBean(UserKeyDTO.class)
+                    .stream().toList();
+        });
+    }
+
+    public boolean isAnyUserKeyActive(Integer userId) {
+        String sql = """
+            SELECT *
+            FROM user_keys
+            WHERE user_id = :userId AND status = 'ACTIVE'
+            """;
+
+        return jdbi.withHandle(handle -> {
+            return handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToMap()
+                    .findFirst()
+                    .isPresent();
         });
     }
 
@@ -59,17 +91,5 @@ public class UserKeyDao {
                     .bindBean(userKeyDTO)
                     .execute() > 0;
         });
-    }
-    public UserKeyDTO getActiveUserKey(int userId) {
-        String sql = """
-                SELECT * FROM user_keys  
-                WHERE user_id = :userId  AND status = 'ACTIVE'
-                LIMIT 1;
-        """;
-        return jdbi.withHandle(handle -> handle.createQuery(sql)
-                .bind("userId",userId)
-                .mapToBean(UserKeyDTO.class)
-                .findFirst()
-        .orElse(null));
     }
 }

@@ -8,17 +8,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.user.UserKeyDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.order.PaymentMethod;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
-import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
 import vn.edu.hcmuaf.fit.pkcn.service.order.PaymentMethodService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
-import vn.edu.hcmuaf.fit.pkcn.service.user.UserKeyService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
@@ -33,7 +29,6 @@ public class ViewPaymentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
         User user = (User) session.getAttribute("user");
-        UserKeyService userKeyService = new UserKeyService(new UserKeyDao(JDBI.getJdbi()), new UserDao(JDBI.getJdbi()));
         AddressService addressService = new AddressService(JDBI.getJdbi());
         if (cart == null || cart.getCartItems().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/view-cart");
@@ -52,10 +47,6 @@ public class ViewPaymentServlet extends HttpServlet {
             shipFee = shippingFeeService.getPriceShipByAddress(defaultAddress.getProvinceCity());
         }else{
             request.setAttribute("error","Bạn chưa thiết lập địa chỉ nhận hàng. Vui lòng thêm địa chỉ để tiến hành thanh toán");
-        }
-        UserKeyDTO userKeyDTO = userKeyService.getActiveUserKeyByIdUser(user.getId());
-        if(userKeyDTO!=null){
-            request.setAttribute("activeKey",userKeyDTO);
         }
 
         double totalPrice = cart.priceTotal();

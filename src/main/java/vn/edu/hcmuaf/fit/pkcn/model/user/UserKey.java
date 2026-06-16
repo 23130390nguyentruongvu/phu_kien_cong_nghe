@@ -12,6 +12,7 @@ public class UserKey {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime revokedAt;
+
     public UserKey() {
     }
 
