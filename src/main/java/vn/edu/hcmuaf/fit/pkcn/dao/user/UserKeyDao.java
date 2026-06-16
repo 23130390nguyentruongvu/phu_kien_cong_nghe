@@ -44,6 +44,21 @@ public class UserKeyDao {
         });
     }
 
+    public boolean isDbHasPublicKey(String publicKey) {
+        String sql = """
+            SELECT *
+            FROM user_keys
+            WHERE public_key = :publicKey
+            """;
+        return jdbi.withHandle(handle -> {
+            return handle.createQuery(sql)
+                    .bind("publicKey", publicKey)
+                    .mapToMap()
+                    .findFirst()
+                    .isPresent();
+        });
+    }
+
     public boolean isAnyUserKeyActive(Integer userId) {
         String sql = """
             SELECT *

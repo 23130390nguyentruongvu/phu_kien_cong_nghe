@@ -90,13 +90,13 @@ function executeRevokeModal(userKeyId) {
 
     const data = {
         id: ""+userKeyId,
-        userId: ""+ mCURRENT_USER_ID
+        userId: ""+ CURRENT_USER_ID
     };
 
     fetch(window.contextPath + '/json-revoke-user-key', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
+            "Content-Type": "application/json; charset=utf-8"
         },
         body: JSON.stringify(data)
     })
