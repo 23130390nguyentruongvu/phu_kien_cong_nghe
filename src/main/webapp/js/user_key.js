@@ -90,7 +90,7 @@ function executeRevokeModal(userKeyId) {
 
     const data = {
         id: ""+userKeyId,
-        userId: ""+CURRENT_USER_ID
+        userId: ""+ mCURRENT_USER_ID
     };
 
     fetch(window.contextPath + '/json-revoke-user-key', {
