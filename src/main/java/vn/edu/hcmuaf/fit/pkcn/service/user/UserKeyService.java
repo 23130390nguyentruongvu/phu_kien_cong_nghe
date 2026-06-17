@@ -42,4 +42,8 @@ public class UserKeyService {
 
         return userKeyDao.revokedUserKeyById(userId, id);
     }
+
+    public UserKeyDTO getActiveUserKeyByIdUser(int userId) {
+        return userKeyDao.getActiveUserKey(userId);
+    }
 }

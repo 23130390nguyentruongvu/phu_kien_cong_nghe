@@ -28,7 +28,7 @@ public class JsonGetOrderEditServlet extends HttpServlet {
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             OrderSnapshotService snapshotService = new OrderSnapshotService(new OrderSnapshotDAO(JDBI.getJdbi()));
-            OrderSnapshot orderSnapshot = snapshotService.getOrderSnapshotsByOrderId(orderId);
+            OrderSnapshot orderSnapshot = snapshotService.getOrderSnapshotsByOrderId(orderId, user.getId());
             request.setAttribute("orderSnapshot", orderSnapshot);
             if (orderSnapshot != null && orderSnapshot.getStatusOrder() != null) {
                 try {
