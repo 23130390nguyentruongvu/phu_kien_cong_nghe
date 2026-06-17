@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.order.snap;
 
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.AddressOrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
@@ -85,6 +86,57 @@ public class OrderSnapshotDAO {
                 }
             }
             return result;
+        });
+    }
+
+    public List<OrderSnapshot> getOrdersForAdmin(String key, String status) {
+        StringBuilder sql = new StringBuilder("""
+        SELECT o.* FROM orders o
+        JOIN users u ON u.id = o.user_id
+        JOIN address_order ao ON ao.id = o.address_order_id
+        WHERE 1=1
+        """);
+
+        if (key != null && !key.isEmpty()) {
+            sql.append(" AND (CAST(o.id AS CHAR) LIKE :keyPattern OR ao.receiver_name LIKE :keyPattern OR u.full_name LIKE :keyPattern)");
+        }
+
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND o.status_order = :status");
+        }
+
+        sql.append(" ORDER BY o.order_date DESC");
+
+        String finalSql = sql.toString();
+
+        return jdbi.withHandle(handle -> {
+            var query = handle.createQuery(finalSql);
+            if (key != null && !key.isEmpty()) {
+                query.bind("keyPattern", "%" + key + "%");
+            }
+            if (status != null && !status.isEmpty()) {
+                query.bind("status", status);
+            }
+
+            List<OrderSnapshot> orders = query.mapToBean(OrderSnapshot.class).list();
+
+            for (OrderSnapshot order : orders) {
+
+                AddressOrderSnapshot address = handle.createQuery("SELECT * FROM address_order WHERE id = :id")
+                        .bind("id", order.getAddressOrderId())
+                        .mapToBean(AddressOrderSnapshot.class)
+                        .findOne()
+                        .orElse(null);
+                order.setAddressOrderSnapshot(address);
+
+                List<OrderDetailSnapshot> details = handle.createQuery("SELECT * FROM order_details WHERE order_id = :orderId")
+                        .bind("orderId", order.getId())
+                        .mapToBean(OrderDetailSnapshot.class)
+                        .list();
+                order.setOrderDetailSnapshots(details);
+            }
+
+            return orders;
         });
     }
 }

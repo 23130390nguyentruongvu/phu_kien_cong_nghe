@@ -141,11 +141,11 @@ public class AdminOrderShowAsItem {
         }
     }
 
-    public String getVerifyStatus() {
-        if (statusOrder == null) return "unsigned";
-        if ("security_alert".equals(statusOrder)) return "tampered";
-        if (signature == null || signature.isEmpty()) return "unsigned";
-        if ("signed".equals(statusOrder) || "approved".equals(statusOrder)) return "verified";
-        return "unsigned";
-    }
+//    public String getVerifyStatus() {
+//        if (statusOrder == null) return "unsigned";
+//        if ("security_alert".equals(statusOrder)) return "tampered";
+//        if (signature == null || signature.isEmpty()) return "unsigned";
+//        if ("signed".equals(statusOrder) || "approved".equals(statusOrder)) return "verified";
+//        return "unsigned";
+//    }
 }

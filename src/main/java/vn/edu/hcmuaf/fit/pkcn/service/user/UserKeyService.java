@@ -15,6 +15,10 @@ public class UserKeyService {
         this.userDao = userDao;
     }
 
+    public UserKeyDTO getUserKeyById(Integer userKeyId) {
+        return userKeyDao.getUserKeyById(userKeyId);
+    }
+
     public UserKeyDTO getUserKeyActiveByUserId(Integer userId) {
         return userKeyDao.getActiveUserKey(userId);
     }

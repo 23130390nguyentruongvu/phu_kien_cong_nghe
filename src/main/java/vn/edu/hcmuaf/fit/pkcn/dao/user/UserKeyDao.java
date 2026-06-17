@@ -119,4 +119,16 @@ public class UserKeyDao {
                 .findFirst()
                 .orElse(null));
     }
+
+    public UserKeyDTO getUserKeyById(Integer userKeyId) {
+        String sql = """
+                SELECT * FROM user_keys  
+                WHERE id = :userKeyId
+        """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("userKeyId",userKeyId)
+                .mapToBean(UserKeyDTO.class)
+                .findFirst()
+                .orElse(null));
+    }
 }
