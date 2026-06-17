@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +18,7 @@
 </head>
 <body>
 <div class="wrap-all-content">
-    <!--    open nav admin-->
     <jsp:include page="/WEB-INF/views/common/sidebar_admin.jsp"/>
-    <!--    close nav admin-->
-    <!--    open main content admin-->
     <div class="main-content-admin">
         <h1 class="title-for-page">Quản lí đơn hàng</h1>
         <div class="wrap-find-info-order">
@@ -71,30 +69,43 @@
                         <tr>
                             <td class="verify-cell">
                                 <c:choose>
-                                    <c:when test="${order.verifyStatus == 'verified'}">
-                                        <span class="verify-icon verified" title="Chữ ký hợp lệ"><i class="fa-solid fa-circle-check"></i></span>
+                                    <%-- Sửa đổi: Kiểm tra qua biến logic Boolean 'isVerify' của Model --%>
+                                    <c:when test="${empty order.signature}">
+                                        <span class="verify-icon unsigned" title="Chưa ký số bảo vệ"><i class="fa-regular fa-circle"></i></span>
                                     </c:when>
-                                    <c:when test="${order.verifyStatus == 'tampered'}">
-                                        <span class="verify-icon tampered" title="Dữ liệu đơn hàng đã bị thay đổi!"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                    <c:when test="${order.verify == true}">
+                                        <span class="verify-icon verified" title="Chữ ký hợp lệ - Toàn vẹn dữ liệu"><i class="fa-solid fa-circle-check"></i></span>
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="verify-icon unsigned" title="Chưa ký"><i class="fa-regular fa-circle"></i></span>
+                                        <span class="verify-icon tampered" title="CẢNH BÁO: Dữ liệu đơn hàng đã bị thay đổi trái phép!"><i class="fa-solid fa-circle-exclamation"></i></span>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                            <td>#${order.orderId}</td>
+                                <%-- Sửa thuộc tính: orderId -> id --%>
+                            <td>#${order.id}</td>
                             <td>${order.userId}</td>
-                            <td>${order.receiverName}</td>
-                            <td>${order.phoneNumber}</td>
-                            <td class="address-cell" title="${order.addressDetail}">${order.addressDetail}</td>
-                            <td class="price-cell">${order.totalPriceFormat}</td>
-                            <td>
-                                <span class="status-order ${order.statusOrder}">${order.statusDisplay}</span>
+                                <%-- Sửa thuộc tính: lấy từ object liên kết AddressOrderSnapshot --%>
+                            <td>${order.addressOrderSnapshot.receiverName}</td>
+                            <td>${order.addressOrderSnapshot.phoneNumber}</td>
+                            <td class="address-cell" title="${order.addressOrderSnapshot.addressDetail}">
+                                    ${order.addressOrderSnapshot.addressDetail}
                             </td>
-                            <td>${order.orderDateFormat}</td>
+                                <%-- Sửa thuộc tính: Định dạng tiền tệ VND tự động cho totalMustPay thay vì dùng hàm cũ --%>
+                            <td class="price-cell">
+                                <fmt:formatNumber value="${order.totalMustPay}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
+                            </td>
+                            <td>
+                                <span class="status-order ${order.statusOrder}">${order.statusOrder}</span>
+                            </td>
+                                <%-- Sửa thuộc tính: Sử dụng thư viện fmt để format định dạng chuẩn cho LocalDateTime (orderDate) --%>
+                            <td>
+                                <fmt:parseDate value="${order.orderDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDate" type="both" />
+                                <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy HH:mm" />
+                            </td>
                             <td>
                                 <span class="edit-order">
-                                    <span class="edit-order-update" data-id="${order.orderId}"
+                                    <%-- Sửa thuộc tính: orderId -> id --%>
+                                    <span class="edit-order-update" data-id="${order.id}"
                                           title="Sửa thông tin đơn hàng"><i class="fa-solid fa-pen-to-square"></i></span>
                                 </span>
                             </td>
@@ -105,8 +116,6 @@
             </c:if>
         </div>
     </div>
-    <!--    close main content admin-->
-
     <div id="popup-edit-order" class="popup" style="display:none;">
         <div class="popup-content edit-order-content">
             <h2>Chỉnh sửa đơn hàng #<span id="edit-order-id"></span></h2>

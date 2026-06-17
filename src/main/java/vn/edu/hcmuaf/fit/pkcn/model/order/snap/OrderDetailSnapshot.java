@@ -16,7 +16,7 @@ public class OrderDetailSnapshot {
     private String sizeSnapshot;
     private Integer quantity;
     private BigDecimal priceTotal;
-    private String urlImage;
+//    private String urlImage;
 
     public OrderDetailSnapshot() {}
 
@@ -36,7 +36,7 @@ public class OrderDetailSnapshot {
         this.sizeSnapshot = sizeSnapshot;
         this.quantity = quantity;
         this.priceTotal = priceTotal;
-        this.urlImage = urlImage;
+//        this.urlImage = urlImage;
     }
 
     @ColumnName("id")
@@ -147,12 +147,12 @@ public class OrderDetailSnapshot {
         this.priceTotal = priceTotal;
     }
 
-    @ColumnName("image_url_snapshot")
-    public String getUrlImage() {
-        return urlImage;
-    }
-
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
-    }
+//    @ColumnName("image_url_snapshot")
+//    public String getUrlImage() {
+//        return urlImage;
+//    }
+//
+//    public void setUrlImage(String urlImage) {
+//        this.urlImage = urlImage;
+//    }
 }

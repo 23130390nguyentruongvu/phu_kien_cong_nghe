@@ -3,6 +3,8 @@ package vn.edu.hcmuaf.fit.pkcn.service.order.snap;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 
+import java.util.List;
+
 public class OrderSnapshotService {
     private final OrderSnapshotDAO orderSnapshotDAO;
 
@@ -17,5 +19,9 @@ public class OrderSnapshotService {
 
     public boolean saveSignatureAndUserKeyId(Integer orderId, Integer userKeyId, String signature) {
         return orderSnapshotDAO.saveSignatureAndUserKeyId(orderId, userKeyId, signature);
+    }
+
+    public List<OrderSnapshot> getOrderSnapshotsForAdmin(String key, String status) {
+        return orderSnapshotDAO.getOrdersForAdmin(key, status);
     }
 }

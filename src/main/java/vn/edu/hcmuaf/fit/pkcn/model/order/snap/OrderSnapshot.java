@@ -20,16 +20,18 @@ public class OrderSnapshot {
     private String signature;
     private Integer userKeyId;
     private LocalDateTime expireSignKey;
-    private Boolean snapshotValid;
+//    private Boolean snapshotValid;
     private AddressOrderSnapshot addressOrderSnapshot;
     private List<OrderDetailSnapshot> orderDetailSnapshots;
+
+    private boolean isVerify;
 
     public OrderSnapshot() {}
 
     public OrderSnapshot(Integer id, Integer userId, Integer paymentMethodId, String paymentMethodSnapshot,
                          Integer addressOrderId, String statusOrder, BigDecimal totalMustPay, LocalDateTime orderDate,
                          LocalDateTime deliveryDate, BigDecimal shippingFee, String note, String signature,
-                         Integer userKeyId, LocalDateTime expireSignKey, Boolean snapshotValid, AddressOrderSnapshot addressOrderSnapshot,
+                         Integer userKeyId, LocalDateTime expireSignKey, AddressOrderSnapshot addressOrderSnapshot,
                          List<OrderDetailSnapshot> orderDetailSnapshots) {
         this.id = id;
         this.userId = userId;
@@ -45,9 +47,17 @@ public class OrderSnapshot {
         this.signature = signature;
         this.userKeyId = userKeyId;
         this.expireSignKey = expireSignKey;
-        this.snapshotValid = snapshotValid;
+//        this.snapshotValid = snapshotValid;
         this.addressOrderSnapshot = addressOrderSnapshot;
         this.orderDetailSnapshots = orderDetailSnapshots;
+    }
+
+    public boolean isVerify() {
+        return isVerify;
+    }
+
+    public void setVerify(boolean verify) {
+        isVerify = verify;
     }
 
     @ColumnName("id")
@@ -175,16 +185,15 @@ public class OrderSnapshot {
     public void setExpireSignKey(LocalDateTime expireSignKey) {
         this.expireSignKey = expireSignKey;
     }
-
-    @ColumnName("snapshot_valid")
-    public Boolean getSnapshotValid() {
-        return snapshotValid;
-    }
-
-    public void setSnapshotValid(Boolean snapshotValid) {
-        this.snapshotValid = snapshotValid;
-    }
-
+//
+//    @ColumnName("snapshot_valid")
+//    public Boolean getSnapshotValid() {
+//        return snapshotValid;
+//    }
+//
+//    public void setSnapshotValid(Boolean snapshotValid) {
+//        this.snapshotValid = snapshotValid;
+//    }
     public AddressOrderSnapshot getAddressOrderSnapshot() {
         return addressOrderSnapshot;
     }

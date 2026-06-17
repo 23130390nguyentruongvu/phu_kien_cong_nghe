@@ -53,7 +53,7 @@ public class OrderService {
                 wrap.setType(snap.getVariantNameSnapshot());
                 wrap.setQuantity(snap.getQuantity());
                 wrap.setTotalPrice(snap.getPriceTotal() != null ? snap.getPriceTotal().doubleValue() : 0);
-                wrap.setUrlImage(snap.getUrlImage());
+//                wrap.setUrlImage(snap.getUrlImage());
                 wrapList.add(wrap);
             }
             OrderShowAsItem item = res.get(entry.getKey());

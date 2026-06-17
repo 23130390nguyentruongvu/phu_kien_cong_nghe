@@ -14,7 +14,7 @@ public class DownloadToolServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String relativePath = "/resources/ToolKiDienTu.zip";
+        String relativePath = "/resources/ToolKiDonHang.zip";
         String fileName = "ToolKiDonHang.zip";
 
         response.setContentType("application/zip");
