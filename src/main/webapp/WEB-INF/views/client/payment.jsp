@@ -70,33 +70,6 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
-                            <h3>Khóa số</h3>
-                            <div class="address">
-                                <c:choose>
-                                    <c:when test="${not empty requestScope.activeKey}">
-                                        <table class="user-address">
-                                            <tr>
-                                                <td>
-                                                    <p><strong>${requestScope.activeKey.keyName}</strong></p>
-                                                    <p>Thuật toán: ${requestScope.activeKey.nameAlgorithm}</p>
-                                                    <p class="focus">Đang hoạt động</p>
-                                                    <button type="button" class="btn-address"
-                                                            onclick="window.location.href='${pageContext.request.contextPath}/user-key'">
-                                                        Đổi khóa
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="no-address">
-                                            <p>Bạn chưa có khóa số đang hoạt động.
-                                                <a href="${pageContext.request.contextPath}/user-key">Thêm ngay</a>
-                                            </p>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
                             <textarea rows="5" name="note" placeholder="Ghi chú đơn hàng..." class="note"></textarea>
                         </div>
                     </div>

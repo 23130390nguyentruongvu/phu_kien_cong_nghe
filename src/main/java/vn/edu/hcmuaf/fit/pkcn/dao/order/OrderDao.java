@@ -105,12 +105,11 @@ public class OrderDao {
 
     public List<OrderDetailItem> getOrderDetailItems(int orderId) {
         String sql = """
-                SELECT od.order_id, od.id, od.product_variant_id as variant_id,
-                       od.product_name_snapshot as name, od.variant_name_snapshot as type,
-                       od.quantity, od.variant_price_snapshot as price, od.price_total
-                FROM order_details od
-                WHERE od.order_id = :orderId
-                """;
+            SELECT 
+                order_id, id, product_variant_id AS variant_id, product_name_snapshot AS name,variant_name_snapshot AS type,quantity, variant_price_snapshot AS price,price_total
+            FROM order_details
+            WHERE order_id = :orderId
+            """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("orderId", orderId)
                 .mapToBean(OrderDetailItem.class)
@@ -118,15 +117,14 @@ public class OrderDao {
         );
     }
 
-    public OrderDetail getOrderDetail(int orderId) {
+   public OrderDetail getOrderDetail(int orderId) {
         String sql = """
-                SELECT o.id as id, o.user_id, o.order_date, o.delivery_date, o.status_order, o.shipping_fee,
-                o.total_must_pay, ao.phone_number, ao.address_detail, ao.receiver_name,
-                 o.payment_method_snapshot as name_method
-                FROM orders o
-                JOIN address_order ao ON ao.id = o.address_order_id
-                WHERE o.id = :orderId
-                """;
+            SELECT 
+                o.id, o.user_id, o.order_date,o.delivery_date, o.status_order, o.shipping_fee,o.total_must_pay, ao.phone_number, ao.address_detail, ao.receiver_name,o.payment_method_snapshot AS name_method
+            FROM orders o
+            JOIN address_order ao ON ao.id = o.address_order_id
+            WHERE o.id = :orderId
+            """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
                 .bind("orderId", orderId)
                 .mapToBean(OrderDetail.class)
