@@ -18,6 +18,8 @@ public class AdminOrderShowAsItem {
     private String statusOrder;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
+    private Boolean snapshotValid;
+    private String signature;
 
     public int getOrderId() {
         return orderId;
@@ -100,6 +102,24 @@ public class AdminOrderShowAsItem {
         this.deliveryDate = deliveryDate;
     }
 
+    @ColumnName("snapshot_valid")
+    public Boolean getSnapshotValid() {
+        return snapshotValid;
+    }
+
+    public void setSnapshotValid(Boolean snapshotValid) {
+        this.snapshotValid = snapshotValid;
+    }
+
+    @ColumnName("signature")
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
     public String getTotalPriceFormat() {
         return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, totalMustPay);
     }
@@ -119,5 +139,14 @@ public class AdminOrderShowAsItem {
         } catch (IllegalArgumentException e) {
             return statusOrder;
         }
+    }
+
+    public String getVerifyStatus() {
+        if (statusOrder == null) return "unsigned";
+        if ("security_alert".equals(statusOrder)) return "tampered";
+        if (snapshotValid != null && !snapshotValid) return "tampered";
+        if (signature == null || signature.isEmpty()) return "unsigned";
+        if (snapshotValid != null && snapshotValid) return "verified";
+        return "unsigned";
     }
 }

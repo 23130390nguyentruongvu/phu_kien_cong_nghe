@@ -140,7 +140,7 @@ public class JsonUpdateOrderServlet extends HttpServlet {
 
                 newTotalMustPay += shipFee.doubleValue();
 
-                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status WHERE id = :id")
+                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status, signature = NULL, user_key_id = NULL, snapshot_valid = FALSE WHERE id = :id")
                         .bind("total", BigDecimal.valueOf(newTotalMustPay))
                         .bind("status", OrderStatus.WAITING_RE_SIGN.getCode())
                         .bind("id", orderId)

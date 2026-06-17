@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.OrderOverView;
@@ -12,23 +13,23 @@ import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariantWrapOrder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderService {
     private OrderDao orderDao;
-    private ProductDao productDao;
+    private OrderSnapshotDAO orderSnapshotDAO;
 
     public OrderService(OrderDao orderDao, ProductDao productDao) {
         this.orderDao = orderDao;
-        this.productDao = productDao;
+        this.orderSnapshotDAO = new OrderSnapshotDAO(JDBI.getJdbi());
     }
 
-    public OrderService(Jdbi orderDao) {
-        this.orderDao = new OrderDao(orderDao);
+    public OrderService(Jdbi jdbi) {
+        this.orderDao = new OrderDao(jdbi);
+        this.orderSnapshotDAO = new OrderSnapshotDAO(jdbi);
     }
 
     public int getUserIdByOrderId(int orderId) {
@@ -38,12 +39,28 @@ public class OrderService {
     public List<OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         HashMap<Integer, OrderShowAsItem> res = orderDao.getOrdersShowAsItem(userId, status);
         if (res.isEmpty()) return null;
-        //Lấy các id của order để lấy các order detail
         List<Integer> orderIds = res.keySet().stream().toList();
 
-        HashMap<Integer, List<ProductVariantWrapOrder>> orderDetails = productDao.getProdVarWrapOrder(orderIds);
-        for (Map.Entry<Integer, List<ProductVariantWrapOrder>> entry : orderDetails.entrySet())
-            res.get(entry.getKey()).setOrderDetails(entry.getValue());
+        HashMap<Integer, List<OrderDetailSnapshot>> snapDetails = orderSnapshotDAO.getOrderDetailSnapshotsByOrderIds(orderIds);
+        for (Map.Entry<Integer, List<OrderDetailSnapshot>> entry : snapDetails.entrySet()) {
+            List<ProductVariantWrapOrder> wrapList = new ArrayList<>();
+            for (OrderDetailSnapshot snap : entry.getValue()) {
+                ProductVariantWrapOrder wrap = new ProductVariantWrapOrder();
+                wrap.setOrderDetailId(snap.getId());
+                wrap.setOrderId(snap.getOrderId());
+                wrap.setProdVarId(snap.getProductVariantId());
+                wrap.setName(snap.getProductNameSnapshot());
+                wrap.setType(snap.getVariantNameSnapshot());
+                wrap.setQuantity(snap.getQuantity());
+                wrap.setTotalPrice(snap.getPriceTotal() != null ? snap.getPriceTotal().doubleValue() : 0);
+                wrap.setUrlImage(snap.getUrlImage());
+                wrapList.add(wrap);
+            }
+            OrderShowAsItem item = res.get(entry.getKey());
+            if (item != null) {
+                item.setOrderDetails(wrapList);
+            }
+        }
 
         return res.values().stream().toList();
     }

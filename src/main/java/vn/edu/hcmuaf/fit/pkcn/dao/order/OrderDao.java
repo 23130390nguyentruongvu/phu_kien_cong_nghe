@@ -21,7 +21,7 @@ public class OrderDao {
 
     public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         String filter = status == null ? ":status IS NULL" : "o.status_order = :status";
-        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note " +
+        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note, o.signature, o.snapshot_valid " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
                 "WHERE o.user_id = :userId AND " + filter + " " +
@@ -176,7 +176,8 @@ public class OrderDao {
         StringBuilder sql = new StringBuilder("""
             SELECT o.id as order_id, u.id as user_id, o.total_must_pay,
                    o.order_date, o.status_order, o.delivery_date,
-                   ao.receiver_name, ao.phone_number, ao.address_detail
+                   ao.receiver_name, ao.phone_number, ao.address_detail,
+                   o.snapshot_valid, o.signature
             FROM orders o
             JOIN users u ON u.id = o.user_id
             JOIN address_order ao ON ao.id = o.address_order_id

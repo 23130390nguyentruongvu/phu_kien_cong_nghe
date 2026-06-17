@@ -7,10 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
-import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
+import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
-import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
+import vn.edu.hcmuaf.fit.pkcn.service.order.snap.OrderSnapshotService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
@@ -27,12 +26,21 @@ public class JsonGetOrderEditServlet extends HttpServlet {
         }
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
-            OrderService orderService = new OrderService(JDBI.getJdbi());
-            OrderDetail orderDetail = orderService.getOrderDetailByOrderId(orderId);
-            request.setAttribute("orderDetail", orderDetail);
+            OrderSnapshotService snapshotService = new OrderSnapshotService(new OrderSnapshotDAO(JDBI.getJdbi()));
+            OrderSnapshot orderSnapshot = snapshotService.getOrderSnapshotsByOrderId(orderId);
+            request.setAttribute("orderSnapshot", orderSnapshot);
+            if (orderSnapshot != null && orderSnapshot.getStatusOrder() != null) {
+                try {
+                    request.setAttribute("statusDisplay", vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus.fromCode(orderSnapshot.getStatusOrder()).getDisplayName());
+                } catch (IllegalArgumentException e) {
+                    request.setAttribute("statusDisplay", orderSnapshot.getStatusOrder());
+                }
+            } else {
+                request.setAttribute("statusDisplay", "");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("orderDetail", null);
+            request.setAttribute("orderSnapshot", null);
         }
         request.getRequestDispatcher("/WEB-INF/fragments/edit_order_row.jsp").forward(request, response);
     }

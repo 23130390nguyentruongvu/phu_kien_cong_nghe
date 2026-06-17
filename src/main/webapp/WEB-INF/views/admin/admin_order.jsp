@@ -54,6 +54,7 @@
                 <table>
                     <thead>
                     <tr>
+                        <th>Xác thực</th>
                         <th>Mã đơn</th>
                         <th>Mã KH</th>
                         <th>Người nhận</th>
@@ -68,6 +69,19 @@
                     <tbody>
                     <c:forEach var="order" items="${requestScope.orders}">
                         <tr>
+                            <td class="verify-cell">
+                                <c:choose>
+                                    <c:when test="${order.verifyStatus == 'verified'}">
+                                        <span class="verify-icon verified" title="Chữ ký hợp lệ"><i class="fa-solid fa-circle-check"></i></span>
+                                    </c:when>
+                                    <c:when test="${order.verifyStatus == 'tampered'}">
+                                        <span class="verify-icon tampered" title="Dữ liệu đơn hàng đã bị thay đổi!"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="verify-icon unsigned" title="Chưa ký"><i class="fa-regular fa-circle"></i></span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                             <td>#${order.orderId}</td>
                             <td>${order.userId}</td>
                             <td>${order.receiverName}</td>
@@ -82,12 +96,6 @@
                                 <span class="edit-order">
                                     <span class="edit-order-update" data-id="${order.orderId}"
                                           title="Sửa thông tin đơn hàng"><i class="fa-solid fa-pen-to-square"></i></span>
-                                    <span class="edit-order-add-item" data-id="${order.orderId}"
-                                          title="Thêm sản phẩm vào đơn"><i class="fa-solid fa-circle-plus"></i></span>
-                                    <span class="edit-order-remove" data-id="${order.orderId}"
-                                          title="Xóa đơn hàng"><i class="fa-solid fa-circle-minus"></i></span>
-                                    <span class="edit-order-view" data-id="${order.orderId}"
-                                          title="Xem chi tiết đơn hàng"><i class="fa-solid fa-eye"></i></span>
                                 </span>
                             </td>
                         </tr>
@@ -99,17 +107,6 @@
     </div>
     <!--    close main content admin-->
 
-    <!--    TODO: Popup xem chi tiết đơn hàng -->
-    <div id="popup-order-detail" class="popup" style="display:none;">
-        <div class="popup-content">
-            <h2>Chi tiết đơn hàng #<span id="display-order-id"></span></h2>
-            <div id="order-detail-container">
-                <p>Đang tải dữ liệu...</p>
-            </div>
-            <button type="button" id="closeOrderDetail" class="close-popup-btn">Đóng</button>
-        </div>
-    </div>
-
     <div id="popup-edit-order" class="popup" style="display:none;">
         <div class="popup-content edit-order-content">
             <h2>Chỉnh sửa đơn hàng #<span id="edit-order-id"></span></h2>
@@ -120,39 +117,6 @@
                 <div class="popup-actions">
                     <button type="submit" id="submit-update-order" class="submit">Cập nhật</button>
                     <button type="button" id="closeEditOrder" class="close">Đóng</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="popup-add-order-item" class="popup" style="display:none;">
-        <div class="popup-content">
-            <h2>Thêm sản phẩm vào đơn hàng #<span id="add-item-order-id"></span></h2>
-            <form id="addOrderItemForm">
-                <input type="hidden" id="add-item-order-id-hidden" name="orderId" value="">
-                <label for="add-item-variant-id">Mã biến thể:</label>
-                <input type="number" id="add-item-variant-id" name="variantId" class="form-input" placeholder="Nhập mã biến thể" required>
-                <br>
-                <label for="add-item-quantity">Số lượng:</label>
-                <input type="number" id="add-item-quantity" name="quantity" class="form-input" value="1" min="1" required>
-                <br>
-                <div class="wrap-button-cancel-submit">
-                    <button type="submit" id="submitAddOrderItem" class="submit">Thêm</button>
-                    <button type="button" id="closeAddOrderItem" class="close">Đóng</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="popup-confirm" class="popup" style="display:none;">
-        <div class="popup-content confirm-content">
-            <h2>Xác nhận xóa</h2>
-            <p id="confirmMessage">Bạn có chắc chắn muốn xóa đơn hàng này?</p>
-            <form id="confirmForm">
-                <input type="hidden" id="confirm-order-id" value="">
-                <div class="wrap-button-cancel-submit">
-                    <button type="submit" id="confirmYes" class="submit">Đồng ý</button>
-                    <button type="button" id="confirmNo" class="close">Hủy</button>
                 </div>
             </form>
         </div>

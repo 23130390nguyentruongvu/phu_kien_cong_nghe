@@ -15,6 +15,8 @@ public class OrderShowAsItem {
     private String address;
     private double totalPrice;
     private String description;
+    private String signature;
+    private Boolean snapshotValid;
     private List<ProductVariantWrapOrder> orderDetails;
 
     public OrderShowAsItem() {
@@ -46,6 +48,24 @@ public class OrderShowAsItem {
     @ColumnName("address_detail")
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @ColumnName("signature")
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    @ColumnName("snapshot_valid")
+    public Boolean getSnapshotValid() {
+        return snapshotValid;
+    }
+
+    public void setSnapshotValid(Boolean snapshotValid) {
+        this.snapshotValid = snapshotValid;
     }
 
     public String getDescription() {
@@ -81,6 +101,15 @@ public class OrderShowAsItem {
         } catch (IllegalArgumentException e) {
             return status;
         }
+    }
+
+    public String getVerifyStatus() {
+        if (status == null) return "unsigned";
+        if ("security_alert".equals(status)) return "tampered";
+        if (snapshotValid != null && !snapshotValid) return "tampered";
+        if (signature == null || signature.isEmpty()) return "unsigned";
+        if (snapshotValid != null && snapshotValid) return "verified";
+        return "unsigned";
     }
 
     public String getPriceFormat() {

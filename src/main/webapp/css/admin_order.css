@@ -222,32 +222,7 @@
     transform: scale(1.15);
 }
 
-.edit-order-add-item {
-    color: #1a7d3a;
-}
 
-.edit-order-add-item:hover {
-    background-color: #D8FCE8;
-    transform: scale(1.15);
-}
-
-.edit-order-remove {
-    color: #b3001e;
-}
-
-.edit-order-remove:hover {
-    background-color: #FBE1E4;
-    transform: scale(1.15);
-}
-
-.edit-order-view {
-    color: #6a0dad;
-}
-
-.edit-order-view:hover {
-    background-color: #f0e6ff;
-    transform: scale(1.15);
-}
 
 /* Popup styles */
 .popup {
@@ -281,11 +256,6 @@
 
 .popup-content.edit-order-content {
     width: 600px;
-}
-
-.popup-content.confirm-content {
-    width: 450px;
-    text-align: center;
 }
 
 .popup-content p {
@@ -349,24 +319,6 @@
 
 .wrap-button-cancel-submit .close:hover {
     background-color: #cc0000;
-}
-
-.close-popup-btn {
-    color: white;
-    border-radius: 10px;
-    border: 1px solid rgb(4, 107, 210);
-    width: 100px;
-    height: 40px;
-    background-color: rgb(4, 107, 210);
-    cursor: pointer;
-    font-size: 15px;
-    transition: background-color 0.2s;
-    margin-top: 15px;
-    float: right;
-}
-
-.close-popup-btn:hover {
-    background-color: #024b9b;
 }
 
 #popup-edit-order .form-input {
@@ -450,6 +402,40 @@
 
 .order-items-table tbody tr:hover {
     background-color: #f8f9fa;
+}
+
+/* Verify icons */
+.verify-cell {
+    text-align: center;
+    width: 50px;
+}
+
+.verify-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.verify-icon:hover {
+    transform: scale(1.2);
+}
+
+.verify-icon.verified {
+    color: #16a34a;
+}
+
+.verify-icon.tampered {
+    color: #dc2626;
+    animation: pulse-alert 1.5s ease-in-out infinite;
+}
+
+.verify-icon.unsigned {
+    color: #9ca3af;
 }
 
 /* No data state */

@@ -107,7 +107,7 @@ public class JsonAddOrderItemServlet extends HttpServlet {
                         .bind("vid", variantId)
                         .execute();
 
-                handle.createUpdate("UPDATE orders SET total_must_pay = total_must_pay + :price, status_order = :status WHERE id = :id")
+                handle.createUpdate("UPDATE orders SET total_must_pay = total_must_pay + :price, status_order = :status, signature = NULL, user_key_id = NULL, snapshot_valid = FALSE WHERE id = :id")
                         .bind("price", priceTotal)
                         .bind("status", OrderStatus.WAITING_RE_SIGN.getCode())
                         .bind("id", orderId)
