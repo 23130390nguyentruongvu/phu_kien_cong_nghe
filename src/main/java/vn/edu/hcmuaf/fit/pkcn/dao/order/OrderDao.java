@@ -66,8 +66,8 @@ public class OrderDao {
     }
 
     public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
-        String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
-                "VALUES (:userId, :addressOrderId, :total, :status, :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
+        String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id,payment_method_snapshot, order_date, note, delivery_date) " +
+                "VALUES (:userId, :addressOrderId, :total, :status, :shipFee, :paymentMethodId,:paymentMethodSnapshot, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
 
         return handle.createUpdate(sql)
                 .bind("userId", userId)
@@ -76,6 +76,7 @@ public class OrderDao {
                 .bind("status", OrderStatus.PENDING_SIGNATURE.getCode())
                 .bind("shipFee", shipFee)
                 .bind("paymentMethodId", paymentMethodId)
+                .bind("paymentMethodSnapshot", paymentMethodId)
                 .bind("note", note)
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
@@ -83,12 +84,19 @@ public class OrderDao {
     }
 
     public void insertOrderDetail(Handle handle, int orderId, CartItem item) {
-        String sql = "INSERT INTO order_details (order_id, product_variant_id, quantity, price_total) VALUES (:oid, :vid, :qty, :price)";
+        String sql = "INSERT INTO order_details (order_id, product_variant_id, quantity, price_total, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot) VALUES(:oid, :vid, :qty, :price, :productName, :variantName, :sku, :variantPrice, :gram, :color, :size)";
         handle.createUpdate(sql)
                 .bind("oid", orderId)
                 .bind("vid", item.getProductVariantId())
                 .bind("qty", item.getQuantity())
                 .bind("price", item.getPrice())
+                .bind("productName", item.getNameProduct())
+                .bind("variantName",item.getProductVariant().getName())
+                .bind("sku", item.getProductVariant().getSku())
+                .bind("variantPrice", item.getProductVariant().getPrice())
+                .bind("gram", item.getProductVariant().getGram())
+                .bind("color", item.getProductVariant().getColor())
+                .bind("size", item.getProductVariant().getSize())
                 .execute();
     }
 

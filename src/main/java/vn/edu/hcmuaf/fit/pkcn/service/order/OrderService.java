@@ -72,7 +72,11 @@ public class OrderService {
                     throw new Exception("Sản phẩm: " + item.getNameProduct() + " không đủ hàng (Hiện còn: " + currentStock + ")");
                 }
             }
-
+            String paymentSnapshot = handle.createQuery("SELECT name_method FROM payment_methods WHERE id = :id")
+                    .bind("id",paymentMethodId)
+                    .mapTo(String.class)
+                    .findOne()
+                    .orElse(null);
             int addressOrderId = orderDao.insertAddressOrder(handle, addressId, note);
             double totalMustPay = cart.priceTotal() + shipFee;
             int orderId = orderDao.insertOrder(handle, userId, addressOrderId, totalMustPay, note, shipFee, paymentMethodId);

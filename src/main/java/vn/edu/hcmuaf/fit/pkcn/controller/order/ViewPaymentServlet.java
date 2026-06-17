@@ -45,17 +45,12 @@ public class ViewPaymentServlet extends HttpServlet {
         Address defaultAddress = addressService.getAddressDefault(user.getId());
         ShippingFeeService shippingFeeService = new ShippingFeeService(JDBI.getJdbi());
         PaymentMethodService paymentMethodService = new PaymentMethodService(JDBI.getJdbi());
-        UserKeyService userKeyService = new UserKeyService(new UserKeyDao(JDBI.getJdbi()),new UserDao(JDBI.getJdbi()));
         List<PaymentMethod> methods = paymentMethodService.getAllPaymentMethods();
         double shipFee = 0;
         if(defaultAddress!=null){
             shipFee = shippingFeeService.getPriceShipByAddress(defaultAddress.getProvinceCity());
         }else{
             request.setAttribute("error","Bạn chưa thiết lập địa chỉ nhận hàng. Vui lòng thêm địa chỉ để tiến hành thanh toán");
-        }
-        UserKeyDTO activeKey = userKeyService.getActiveUserKeyByIdUser(user.getId());
-        if(activeKey!=null){
-            request.setAttribute("activeKey",activeKey);
         }
         double totalPrice = cart.priceTotal();
         double totalOrder = totalPrice + shipFee;
