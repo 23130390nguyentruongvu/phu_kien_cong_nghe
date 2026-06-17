@@ -112,9 +112,10 @@ public class JsonUpdateOrderServlet extends HttpServlet {
                     BigDecimal priceTotal = price.multiply(BigDecimal.valueOf(newQty));
                     newTotalMustPay += priceTotal.doubleValue();
 
-                    handle.createUpdate("UPDATE order_details SET quantity = :qty, price_total = :priceTotal WHERE id = :id AND order_id = :oid")
+                    handle.createUpdate("UPDATE order_details SET quantity = :qty, price_total = :priceTotal, variant_price_snapshot = :varPrice WHERE id = :id AND order_id = :oid")
                             .bind("qty", newQty)
                             .bind("priceTotal", priceTotal)
+                            .bind("varPrice", price)
                             .bind("id", orderDetailId)
                             .bind("oid", orderId)
                             .execute();
@@ -140,7 +141,7 @@ public class JsonUpdateOrderServlet extends HttpServlet {
 
                 newTotalMustPay += shipFee.doubleValue();
 
-                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status WHERE id = :id")
+                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status, signature = NULL, user_key_id = NULL WHERE id = :id")
                         .bind("total", BigDecimal.valueOf(newTotalMustPay))
                         .bind("status", OrderStatus.WAITING_RE_SIGN.getCode())
                         .bind("id", orderId)

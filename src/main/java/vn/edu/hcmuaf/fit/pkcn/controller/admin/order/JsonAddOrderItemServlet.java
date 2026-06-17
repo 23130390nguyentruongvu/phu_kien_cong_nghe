@@ -83,16 +83,36 @@ public class JsonAddOrderItemServlet extends HttpServlet {
                     throw new Exception("Sản phẩm không đủ hàng (Hiện còn: " + currentStock + ")");
                 }
 
-                BigDecimal price = handle.createQuery("SELECT price FROM product_variants WHERE id = :id")
-                        .bind("id", variantId)
-                        .mapTo(BigDecimal.class)
+                // Lấy thông tin snapshot cho biến thể
+                String snapshotSql = """
+                        SELECT pv.id, pv.name as variant_name, pv.sku, pv.price, pv.gram, pv.color, pv.size,
+                               p.name as product_name
+                        FROM product_variants pv
+                        JOIN products p ON p.id = pv.product_id
+                        WHERE pv.id = :vid
+                        """;
+                var snapshotData = handle.createQuery(snapshotSql)
+                        .bind("vid", variantId)
+                        .mapToMap()
                         .one();
 
+                BigDecimal price = (BigDecimal) snapshotData.get("price");
                 BigDecimal priceTotal = price.multiply(BigDecimal.valueOf(quantity));
 
-                handle.createUpdate("INSERT INTO order_details (order_id, product_variant_id, quantity, price_total) VALUES (:oid, :vid, :qty, :price)")
+                handle.createUpdate("INSERT INTO order_details (order_id, product_variant_id, " +
+                        "product_name_snapshot, variant_name_snapshot, sku_snapshot, " +
+                        "variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, " +
+                        "quantity, price_total) " +
+                        "VALUES (:oid, :vid, :prodName, :varName, :sku, :varPrice, :gram, :color, :size, :qty, :price)")
                         .bind("oid", orderId)
                         .bind("vid", variantId)
+                        .bind("prodName", snapshotData.get("product_name"))
+                        .bind("varName", snapshotData.get("variant_name"))
+                        .bind("sku", snapshotData.get("sku"))
+                        .bind("varPrice", price)
+                        .bind("gram", snapshotData.get("gram"))
+                        .bind("color", snapshotData.get("color"))
+                        .bind("size", snapshotData.get("size"))
                         .bind("qty", quantity)
                         .bind("price", priceTotal)
                         .execute();
@@ -107,7 +127,7 @@ public class JsonAddOrderItemServlet extends HttpServlet {
                         .bind("vid", variantId)
                         .execute();
 
-                handle.createUpdate("UPDATE orders SET total_must_pay = total_must_pay + :price, status_order = :status WHERE id = :id")
+                handle.createUpdate("UPDATE orders SET total_must_pay = total_must_pay + :price, status_order = :status, signature = NULL, user_key_id = NULL WHERE id = :id")
                         .bind("price", priceTotal)
                         .bind("status", OrderStatus.WAITING_RE_SIGN.getCode())
                         .bind("id", orderId)

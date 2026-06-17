@@ -1,18 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${empty requestScope.orderDetail}">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:if test="${empty requestScope.orderSnapshot}">
     <h3>Không tìm thấy đơn hàng</h3>
 </c:if>
-<c:if test="${not empty requestScope.orderDetail}">
-    <input type="hidden" name="orderId" value="${requestScope.orderDetail.orderId}">
-    <input type="hidden" name="addressOrderId" id="address-order-id" value="">
+<c:if test="${not empty requestScope.orderSnapshot}">
+    <c:set var="address" value="${requestScope.orderSnapshot.addressOrderSnapshot}" />
+    <input type="hidden" name="orderId" value="${requestScope.orderSnapshot.id}">
     <label for="edit-receiver-name">Tên người nhận:</label>
-    <input type="text" id="edit-receiver-name" name="receiverName" class="form-input" value="${requestScope.orderDetail.receiverName}" required>
+    <input type="text" id="edit-receiver-name" name="receiverName" class="form-input" value="${address.receiverName}" required>
     <label for="edit-phone">Số điện thoại:</label>
-    <input type="text" id="edit-phone" name="phoneNumber" class="form-input" value="${requestScope.orderDetail.phoneNumber}" required>
+    <input type="text" id="edit-phone" name="phoneNumber" class="form-input" value="${address.phoneNumber}" required>
     <label for="edit-address">Địa chỉ:</label>
-    <input type="text" id="edit-address" name="addressDetail" class="form-input" value="${requestScope.orderDetail.addressDetail}" required>
-    <label>Trạng thái hiện tại: <strong>${requestScope.orderDetail.statusDisplay}</strong></label>
+    <input type="text" id="edit-address" name="addressDetail" class="form-input" value="${address.addressDetail}, ${address.district}, ${address.provinceCity}" required>
+    <label>Trạng thái hiện tại: <strong>${requestScope.statusDisplay}</strong></label>
     <br>
     <h3>Chi tiết sản phẩm</h3>
     <table class="order-items-table">
@@ -26,17 +27,17 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="item" items="${requestScope.orderDetail.items}">
+            <c:forEach var="item" items="${requestScope.orderSnapshot.orderDetailSnapshots}">
                 <tr>
-                    <td>${item.name}</td>
-                    <td>${item.type}</td>
+                    <td>${item.productNameSnapshot}</td>
+                    <td>${item.variantNameSnapshot}</td>
                     <td>
-                        <input type="hidden" name="orderDetailId" value="${item.orderDetailId}">
-                        <input type="hidden" name="variantId" value="${item.variantId}">
-                        <input type="number" name="quantity" class="edit-quantity form-input" value="${item.quantity}" min="1" style="width:80px;" data-price="${item.priceVariant}">
+                        <input type="hidden" name="orderDetailId" value="${item.id}">
+                        <input type="hidden" name="variantId" value="${item.productVariantId}">
+                        <input type="number" name="quantity" class="edit-quantity form-input" value="${item.quantity}" min="1" style="width:80px;" data-price="${item.variantPriceSnapshot}">
                     </td>
-                    <td class="price-cell">${item.priceVariantFormat}</td>
-                    <td class="price-cell item-total">${item.totalPriceFormat}</td>
+                    <td class="price-cell"><fmt:formatNumber value="${item.variantPriceSnapshot}" pattern="#,###"/>₫</td>
+                    <td class="price-cell item-total"><fmt:formatNumber value="${item.priceTotal}" pattern="#,###"/>₫</td>
                 </tr>
             </c:forEach>
         </tbody>
