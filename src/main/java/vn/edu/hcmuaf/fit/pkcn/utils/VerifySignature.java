@@ -8,9 +8,10 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 public class VerifySignature {
-    public static boolean verifySignature(String base64PublicKey, String base64Signature, String rawDataJson, String algorithm) {
+    //dataNeedHash la loai du lieu khong duoc bam, no la du lieu duoc sinh tu OrderHashDataFormatter
+    public static boolean verifySignature(String base64PublicKey, String base64Signature, String dataNeedHash, String algorithm) {
         try {
-            if (base64PublicKey == null || base64Signature == null || rawDataJson == null || algorithm == null) {
+            if (base64PublicKey == null || base64Signature == null || dataNeedHash == null || algorithm == null) {
                 return false;
             }
 
@@ -40,7 +41,7 @@ public class VerifySignature {
             Signature signatureInstance = Signature.getInstance(sigAlgorithm);
             signatureInstance.initVerify(publicKey);
 
-            String hexHashData = HashSHA256.SHA256(rawDataJson);
+            String hexHashData = HashSHA256.SHA256(dataNeedHash);
 
             int len = hexHashData.length();
             byte[] hashBytesForVerify = new byte[len / 2];

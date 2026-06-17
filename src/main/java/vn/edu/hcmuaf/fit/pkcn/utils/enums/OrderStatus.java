@@ -7,7 +7,7 @@ public enum OrderStatus {
 
     APPROVED("approved", "Admin đã duyệt đơn"),
     REJECTED("rejected", "Admin từ chối duyệt"),
-    SECURITY_ALERT("security_alert", "CẢNH BÁO: Vi phạm tính toàn vẹn!"),
+    SECURITY_ALERT("security_alert", "Cảnh báo bảo mật đơn"),
 
     PENDING("pending", "Đang xử lý đóng gói / Giao hàng"),
     SHIPPING("shipping", "Đơn hàng đang được vận chuyển"),

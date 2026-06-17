@@ -1,3 +1,5 @@
+import {showLoading, hideLoading} from './overlay_processing.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const btnCopyHash = document.getElementById("btnCopyHash");
     const btnDownloadHash = document.getElementById("btnDownloadHash");
@@ -79,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnConfirmSignature && signatureInput) {
         btnConfirmSignature.addEventListener("click", () => {
             const signatureValue = signatureInput.value.trim();
-            const currentConfig = window.orderConfig || { userId: null, orderId: null };
+            const currentConfig = window.orderConfig;
 
             if (!signatureValue) {
                 alert("Vui lòng nhập hoặc tải tệp chứa chuỗi chữ ký số Base64 nhận được từ Tool của chúng tôi!");
@@ -87,20 +89,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            showLoading()
+
             btnConfirmSignature.disabled = true;
             const originalBtnText = btnConfirmSignature.textContent;
             btnConfirmSignature.textContent = "Đang xác thực...";
 
             const payload = {
-                userId: currentConfig.userId,
-                orderId: currentConfig.orderId,
+                userId: currentConfig.userId + "",
+                orderId: currentConfig.orderId + "",
+                userKeyId: currentConfig.userKeyId + "",
                 signature: signatureValue
             };
 
-            const contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 1));
-            const targetUrl = `${window.location.origin}${contextPath}/verify-and-save-signature`;
 
-            fetch(targetUrl, {
+            fetch(window.contextPath + "/process-sign-order", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8"
@@ -114,6 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     return response.json();
                 })
                 .then(data => {
+                    hideLoading()
+
                     if (data.success) {
                         alert("Xác nhận chữ ký số thành công! Đơn hàng đã được ký bảo vệ.");
                         window.location.href = `${window.location.origin}${contextPath}/order-success?orderId=${currentConfig.orderId}`;
@@ -124,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
                 .catch(error => {
+                    hideLoading()
                     console.error("Error:", error);
                     alert("Đã xảy ra lỗi hệ thống trong quá trình gửi chữ ký.");
                     btnConfirmSignature.disabled = false;
