@@ -106,9 +106,8 @@ public class OrderShowAsItem {
     public String getVerifyStatus() {
         if (status == null) return "unsigned";
         if ("security_alert".equals(status)) return "tampered";
-        if (snapshotValid != null && !snapshotValid) return "tampered";
         if (signature == null || signature.isEmpty()) return "unsigned";
-        if (snapshotValid != null && snapshotValid) return "verified";
+        if ("signed".equals(status) || "approved".equals(status)) return "verified";
         return "unsigned";
     }
 

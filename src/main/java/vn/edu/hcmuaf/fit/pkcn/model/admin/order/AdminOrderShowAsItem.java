@@ -144,9 +144,8 @@ public class AdminOrderShowAsItem {
     public String getVerifyStatus() {
         if (statusOrder == null) return "unsigned";
         if ("security_alert".equals(statusOrder)) return "tampered";
-        if (snapshotValid != null && !snapshotValid) return "tampered";
         if (signature == null || signature.isEmpty()) return "unsigned";
-        if (snapshotValid != null && snapshotValid) return "verified";
+        if ("signed".equals(statusOrder) || "approved".equals(statusOrder)) return "verified";
         return "unsigned";
     }
 }

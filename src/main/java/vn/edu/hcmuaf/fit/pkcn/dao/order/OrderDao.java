@@ -21,7 +21,7 @@ public class OrderDao {
 
     public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         String filter = status == null ? ":status IS NULL" : "o.status_order = :status";
-        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note, o.signature, o.snapshot_valid " +
+        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note, o.signature " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
                 "WHERE o.user_id = :userId AND " + filter + " " +
@@ -83,10 +83,21 @@ public class OrderDao {
     }
 
     public void insertOrderDetail(Handle handle, int orderId, CartItem item) {
-        String sql = "INSERT INTO order_details (order_id, product_variant_id, quantity, price_total) VALUES (:oid, :vid, :qty, :price)";
+        String sql = "INSERT INTO order_details (order_id, product_variant_id, " +
+                "product_name_snapshot, variant_name_snapshot, sku_snapshot, " +
+                "variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, " +
+                "quantity, price_total) " +
+                "VALUES (:oid, :vid, :prodName, :varName, :sku, :varPrice, :gram, :color, :size, :qty, :price)";
         handle.createUpdate(sql)
                 .bind("oid", orderId)
                 .bind("vid", item.getProductVariantId())
+                .bind("prodName", item.getNameProduct())
+                .bind("varName", item.getProductVariant().getName())
+                .bind("sku", item.getProductVariant().getSku())
+                .bind("varPrice", item.getProductVariant().getPrice())
+                .bind("gram", item.getProductVariant().getGram())
+                .bind("color", item.getProductVariant().getColor())
+                .bind("size", item.getProductVariant().getSize())
                 .bind("qty", item.getQuantity())
                 .bind("price", item.getPrice())
                 .execute();
@@ -94,10 +105,10 @@ public class OrderDao {
 
     public List<OrderDetailItem> getOrderDetailItems(int orderId) {
         String sql = """
-                SELECT od.order_id, od.id, pv.id as variant_id, p.name, pv.name as type, od.quantity, pv.price, od.price_total
+                SELECT od.order_id, od.id, od.product_variant_id as variant_id,
+                       od.product_name_snapshot as name, od.variant_name_snapshot as type,
+                       od.quantity, od.variant_price_snapshot as price, od.price_total
                 FROM order_details od
-                JOIN product_variants pv ON pv.id = od.product_variant_id
-                JOIN products p ON p.id = pv.product_id
                 WHERE od.order_id = :orderId
                 """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
@@ -111,10 +122,9 @@ public class OrderDao {
         String sql = """
                 SELECT o.id as id, o.user_id, o.order_date, o.delivery_date, o.status_order, o.shipping_fee,
                 o.total_must_pay, ao.phone_number, ao.address_detail, ao.receiver_name,
-                 pm.name_method
+                 o.payment_method_snapshot as name_method
                 FROM orders o
                 JOIN address_order ao ON ao.id = o.address_order_id
-                JOIN payment_methods pm ON pm.id = o.payment_method_id
                 WHERE o.id = :orderId
                 """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
@@ -177,7 +187,7 @@ public class OrderDao {
             SELECT o.id as order_id, u.id as user_id, o.total_must_pay,
                    o.order_date, o.status_order, o.delivery_date,
                    ao.receiver_name, ao.phone_number, ao.address_detail,
-                   o.snapshot_valid, o.signature
+                   o.signature
             FROM orders o
             JOIN users u ON u.id = o.user_id
             JOIN address_order ao ON ao.id = o.address_order_id
