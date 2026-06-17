@@ -4,6 +4,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.snap.AddressOrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class OrderHashDataFormatter {
@@ -24,9 +25,10 @@ public class OrderHashDataFormatter {
      *
      * CHI PHÍ THANH TOÁN
      * Phí vận chuyển: 30000.00
+     * Ngày tạo đơn: xxxx
      * TỔNG TIỀN PHẢI TRẢ: 30020000.00
      */
-    public static String buildOrderHashSource(OrderSnapshot order) {
+    public static String    buildOrderFormatForHash(OrderSnapshot order) {
         if (order == null) {
             return "";
         }
@@ -83,6 +85,12 @@ public class OrderHashDataFormatter {
 
         sb.append("\nCHI PHÍ THANH TOÁN\n");
         sb.append("Phí vận chuyển: ").append(order.getShippingFee() != null ? order.getShippingFee().toPlainString() : "0").append("\n");
+        sb.append("Ngày tạo đơn: ")
+                .append(order.getOrderDate() != null
+                        ? order.getOrderDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
+                        : "")
+                .append("\n");
+
         sb.append("TỔNG TIỀN PHẢI TRẢ: ").append(order.getTotalMustPay() != null ? order.getTotalMustPay().toPlainString() : "0");
 
         return sb.toString();

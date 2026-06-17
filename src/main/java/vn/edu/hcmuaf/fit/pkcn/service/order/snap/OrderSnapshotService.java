@@ -10,7 +10,12 @@ public class OrderSnapshotService {
         this.orderSnapshotDAO = orderSnapshotDAO;
     }
 
-    public OrderSnapshot getOrderSnapshotsByOrderId(Integer orderId) {
-        return orderSnapshotDAO.getOrderDetailsByOrderId(orderId);
+    //phuong thuc nay kiem tra don hang co phai cua nguoi dung khong truoc khi lay ra don hang do
+    public OrderSnapshot getOrderSnapshotsByOrderId(Integer orderId, Integer userId) {
+        return orderSnapshotDAO.getOrderDetailsByOrderId(orderId, userId);
+    }
+
+    public boolean saveSignatureAndUserKeyId(Integer orderId, Integer userKeyId, String signature) {
+        return orderSnapshotDAO.saveSignatureAndUserKeyId(orderId, userKeyId, signature);
     }
 }
