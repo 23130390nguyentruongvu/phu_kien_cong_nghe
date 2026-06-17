@@ -10,6 +10,7 @@ public abstract class PriceFormatUtils {
 
     public static String formatPrice(String pattern, Number price) {
         if (pattern == null || pattern.isEmpty()) return "";
+        if (price == null) price = 0;
         df.applyPattern(pattern);
         return df.format(price);
     }

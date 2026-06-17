@@ -104,8 +104,9 @@ public class JsonUpdateOrderServlet extends HttpServlet {
                     int newQty = Integer.parseInt(quantitiesArr[i]);
                     int oldQty = oldVariants.getOrDefault(variantId, 0);
 
-                    BigDecimal price = handle.createQuery("SELECT price FROM product_variants WHERE id = :id")
-                            .bind("id", variantId)
+                    BigDecimal price = handle.createQuery("SELECT variant_price_snapshot FROM order_details WHERE id = :id AND order_id = :oid")
+                            .bind("id", orderDetailId)
+                            .bind("oid", orderId)
                             .mapTo(BigDecimal.class)
                             .one();
 
