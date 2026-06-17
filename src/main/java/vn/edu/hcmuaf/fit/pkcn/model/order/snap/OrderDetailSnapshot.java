@@ -16,13 +16,14 @@ public class OrderDetailSnapshot {
     private String sizeSnapshot;
     private Integer quantity;
     private BigDecimal priceTotal;
+    private String urlImage;
 
     public OrderDetailSnapshot() {}
 
     public OrderDetailSnapshot(Integer id, Integer orderId, Integer productVariantId, String productNameSnapshot,
                                String variantNameSnapshot, String skuSnapshot, BigDecimal variantPriceSnapshot,
                                Integer gramSnapshot, String colorSnapshot, String sizeSnapshot, Integer quantity,
-                               BigDecimal priceTotal) {
+                               BigDecimal priceTotal, String urlImage) {
         this.id = id;
         this.orderId = orderId;
         this.productVariantId = productVariantId;
@@ -35,6 +36,7 @@ public class OrderDetailSnapshot {
         this.sizeSnapshot = sizeSnapshot;
         this.quantity = quantity;
         this.priceTotal = priceTotal;
+        this.urlImage = urlImage;
     }
 
     @ColumnName("id")
@@ -143,5 +145,14 @@ public class OrderDetailSnapshot {
 
     public void setPriceTotal(BigDecimal priceTotal) {
         this.priceTotal = priceTotal;
+    }
+
+    @ColumnName("image_url_snapshot")
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }

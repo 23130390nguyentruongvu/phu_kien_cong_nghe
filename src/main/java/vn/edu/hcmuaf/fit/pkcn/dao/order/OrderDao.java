@@ -21,7 +21,7 @@ public class OrderDao {
 
     public HashMap<Integer, OrderShowAsItem> getOrdersShowAsItem(int userId, String status) {
         String filter = status == null ? ":status IS NULL" : "o.status_order = :status";
-        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note " +
+        String sql = "SELECT o.id, o.status_order, o.total_must_pay, ao.address_detail, ao.note, o.signature " +
                 "FROM orders o " +
                 "JOIN address_order ao ON ao.id = o.address_order_id " +
                 "WHERE o.user_id = :userId AND " + filter + " " +
@@ -66,8 +66,8 @@ public class OrderDao {
     }
 
     public int insertOrder(Handle handle, int userId, int addressOrderId, double total, String note, double shipFee, int paymentMethodId) {
-        String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id,payment_method_snapshot, order_date, note, delivery_date) " +
-                "VALUES (:userId, :addressOrderId, :total, :status, :shipFee, :paymentMethodId,:paymentMethodSnapshot, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
+        String sql = "INSERT INTO orders (user_id, address_order_id, total_must_pay, status_order, shipping_fee, payment_method_id, order_date, note, delivery_date) " +
+                "VALUES (:userId, :addressOrderId, :total, :status, :shipFee, :paymentMethodId, NOW(), :note, DATE_ADD(NOW(), INTERVAL 3 DAY))";
 
         return handle.createUpdate(sql)
                 .bind("userId", userId)
@@ -76,7 +76,6 @@ public class OrderDao {
                 .bind("status", OrderStatus.PENDING_SIGNATURE.getCode())
                 .bind("shipFee", shipFee)
                 .bind("paymentMethodId", paymentMethodId)
-                .bind("paymentMethodSnapshot", paymentMethodId)
                 .bind("note", note)
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
@@ -84,26 +83,30 @@ public class OrderDao {
     }
 
     public void insertOrderDetail(Handle handle, int orderId, CartItem item) {
-        String sql = "INSERT INTO order_details (order_id, product_variant_id, quantity, price_total, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot) VALUES(:oid, :vid, :qty, :price, :productName, :variantName, :sku, :variantPrice, :gram, :color, :size)";
+        String sql = "INSERT INTO order_details (order_id, product_variant_id, " +
+                "product_name_snapshot, variant_name_snapshot, sku_snapshot, " +
+                "variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, " +
+                "quantity, price_total) " +
+                "VALUES (:oid, :vid, :prodName, :varName, :sku, :varPrice, :gram, :color, :size, :qty, :price)";
         handle.createUpdate(sql)
                 .bind("oid", orderId)
                 .bind("vid", item.getProductVariantId())
-                .bind("qty", item.getQuantity())
-                .bind("price", item.getPrice())
-                .bind("productName", item.getNameProduct())
-                .bind("variantName",item.getProductVariant().getName())
+                .bind("prodName", item.getNameProduct())
+                .bind("varName", item.getProductVariant().getName())
                 .bind("sku", item.getProductVariant().getSku())
-                .bind("variantPrice", item.getProductVariant().getPrice())
+                .bind("varPrice", item.getProductVariant().getPrice())
                 .bind("gram", item.getProductVariant().getGram())
                 .bind("color", item.getProductVariant().getColor())
                 .bind("size", item.getProductVariant().getSize())
+                .bind("qty", item.getQuantity())
+                .bind("price", item.getPrice())
                 .execute();
     }
 
     public List<OrderDetailItem> getOrderDetailItems(int orderId) {
         String sql = """
             SELECT 
-                order_id, id, product_variant_id AS variant_id,     product_name_snapshot AS name,variant_name_snapshot AS type,quantity, variant_price_snapshot AS price,price_total
+                order_id, id, product_variant_id AS variant_id, product_name_snapshot AS name,variant_name_snapshot AS type,quantity, variant_price_snapshot AS price,price_total
             FROM order_details
             WHERE order_id = :orderId
             """;
@@ -113,7 +116,8 @@ public class OrderDao {
                 .list()
         );
     }
-    public OrderDetail getOrderDetail(int orderId) {
+
+   public OrderDetail getOrderDetail(int orderId) {
         String sql = """
             SELECT 
                 o.id, o.user_id, o.order_date,o.delivery_date, o.status_order, o.shipping_fee,o.total_must_pay, ao.phone_number, ao.address_detail, ao.receiver_name,o.payment_method_snapshot AS name_method
@@ -128,6 +132,7 @@ public class OrderDao {
                 .orElse(null)
         );
     }
+
     public int setStatusOrder(Handle handle, int orderId, String status) {
         String sql = """
                 UPDATE orders
@@ -179,7 +184,8 @@ public class OrderDao {
         StringBuilder sql = new StringBuilder("""
             SELECT o.id as order_id, u.id as user_id, o.total_must_pay,
                    o.order_date, o.status_order, o.delivery_date,
-                   ao.receiver_name, ao.phone_number, ao.address_detail
+                   ao.receiver_name, ao.phone_number, ao.address_detail,
+                   o.signature
             FROM orders o
             JOIN users u ON u.id = o.user_id
             JOIN address_order ao ON ao.id = o.address_order_id

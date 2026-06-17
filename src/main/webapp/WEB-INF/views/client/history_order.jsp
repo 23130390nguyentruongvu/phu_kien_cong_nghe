@@ -54,17 +54,29 @@
                 <c:forEach var="order" items="${requestScope.orders}">
                     <div class="wrap-content-order" data-id="${order.orderId}">
                         <div class="header-order">
-                            <c:if test="${order.status == 'pending_signature'}">
-                                <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
-                                    <i class="fa-solid fa-file-signature"></i>
-                                    <span class="btn-sign-text">Ký đơn hàng</span>
-                                </button>
-                            </c:if>
-                            <span class="status-order"><strong>Trạng thái:
-                            <em class="${order.status}">${order.statusDisplay}</em>
-                        </strong>
-                            <span class="status-description ${order.status}">${order.statusDisplay}</span>
-                        </span>
+                            <div class="header-order-top">
+                                <c:choose>
+                                    <c:when test="${order.verifyStatus == 'verified'}">
+                                        <span class="verify-icon verified" title="Chữ ký hợp lệ"><i class="fa-solid fa-circle-check"></i></span>
+                                    </c:when>
+                                    <c:when test="${order.verifyStatus == 'tampered'}">
+                                        <span class="verify-icon tampered" title="Dữ liệu đơn hàng đã bị thay đổi!"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="verify-icon unsigned" title="Chưa ký"><i class="fa-regular fa-circle"></i></span>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${order.status == 'pending_signature' || order.status == 'waiting_re_sign'}">
+                                    <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
+                                        <i class="fa-solid fa-file-signature"></i>
+                                        <span class="btn-sign-text">Ký đơn hàng</span>
+                                    </button>
+                                </c:if>
+                            </div>
+                            <span class="status-order">
+                                <strong>Trạng thái:</strong>
+                                <em class="${order.status}">${order.statusDisplay}</em>
+                            </span>
                             <c:if test="${not empty order.description}">
                                 <div class="order-note">
                                     <i class="fa-solid fa-note-sticky"></i>

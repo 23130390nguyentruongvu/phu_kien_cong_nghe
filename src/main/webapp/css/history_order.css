@@ -306,3 +306,43 @@
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
 }
+
+.header-order-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.verify-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.verify-icon:hover {
+    transform: scale(1.2);
+}
+
+.verify-icon.verified {
+    color: #16a34a;
+}
+
+.verify-icon.tampered {
+    color: #dc2626;
+    animation: pulse-alert 1.5s ease-in-out infinite;
+}
+
+.verify-icon.unsigned {
+    color: #9ca3af;
+}
+
+@keyframes pulse-alert {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
