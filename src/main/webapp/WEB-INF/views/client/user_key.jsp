@@ -83,7 +83,6 @@
                         </div>
 
                         <button type="submit" class="btn-submit-key">Kích hoạt &amp; Lưu</button>
-                        <p class="form-note">Khóa mới sẽ thay thế khóa cũ nếu đã tồn tại.</p>
                     </form>
                 </div>
 

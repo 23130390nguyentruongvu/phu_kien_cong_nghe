@@ -181,4 +181,20 @@ public class OrderSnapshotDAO {
             return orders;
         });
     }
+
+    public OrderSnapshot getOrderSnapshotByOrderId(Integer orderId) {
+        String sql = """
+                SELECT *
+                FROM orders
+                WHERE id = :orderId
+                """;
+
+        return jdbi.withHandle(handle -> {
+           return handle.createQuery(sql)
+                   .bind("orderId", orderId)
+                   .mapToBean(OrderSnapshot.class)
+                   .findOne()
+                   .orElse(null);
+        });
+    }
 }
