@@ -61,12 +61,12 @@ public class OrderSnapshotDAO {
                 """;
 
         return jdbi.withHandle(handle -> {
-           return handle.createUpdate(sql)
-                   .bind("statusOrder", OrderStatus.SIGNED)
-                   .bind("orderId", orderId)
-                   .bind("signature", signature)
-                   .bind("userKeyId", userKeyId)
-                   .execute() > 0;
+            return handle.createUpdate(sql)
+                    .bind("statusOrder", OrderStatus.SIGNED)
+                    .bind("orderId", orderId)
+                    .bind("signature", signature)
+                    .bind("userKeyId", userKeyId)
+                    .execute() > 0;
         });
     }
 
@@ -80,7 +80,7 @@ public class OrderSnapshotDAO {
                 result.put(id, new ArrayList<>());
             }
             List<OrderDetailSnapshot> details = handle.createQuery(
-                    "SELECT * FROM order_details WHERE order_id IN (<orderIds>)")
+                            "SELECT * FROM order_details WHERE order_id IN (<orderIds>)")
                     .bindList("orderIds", orderIds)
                     .mapToBean(OrderDetailSnapshot.class)
                     .list();
@@ -96,9 +96,9 @@ public class OrderSnapshotDAO {
 
     public List<OrderSnapshot> getOrdersByUserId(Integer userId, String statusFilter) {
         StringBuilder sql = new StringBuilder("""
-        SELECT o.* FROM orders o
-        WHERE o.user_id = :userId
-        """);
+                SELECT o.* FROM orders o
+                WHERE o.user_id = :userId
+                """);
 
         if (statusFilter != null && !statusFilter.isEmpty()) {
             sql.append(" AND o.status_order = :statusFilter");
@@ -138,11 +138,11 @@ public class OrderSnapshotDAO {
 
     public List<OrderSnapshot> getOrdersForAdmin(String key, String status) {
         StringBuilder sql = new StringBuilder("""
-        SELECT o.* FROM orders o
-        JOIN users u ON u.id = o.user_id
-        JOIN address_order ao ON ao.id = o.address_order_id
-        WHERE 1=1
-        """);
+                SELECT o.* FROM orders o
+                JOIN users u ON u.id = o.user_id
+                JOIN address_order ao ON ao.id = o.address_order_id
+                WHERE 1=1
+                """);
 
         if (key != null && !key.isEmpty()) {
             sql.append(" AND (CAST(o.id AS CHAR) LIKE :keyPattern OR ao.receiver_name LIKE :keyPattern OR u.full_name LIKE :keyPattern)");
@@ -186,18 +186,20 @@ public class OrderSnapshotDAO {
             return orders;
         });
     }
+
     public List<OrderDetailSnapshot> getOrderDetailItems(int orderId) {
         String sql = """
-              SELECT id, order_id, product_variant_id, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, quantity, price_total
-              FROM order_details 
-              WHERE order_id = :orderId
-              """;
+                SELECT id, order_id, product_variant_id, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, quantity, price_total
+                FROM order_details 
+                WHERE order_id = :orderId
+                """;
         return jdbi.withHandle(handle -> handle.createQuery(sql)
-                .bind("orderId",orderId)
+                .bind("orderId", orderId)
                 .mapToBean(OrderDetailSnapshot.class)
                 .list());
 
     }
+
     public OrderSnapshot getOrderDetail(int orderId) {
         String sql = """
                 SELECT id, user_id, payment_method_id, payment_method_snapshot,address_order_id,status_order,total_must_pay,order_date,delivery_date,shipping_fee, note,signature,user_key_id,expire_sign_key
@@ -214,10 +216,10 @@ public class OrderSnapshotDAO {
             return null;
         }
         String addressSql = """
-            SELECT id, receiver_name, phone_number, address_detail, district, province_city, note
-            FROM address_order
-            WHERE id = :addressOrderId
-            """;
+                SELECT id, receiver_name, phone_number, address_detail, district, province_city, note
+                FROM address_order
+                WHERE id = :addressOrderId
+                """;
         AddressOrderSnapshot addressSnapshot = jdbi.withHandle(handle -> handle.createQuery(addressSql)
                 .bind("addressOrderId", orderSnapshot.getAddressOrderId())
                 .mapToBean(AddressOrderSnapshot.class)
@@ -229,24 +231,26 @@ public class OrderSnapshotDAO {
         orderSnapshot.setOrderDetailSnapshots(detailSnapshots);
         return orderSnapshot;
     }
-    public int insertOrder(Handle handle,Integer userId,Integer paymentMethodId, String paymentMethodSnapshot, Integer addressOrderId,String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee, String note) {
+
+    public int insertOrder(Handle handle, Integer userId, Integer paymentMethodId, String paymentMethodSnapshot, Integer addressOrderId, String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee, String note) {
         String sql =
                 "INSERT INTO orders (user_id, payment_method_id, payment_method_snapshot, address_order_id, status_order, total_must_pay, order_date, delivery_date, shipping_fee, note)" +
                         "VALUES(:userId, :paymentMethodId,:paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay, NOW(),DATE_ADD(NOW(), INTERVAL 3 DAY),:shippingFee, :note)";
         return handle.createUpdate(sql)
-                .bind("userId",userId)
-                .bind("paymentMethodId",paymentMethodId)
-                .bind("paymentMethodSnapshot",paymentMethodSnapshot)
-                .bind("addressOrderId",addressOrderId)
+                .bind("userId", userId)
+                .bind("paymentMethodId", paymentMethodId)
+                .bind("paymentMethodSnapshot", paymentMethodSnapshot)
+                .bind("addressOrderId", addressOrderId)
                 .bind("statusOrder", statusOrder)
-                .bind("totalMustPay",totalMustPay)
-                .bind("shippingFee",shippingFee)
+                .bind("totalMustPay", totalMustPay)
+                .bind("shippingFee", shippingFee)
                 .bind("note", note)
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
                 .one();
     }
-    public void insertOrderDetails(Handle handle, Integer orderId,Integer productVariantId, String productNameSnapshot, String variantNameSnapshot, String skuSnapshot, BigDecimal variantPriceSnapshot, Integer gramSnapshot, String colorSnapshot, String sizeSnapshot, Integer quantity, BigDecimal priceTotal){
+
+    public void insertOrderDetails(Handle handle, Integer orderId, Integer productVariantId, String productNameSnapshot, String variantNameSnapshot, String skuSnapshot, BigDecimal variantPriceSnapshot, Integer gramSnapshot, String colorSnapshot, String sizeSnapshot, Integer quantity, BigDecimal priceTotal) {
         String sql = "INSERT INTO order_details (order_id, product_variant_id, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, quantity, price_total)" +
                 "VALUES (:orderId, :vid, :proName, :varName, :sku, :varPrice, :gram, :color, :size, :qty, :price)";
         handle.createUpdate(sql)
@@ -263,7 +267,7 @@ public class OrderSnapshotDAO {
                 .bind("price", priceTotal)
                 .execute();
 
-
+    }
     public OrderSnapshot getOrderSnapshotByOrderId(Integer orderId) {
         String sql = """
                 SELECT *
@@ -272,11 +276,12 @@ public class OrderSnapshotDAO {
                 """;
 
         return jdbi.withHandle(handle -> {
-           return handle.createQuery(sql)
-                   .bind("orderId", orderId)
-                   .mapToBean(OrderSnapshot.class)
-                   .findOne()
-                   .orElse(null);
+            return handle.createQuery(sql)
+                    .bind("orderId", orderId)
+                    .mapToBean(OrderSnapshot.class)
+                    .findOne()
+                    .orElse(null);
         });
     }
 }
+
