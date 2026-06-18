@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderSnapshotService {
@@ -136,5 +137,8 @@ public class OrderSnapshotService {
 
             cart.clearCart();
         });
+
+    public List<OrderSnapshot> getOrderSnapshotByUserId(Integer userId, String statusFilter) {
+        return orderSnapshotDAO.getOrdersByUserId(userId, statusFilter);
     }
 }

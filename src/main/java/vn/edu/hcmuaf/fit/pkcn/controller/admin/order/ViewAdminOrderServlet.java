@@ -20,6 +20,7 @@ import vn.edu.hcmuaf.fit.pkcn.utils.VerifySignature;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ViewAdminOrderServlet", value = "/admin-order")
@@ -54,11 +55,13 @@ public class ViewAdminOrderServlet extends HttpServlet {
             if (statusFilter != null && statusFilter.isEmpty()) {
                 statusFilter = null;
             }
+
+            String verifyFilter = request.getParameter("verifyFilter");
             List<OrderSnapshot> orders = orderSnapshotService.getOrderSnapshotsForAdmin(key, statusFilter);
 
             //check verify
-            for(OrderSnapshot orderSnapshot: orders) {
-                if(orderSnapshot.getSignature() == null) {
+            for (OrderSnapshot orderSnapshot : orders) {
+                if (orderSnapshot.getSignature() == null) {
                     orderSnapshot.setVerify(false);
                     continue;
                 }
@@ -68,7 +71,7 @@ public class ViewAdminOrderServlet extends HttpServlet {
 //                    continue;
 //                }
                 UserKeyDTO userKeyDTO = userKeyService.getUserKeyById(orderSnapshot.getUserKeyId());
-                if(userKeyDTO == null) {
+                if (userKeyDTO == null) {
                     orderSnapshot.setVerify(false);
                     continue;
                 }
@@ -84,7 +87,27 @@ public class ViewAdminOrderServlet extends HttpServlet {
                 orderSnapshot.setVerify(isVerity);
             }
 
-            request.setAttribute("orders", orders);
+            List<OrderSnapshot> res;
+
+            if (verifyFilter == null || verifyFilter.equalsIgnoreCase("both"))
+                request.setAttribute("orders", orders);
+            else if (verifyFilter.equalsIgnoreCase("verify")) {
+                res = new ArrayList<>();
+                for(OrderSnapshot orderSnapshot: orders)
+                    if(orderSnapshot.isVerify())
+                        res.add(orderSnapshot);
+
+                request.setAttribute("orders", res);
+            } else if (verifyFilter.equalsIgnoreCase("un-verify")) {
+                res = new ArrayList<>();
+                for(OrderSnapshot orderSnapshot: orders)
+                    if(!orderSnapshot.isVerify())
+                        res.add(orderSnapshot);
+
+                request.setAttribute("orders", res);
+            }
+
+            request.setAttribute("verifyFilter", verifyFilter);
             request.setAttribute("keySearch", key);
             request.setAttribute("statusFilter", statusFilter);
             request.setAttribute("navLink", 4);

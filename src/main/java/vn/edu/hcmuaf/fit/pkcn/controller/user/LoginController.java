@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", user);
                 session.setAttribute("cart", cart);
                 if (user.getRole() == 1) {
-                    response.sendRedirect(request.getContextPath() + "/overview");
+                    response.sendRedirect(request.getContextPath() + "/admin-order");
                 } else if (user.getRole() == 2) {
                     response.sendRedirect(request.getContextPath() + "/");
                 }

@@ -94,6 +94,48 @@ public class OrderSnapshotDAO {
         });
     }
 
+    public List<OrderSnapshot> getOrdersByUserId(Integer userId, String statusFilter) {
+        StringBuilder sql = new StringBuilder("""
+        SELECT o.* FROM orders o
+        WHERE o.user_id = :userId
+        """);
+
+        if (statusFilter != null && !statusFilter.isEmpty()) {
+            sql.append(" AND o.status_order = :statusFilter");
+        }
+
+        sql.append(" ORDER BY o.order_date DESC");
+
+        String finalSql = sql.toString();
+
+        return jdbi.withHandle(handle -> {
+            var query = handle.createQuery(finalSql)
+                    .bind("userId", userId);
+
+            if (statusFilter != null && !statusFilter.isEmpty()) {
+                query.bind("statusFilter", statusFilter);
+            }
+
+            List<OrderSnapshot> orders = query.mapToBean(OrderSnapshot.class).list();
+            for (OrderSnapshot order : orders) {
+                AddressOrderSnapshot address = handle.createQuery("SELECT * FROM address_order WHERE id = :id")
+                        .bind("id", order.getAddressOrderId())
+                        .mapToBean(AddressOrderSnapshot.class)
+                        .findOne()
+                        .orElse(null);
+                order.setAddressOrderSnapshot(address);
+
+                List<OrderDetailSnapshot> details = handle.createQuery("SELECT * FROM order_details WHERE order_id = :orderId")
+                        .bind("orderId", order.getId())
+                        .mapToBean(OrderDetailSnapshot.class)
+                        .list();
+                order.setOrderDetailSnapshots(details);
+            }
+
+            return orders;
+        });
+    }
+
     public List<OrderSnapshot> getOrdersForAdmin(String key, String status) {
         StringBuilder sql = new StringBuilder("""
         SELECT o.* FROM orders o
@@ -221,5 +263,20 @@ public class OrderSnapshotDAO {
                 .bind("price", priceTotal)
                 .execute();
 
+
+    public OrderSnapshot getOrderSnapshotByOrderId(Integer orderId) {
+        String sql = """
+                SELECT *
+                FROM orders
+                WHERE id = :orderId
+                """;
+
+        return jdbi.withHandle(handle -> {
+           return handle.createQuery(sql)
+                   .bind("orderId", orderId)
+                   .mapToBean(OrderSnapshot.class)
+                   .findOne()
+                   .orElse(null);
+        });
     }
 }

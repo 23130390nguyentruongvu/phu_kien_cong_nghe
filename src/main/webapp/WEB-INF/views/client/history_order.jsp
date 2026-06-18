@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,20 +17,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/history_order.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css">
-
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main>
     <div class="wrap-content-all">
-        <!--    open account nav-->
         <jsp:include page="/WEB-INF/views/common/sidebar_user.jsp"/>
-        <!--    close account nav-->
-        <!--        open main content-->
         <div class="main-content">
              <span class="filter">
-                    <form class="form-filter" method="get" action="${pageContext.request.contextPath}/order-history"
-                          onchange="this.submit()">
+                  <form class="form-filter" method="get" action="${pageContext.request.contextPath}/order-history"
+                        onchange="this.submit()">
                         <select name="filter-by" class="filter-by">
                             <option value="" ${empty requestScope.filterBy ? 'selected' : ''}>Tất cả trạng thái</option>
                             <option value="pending_signature" ${requestScope.filterBy == 'pending_signature' ? 'selected' : ''}>Chờ khách hàng ký số</option>
@@ -43,71 +39,100 @@
                             <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
                             <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
+
+                        <select style="margin-left: 18px" name="verifyFilter" class="filter-by"
+                                onchange="this.form.submit()">
+                    <option value="both" ${requestScope.verifyFilter == 'both' || empty requestScope.verifyFilter ? 'selected' : ''}>Đơn xác thực và không xác thực</option>
+                    <option value="verify" ${requestScope.verifyFilter == 'verify' ? 'selected' : ''}>Đơn xác thực</option>
+                    <option value="un-verify" ${requestScope.verifyFilter == 'un-verify' ? 'selected' : ''}>Đơn không xác thực</option>
+                </select>
                     </form>
                 </span>
             <c:if test="${empty requestScope.orders}">
-                <div class="wrap-content-order" data-id="${-1}">
+                <div class="wrap-content-order">
                     <h3>Không tìm thấy đơn hàng nào</h3>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.orders}">
                 <c:forEach var="order" items="${requestScope.orders}">
-                    <div class="wrap-content-order" data-id="${order.orderId}">
+                    <div class="wrap-content-order" data-id="${order.id}">
                         <div class="header-order">
                             <div class="header-order-top">
                                 <c:choose>
-                                    <c:when test="${order.verifyStatus == 'verified'}">
-                                        <span class="verify-icon verified" title="Chữ ký hợp lệ"><i class="fa-solid fa-circle-check"></i></span>
+                                    <c:when test="${order.verify == false}">
+                                        <span class="verify-icon no-verify"><i style="color: #dc2626"
+                                                                               class="fa-solid fa-minus"></i>
+</span>
                                     </c:when>
-                                    <c:when test="${order.verifyStatus == 'tampered'}">
-                                        <span class="verify-icon tampered" title="Dữ liệu đơn hàng đã bị thay đổi!"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                    <c:when test="${order.verify == true}">
+                                        <span class="verify-icon verified"><i
+                                                class="fa-solid fa-circle-check"></i></span>
                                     </c:when>
-                                    <c:otherwise>
-                                        <span class="verify-icon unsigned" title="Chưa ký"><i class="fa-regular fa-circle"></i></span>
-                                    </c:otherwise>
+
                                 </c:choose>
-                                <c:if test="${order.status == 'pending_signature' || order.status == 'waiting_re_sign'}">
-                                    <button type="button" class="btn-sign-order" data-order-id="${order.orderId}">
+
+                                <c:if test="${order.statusOrder == 'pending_signature' || order.statusOrder == 'waiting_re_sign'}">
+                                    <button type="button" class="btn-sign-order" data-order-id="${order.id}">
                                         <i class="fa-solid fa-file-signature"></i>
                                         <span class="btn-sign-text">Ký đơn hàng</span>
                                     </button>
                                 </c:if>
                             </div>
                             <span class="status-order">
+                                <strong>Mã đơn hàng:</strong> <em>#${order.id}</em> |
                                 <strong>Trạng thái:</strong>
-                                <em class="${order.status}">${order.statusDisplay}</em>
+                                <em class="${order.statusOrder}">${order.statusOrder}</em>
                             </span>
-                            <c:if test="${not empty order.description}">
+
+                            <c:if test="${not empty order.note}">
                                 <div class="order-note">
                                     <i class="fa-solid fa-note-sticky"></i>
-                                    <span>${order.description}</span>
+                                    <span>${order.note}</span>
                                 </div>
                             </c:if>
-                            <span class="address-shipping"><em><i
-                                    class="fa-regular fa-truck"></i> ${order.address}</em></span>
 
+                            <span class="address-shipping">
+                                <em>
+                                    <i class="fa-solid fa-truck"></i>
+                                    Người nhận: ${order.addressOrderSnapshot.receiverName} (${order.addressOrderSnapshot.phoneNumber}) - ${order.addressOrderSnapshot.addressDetail}
+                                </em>
+                            </span>
                         </div>
-                        <c:forEach var="orderDetail" items="${order.orderDetails}">
+
+                        <c:forEach var="orderDetail" items="${order.orderDetailSnapshots}">
                             <div class="per-cart-item">
-                    <span class="img-cart-item"><img src="${orderDetail.urlImage}"
-                                                     loading="lazy"></span>
                                 <span class="info-base-cart-item">
-                    <span class="name-cart-item"><strong>${orderDetail.name}</strong></span>
-                    <div class="info-cart-item">${orderDetail.type}</div>
-                        <div class="info-quantity-cart-item">Số lượng: ${orderDetail.quantity}</div>
-                    <div class="price-cart-item">${orderDetail.priceByFormat}</div>
-                </span>
+                                    <%-- Tên sản phẩm lưu trong Snapshot --%>
+                                    <span class="name-cart-item"><strong>${orderDetail.productNameSnapshot}</strong></span>
+
+                                    <%-- Thông tin phân loại cấu hình sản phẩm --%>
+                                    <div class="info-cart-item">
+                                        Phân loại: ${orderDetail.variantNameSnapshot}
+                                        <c:if test="${not empty orderDetail.colorSnapshot}"> | Màu: ${orderDetail.colorSnapshot}</c:if>
+                                        <c:if test="${not empty orderDetail.sizeSnapshot}"> | Kích thước: ${orderDetail.sizeSnapshot}</c:if>
+                                    </div>
+
+                                    <div class="info-quantity-cart-item">Số lượng: ${orderDetail.quantity}</div>
+
+                                    <div class="price-cart-item">
+                                        Đơn giá: <fmt:formatNumber value="${orderDetail.variantPriceSnapshot}"
+                                                                   type="currency" currencySymbol="đ"
+                                                                   maxFractionDigits="0"/>
+                                    </div>
+                                </span>
                             </div>
                         </c:forEach>
+
                         <div class="footer-order">
-                            <p class="price-total-pay-order"><i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
-                                    ${order.priceFormat}
+                            <p class="price-total-pay-order">
+                                <i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
+                                <fmt:formatNumber value="${order.totalMustPay}" type="currency" currencySymbol="đ"
+                                                  maxFractionDigits="0"/>
                             </p>
                         </div>
                     </div>
                 </c:forEach>
             </c:if>
-            <!--        close main content-->
         </div>
     </div>
 </main>
