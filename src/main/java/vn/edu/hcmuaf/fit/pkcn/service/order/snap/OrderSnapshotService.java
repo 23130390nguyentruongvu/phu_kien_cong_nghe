@@ -47,11 +47,11 @@ public class OrderSnapshotService {
         JDBI.getJdbi().useTransaction(handle -> {
             for (CartItem item : cart.getCartItems()) {
                 Integer currentStock = handle.createQuery("""
-                    SELECT stock
-                    FROM product_variants
-                    WHERE id = :id
-                    FOR UPDATE
-                    """)
+                                SELECT stock
+                                FROM product_variants
+                                WHERE id = :id
+                                FOR UPDATE
+                                """)
                         .bind("id", item.getProductVariantId())
                         .mapTo(Integer.class)
                         .findOne()
@@ -67,9 +67,9 @@ public class OrderSnapshotService {
             }
 
             String insertAddressSql = """
-                INSERT INTO address_order (receiver_name, phone_number, address_detail, district, province_city, note)
-                VALUES (:name, :phone, :detail, :district, :province, :note)
-                """;
+                    INSERT INTO address_order (receiver_name, phone_number, address_detail, district, province_city, note)
+                    VALUES (:name, :phone, :detail, :district, :province, :note)
+                    """;
 
             int generatedAddressOrderId = handle.createUpdate(insertAddressSql)
                     .bind("name", address.getReceiverName())
@@ -116,20 +116,20 @@ public class OrderSnapshotService {
                         lineTotal
                 );
                 handle.createUpdate("""
-                    UPDATE product_variants
-                    SET stock = stock - :qty
-                    WHERE id = :vid
-                    """)
+                                UPDATE product_variants
+                                SET stock = stock - :qty
+                                WHERE id = :vid
+                                """)
                         .bind("qty", item.getQuantity())
                         .bind("vid", pv.getId())
                         .execute();
 
                 handle.createUpdate("""
-                    UPDATE products p
-                    JOIN product_variants pv ON p.id = pv.product_id
-                    SET p.stock = p.stock - :qty
-                    WHERE pv.id = :vid
-                    """)
+                                UPDATE products p
+                                JOIN product_variants pv ON p.id = pv.product_id
+                                SET p.stock = p.stock - :qty
+                                WHERE pv.id = :vid
+                                """)
                         .bind("qty", item.getQuantity())
                         .bind("vid", pv.getId())
                         .execute();
@@ -138,6 +138,7 @@ public class OrderSnapshotService {
             cart.clearCart();
         });
 
+    }
     public List<OrderSnapshot> getOrderSnapshotByUserId(Integer userId, String statusFilter) {
         return orderSnapshotDAO.getOrdersByUserId(userId, statusFilter);
     }
