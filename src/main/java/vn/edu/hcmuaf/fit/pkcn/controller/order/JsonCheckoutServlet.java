@@ -8,11 +8,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
+import vn.edu.hcmuaf.fit.pkcn.service.order.snap.OrderSnapshotService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
@@ -24,7 +26,7 @@ import java.util.Map;
 public class JsonCheckoutServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderService orderService = new OrderService(JDBI.getJdbi());
+        OrderSnapshotService orderService = new OrderSnapshotService(new OrderSnapshotDAO(JDBI.getJdbi()));
         ShippingFeeService shippingFeeService = new ShippingFeeService(JDBI.getJdbi());
         AddressService addressService = new AddressService(JDBI.getJdbi());
         HttpSession session = request.getSession();
@@ -38,7 +40,6 @@ public class JsonCheckoutServlet extends HttpServlet {
         String addressId1 = request.getParameter("selectedAddressId");
         String note = request.getParameter("note");
         String paymentMethodIdStr = request.getParameter("paymentMethodId");
-
         Map<String, Object> map = new HashMap<>();
         String msg = null;
         boolean isSuccess = false;
@@ -52,9 +53,18 @@ public class JsonCheckoutServlet extends HttpServlet {
             if (msg == null) {
                 int addressId = Integer.parseInt(addressId1);
                 int paymentMethodId = Integer.parseInt(paymentMethodIdStr);
+                String paymentMethodName = JDBI.getJdbi().withHandle(handle ->
+                        handle.createQuery("SELECT name_method FROM payment_methods WHERE id = :id")
+                                .bind("id",paymentMethodId)
+                                .mapTo(String.class)
+                                .findOne()
+                                .orElse("Chưa xác định"));
                 Address address = addressService.getAddressById(addressId);
+                if (address == null) {
+                    throw new RuntimeException("Địa chỉ không tồn tại trên hệ thống!");
+                }
                 double shippingFee = shippingFeeService.getPriceShipByAddress(address.getProvinceCity());
-                orderService.checkOut(user.getId(), addressId, note, cart, shippingFee, paymentMethodId);
+                orderService.checkOut(user.getId(), address, note, cart, shippingFee, paymentMethodId,paymentMethodName);
 
                 cart.clearCart();
                 isSuccess = true;
@@ -62,6 +72,7 @@ public class JsonCheckoutServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             msg = "Lỗi: " + e.getMessage();
         }
         map.put("success", isSuccess);
