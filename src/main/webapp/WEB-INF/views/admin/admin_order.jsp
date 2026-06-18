@@ -69,16 +69,14 @@
                         <tr>
                             <td class="verify-cell">
                                 <c:choose>
-                                    <%-- Sửa đổi: Kiểm tra qua biến logic Boolean 'isVerify' của Model --%>
-                                    <c:when test="${empty order.signature}">
-                                        <span class="verify-icon unsigned" title="Chưa ký số bảo vệ"><i class="fa-regular fa-circle"></i></span>
+                                    <c:when test="${order.verify == false}">
+                                        <span class="verify-icon no-verify"><i style="color: #dc2626" class="fa-solid fa-minus"></i>
+</span>
                                     </c:when>
                                     <c:when test="${order.verify == true}">
-                                        <span class="verify-icon verified" title="Chữ ký hợp lệ - Toàn vẹn dữ liệu"><i class="fa-solid fa-circle-check"></i></span>
+                                        <span class="verify-icon verified" ><i class="fa-solid fa-circle-check"></i></span>
                                     </c:when>
-                                    <c:otherwise>
-                                        <span class="verify-icon tampered" title="CẢNH BÁO: Dữ liệu đơn hàng đã bị thay đổi trái phép!"><i class="fa-solid fa-circle-exclamation"></i></span>
-                                    </c:otherwise>
+
                                 </c:choose>
                             </td>
                                 <%-- Sửa thuộc tính: orderId -> id --%>

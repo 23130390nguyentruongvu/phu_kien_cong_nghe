@@ -24,4 +24,8 @@ public class OrderSnapshotService {
     public List<OrderSnapshot> getOrderSnapshotsForAdmin(String key, String status) {
         return orderSnapshotDAO.getOrdersForAdmin(key, status);
     }
+
+    public List<OrderSnapshot> getOrderSnapshotByUserId(Integer userId, String statusFilter) {
+        return orderSnapshotDAO.getOrdersByUserId(userId, statusFilter);
+    }
 }

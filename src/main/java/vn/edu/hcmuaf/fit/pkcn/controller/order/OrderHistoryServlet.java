@@ -5,11 +5,20 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.OrderDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
+import vn.edu.hcmuaf.fit.pkcn.dao.user.UserKeyDao;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
+import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
 import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
+import vn.edu.hcmuaf.fit.pkcn.service.order.snap.OrderSnapshotService;
+import vn.edu.hcmuaf.fit.pkcn.service.user.UserKeyService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
+import vn.edu.hcmuaf.fit.pkcn.utils.OrderHashDataFormatter;
+import vn.edu.hcmuaf.fit.pkcn.utils.VerifySignature;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.io.IOException;
@@ -36,8 +45,49 @@ public class OrderHistoryServlet extends HttpServlet {
                     status = null;
                 }
 
-                List<OrderShowAsItem> res = orderService.getOrdersShowAsItem(user.getId(), status);
-                request.setAttribute("orders", res);
+                OrderSnapshotService orderSnapshotService = new OrderSnapshotService(
+                        new OrderSnapshotDAO(JDBI.getJdbi())
+                );
+
+                UserKeyService userKeyService = new UserKeyService(
+                        new UserKeyDao(JDBI.getJdbi()),
+                        new UserDao(JDBI.getJdbi())
+                );
+
+                List<OrderSnapshot> orders = orderSnapshotService.getOrderSnapshotByUserId(
+                        user.getId(),
+                        status
+                );
+
+                //check verify
+                for(OrderSnapshot orderSnapshot: orders) {
+                    if(orderSnapshot.getSignature() == null) {
+                        orderSnapshot.setVerify(false);
+                        continue;
+                    }
+//                if(orderSnapshot.getStatusOrder().equals(OrderStatus.PENDING_SIGNATURE.getCode())
+//                || orderSnapshot.getStatusOrder().equals(OrderStatus.WAITING_RE_SIGN.getCode())) {
+//                    orderSnapshot.setVerify(false);
+//                    continue;
+//                }
+                    UserKeyDTO userKeyDTO = userKeyService.getUserKeyById(orderSnapshot.getUserKeyId());
+                    if(userKeyDTO == null) {
+                        orderSnapshot.setVerify(false);
+                        continue;
+                    }
+
+                    String formatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
+                    boolean isVerity = VerifySignature.verifySignature(
+                            userKeyDTO.getPublicKey(),
+                            orderSnapshot.getSignature(),
+                            formatData,
+                            userKeyDTO.getNameAlgorithm()
+                    );
+
+                    orderSnapshot.setVerify(isVerity);
+                }
+
+                request.setAttribute("orders", orders);
                 request.setAttribute("filterBy", status);
                 request.setAttribute("linkNav", 2);
 
