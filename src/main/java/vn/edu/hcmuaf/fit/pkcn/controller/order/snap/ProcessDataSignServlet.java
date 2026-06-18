@@ -24,6 +24,7 @@ import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -57,6 +58,9 @@ public class ProcessDataSignServlet extends HttpServlet {
             OrderSnapshot orderSnapshot = orderSnapshotService.getOrderSnapshotsByOrderId(orderId, userId);
             if(orderSnapshot == null)
                 throw new Exception("Không tìm thấy đơn hàng này");
+
+            if(orderSnapshot.getExpireSignKey().isBefore(LocalDateTime.now()))
+                throw new Exception("Đơn hàng này đã hết hạn kí, vui lòng tạo đơn mới");
 
             if(!orderSnapshot.getStatusOrder().equals(OrderStatus.PENDING_SIGNATURE.getCode())
             && !orderSnapshot.getStatusOrder().equals(OrderStatus.WAITING_RE_SIGN.getCode()))
@@ -128,6 +132,8 @@ public class ProcessDataSignServlet extends HttpServlet {
             OrderSnapshot orderSnapshot = orderSnapshotService.getOrderSnapshotsByOrderId(orderId, userId);
             if(orderSnapshot == null)
                 throw new Exception("Không tìm thấy đơn hàng");
+            if(orderSnapshot.getExpireSignKey().isBefore(LocalDateTime.now()))
+                throw new Exception("Đơn hàng này đã hết hạn kí, vui lòng tạo đơn mới");
 
             if(!orderSnapshot.getStatusOrder().equals(OrderStatus.PENDING_SIGNATURE.getCode())
                     && !orderSnapshot.getStatusOrder().equals(OrderStatus.WAITING_RE_SIGN.getCode()))
