@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.order.snap;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
@@ -9,6 +10,8 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class OrderSnapshotDAO {
@@ -183,5 +186,40 @@ public class OrderSnapshotDAO {
         List<OrderDetailSnapshot> detailSnapshots = getOrderDetailItems(orderId);
         orderSnapshot.setOrderDetailSnapshots(detailSnapshots);
         return orderSnapshot;
+    }
+    public int insertOrder(Handle handle,Integer userId,Integer paymentMethodId, String paymentMethodSnapshot, Integer addressOrderId,String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee, String note) {
+        String sql =
+                "INSERT INTO orders (user_id, payment_method_id, payment_method_snapshot, address_order_id, status_order, total_must_pay, order_date, delivery_date, shipping_fee, note)" +
+                        "VALUES(:userId, :paymentMethodId,:paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay, NOW(),DATE_ADD(NOW(), INTERVAL 3 DAY),:shippingFee, :note)";
+        return handle.createUpdate(sql)
+                .bind("userId",userId)
+                .bind("paymentMethodId",paymentMethodId)
+                .bind("paymentMethodSnapshot",paymentMethodSnapshot)
+                .bind("addressOrderId",addressOrderId)
+                .bind("statusOrder", statusOrder)
+                .bind("totalMustPay",totalMustPay)
+                .bind("shippingFee",shippingFee)
+                .bind("note", note)
+                .executeAndReturnGeneratedKeys()
+                .mapTo(Integer.class)
+                .one();
+    }
+    public void insertOrderDetails(Handle handle, Integer orderId,Integer productVariantId, String productNameSnapshot, String variantNameSnapshot, String skuSnapshot, BigDecimal variantPriceSnapshot, Integer gramSnapshot, String colorSnapshot, String sizeSnapshot, Integer quantity, BigDecimal priceTotal){
+        String sql = "INSERT INTO order_details (order_id, product_variant_id, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, quantity, price_total)" +
+                "VALUES (:orderId, :vid, :proName, :varName, :sku, :varPrice, :gram, :color, :size, :qty, :price)";
+        handle.createUpdate(sql)
+                .bind("orderId", orderId)
+                .bind("vid", productVariantId)
+                .bind("proName", productNameSnapshot)
+                .bind("varName", variantNameSnapshot)
+                .bind("sku", skuSnapshot)
+                .bind("varPrice", variantPriceSnapshot)
+                .bind("gram", gramSnapshot)
+                .bind("color", colorSnapshot)
+                .bind("size", sizeSnapshot)
+                .bind("qty", quantity)
+                .bind("price", priceTotal)
+                .execute();
+
     }
 }
