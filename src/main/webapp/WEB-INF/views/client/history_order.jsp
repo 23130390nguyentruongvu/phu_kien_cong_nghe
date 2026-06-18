@@ -39,6 +39,13 @@
                             <option value="cancel" ${requestScope.filterBy == 'cancel' ? 'selected' : ''}>Đã hủy</option>
                             <option value="pending" ${requestScope.filterBy == 'pending' ? 'selected' : ''}>Đang chờ xử lí</option>
                         </select>
+
+                        <select style="margin-left: 18px" name="verifyFilter" class="filter-by"
+                                onchange="this.form.submit()">
+                    <option value="both" ${requestScope.verifyFilter == 'both' || empty requestScope.verifyFilter ? 'selected' : ''}>Đơn xác thực và không xác thực</option>
+                    <option value="verify" ${requestScope.verifyFilter == 'verify' ? 'selected' : ''}>Đơn xác thực</option>
+                    <option value="un-verify" ${requestScope.verifyFilter == 'un-verify' ? 'selected' : ''}>Đơn không xác thực</option>
+                </select>
                     </form>
                 </span>
             <c:if test="${empty requestScope.orders}">
@@ -53,11 +60,13 @@
                             <div class="header-order-top">
                                 <c:choose>
                                     <c:when test="${order.verify == false}">
-                                        <span class="verify-icon no-verify"><i style="color: #dc2626" class="fa-solid fa-minus"></i>
+                                        <span class="verify-icon no-verify"><i style="color: #dc2626"
+                                                                               class="fa-solid fa-minus"></i>
 </span>
                                     </c:when>
                                     <c:when test="${order.verify == true}">
-                                        <span class="verify-icon verified" ><i class="fa-solid fa-circle-check"></i></span>
+                                        <span class="verify-icon verified"><i
+                                                class="fa-solid fa-circle-check"></i></span>
                                     </c:when>
 
                                 </c:choose>
@@ -106,7 +115,9 @@
                                     <div class="info-quantity-cart-item">Số lượng: ${orderDetail.quantity}</div>
 
                                     <div class="price-cart-item">
-                                        Đơn giá: <fmt:formatNumber value="${orderDetail.variantPriceSnapshot}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
+                                        Đơn giá: <fmt:formatNumber value="${orderDetail.variantPriceSnapshot}"
+                                                                   type="currency" currencySymbol="đ"
+                                                                   maxFractionDigits="0"/>
                                     </div>
                                 </span>
                             </div>
@@ -115,7 +126,8 @@
                         <div class="footer-order">
                             <p class="price-total-pay-order">
                                 <i class="fa-solid fa-dollar-sign"></i>Tổng số tiền:
-                                <fmt:formatNumber value="${order.totalMustPay}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
+                                <fmt:formatNumber value="${order.totalMustPay}" type="currency" currencySymbol="đ"
+                                                  maxFractionDigits="0"/>
                             </p>
                         </div>
                     </div>

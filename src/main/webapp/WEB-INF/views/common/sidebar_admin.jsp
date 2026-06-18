@@ -16,9 +16,9 @@
     <hr>
     <div class="wrap-nav-link-admin">
         <ul>
-            <li class="item-nav-link-admin ${requestScope.navLink == 1?'selected':''}">
-                <i class="fa-solid fa-eye"></i> <a href="${pageContext.request.contextPath}/overview">Tổng quan</a>
-            </li>
+<%--            <li class="item-nav-link-admin ${requestScope.navLink == 1?'selected':''}">--%>
+<%--                <i class="fa-solid fa-eye"></i> <a href="${pageContext.request.contextPath}/overview">Tổng quan</a>--%>
+<%--            </li>--%>
             <li class="item-nav-link-admin ${requestScope.navLink == 2?'selected':''}">
                 <i class="fa-solid fa-user-group"></i> <a href="${pageContext.request.contextPath}/view-user">Quản lí người dùng</a>
             </li>

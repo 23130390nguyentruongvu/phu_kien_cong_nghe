@@ -22,6 +22,7 @@ import vn.edu.hcmuaf.fit.pkcn.utils.VerifySignature;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "OrderHistoryServlet", value = "/order-history")
@@ -44,6 +45,8 @@ public class OrderHistoryServlet extends HttpServlet {
                 } else if (status != null && status.isEmpty()) {
                     status = null;
                 }
+
+                String verifyFilter = request.getParameter("verifyFilter");
 
                 OrderSnapshotService orderSnapshotService = new OrderSnapshotService(
                         new OrderSnapshotDAO(JDBI.getJdbi())
@@ -87,7 +90,27 @@ public class OrderHistoryServlet extends HttpServlet {
                     orderSnapshot.setVerify(isVerity);
                 }
 
-                request.setAttribute("orders", orders);
+                List<OrderSnapshot> res;
+
+                if (verifyFilter == null || verifyFilter.equalsIgnoreCase("both"))
+                    request.setAttribute("orders", orders);
+                else if (verifyFilter.equalsIgnoreCase("verify")) {
+                    res = new ArrayList<>();
+                    for(OrderSnapshot orderSnapshot: orders)
+                        if(orderSnapshot.isVerify())
+                            res.add(orderSnapshot);
+
+                    request.setAttribute("orders", res);
+                } else if (verifyFilter.equalsIgnoreCase("un-verify")) {
+                    res = new ArrayList<>();
+                    for(OrderSnapshot orderSnapshot: orders)
+                        if(!orderSnapshot.isVerify())
+                            res.add(orderSnapshot);
+
+                    request.setAttribute("orders", res);
+                }
+
+                request.setAttribute("verifyFilter", verifyFilter);
                 request.setAttribute("filterBy", status);
                 request.setAttribute("linkNav", 2);
 
