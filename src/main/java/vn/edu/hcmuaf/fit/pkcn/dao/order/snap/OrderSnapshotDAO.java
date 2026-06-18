@@ -2,6 +2,8 @@ package vn.edu.hcmuaf.fit.pkcn.dao.order.snap;
 
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
+import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
+import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.AddressOrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
@@ -138,5 +140,48 @@ public class OrderSnapshotDAO {
 
             return orders;
         });
+    }
+    public List<OrderDetailSnapshot> getOrderDetailItems(int orderId) {
+        String sql = """
+              SELECT id, order_id, product_variant_id, product_name_snapshot, variant_name_snapshot, sku_snapshot, variant_price_snapshot, gram_snapshot, color_snapshot, size_snapshot, quantity, price_total
+              FROM order_details 
+              WHERE order_id = :orderId
+              """;
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("orderId",orderId)
+                .mapToBean(OrderDetailSnapshot.class)
+                .list());
+
+    }
+    public OrderSnapshot getOrderDetail(int orderId) {
+        String sql = """
+                SELECT id, user_id, payment_method_id, payment_method_snapshot,address_order_id,status_order,total_must_pay,order_date,delivery_date,shipping_fee, note,signature,user_key_id,expire_sign_key
+                FROM orders
+                WHERE id = :orderId
+                """;
+        OrderSnapshot orderSnapshot = jdbi.withHandle(handle -> handle.createQuery(sql)
+                .bind("orderId", orderId)
+                .mapToBean(OrderSnapshot.class)
+                .findOne()
+                .orElse(null)
+        );
+        if (orderSnapshot == null) {
+            return null;
+        }
+        String addressSql = """
+            SELECT id, receiver_name, phone_number, address_detail, district, province_city, note
+            FROM address_order
+            WHERE id = :addressOrderId
+            """;
+        AddressOrderSnapshot addressSnapshot = jdbi.withHandle(handle -> handle.createQuery(addressSql)
+                .bind("addressOrderId", orderSnapshot.getAddressOrderId())
+                .mapToBean(AddressOrderSnapshot.class)
+                .findOne()
+                .orElse(null)
+        );
+        orderSnapshot.setAddressOrderSnapshot(addressSnapshot);
+        List<OrderDetailSnapshot> detailSnapshots = getOrderDetailItems(orderId);
+        orderSnapshot.setOrderDetailSnapshots(detailSnapshots);
+        return orderSnapshot;
     }
 }
