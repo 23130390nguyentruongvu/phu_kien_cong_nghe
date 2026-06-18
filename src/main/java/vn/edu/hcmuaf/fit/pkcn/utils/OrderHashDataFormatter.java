@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 
 public class OrderHashDataFormatter {
@@ -28,7 +29,7 @@ public class OrderHashDataFormatter {
      * Ngày tạo đơn: xxxx
      * TỔNG TIỀN PHẢI TRẢ: 30020000.00
      */
-    public static String    buildOrderFormatForHash(OrderSnapshot order) {
+    public static String buildOrderFormatForHash(OrderSnapshot order) {
         if (order == null) {
             return "";
         }
@@ -62,6 +63,9 @@ public class OrderHashDataFormatter {
         List<OrderDetailSnapshot> details = order.getOrderDetailSnapshots();
         sb.append("\nCHI TIẾT SẢN PHẨM\n");
         if (details != null && !details.isEmpty()) {
+            details.sort(
+                    Comparator.comparing(OrderDetailSnapshot::getId)
+            );
             for (OrderDetailSnapshot item : details) {
                 sb.append("- Mã biến thể: ").append(item.getProductVariantId()).append(" | ")
                         .append(item.getProductNameSnapshot() != null ? item.getProductNameSnapshot() : "");

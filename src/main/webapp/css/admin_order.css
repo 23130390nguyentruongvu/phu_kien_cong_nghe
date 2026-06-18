@@ -429,13 +429,13 @@
     color: #16a34a;
 }
 
-.verify-icon.tampered {
-    color: #dc2626;
-    animation: pulse-alert 1.5s ease-in-out infinite;
-}
+/*.verify-icon.tampered {*/
+/*    color: #dc2626;*/
+/*    animation: pulse-alert 1.5s ease-in-out infinite;*/
+/*}*/
 
-.verify-icon.unsigned {
-    color: #9ca3af;
+.verify-icon.no-verify {
+    color: #dc2626;
 }
 
 /* No data state */
