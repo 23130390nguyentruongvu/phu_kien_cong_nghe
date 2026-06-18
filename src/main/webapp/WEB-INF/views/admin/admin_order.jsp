@@ -39,6 +39,12 @@
                     <option value="completed" ${requestScope.statusFilter == 'completed' ? 'selected' : ''}>Hoàn thành</option>
                     <option value="cancel" ${requestScope.statusFilter == 'cancel' ? 'selected' : ''}>Đã hủy</option>
                 </select>
+
+                <select style="margin-left: 18px" name="verifyFilter" class="filter-status-select" onchange="this.form.submit()">
+                    <option value="both" ${requestScope.verifyFilter == 'both' || empty requestScope.verifyFilter ? 'selected' : ''}>Đơn xác thực và không xác thực</option>
+                    <option value="verify" ${requestScope.verifyFilter == 'verify' ? 'selected' : ''}>Đơn xác thực</option>
+                    <option value="un-verify" ${requestScope.verifyFilter == 'un-verify' ? 'selected' : ''}>Đơn không xác thực</option>
+                </select>
                 <button type="submit" class="submit-data">Tìm kiếm</button>
             </form>
         </div>
