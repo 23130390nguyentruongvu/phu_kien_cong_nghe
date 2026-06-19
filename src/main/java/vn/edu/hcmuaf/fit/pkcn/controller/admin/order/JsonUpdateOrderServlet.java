@@ -34,7 +34,7 @@ public class JsonUpdateOrderServlet extends HttpServlet {
         EDITABLE_STATUSES.add(OrderStatus.PENDING_SIGNATURE.getCode());
         EDITABLE_STATUSES.add(OrderStatus.SIGNED.getCode());
         EDITABLE_STATUSES.add(OrderStatus.WAITING_RE_SIGN.getCode());
-        EDITABLE_STATUSES.add(OrderStatus.REJECTED.getCode());
+        EDITABLE_STATUSES.add(OrderStatus.APPROVED.getCode());
     }
 
     @Override
@@ -65,7 +65,10 @@ public class JsonUpdateOrderServlet extends HttpServlet {
             String receiverName = json.get("receiverName").getAsString();
             String phoneNumber = json.get("phoneNumber").getAsString();
             String addressDetail = json.get("addressDetail").getAsString();
-
+            String province = (json.has("province") && !json.get("province").isJsonNull())
+                    ? json.get("province").getAsString() : "";
+            String district = (json.has("district") && !json.get("district").isJsonNull())
+                    ? json.get("district").getAsString() : "";
             JDBI.getJdbi().inTransaction(handle -> {
                 OrderDao orderDao = new OrderDao(JDBI.getJdbi());
 
@@ -84,10 +87,12 @@ public class JsonUpdateOrderServlet extends HttpServlet {
                         .mapTo(Integer.class)
                         .one();
 
-                handle.createUpdate("UPDATE address_order SET receiver_name = :name, phone_number = :phone, address_detail = :addr WHERE id = :id")
+                handle.createUpdate("UPDATE address_order SET receiver_name = :name, phone_number = :phone, address_detail = :addr, province_city = :province, district  = :district WHERE id = :id")
                         .bind("name", receiverName)
                         .bind("phone", phoneNumber)
                         .bind("addr", addressDetail)
+                        .bind("province",province)
+                        .bind("district",district)
                         .bind("id", addressOrderId)
                         .execute();
 
@@ -142,7 +147,7 @@ public class JsonUpdateOrderServlet extends HttpServlet {
 
                 newTotalMustPay += shipFee.doubleValue();
 
-                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status, signature = NULL, user_key_id = NULL WHERE id = :id")
+                handle.createUpdate("UPDATE orders SET total_must_pay = :total, status_order = :status, signature = NULL, user_key_id = NULL, expire_sign_key = DATE_ADD(NOW(), INTERVAL 2 DAY) WHERE id = :id")
                         .bind("total", BigDecimal.valueOf(newTotalMustPay))
                         .bind("status", OrderStatus.WAITING_RE_SIGN.getCode())
                         .bind("id", orderId)
@@ -161,10 +166,12 @@ public class JsonUpdateOrderServlet extends HttpServlet {
                 UserService userService = new UserService(JDBI.getJdbi());
                 User orderUser = userService.getUserById(userId);
                 if (orderUser != null && orderUser.getEmail() != null && !orderUser.getEmail().isEmpty()) {
+                    String url = "http://localhost:8080/pkcn/order-history";
                     String subject = "Đơn hàng #" + orderId + " đã được Admin chỉnh sửa";
                     String body = "<h2>Thông báo chỉnh sửa đơn hàng</h2>"
                             + "<p>Đơn hàng #" + orderId + " của bạn đã được Admin chỉnh sửa.</p>"
                             + "<p>Vui lòng đăng nhập vào hệ thống và ký lại đơn hàng để tiếp tục.</p>"
+                            + "<p><a href=\"" + url + "\">Bấm vào đây để ký lại đơn hàng</a></p>"
                             + "<p>Xin cảm ơn!</p>";
                     EmailUtils.sendEmail(orderUser.getEmail(), subject, body);
                 }

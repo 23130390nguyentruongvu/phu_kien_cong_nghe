@@ -13,13 +13,11 @@
     <input type="text" id="edit-phone" name="phoneNumber" class="form-input" value="${address.phoneNumber}" required>
     <label for="edit-province">Tỉnh thành:</label>
     <div class="province-district" >
-            <%-- Khai báo danh sách tỉnh thành (Ví dụ một số tỉnh trong 34 tỉnh) --%>
-        <c:set var="provinces" value="${['An Giang', 'Bắc Ninh', 'Hà Nội', 'TP.Hồ Chí Minh', 'Hải Phòng', 'Đà Nẵng', 'Cần Thơ', 'Huế', 'Tuyên Quang', 'Lào Cai', 'Thái Nguyên', 'Phú Thọ', 'Hưng Yên', 'Ninh Bình', 'Quảng Trị', 'Quảng Ngãi', 'Gia Lai', 'Khánh Hòa', 'Lâm Đồng', 'Đắk Lắk', 'Đồng Nai', 'Tây Ninh', 'Vĩnh Long', 'Đồng Tháp', 'Cà Mau', 'Quảng Ninh', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Sơn La', 'Lai Châu', 'Điện Biên', 'Cao Bằng', 'Lạng Sơn']}" />
 
         <div class="select-province">
             <select class="form-input" id="edit-province" name="province">
                 <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                <c:forEach var="p" items="${provinces}">
+                <c:forEach var="p" items="${requestScope.province}">
                     <option value="${p}" ${p == address.provinceCity ? 'selected' : ''}>${p}</option>
                 </c:forEach>
             </select>

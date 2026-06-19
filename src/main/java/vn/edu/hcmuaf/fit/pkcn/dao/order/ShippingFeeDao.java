@@ -1,6 +1,9 @@
 package vn.edu.hcmuaf.fit.pkcn.dao.order;
 
 import org.jdbi.v3.core.Jdbi;
+
+import java.util.List;
+
 public class ShippingFeeDao {
     private Jdbi jdbi;
     public ShippingFeeDao(Jdbi jdbi) {
@@ -29,6 +32,12 @@ public class ShippingFeeDao {
                         .findOne()
                         .orElse(50000.0) // Giá trị mặc định cuối cùng nếu DB không có dòng "Các tỉnh khác"
         );
+    }
+    public List<String> getAllProvinces(){
+        String sql = "SELECT province_city FROM ship_fee_by_address WHERE province_city != 'Các tỉnh khác' ORDER BY province_city";
+        return jdbi.withHandle(handle -> handle.createQuery(sql)
+                .mapTo(String.class)
+                .list());
     }
 }
 

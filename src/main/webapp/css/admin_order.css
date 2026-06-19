@@ -114,10 +114,9 @@
 }
 
 .address-cell {
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 250px;
+    white-space: normal;
+    word-wrap: break-word;
     cursor: help;
 }
 

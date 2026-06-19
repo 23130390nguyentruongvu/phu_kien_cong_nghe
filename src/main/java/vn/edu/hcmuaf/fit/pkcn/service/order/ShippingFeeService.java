@@ -5,6 +5,8 @@ import vn.edu.hcmuaf.fit.pkcn.dao.order.ShippingFeeDao;
 import vn.edu.hcmuaf.fit.pkcn.dao.user.UserAddressDao;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 
+import java.util.List;
+
 public class ShippingFeeService {
     private ShippingFeeDao dao;
     public ShippingFeeService(Jdbi shippingFeeDao) {
@@ -12,5 +14,8 @@ public class ShippingFeeService {
     }
     public double getPriceShipByAddress(String province) {
         return dao.getPriceByAddress(province);
+    }
+    public List<String> getAllProvinces() {
+        return dao.getAllProvinces();
     }
 }

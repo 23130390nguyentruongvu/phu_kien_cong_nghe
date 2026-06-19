@@ -91,8 +91,8 @@
                                 <%-- Sửa thuộc tính: lấy từ object liên kết AddressOrderSnapshot --%>
                             <td>${order.addressOrderSnapshot.receiverName}</td>
                             <td>${order.addressOrderSnapshot.phoneNumber}</td>
-                            <td class="address-cell" title="${order.addressOrderSnapshot.addressDetail}">
-                                    ${order.addressOrderSnapshot.addressDetail}
+                            <td class="address-cell" title="${order.addressOrderSnapshot.addressDetail} ,${order.addressOrderSnapshot.district}, ${order.addressOrderSnapshot.provinceCity}">
+                                    ${order.addressOrderSnapshot.addressDetail},${order.addressOrderSnapshot.district},${order.addressOrderSnapshot.provinceCity}
                             </td>
                                 <%-- Sửa thuộc tính: Định dạng tiền tệ VND tự động cho totalMustPay thay vì dùng hàm cũ --%>
                             <td class="price-cell">
