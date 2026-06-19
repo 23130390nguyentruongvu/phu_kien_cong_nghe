@@ -141,5 +141,5 @@
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/popup_common.js"></script>
-<script src="${pageContext.request.contextPath}/js/admin_order.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_order.js"></script>
 </html>

@@ -202,7 +202,7 @@ public class OrderSnapshotDAO {
 
     public OrderSnapshot getOrderDetail(int orderId) {
         String sql = """
-                SELECT id, user_id, payment_method_id, payment_method_snapshot,address_order_id,status_order,total_must_pay,order_date,delivery_date,shipping_fee, note,signature,user_key_id,expire_sign_key
+                SELECT id, user_id, payment_method_snapshot,address_order_id,status_order,total_must_pay,order_date,delivery_date,shipping_fee, note,signature,user_key_id,expire_sign_key
                 FROM orders
                 WHERE id = :orderId
                 """;
