@@ -10,10 +10,12 @@ import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
+import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.snap.OrderSnapshotService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "JsonGetOrderEditServlet", value = "/get-order-edit")
 public class JsonGetOrderEditServlet extends HttpServlet {
@@ -27,8 +29,11 @@ public class JsonGetOrderEditServlet extends HttpServlet {
         }
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
+            ShippingFeeService shippingFeeService = new ShippingFeeService(JDBI.getJdbi());
             OrderSnapshotService snapshotService = new OrderSnapshotService(new OrderSnapshotDAO(JDBI.getJdbi()));
             OrderSnapshot orderSnapshot = snapshotService.getOrderSnapshotByOrderId(orderId);
+            List<String> province = shippingFeeService.getAllProvinces();
+            request.setAttribute("province", province);
             request.setAttribute("orderSnapshot", orderSnapshot);
             if (orderSnapshot != null && orderSnapshot.getStatusOrder() != null) {
                 try {

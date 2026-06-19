@@ -92,7 +92,7 @@ public class OrderSnapshotService {
                     paymentMethodId,
                     paymentMethodSnapshot,
                     generatedAddressOrderId,
-                    OrderStatus.PENDING.name(),
+                    OrderStatus.PENDING_SIGNATURE.name(),
                     totalMustPay,
                     BigDecimal.valueOf(shipFee),
                     note
