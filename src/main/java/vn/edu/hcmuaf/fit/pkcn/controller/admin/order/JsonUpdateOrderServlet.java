@@ -161,12 +161,11 @@ public class JsonUpdateOrderServlet extends HttpServlet {
                 UserKeyDao userKeyDao = new UserKeyDao(JDBI.getJdbi());
                 UserKeyDTO dto = new UserKeyDTO();
                 dto.setUserId(userId);
-                userKeyDao.revokedAllUserKey(dto);
 
                 UserService userService = new UserService(JDBI.getJdbi());
                 User orderUser = userService.getUserById(userId);
                 if (orderUser != null && orderUser.getEmail() != null && !orderUser.getEmail().isEmpty()) {
-                    String url = "http://localhost:8080/pkcn/order-history";
+                    String url = "http://localhost:8080/pkcn/process-sign-order?orderId=" + orderId ;
                     String subject = "Đơn hàng #" + orderId + " đã được Admin chỉnh sửa";
                     String body = "<h2>Thông báo chỉnh sửa đơn hàng</h2>"
                             + "<p>Đơn hàng #" + orderId + " của bạn đã được Admin chỉnh sửa.</p>"
