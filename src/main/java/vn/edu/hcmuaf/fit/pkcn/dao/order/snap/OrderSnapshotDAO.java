@@ -234,11 +234,11 @@ public class OrderSnapshotDAO {
 
     public int insertOrder(Handle handle, Integer userId, Integer paymentMethodId, String paymentMethodSnapshot, Integer addressOrderId, String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee, String note) {
         String sql =
-                "INSERT INTO orders (user_id, payment_method_id, payment_method_snapshot, address_order_id, status_order, total_must_pay, order_date, delivery_date, shipping_fee, note)" +
-                        "VALUES(:userId, :paymentMethodId,:paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay, NOW(),DATE_ADD(NOW(), INTERVAL 3 DAY),:shippingFee, :note)";
+                "INSERT INTO orders (user_id, payment_method_snapshot, address_order_id, status_order, total_must_pay, order_date, delivery_date, shipping_fee, note)" +
+                        "VALUES(:userId,:paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay, NOW(),DATE_ADD(NOW(), INTERVAL 3 DAY),:shippingFee, :note)";
         return handle.createUpdate(sql)
                 .bind("userId", userId)
-                .bind("paymentMethodId", paymentMethodId)
+//                .bind("paymentMethodId", paymentMethodId)
                 .bind("paymentMethodSnapshot", paymentMethodSnapshot)
                 .bind("addressOrderId", addressOrderId)
                 .bind("statusOrder", statusOrder)
