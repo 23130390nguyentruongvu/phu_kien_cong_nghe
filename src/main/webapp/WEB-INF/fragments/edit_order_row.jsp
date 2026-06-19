@@ -11,9 +11,26 @@
     <input type="text" id="edit-receiver-name" name="receiverName" class="form-input" value="${address.receiverName}" required>
     <label for="edit-phone">Số điện thoại:</label>
     <input type="text" id="edit-phone" name="phoneNumber" class="form-input" value="${address.phoneNumber}" required>
-    <label for="edit-address">Địa chỉ:</label>
-    <input type="text" id="edit-address" name="addressDetail" class="form-input" value="${address.addressDetail}, ${address.district}, ${address.provinceCity}" required>
-    <label>Trạng thái hiện tại: <strong>${requestScope.statusDisplay}</strong></label>
+    <label for="edit-province">Tỉnh thành:</label>
+    <div class="province-district" >
+            <%-- Khai báo danh sách tỉnh thành (Ví dụ một số tỉnh trong 34 tỉnh) --%>
+        <c:set var="provinces" value="${['An Giang', 'Bắc Ninh', 'Hà Nội', 'TP.Hồ Chí Minh', 'Hải Phòng', 'Đà Nẵng', 'Cần Thơ', 'Huế', 'Tuyên Quang', 'Lào Cai', 'Thái Nguyên', 'Phú Thọ', 'Hưng Yên', 'Ninh Bình', 'Quảng Trị', 'Quảng Ngãi', 'Gia Lai', 'Khánh Hòa', 'Lâm Đồng', 'Đắk Lắk', 'Đồng Nai', 'Tây Ninh', 'Vĩnh Long', 'Đồng Tháp', 'Cà Mau', 'Quảng Ninh', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Sơn La', 'Lai Châu', 'Điện Biên', 'Cao Bằng', 'Lạng Sơn']}" />
+
+        <div class="select-province">
+            <select class="form-input" id="edit-province" name="province">
+                <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                <c:forEach var="p" items="${provinces}">
+                    <option value="${p}" ${p == address.provinceCity ? 'selected' : ''}>${p}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+    <label for="edit-address">Địa chỉ chi tiết:</label>
+    <input type="text" id="edit-address" name="addressDetail" class="form-input" value="${address.addressDetail}" required>
+    <label for="note-order">Ghi chú:</label>
+    <textarea name="note" id="note" id="note-order" class="form-area">
+            ${requestScope.orderSnapshot.note}
+    </textarea>
     <br>
     <h3>Chi tiết sản phẩm</h3>
     <table class="order-items-table">
@@ -22,8 +39,6 @@
                 <th>Sản phẩm</th>
                 <th>Biến thể</th>
                 <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Thành tiền</th>
             </tr>
         </thead>
         <tbody>
@@ -36,8 +51,6 @@
                         <input type="hidden" name="variantId" value="${item.productVariantId}">
                         <input type="number" name="quantity" class="edit-quantity form-input" value="${item.quantity}" min="1" style="width:80px;" data-price="${item.variantPriceSnapshot}">
                     </td>
-                    <td class="price-cell"><fmt:formatNumber value="${item.variantPriceSnapshot}" pattern="#,###"/>₫</td>
-                    <td class="price-cell item-total"><fmt:formatNumber value="${item.priceTotal}" pattern="#,###"/>₫</td>
                 </tr>
             </c:forEach>
         </tbody>

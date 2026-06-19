@@ -444,3 +444,18 @@
     padding: 40px;
     color: #888;
 }
+.form-area {
+    width: 100%;
+    height: 70px;
+    margin: 8px 0;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+#popup-edit-order .form-area {
+    width: 100%;
+    height: 70px;
+    margin: 8px 0;
+}

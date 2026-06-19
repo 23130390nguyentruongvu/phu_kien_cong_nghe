@@ -14,7 +14,7 @@
             referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_order.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_order.css?v=2">
 </head>
 <body>
 <div class="wrap-all-content">
