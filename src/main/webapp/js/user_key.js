@@ -82,7 +82,7 @@ function executeRevokeModal(userKeyId) {
         return;
     }
 
-    const isConfirmed = confirm("Xác nhận thu hồi khóa này? Sau khi thu hồi, khóa sẽ không thể tiếp tục sử dụng!");
+    const isConfirmed = confirm("Xác nhận thu hồi khóa này? Chúng tôi sẽ kiểm tra và gửi đường dẫn cho bạn qua email!");
     if (!isConfirmed) return;
 
 
@@ -110,7 +110,7 @@ function executeRevokeModal(userKeyId) {
         .then(res => {
             hideLoading();
             if (res.success === true || res.status === 'success') {
-                alert('Thu hồi khóa thành công!');
+                alert(res.message);
                 window.location.reload();
             } else {
                 alert(res.message || 'Có lỗi xảy ra khi thu hồi khóa.');

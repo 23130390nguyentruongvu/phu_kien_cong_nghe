@@ -1,3 +1,5 @@
+import {showLoading, hideLoading} from './overlay_processing.js';
+
 // Popup sửa thông tin đơn hàng
 document.querySelectorAll('.edit-order-update').forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -42,6 +44,7 @@ document.getElementById('editOrderForm').addEventListener('submit', async (e) =>
     data['quantities'] = quantities;
 
     if (!confirm('Sau khi chỉnh sửa, đơn hàng sẽ chuyển trạng thái chờ người dùng ký lại. Tiếp tục?')) return;
+    showLoading()
 
     try {
         const response = await fetch(window.contextPath + '/update-order', {
@@ -50,12 +53,14 @@ document.getElementById('editOrderForm').addEventListener('submit', async (e) =>
             body: JSON.stringify(data)
         });
         const result = await response.json();
+        hideLoading()
         alert(result.message);
         if (result.success) {
             popupCommon.close('popup-edit-order');
             window.location.reload();
         }
     } catch (err) {
+        hideLoading()
         console.error('Lỗi khi cập nhật đơn hàng:', err);
         alert('Lỗi: ' + err.message);
     }
