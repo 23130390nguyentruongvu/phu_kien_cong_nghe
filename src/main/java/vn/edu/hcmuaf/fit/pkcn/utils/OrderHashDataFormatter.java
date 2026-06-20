@@ -43,7 +43,9 @@ public class OrderHashDataFormatter {
         sb.append("THÔNG TIN ĐƠN HÀNG\n");
         sb.append("Mã đơn hàng: ").append(order.getId()).append("\n")
                 .append("Mã người dùng: ").append(order.getUserId())
-                .append("Mã địa chỉ nơi nhận: " ).append(order.getAddressOrderId());
+                .append("\n")
+                .append("Mã địa chỉ nơi nhận: " ).append(order.getAddressOrderId())
+                .append("\n");
         sb.append("Phương thức thanh toán: ")
                 .append(order.getPaymentMethodSnapshot() != null ? order.getPaymentMethodSnapshot() : "").append("\n");
         sb.append("Ghi chú đơn hàng: ")
@@ -73,8 +75,12 @@ public class OrderHashDataFormatter {
                     Comparator.comparing(OrderDetailSnapshot::getId)
             );
             for (OrderDetailSnapshot item : details) {
-                sb.append("Mã đơn hàng chi tiết: ").append((item.getId() != null)?item.getId():"Unknown");
-                sb.append("Mã của đơn hàng chứa đơn chi tiết: ").append((item.getOrderId() != null)?item.getOrderId():"Unknown");
+                sb.append("Mã đơn hàng chi tiết: ")
+                        .append((item.getId() != null)?item.getId():"Unknown")
+                        .append("\n");
+                sb.append("Mã của đơn hàng chứa đơn chi tiết: ")
+                        .append((item.getOrderId() != null)?item.getOrderId():"Unknown")
+                        .append("\n");
                 sb.append("- Mã biến thể: ").append(item.getProductVariantId()).append(" | ")
                         .append(item.getProductNameSnapshot() != null ? item.getProductNameSnapshot() : "");
 
