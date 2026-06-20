@@ -9,25 +9,28 @@ import java.util.Comparator;
 import java.util.List;
 
 public class OrderHashDataFormatter {
-    /**mẫu
-     *THÔNG TIN ĐƠN HÀNG
+    /**
+     * mẫu
+     * THÔNG TIN ĐƠN HÀNG
      * Mã đơn hàng: 12
      * Mã người dùng: 1
+     * Mã khóa ký: 1
      * Mã địa chỉ nơi nhận: 1
+     * Hạn kí đơn: xxxx
      * Phương thức thanh toán: Chuyển khoản ngân hàng
      * Ghi chú đơn hàng: Giao vào giờ hành chính giúp
-     *
+     * <p>
      * THÔNG TIN NGƯỜI NHẬN: Mã (1)
      * Người nhận: Nguyễn Văn A
      * Số điện thoại: 0901234567
      * Địa chỉ: Số 1 Lý Tự Trọng, Quận 1, TP. Hồ Chí Minh
      * Ghi chú địa chỉ: Bấm chuông cửa màu xanh
-     *
+     * <p>
      * CHI TIẾT SẢN PHẨM
      * Mã đơn hàng chi tiết: 1
      * Mã của đơn hàng chứa đơn chi tiết: 12
      * - Mã biến thể: 102 | Điện thoại iPhone 15 Pro Max (Tự Nhiên) | SKU: IP15PM-256-NAT | Trọng lượng: 221g | Màu sắc: Titan Tự Nhiên | Kích cỡ: 256GB | Đơn giá: 29990000.00 | Số lượng: 1 | Tổng dòng: 29990000.00
-     *
+     * <p>
      * CHI PHÍ THANH TOÁN
      * Phí vận chuyển: 30000.00
      * Ngày tạo đơn: xxxx
@@ -44,15 +47,27 @@ public class OrderHashDataFormatter {
         sb.append("Mã đơn hàng: ").append(order.getId()).append("\n")
                 .append("Mã người dùng: ").append(order.getUserId())
                 .append("\n")
-                .append("Mã địa chỉ nơi nhận: " ).append(order.getAddressOrderId())
+                .append("Mã khóa ký: ")
+                .append(order.getUserKeyId()).append("\n")
+                .append("Mã địa chỉ nơi nhận: ").append(order.getAddressOrderId())
+                .append("\n")
+                .append("Hạn kí đơn: ")
+                .append(order.getExpireSignKey().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
                 .append("\n");
+
         sb.append("Phương thức thanh toán: ")
                 .append(order.getPaymentMethodSnapshot() != null ? order.getPaymentMethodSnapshot() : "").append("\n");
         sb.append("Ghi chú đơn hàng: ")
                 .append(order.getNote() != null ? order.getNote() : "").append("\n");
 
         AddressOrderSnapshot address = order.getAddressOrderSnapshot();
-        sb.append("\nTHÔNG TIN NGƯỜI NHẬN: Mã ("+ ((address.getId() != null)?address.getId():"Unknown") +")\n");
+        if (address != null) {
+            sb.append("\nTHÔNG TIN NGƯỜI NHẬN: Mã (")
+                    .append(address.getId() != null ? address.getId() : "Unknown")
+                    .append(")\n");
+        } else {
+            sb.append("\nTHÔNG TIN NGƯỜI NHẬN\n");
+        }
         if (address != null) {
             sb.append("Người nhận: ")
                     .append(address.getReceiverName() != null ? address.getReceiverName() : "").append("\n");
@@ -76,10 +91,10 @@ public class OrderHashDataFormatter {
             );
             for (OrderDetailSnapshot item : details) {
                 sb.append("Mã đơn hàng chi tiết: ")
-                        .append((item.getId() != null)?item.getId():"Unknown")
+                        .append((item.getId() != null) ? item.getId() : "Unknown")
                         .append("\n");
                 sb.append("Mã của đơn hàng chứa đơn chi tiết: ")
-                        .append((item.getOrderId() != null)?item.getOrderId():"Unknown")
+                        .append((item.getOrderId() != null) ? item.getOrderId() : "Unknown")
                         .append("\n");
                 sb.append("- Mã biến thể: ").append(item.getProductVariantId()).append(" | ")
                         .append(item.getProductNameSnapshot() != null ? item.getProductNameSnapshot() : "");
