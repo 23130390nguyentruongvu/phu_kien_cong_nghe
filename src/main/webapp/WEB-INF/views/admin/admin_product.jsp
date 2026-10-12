@@ -353,7 +353,7 @@
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 
-<script type="module" src="${pageContext.request.contextPath}/js/firebase.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/firebase_template.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 
