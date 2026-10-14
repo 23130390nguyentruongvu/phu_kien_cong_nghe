@@ -11,7 +11,7 @@
  Target Server Version : 80407 (8.4.7)
  File Encoding         : 65001
 
- Date: 12/10/2026 22:30:26
+ Date: 14/10/2026 14:32:58
 */
 
 SET NAMES utf8mb4;
@@ -150,7 +150,7 @@ CREATE TABLE `comment_articles`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_comment_articles_articles`(`article_id` ASC) USING BTREE,
   CONSTRAINT `fk_comment_articles_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment_articles
@@ -1727,7 +1727,7 @@ CREATE TABLE `security_alerts`  (
   CONSTRAINT `fk_alert_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_alert_userkey` FOREIGN KEY (`key_id`) REFERENCES `user_keys` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_alert_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of security_alerts
@@ -1846,12 +1846,13 @@ CREATE TABLE `users`  (
   UNIQUE INDEX `uid_unique_idx`(`uid` ASC) USING BTREE,
   INDEX `fk_users_roles`(`role_id` ASC) USING BTREE,
   CONSTRAINT `fk_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, NULL, NULL, 1, 'ADMIN', 'ADMIN', 'duy123@gmail.com', 'efeef922fa3d69c82d8a65ef53a39647', 'active', 'https://spacet.vn/blog/nguon-cam-hung/cap-nhat-menu-phuc-long-va-khong-gian-quan-cuc-chi-tiet');
-INSERT INTO `users` VALUES (31, NULL, NULL, 2, 'ác', 'alo123', 'aqxsxa@gmail.com', 'efeef922fa3d69c82d8a65ef53a39647', 'active', NULL);
+INSERT INTO `users` VALUES (32, NULL, NULL, 1, 'ADMIN', 'ADMIN2', 'admin@gmail.com', '6fd89c7284a217867089c904399ad6cb', 'active', NULL);
+INSERT INTO `users` VALUES (33, NULL, NULL, 2, 'USER', 'USER2', 'user@gmail.com', '6fd89c7284a217867089c904399ad6cb', 'active', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
