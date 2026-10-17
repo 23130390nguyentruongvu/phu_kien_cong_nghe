@@ -157,21 +157,65 @@ ul li {
 }
 
 .header .header-container .header-center .shopping-cart {
-    padding-top: 12px;
-    font-size: 40px;
+    padding-top: 0;
+    font-size: 30px;
+}
+
+.header .header-container .header-center .header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 12px;
+}
+
+.header .header-container .header-center .wishlist-header-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 54px;
+    height: 50px;
+    border: 1px solid rgb(255 255 255 / 35%);
+    border-radius: 10px;
+    background: rgb(255 255 255 / 10%);
+    color: white;
+    text-decoration: none;
+    transition: color .15s ease, background-color .15s ease, transform .15s ease;
+}
+
+.header .header-container .header-center .wishlist-header-link i {
+    font-size: 23px;
+}
+
+.header .header-container .header-center .wishlist-header-label {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.header .header-container .header-center .wishlist-header-link:hover {
+    color: #ffd700;
+    background: rgb(255 255 255 / 20%);
+    transform: translateY(-1px);
+}
+
+.header .header-container .header-center .wishlist-header-link:focus-visible {
+    outline: 3px solid #ffd700;
+    outline-offset: 3px;
 }
 
 .header .header-container .header-center .shopping-cart .fa-cart-shopping {
     position: relative;
     display: inline-block;
-    font-size: 40px;
+    font-size: 30px;
     color: white;
 }
 
 .header .header-container .header-center .shopping-cart .fa-cart-shopping:hover {
     position: relative;
     display: inline-block;
-    font-size: 40px;
     color: #FFD700;
 }
 
@@ -296,4 +340,39 @@ main {
     margin-top: 152px;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+@media (max-width: 700px) {
+    .header .header-container .header-center {
+        grid-template-columns: 64px minmax(0, 1fr) 86px;
+    }
+
+    .header .header-container .header-center .header-actions {
+        gap: 10px;
+        padding: 0 4px;
+    }
+
+    .header .header-container .header-center .wishlist-header-link,
+    .header .header-container .header-center .shopping-cart .fa-cart-shopping {
+        font-size: 24px;
+    }
+
+    .header .header-container .header-center .wishlist-header-link {
+        min-width: 36px;
+        height: 36px;
+    }
+
+    .header .header-container .header-center .wishlist-header-link i {
+        font-size: 22px;
+    }
+
+    .header .header-container .header-center .wishlist-header-label {
+        display: none;
+    }
+
+    .header .header-container .header-center .form-search .search-input {
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 14px;
+    }
 }

@@ -23,7 +23,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/shared/main.css">
+          href="${pageContext.request.contextPath}/shared/main.css?v=2">
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/css/news_detail.css">
     <link rel="stylesheet"

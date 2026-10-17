@@ -63,9 +63,18 @@
                         </button>
                     </form>
                 </div>
-                <div class="center shopping-cart">
-                    <a href="${pageContext.request.contextPath}/view-cart"><i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
-                                                                  class="badge">${requestScope.cartBadgeCount}</span></i></a>
+                <div class="center header-actions">
+                    <a class="wishlist-header-link" href="${pageContext.request.contextPath}/wishlist"
+                       aria-label="Sản phẩm yêu thích" title="Sản phẩm yêu thích">
+                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                        <span class="wishlist-header-label">Yêu thích</span>
+                    </a>
+                    <div class="shopping-cart">
+                        <a href="${pageContext.request.contextPath}/view-cart" aria-label="Giỏ hàng" title="Giỏ hàng">
+                            <i class="fa-solid fa-cart-shopping"><span id="badgeNumItemCart"
+                                                                       class="badge">${requestScope.cartBadgeCount}</span></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <!--        close header-center-->
@@ -108,6 +117,9 @@
                                     href="${pageContext.request.contextPath}/news">TIN TỨC</a></li>
                             <li id="menuContact" class="menu-item ${requestScope.activeHeader == 5 ? 'active' : ''}" ><a
                                     href="${pageContext.request.contextPath}/view-contact-shop">LIÊN HỆ VỚI CHÚNG TÔI</a></li>
+                            <li id="menuVouchers" class="menu-item ${requestScope.activeHeader == 6 ? 'active' : ''}">
+                                <a href="${pageContext.request.contextPath}/voucher-store"><i class="fa-solid fa-ticket"></i> KHO VOUCHER</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

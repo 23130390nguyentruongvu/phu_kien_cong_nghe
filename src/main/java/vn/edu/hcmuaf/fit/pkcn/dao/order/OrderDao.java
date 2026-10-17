@@ -120,7 +120,9 @@ public class OrderDao {
    public OrderDetail getOrderDetail(int orderId) {
         String sql = """
             SELECT 
-                o.id, o.user_id, o.order_date,o.delivery_date, o.status_order, o.shipping_fee,o.total_must_pay, ao.phone_number, ao.address_detail, ao.receiver_name,o.payment_method_snapshot AS name_method
+                o.id, o.user_id, o.order_date,o.delivery_date, o.status_order, o.shipping_fee,o.total_must_pay,
+                o.discount_amount, o.voucher_code_snapshot, ao.phone_number, ao.address_detail, ao.receiver_name,
+                o.payment_method_snapshot AS name_method
             FROM orders o
             JOIN address_order ao ON ao.id = o.address_order_id
             WHERE o.id = :orderId

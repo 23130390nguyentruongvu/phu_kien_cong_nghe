@@ -12,7 +12,6 @@ import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
-import vn.edu.hcmuaf.fit.pkcn.service.order.OrderService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.snap.OrderSnapshotService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
@@ -40,19 +39,25 @@ public class JsonCheckoutServlet extends HttpServlet {
         String addressId1 = request.getParameter("selectedAddressId");
         String note = request.getParameter("note");
         String paymentMethodIdStr = request.getParameter("paymentMethodId");
+        String voucherIdValue = request.getParameter("voucherId");
         Map<String, Object> map = new HashMap<>();
         String msg = null;
         boolean isSuccess = false;
         try {
+            if (cart == null || cart.getCartItems().isEmpty()) {
+                msg = "Giỏ hàng đang trống. Vui lòng thêm sản phẩm trước khi thanh toán";
+            }
             if (addressId1 == null || addressId1.isEmpty()) {
-                msg = "Vui lòng thêm địa chỉ nhận hàng trước khi đặt hàng";
+                msg = (msg == null ? "" : msg + "\n") + "Vui lòng thêm địa chỉ nhận hàng trước khi đặt hàng";
             }
             if (paymentMethodIdStr == null || paymentMethodIdStr.isEmpty()) {
-                msg += "\nVui lòng thêm địa chỉ nhận hàng trước khi đặt hàng";
+                msg = (msg == null ? "" : msg + "\n") + "Vui lòng chọn phương thức thanh toán";
             }
             if (msg == null) {
                 int addressId = Integer.parseInt(addressId1);
                 int paymentMethodId = Integer.parseInt(paymentMethodIdStr);
+                Integer voucherId = voucherIdValue == null || voucherIdValue.isBlank()
+                        ? null : Integer.valueOf(voucherIdValue);
                 String paymentMethodName = JDBI.getJdbi().withHandle(handle ->
                         handle.createQuery("SELECT name_method FROM payment_methods WHERE id = :id")
                                 .bind("id",paymentMethodId)
@@ -64,7 +69,8 @@ public class JsonCheckoutServlet extends HttpServlet {
                     throw new RuntimeException("Địa chỉ không tồn tại trên hệ thống!");
                 }
                 double shippingFee = shippingFeeService.getPriceShipByAddress(address.getProvinceCity());
-                orderService.checkOut(user.getId(), address, note, cart, shippingFee, paymentMethodId,paymentMethodName);
+                orderService.checkOut(user.getId(), address, note, cart, shippingFee,
+                        paymentMethodId, paymentMethodName, voucherId);
 
                 cart.clearCart();
                 isSuccess = true;

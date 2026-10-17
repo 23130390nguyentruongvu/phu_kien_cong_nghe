@@ -2,16 +2,12 @@ package vn.edu.hcmuaf.fit.pkcn.dao.order.snap;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
-import vn.edu.hcmuaf.fit.pkcn.model.admin.order.AdminOrderShowAsItem;
-import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetail;
-import vn.edu.hcmuaf.fit.pkcn.model.order.OrderDetailItem;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.AddressOrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderDetailSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class OrderSnapshotDAO {
@@ -232,10 +228,17 @@ public class OrderSnapshotDAO {
         return orderSnapshot;
     }
 
-    public int insertOrder(Handle handle, Integer userId, Integer paymentMethodId, String paymentMethodSnapshot, Integer addressOrderId, String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee, String note) {
-        String sql =
-                "INSERT INTO orders (user_id, payment_method_snapshot, address_order_id, status_order, total_must_pay, order_date, delivery_date, shipping_fee, note)" +
-                        "VALUES(:userId,:paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay, NOW(),DATE_ADD(NOW(), INTERVAL 3 DAY),:shippingFee, :note)";
+    public int insertOrder(Handle handle, Integer userId, Integer paymentMethodId, String paymentMethodSnapshot,
+                           Integer addressOrderId, String statusOrder, BigDecimal totalMustPay, BigDecimal shippingFee,
+                           String note, Integer voucherId, String voucherCode, BigDecimal discountAmount) {
+        String sql = """
+                INSERT INTO orders
+                    (user_id, payment_method_snapshot, address_order_id, status_order, total_must_pay,
+                     order_date, delivery_date, shipping_fee, note, voucher_id, voucher_code_snapshot, discount_amount)
+                VALUES
+                    (:userId, :paymentMethodSnapshot, :addressOrderId, :statusOrder, :totalMustPay,
+                     NOW(), DATE_ADD(NOW(), INTERVAL 3 DAY), :shippingFee, :note, :voucherId, :voucherCode, :discountAmount)
+                """;
         return handle.createUpdate(sql)
                 .bind("userId", userId)
 //                .bind("paymentMethodId", paymentMethodId)
@@ -245,6 +248,9 @@ public class OrderSnapshotDAO {
                 .bind("totalMustPay", totalMustPay)
                 .bind("shippingFee", shippingFee)
                 .bind("note", note)
+                .bind("voucherId", voucherId)
+                .bind("voucherCode", voucherCode)
+                .bind("discountAmount", discountAmount)
                 .executeAndReturnGeneratedKeys()
                 .mapTo(Integer.class)
                 .one();
@@ -284,4 +290,3 @@ public class OrderSnapshotDAO {
         });
     }
 }
-

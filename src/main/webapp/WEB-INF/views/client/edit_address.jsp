@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Thêm địa chỉ mới</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_edit_address.css?v=1.1" />
 </head>

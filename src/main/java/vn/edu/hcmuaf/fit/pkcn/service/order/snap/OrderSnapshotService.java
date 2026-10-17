@@ -4,13 +4,14 @@ import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
 import vn.edu.hcmuaf.fit.pkcn.dao.order.snap.OrderSnapshotDAO;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.CartItem;
+import vn.edu.hcmuaf.fit.pkcn.model.common.VoucherApplication;
 import vn.edu.hcmuaf.fit.pkcn.model.order.snap.OrderSnapshot;
 import vn.edu.hcmuaf.fit.pkcn.model.product.ProductVariant;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
+import vn.edu.hcmuaf.fit.pkcn.service.common.VoucherService;
 import vn.edu.hcmuaf.fit.pkcn.utils.enums.OrderStatus;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderSnapshotService {
@@ -43,7 +44,17 @@ public class OrderSnapshotService {
                          double shipFee,
                          int paymentMethodId,
                          String paymentMethodSnapshot) throws Exception {
+        checkOut(userId, address, note, cart, shipFee, paymentMethodId, paymentMethodSnapshot, null);
+    }
 
+    public void checkOut(int userId,
+                         Address address,
+                         String note,
+                         Cart cart,
+                         double shipFee,
+                         int paymentMethodId,
+                         String paymentMethodSnapshot,
+                         Integer voucherId) throws Exception {
         JDBI.getJdbi().useTransaction(handle -> {
             for (CartItem item : cart.getCartItems()) {
                 Integer currentStock = handle.createQuery("""
@@ -66,6 +77,10 @@ public class OrderSnapshotService {
                 }
             }
 
+            VoucherApplication voucherApplication = voucherId == null ? null
+                    : new VoucherService(JDBI.getJdbi()).applySelectedVoucher(
+                    handle, voucherId, userId, cart, BigDecimal.valueOf(shipFee));
+
             String insertAddressSql = """
                     INSERT INTO address_order (receiver_name, phone_number, address_detail, district, province_city, note)
                     VALUES (:name, :phone, :detail, :district, :province, :note)
@@ -82,9 +97,13 @@ public class OrderSnapshotService {
                     .mapTo(Integer.class)
                     .one();
 
-            BigDecimal totalMustPay =
-                    BigDecimal.valueOf(cart.priceTotal())
-                            .add(BigDecimal.valueOf(shipFee));
+            BigDecimal subtotal = cart.getCartItems().stream()
+                    .map(item -> item.getProductVariant().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal discountAmount = voucherApplication == null
+                    ? BigDecimal.ZERO : voucherApplication.getDiscountAmount();
+            BigDecimal totalMustPay = subtotal.add(BigDecimal.valueOf(shipFee)).subtract(discountAmount)
+                    .max(BigDecimal.ZERO);
 
             int orderId = orderSnapshotDAO.insertOrder(
                     handle,
@@ -95,8 +114,25 @@ public class OrderSnapshotService {
                     OrderStatus.PENDING_SIGNATURE.name(),
                     totalMustPay,
                     BigDecimal.valueOf(shipFee),
-                    note
+                    note,
+                    voucherApplication == null ? null : voucherApplication.getVoucherId(),
+                    voucherApplication == null ? null : voucherApplication.getCode(),
+                    discountAmount
             );
+            if (voucherApplication != null) {
+                handle.createUpdate("UPDATE vouchers SET used_count = used_count + 1 WHERE id = :id")
+                        .bind("id", voucherApplication.getVoucherId())
+                        .execute();
+                handle.createUpdate("""
+                                INSERT INTO voucher_usages (voucher_id, user_id, order_id, discount_amount)
+                                VALUES (:voucherId, :userId, :orderId, :discount)
+                                """)
+                        .bind("voucherId", voucherApplication.getVoucherId())
+                        .bind("userId", userId)
+                        .bind("orderId", orderId)
+                        .bind("discount", discountAmount)
+                        .execute();
+            }
             for (CartItem item : cart.getCartItems()) {
                 ProductVariant pv = item.getProductVariant();
                 BigDecimal lineTotal = pv.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
@@ -137,7 +173,6 @@ public class OrderSnapshotService {
 
             cart.clearCart();
         });
-
     }
     public List<OrderSnapshot> getOrderSnapshotByUserId(Integer userId, String statusFilter) {
         return orderSnapshotDAO.getOrdersByUserId(userId, statusFilter);

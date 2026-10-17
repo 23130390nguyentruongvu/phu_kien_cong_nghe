@@ -9,7 +9,10 @@ ul {
 
 .nav-admin {
     width: 265px;
-    height: 100%;
+    height: 100vh;
+    flex: 0 0 265px;
+    align-self: flex-start;
+    overflow-y: auto;
 }
 
 .role {

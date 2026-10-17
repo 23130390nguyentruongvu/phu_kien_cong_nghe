@@ -86,6 +86,10 @@
                     <h3>Tóm tắt đơn hàng</h3>
                     <p>Giá sản phẩm tạm tính: ${requestScope.orderDetail.totalOrderFormat}</p>
                     <p>Phí vận chuyển: ${requestScope.orderDetail.shipFeeFormat}</p>
+                    <c:if test="${requestScope.orderDetail.discountAmount > 0}">
+                        <p>Voucher <strong>${requestScope.orderDetail.voucherCodeSnapshot}</strong>:
+                            −${requestScope.orderDetail.discountAmountFormat}</p>
+                    </c:if>
                     <hr/>
                     <p class="total"><strong>Tổng cộng: ${requestScope.orderDetail.totalMustPayFormat}</strong></p>
                 </div>

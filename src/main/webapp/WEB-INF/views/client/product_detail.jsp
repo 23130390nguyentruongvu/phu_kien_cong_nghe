@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
           integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css?v=2"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/item_product.css">
     <script src="${pageContext.request.contextPath}/js/product_detail.js"></script>
@@ -52,6 +52,17 @@
                         </c:if>
                     </div>
                     <div class="product-details">
+                        <c:if test="${param.wishlist == 'added'}">
+                            <div class="wishlist-product-feedback success" role="status">
+                                Đã lưu sản phẩm này vào wishlist.
+                                <a href="${pageContext.request.contextPath}/wishlist">Xem wishlist</a>
+                            </div>
+                        </c:if>
+                        <c:if test="${param.wishlist == 'unavailable'}">
+                            <div class="wishlist-product-feedback error" role="alert">
+                                Sản phẩm hiện không khả dụng để lưu vào wishlist.
+                            </div>
+                        </c:if>
                         <div class="title-product">${product.name}</div>
 
                         <div class="price-product">
@@ -127,6 +138,15 @@
                                     THÊM VÀO GIỎ HÀNG
                                 </button>
                             </div>
+                        </form>
+                        <form class="add-to-wishlist-form"
+                              action="${pageContext.request.contextPath}/wishlist" method="post">
+                            <input type="hidden" name="action" value="add">
+                            <input type="hidden" name="productId" value="${product.id}">
+                            <button type="submit" class="add-to-wishlist-btn">
+                                <i class="fa-regular fa-heart"></i> LƯU VÀO WISHLIST
+                            </button>
+                            <span>Sản phẩm được lưu theo sản phẩm chung; bạn chọn biến thể khi thêm vào giỏ.</span>
                         </form>
 
                         <ul class="product-info">

@@ -15,6 +15,9 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if ("wishlist".equals(request.getParameter("continue"))) {
+            session.setAttribute("afterLoginPath", "/wishlist");
+        }
         User user = (User) session.getAttribute("user");
         if (user != null && !CheckUserHelper.checkUserInValid(user.getId())) {
             response.sendRedirect(request.getContextPath() + "/");
@@ -42,10 +45,18 @@ public class LoginController extends HttpServlet {
 
                 session.setAttribute("user", user);
                 session.setAttribute("cart", cart);
+                Object afterLoginPath = session.getAttribute("afterLoginPath");
+                session.removeAttribute("afterLoginPath");
+                String returnPath = afterLoginPath instanceof String path
+                        && ("/wishlist".equals(path) || path.matches("/product-detail\\?id=[1-9][0-9]*"))
+                        ? path
+                        : null;
                 if (user.getRole() == 1) {
-                    response.sendRedirect(request.getContextPath() + "/admin-order");
+                    response.sendRedirect(request.getContextPath()
+                            + (returnPath == null ? "/admin-order" : returnPath));
                 } else if (user.getRole() == 2) {
-                    response.sendRedirect(request.getContextPath() + "/");
+                    response.sendRedirect(request.getContextPath()
+                            + (returnPath == null ? "/" : returnPath));
                 }
             } else {
                 request.setAttribute("error", "Tài khoản hoặc mật khẩu không đúng");

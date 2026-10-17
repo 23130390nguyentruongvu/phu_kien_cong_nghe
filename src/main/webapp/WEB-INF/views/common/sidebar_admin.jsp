@@ -19,6 +19,9 @@
 <%--            <li class="item-nav-link-admin ${requestScope.navLink == 1?'selected':''}">--%>
 <%--                <i class="fa-solid fa-eye"></i> <a href="${pageContext.request.contextPath}/overview">Tổng quan</a>--%>
 <%--            </li>--%>
+            <li class="item-nav-link-admin ${requestScope.navLink == 8?'selected':''}">
+                <i class="fa-solid fa-ticket"></i> <a href="${pageContext.request.contextPath}/admin/vouchers">Quản lí voucher</a>
+            </li>
             <li class="item-nav-link-admin ${requestScope.navLink == 2?'selected':''}">
                 <i class="fa-solid fa-user-group"></i> <a href="${pageContext.request.contextPath}/view-user">Quản lí người dùng</a>
             </li>
@@ -27,6 +30,15 @@
             </li>
             <li class="item-nav-link-admin ${requestScope.navLink == 4?'selected':''}">
                 <i class="fa-solid fa-truck"></i> <a href="${pageContext.request.contextPath}/admin-order">Quản lí đơn hàng</a>
+            </li>
+            <li class="item-nav-link-admin ${requestScope.navLink == 5?'selected':''}">
+                <i class="fa-solid fa-newspaper"></i> <a href="${pageContext.request.contextPath}/admin/articles">Quản lí bài viết</a>
+            </li>
+            <li class="item-nav-link-admin ${requestScope.navLink == 6?'selected':''}">
+                <i class="fa-solid fa-store"></i> <a href="${pageContext.request.contextPath}/admin/shop-info">Thông tin cửa hàng</a>
+            </li>
+            <li class="item-nav-link-admin ${requestScope.navLink == 7?'selected':''}">
+                <i class="fa-solid fa-building-columns"></i> <a href="${pageContext.request.contextPath}/admin/bank-info">Tài khoản ngân hàng</a>
             </li>
             <li class="item-nav-link-admin">
                 <i class="fa-solid fa-house"></i> <a href="${pageContext.request.contextPath}/">Quay lại trang chủ</a>

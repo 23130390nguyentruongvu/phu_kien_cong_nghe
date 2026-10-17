@@ -10,7 +10,7 @@
       <meta charset="UTF-8"/>
       <title>Thông tin cá nhân</title>
       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/personal_info.css" />
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2" />
       <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_account.css" />
       <link
         rel="stylesheet"

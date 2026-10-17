@@ -15,7 +15,8 @@ public class OrderDetail {
     private String receiverName, phoneNumber, addressDetail;
     private LocalDateTime oderDate, deliveryDate;
     private String statusOrder, methodPayment;
-    private BigDecimal shipFee, totalMustPay;
+    private BigDecimal shipFee, totalMustPay, discountAmount;
+    private String voucherCodeSnapshot;
     private List<OrderDetailItem> items;
 
     public int getOrderId() {
@@ -117,6 +118,28 @@ public class OrderDetail {
         this.totalMustPay = totalMustPay;
     }
 
+    public BigDecimal getDiscountAmount() {
+        return discountAmount == null ? BigDecimal.ZERO : discountAmount;
+    }
+
+    @ColumnName("discount_amount")
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public String getVoucherCodeSnapshot() {
+        return voucherCodeSnapshot;
+    }
+
+    @ColumnName("voucher_code_snapshot")
+    public void setVoucherCodeSnapshot(String voucherCodeSnapshot) {
+        this.voucherCodeSnapshot = voucherCodeSnapshot;
+    }
+
+    public String getDiscountAmountFormat() {
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, getDiscountAmount());
+    }
+
     public List<OrderDetailItem> getItems() {
         return items;
     }
@@ -135,7 +158,8 @@ public class OrderDetail {
 
     //không tính ship fee
     public String getTotalOrderFormat() {
-        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND, totalMustPay.doubleValue() - shipFee.doubleValue());
+        return PriceFormatUtils.formatPrice(PriceFormatUtils.PATTERN_VND,
+                totalMustPay.add(getDiscountAmount()).subtract(shipFee));
     }
 
     public String getOrderDateFormat() {

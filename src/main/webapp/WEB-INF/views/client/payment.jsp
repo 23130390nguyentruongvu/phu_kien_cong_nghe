@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Thanh Toán</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment.css?v2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
           integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -128,18 +128,70 @@
                                      </span>
                                     </td>
                                 </tr>
+                                <tr class="voucher-discount-line" id="voucher-discount-line" hidden>
+                                    <th>Voucher giảm</th>
+                                    <td><span class="price-amount" id="voucher-discount-amount">−0₫</span></td>
+                                </tr>
                                 <tr class="order-total">
                                     <th>Tổng</th>
                                     <td>
                                         <strong>
                                                 <span class="price-amount">
-                                                <fmt:formatNumber value="${totalOrder}" pattern="#,###"/>₫
+                                                <span id="payment-total" data-total="${totalOrder}">
+                                                    <fmt:formatNumber value="${totalOrder}" pattern="#,###"/>₫
+                                                </span>
                                             </span>
                                         </strong>
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
+                            <section class="checkout-vouchers" data-subtotal="${subTotal}" data-shipping="${shipFee}">
+                                <div class="checkout-voucher-heading">
+                                    <h3><i class="fa-solid fa-ticket"></i> Voucher áp dụng cho đơn hàng</h3>
+                                    <a href="${pageContext.request.contextPath}/voucher-store">Xem kho voucher</a>
+                                </div>
+                                <label class="checkout-voucher-option">
+                                    <input type="radio" name="voucherId" value="" checked>
+                                    <span>Không sử dụng voucher</span>
+                                </label>
+                                <c:choose>
+                                    <c:when test="${empty vouchers}">
+                                        <p class="checkout-voucher-empty">Chưa có voucher phù hợp với sản phẩm và giá trị đơn hàng.</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="voucher" items="${vouchers}">
+                                            <label class="checkout-voucher-option">
+                                                <input type="radio" name="voucherId" value="${voucher.id}"
+                                                       data-discount="${voucher.discountAmount}">
+                                                <span class="checkout-voucher-description">
+                                                    <strong><c:out value="${voucher.name}"/> · <c:out value="${voucher.code}"/></strong>
+                                                    <small>
+                                                        <c:choose>
+                                                            <c:when test="${voucher.discount_type == 'PERCENT'}">
+                                                                Giảm <fmt:formatNumber value="${voucher.discount_value}" maxFractionDigits="2"/>%
+                                                                trên sản phẩm hợp lệ
+                                                            </c:when>
+                                                            <c:when test="${voucher.discount_type == 'FREESHIP'}">Giảm phí vận chuyển</c:when>
+                                                            <c:otherwise>
+                                                                Giảm <fmt:formatNumber value="${voucher.discount_value}" pattern="#,###"/>₫
+                                                                trên sản phẩm hợp lệ
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <c:if test="${not empty voucher.max_discount_amount && voucher.discount_type == 'PERCENT'}">
+                                                            · Tối đa <fmt:formatNumber value="${voucher.max_discount_amount}" pattern="#,###"/>₫
+                                                        </c:if>
+                                                        · Giảm đơn này <b><fmt:formatNumber value="${voucher.discountAmount}" pattern="#,###"/>₫</b>
+                                                        <c:if test="${voucher.discount_type != 'FREESHIP'}">
+                                                            · Áp dụng trên <fmt:formatNumber value="${voucher.eligibleSubtotal}" pattern="#,###"/>₫ sản phẩm
+                                                        </c:if>
+                                                    </small>
+                                                </span>
+                                            </label>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                            </section>
                             <div id="payment" class="checkout-payment">
                                 <ul class="payment-methods">
                                     <c:forEach var="method" items="${requestScope.paymentMethods}" varStatus="loop">

@@ -151,6 +151,77 @@ tfoot{
 #payment{
     border-radius: 0;
 }
+
+.checkout-vouchers {
+    margin: 0 0 24px;
+    padding: 16px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.checkout-voucher-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.checkout-voucher-heading h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.checkout-voucher-heading a {
+    color: #175cd3;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.checkout-voucher-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 9px;
+    padding: 11px;
+    border: 1px solid #eaecf0;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.checkout-voucher-option:has(input:checked) {
+    border-color: #528bff;
+    background: #eff4ff;
+}
+
+.checkout-voucher-option input {
+    margin-top: 3px;
+    accent-color: #175cd3;
+}
+
+.checkout-voucher-description {
+    display: grid;
+    gap: 4px;
+}
+
+.checkout-voucher-description small,
+.checkout-voucher-empty {
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.voucher-discount-line {
+    color: #067647;
+}
+
+@media (max-width: 700px) {
+    .checkout-voucher-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
 ul.payment-methods{
     padding: 0;
     margin-bottom: 1em;

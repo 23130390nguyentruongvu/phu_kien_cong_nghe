@@ -14,13 +14,91 @@
             referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_order.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_order.css?v=3">
 </head>
 <body>
 <div class="wrap-all-content">
     <jsp:include page="/WEB-INF/views/common/sidebar_admin.jsp"/>
     <div class="main-content-admin">
         <h1 class="title-for-page">Quản lí đơn hàng</h1>
+        <c:if test="${not empty param.createdOrderId}">
+            <div class="order-create-feedback success">
+                Đã tạo đơn hàng #${param.createdOrderId}. Trạng thái là <strong>Chờ khách hàng ký số</strong>; chưa áp dụng voucher.
+            </div>
+        </c:if>
+        <c:if test="${param.createError == 'invalid' || param.createError == 'items'}">
+            <div class="order-create-feedback error">Thông tin tạo đơn không hợp lệ. Hãy chọn khách hàng, địa chỉ, phương thức thanh toán và ít nhất một biến thể với số lượng hợp lệ.</div>
+        </c:if>
+        <c:if test="${param.createError == 'business'}">
+            <div class="order-create-feedback error">Không thể tạo đơn: khách hàng, địa chỉ, phương thức thanh toán hoặc tồn kho không hợp lệ.</div>
+        </c:if>
+        <c:if test="${param.createError == 'server'}">
+            <div class="order-create-feedback error">Có lỗi hệ thống khi tạo đơn. Vui lòng thử lại hoặc kiểm tra log server.</div>
+        </c:if>
+        <details class="create-order-panel">
+            <summary><i class="fa-solid fa-circle-plus"></i> Tạo đơn hàng cho khách hàng</summary>
+            <form id="createOrderForm" action="${pageContext.request.contextPath}/admin-order" method="post">
+                <input type="hidden" name="action" value="create">
+                <div class="create-order-fields">
+                    <label>Khách hàng
+                        <select id="create-order-customer" name="customerId" required>
+                            <option value="">Chọn khách hàng</option>
+                            <c:forEach var="customer" items="${requestScope.createCustomers}">
+                                <option value="${customer.id}"><c:out value="${customer.full_name}"/> (@<c:out value="${customer.user_name}"/>) · #${customer.id}</option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                    <label>Địa chỉ nhận hàng
+                        <select id="create-order-address" name="addressId" required disabled>
+                            <option value="">Chọn khách hàng trước</option>
+                            <c:forEach var="address" items="${requestScope.createAddresses}">
+                                <option value="${address.id}" data-user-id="${address.user_id}">
+                                    <c:out value="${address.receiver_name}"/> · <c:out value="${address.phone_number}"/> ·
+                                    <c:out value="${address.address_detail}"/>, <c:out value="${address.province_city}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                    <label>Phương thức thanh toán
+                        <select name="paymentMethodId" required>
+                            <option value="">Chọn phương thức</option>
+                            <c:forEach var="method" items="${requestScope.createPaymentMethods}">
+                                <option value="${method.id}"><c:out value="${method.name_method}"/></option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                </div>
+                <div class="create-order-items-heading">
+                    <h3>Sản phẩm trong đơn</h3>
+                    <button type="button" id="add-order-item" class="create-order-add-item">+ Thêm sản phẩm</button>
+                </div>
+                <div id="create-order-items">
+                    <div class="create-order-item">
+                        <label>Sản phẩm / biến thể
+                            <select name="variantIds" required>
+                                <option value="">Chọn sản phẩm</option>
+                                <c:forEach var="variant" items="${requestScope.createVariants}">
+                                    <option value="${variant.id}">
+                                        <c:out value="${variant.product_name}"/> — <c:out value="${variant.variant_name}"/>
+                                        (<c:out value="${variant.sku}"/>, còn ${variant.stock}) ·
+                                        <fmt:formatNumber value="${variant.price}" pattern="#,###"/>₫
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                        <label>Số lượng
+                            <input name="quantities" type="number" min="1" value="1" required>
+                        </label>
+                        <button type="button" class="remove-order-item" aria-label="Xóa dòng sản phẩm">Xóa</button>
+                    </div>
+                </div>
+                <label class="create-order-note">Ghi chú
+                    <textarea name="note" maxlength="191" rows="2"></textarea>
+                </label>
+                <p class="create-order-hint">Đơn tạo tại admin luôn ở trạng thái chờ khách hàng ký số. Số lượng tồn kho được giữ ngay khi tạo đơn; không áp dụng voucher.</p>
+                <button type="submit" class="create-order-submit">Tạo đơn và giữ tồn kho</button>
+            </form>
+        </details>
         <div class="wrap-find-info-order">
             <form action="${pageContext.request.contextPath}/admin-order" method="get">
                 <input type="text" name="keySearch" class="input-order-id"
@@ -141,5 +219,6 @@
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/js/popup_common.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_order_create.js" defer></script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin_order.js"></script>
 </html>

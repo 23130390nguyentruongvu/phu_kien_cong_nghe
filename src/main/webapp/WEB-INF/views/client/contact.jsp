@@ -14,7 +14,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2">
       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css">
       <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/sidebar.css">
   </head>

@@ -8,17 +8,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.user.UserDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.user.UserKeyDao;
 import vn.edu.hcmuaf.fit.pkcn.model.cart.Cart;
 import vn.edu.hcmuaf.fit.pkcn.model.order.PaymentMethod;
 import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.model.user.Address;
-import vn.edu.hcmuaf.fit.pkcn.model.user.json.request.UserKeyDTO;
+import vn.edu.hcmuaf.fit.pkcn.service.common.VoucherService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.PaymentMethodService;
 import vn.edu.hcmuaf.fit.pkcn.service.order.ShippingFeeService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.AddressService;
-import vn.edu.hcmuaf.fit.pkcn.service.user.UserKeyService;
 import vn.edu.hcmuaf.fit.pkcn.utils.CheckUserHelper;
 
 import java.io.IOException;
@@ -54,7 +51,10 @@ public class ViewPaymentServlet extends HttpServlet {
         }
         double totalPrice = cart.priceTotal();
         double totalOrder = totalPrice + shipFee;
+        VoucherService voucherService = new VoucherService(JDBI.getJdbi());
         request.setAttribute("paymentMethods", methods);
+        request.setAttribute("vouchers", voucherService.getApplicableVouchers(
+                cart, user.getId(), java.math.BigDecimal.valueOf(shipFee)));
         request.setAttribute("subTotal", totalPrice);
         request.setAttribute("shipFee", shipFee);
         request.setAttribute("totalOrder",totalOrder);

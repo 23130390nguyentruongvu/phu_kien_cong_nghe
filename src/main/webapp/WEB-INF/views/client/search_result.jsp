@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/item_product.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search_result.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/product_sidebar.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/main.css?v=2" />
 </head>
 <body>
 <div class="container-header-main-footer">
