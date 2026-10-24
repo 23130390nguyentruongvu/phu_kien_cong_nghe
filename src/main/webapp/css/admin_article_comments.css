@@ -1,0 +1,33 @@
+#admin-article-comments .record-summary {
+  align-items: flex-start;
+}
+
+#admin-article-comments .record-summary > div:first-child {
+  min-width: 0;
+}
+
+#admin-article-comments .record-summary p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#admin-article-comments .article-comment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#admin-article-comments .article-comment-actions form {
+  margin: 0;
+}
+
+#article-filter {
+  min-width: 260px;
+}
+
+@media (max-width: 720px) {
+  #admin-article-comments .record-summary,
+  #admin-article-comments .article-comment-actions {
+    flex-direction: column;
+  }
+}

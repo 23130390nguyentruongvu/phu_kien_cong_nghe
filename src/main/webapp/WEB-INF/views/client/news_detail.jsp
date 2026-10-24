@@ -27,6 +27,8 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/css/news_detail.css">
     <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/css/article_comments.css">
+    <link rel="stylesheet"
           href="${pageContext.request.contextPath}/shared/sidebar.css">
 </head>
 
@@ -36,6 +38,10 @@
 
 <main>
     <div class="news-detail-container">
+        <c:if test="${not empty articleFlashMessage}">
+            <div class="article-toast ${articleFlashType == 'error' ? 'error' : 'success'}"
+                 role="status" data-testid="article-toast"><c:out value="${articleFlashMessage}"/></div>
+        </c:if>
 
         <!-- ===== TRƯỜNG HỢP KHÔNG CÓ BÀI VIẾT ===== -->
         <c:if test="${empty article}">
@@ -78,63 +84,49 @@
                 <c:out value="${article.content}" escapeXml="false"/>
             </div>
 
-            <!-- Bình luận -->
-<%--            <div class="comment-section">--%>
-<%--                <h3>Để lại một bình luận</h3>--%>
+            <section class="comment-section" id="comments">
+                <h3>Bình luận (${approvedCommentCount})</h3>
+                <button type="button" id="toggle-article-comments" class="btn-submit"
+                        aria-expanded="false" aria-controls="article-comment-list"
+                        data-count="${approvedCommentCount}">
+                    Xem bình luận (${approvedCommentCount})
+                </button>
+                <div id="article-comment-list" class="article-comment-list" hidden
+                     data-comments-url="${pageContext.request.contextPath}/article-comments?articleId=${article.id}">
+                    <p>Đang tải bình luận...</p>
+                </div>
 
-<%--&lt;%&ndash;                <p class="comment-note">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    Email của bạn sẽ không được hiển thị công khai.&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    Các trường bắt buộc được đánh dấu&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    <span class="required">*</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                </p>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                <form class="comment-form"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                      action="${pageContext.request.contextPath}/comment"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                      method="post">&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                    <input type="hidden"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                           name="articleId"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                           value="${article.id}"/>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                    <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        <label for="comment">Nhập vào đây...</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        <textarea id="comment"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                  name="content"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                  rows="6"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                  placeholder="Viết bình luận của bạn..."&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                  required></textarea>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                    <div class="form-row">&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                        <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <label for="name">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                Tên <span class="required">*</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <input type="text"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   id="name"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   name="name"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   required>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        </div>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                        <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <label for="email">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                Email <span class="required">*</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <input type="email"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   id="email"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   name="email"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                   required>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        </div>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                    <button type="submit" class="btn-submit">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        Gửi bình luận&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    </button>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                </form>&ndash;%&gt;--%>
-<%--            </div>--%>
+                <h3>Để lại một bình luận</h3>
+                <p class="comment-note">Bình luận sẽ hiển thị sau khi được quản trị viên duyệt.</p>
+                <form class="comment-form" action="${pageContext.request.contextPath}/article-comments"
+                      method="post" novalidate>
+                    <input type="hidden" name="articleId" value="${article.id}">
+                    <div class="form-group">
+                        <label for="article-comment-content">Nội dung <span class="required">*</span></label>
+                        <textarea id="article-comment-content" name="content" rows="5"
+                                  placeholder="Viết bình luận của bạn..." required></textarea>
+                        <span class="article-field-error" data-error-for="content"
+                              data-testid="article-comment-content-error" aria-live="polite"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="article-comment-name">Tên hiển thị <span class="required">*</span></label>
+                            <input id="article-comment-name" type="text" name="name"
+                                   value="<c:out value='${commentName}'/>" required>
+                            <span class="article-field-error" data-error-for="name"
+                                  data-testid="article-comment-name-error" aria-live="polite"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="article-comment-email">Email <span class="required">*</span></label>
+                            <input id="article-comment-email" type="email" name="email"
+                                   value="<c:out value='${commentEmail}'/>" required>
+                            <span class="article-field-error" data-error-for="email"
+                                  data-testid="article-comment-email-error" aria-live="polite"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Đăng bình luận</button>
+                </form>
+            </section>
 
         </c:if>
 
@@ -144,5 +136,6 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/js/header.js"></script>
+<script src="${pageContext.request.contextPath}/js/article_comments.js" defer></script>
 </body>
 </html>

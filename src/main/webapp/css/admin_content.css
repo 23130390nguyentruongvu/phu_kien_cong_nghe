@@ -166,6 +166,28 @@ body {
     resize: vertical;
 }
 
+.article-editor-form .article-field-error {
+    display: block;
+    min-height: 0;
+    color: #b42318;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.article-notice.error {
+    border: 1px solid #fecdca;
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.article-editor-form .article-field-error:not(:empty) {
+    min-height: 16px;
+}
+
+.article-editor-form .input-invalid {
+    border-color: #b42318;
+}
+
 .editor-form input:focus,
 .editor-form textarea:focus,
 .editor-form select:focus {

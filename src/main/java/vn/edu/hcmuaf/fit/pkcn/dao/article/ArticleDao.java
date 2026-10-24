@@ -7,7 +7,6 @@ import vn.edu.hcmuaf.fit.pkcn.model.article.ArticleShowAsItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 public class ArticleDao {
     private Jdbi jdbi;
@@ -44,12 +43,12 @@ public class ArticleDao {
                 "FROM articles " +
                 "WHERE id = :id";
 
-        ArticleDetail article;
         return jdbi.withHandle(handle -> {
             return handle.createQuery(sql)
                     .bind("id", id)
                     .mapToBean(ArticleDetail.class)
-                    .one();
+                    .findOne()
+                    .orElse(null);
         });
     }
 

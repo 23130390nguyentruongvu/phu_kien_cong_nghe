@@ -18,23 +18,26 @@
             <div><span class="eyebrow">NỘI DUNG</span><h1>Quản lý bài viết</h1></div>
             <p>Tạo mới, chỉnh sửa và gỡ bài viết hiển thị trên trang tin tức.</p>
         </header>
-        <c:if test="${param.status == 'created' || param.status == 'updated' || param.status == 'deleted'}">
-            <div class="notice success" role="status">
-                <c:choose>
-                    <c:when test="${param.status == 'created'}">Đã tạo bài viết.</c:when>
-                    <c:when test="${param.status == 'updated'}">Đã cập nhật bài viết.</c:when>
-                    <c:otherwise>Đã xóa bài viết.</c:otherwise>
-                </c:choose>
-            </div>
+        <c:if test="${not empty articleFlashMessage}">
+            <div class="notice article-notice ${articleFlashType == 'error' ? 'error' : 'success'}" role="status"
+                 data-testid="article-toast">${fn:escapeXml(articleFlashMessage)}</div>
         </c:if>
 
         <section class="admin-card">
             <h2>Thêm bài viết</h2>
-            <form class="editor-form" action="${pageContext.request.contextPath}/admin/articles" method="post">
+            <p><a class="button secondary" href="${pageContext.request.contextPath}/admin/article-comment">Quản lý bình luận bài viết</a></p>
+            <form class="editor-form article-editor-form" action="${pageContext.request.contextPath}/admin/articles"
+                  method="post" novalidate>
                 <input type="hidden" name="action" value="create">
-                <label>Tiêu đề <input name="title" maxlength="191" required></label>
-                <label>Mô tả ngắn <textarea name="subdescription" rows="3" required></textarea></label>
-                <label>Nội dung <textarea name="content" rows="7" required></textarea></label>
+                <label>Tiêu đề <input name="title" required>
+                    <span class="article-field-error" data-error-for="title"
+                          data-testid="article-create-title-error" aria-live="polite"></span></label>
+                <label>Mô tả ngắn <textarea name="subdescription" rows="3" required></textarea>
+                    <span class="article-field-error" data-error-for="subdescription"
+                          data-testid="article-create-description-error" aria-live="polite"></span></label>
+                <label>Nội dung <textarea name="content" rows="7" required></textarea>
+                    <span class="article-field-error" data-error-for="content"
+                          data-testid="article-create-content-error" aria-live="polite"></span></label>
                 <button class="button primary" type="submit">Đăng bài viết</button>
             </form>
         </section>
@@ -76,15 +79,28 @@
                                     </div>
                                     <details class="record-edit">
                                         <summary class="button secondary">Chỉnh sửa</summary>
-                                        <form class="editor-form compact" action="${pageContext.request.contextPath}/admin/articles" method="post">
+                                        <form class="editor-form compact article-editor-form"
+                                              action="${pageContext.request.contextPath}/admin/articles"
+                                              method="post" novalidate>
                                             <input type="hidden" name="action" value="update">
                                             <input type="hidden" name="id" value="${article.id}">
-                                            <label>Tiêu đề <input name="title" maxlength="191" value="${fn:escapeXml(article.title)}" required></label>
-                                            <label>Mô tả ngắn <textarea name="subdescription" rows="3" required>${fn:escapeXml(article.subdescription)}</textarea></label>
-                                            <label>Nội dung <textarea name="content" rows="7" required>${fn:escapeXml(article.content)}</textarea></label>
+                                            <label>Tiêu đề <input name="title" value="${fn:escapeXml(article.title)}" required>
+                                                <span class="article-field-error" data-error-for="title"
+                                                      data-testid="article-update-title-error-${article.id}" aria-live="polite"></span></label>
+                                            <label>Mô tả ngắn <textarea name="subdescription" rows="3" required>${fn:escapeXml(article.subdescription)}</textarea>
+                                                <span class="article-field-error" data-error-for="subdescription"
+                                                      data-testid="article-update-description-error-${article.id}" aria-live="polite"></span></label>
+                                            <label>Nội dung <textarea name="content" rows="7" required>${fn:escapeXml(article.content)}</textarea>
+                                                <span class="article-field-error" data-error-for="content"
+                                                      data-testid="article-update-content-error-${article.id}" aria-live="polite"></span></label>
                                             <button class="button primary" type="submit">Lưu thay đổi</button>
                                         </form>
                                     </details>
+                                    <a class="button secondary article-comments-link"
+                                       href="${pageContext.request.contextPath}/admin/article-comment?articleId=${article.id}"
+                                       data-testid="manage-article-comments-${article.id}">
+                                        Quản lý bình luận (${article.comment_count})
+                                    </a>
                                     <form action="${pageContext.request.contextPath}/admin/articles" method="post" data-confirm="Xóa bài viết này? Các bình luận liên quan cũng sẽ bị xóa.">
                                         <input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="${article.id}">
                                         <input type="hidden" name="q" value="${fn:escapeXml(searchQuery)}">
@@ -100,5 +116,6 @@
     </main>
 </div>
 <script src="${pageContext.request.contextPath}/js/admin_content.js" defer></script>
+<script src="${pageContext.request.contextPath}/js/admin_article_validation.js" defer></script>
 </body>
 </html>
