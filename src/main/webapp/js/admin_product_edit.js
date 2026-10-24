@@ -3,7 +3,7 @@ import {deleteImagesByUrls} from "./admin_product_remove.js"
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
 // Khi chọn file thì hiển thị preview
-document.getElementById('addImageInput').addEventListener('change', function (event) {
+function handleImageInputChange(event) {
     const preview = document.getElementById('editProductPreview');
     preview.innerHTML = ''; // clear cũ
 
@@ -39,48 +39,38 @@ document.getElementById('addImageInput').addEventListener('change', function (ev
             checkboxRemove[posCheck].checked = false;
         }
     }
-});
+}
 
-function validateProductForm() {
-    // const fileSize = document.getElementById('addImageInput').files.length
-    // const mainImageRadio = document.querySelectorAll('#popup-edit .content-edit-product .mainImage')
-    // const checkboxRemove = document.querySelectorAll('#popup-edit .content-edit-product .edit-remove-img')
-
-    const name = document.getElementById('name-product').value.trim();
-    const warranty = document.getElementById('warranty').value.trim();
-    const shortDesc = document.getElementById('short-desc').value.trim();
-    const longDesc = document.getElementById('long-desc').value.trim();
-
-    let errors = [];
-
-
-    // Kiểm tra tên sản phẩm
-    if (name.length < 3) {
-        errors.push("Tên sản phẩm phải có ít nhất 3 ký tự.");
+function setFieldError(form, fieldName, message) {
+    const input = form.elements.namedItem(fieldName);
+    const error = form.querySelector(`[data-error-for="${fieldName}"]`);
+    if (input instanceof HTMLElement) {
+        input.setAttribute('aria-invalid', message ? 'true' : 'false');
+        input.classList.toggle('input-invalid', Boolean(message));
     }
+    if (error) error.textContent = message;
+}
 
-    // Kiểm tra thời hạn bảo hành
-    if (!warranty || isNaN(warranty) || Number(warranty) <= 0) {
-        errors.push("Thời hạn bảo hành phải là số dương.");
-    }
+function validateProductForm(form) {
+    const name = form.elements.namedItem('name-product').value.trim();
+    const warranty = Number(form.elements.namedItem('warranty').value);
+    const shortDesc = form.elements.namedItem('short-desc').value.trim();
+    const longDesc = form.elements.namedItem('long-desc').value.trim();
 
-    // Kiểm tra mô tả ngắn
-    if (shortDesc.length < 5) {
-        errors.push("Mô tả ngắn phải có ít nhất 5 ký tự.");
-    }
+    const fieldErrors = {
+        'name-product': name.length < 3 ? 'Tên sản phẩm phải có ít nhất 3 ký tự.'
+            : name.length > 191 ? 'Tên sản phẩm tối đa 191 ký tự.' : '',
+        warranty: !Number.isInteger(warranty) || warranty < 1 || warranty > 127
+            ? 'Thời hạn bảo hành phải là số nguyên từ 1 đến 127 tháng.' : '',
+        'short-desc': shortDesc.length < 5 ? 'Mô tả ngắn phải có ít nhất 5 ký tự.'
+            : shortDesc.length > 191 ? 'Mô tả ngắn tối đa 191 ký tự.' : '',
+        'long-desc': longDesc.length < 10 ? 'Mô tả chi tiết phải có ít nhất 10 ký tự.' : ''
+    };
 
-    // Kiểm tra mô tả dài
-    if (longDesc.length < 10) {
-        errors.push("Mô tả dài phải có ít nhất 10 ký tự.");
-    }
-
-    // Hiển thị kết quả
-    if (errors.length > 0) {
-        alert("Có lỗi:\n- " + errors.join("\n- "));
-        return false; // không cho submit
-    }
-
-    return true; // hợp lệ
+    Object.entries(fieldErrors).forEach(([fieldName, message]) => {
+        setFieldError(form, fieldName, message);
+    });
+    return Object.values(fieldErrors).every(message => !message);
 }
 
 async function handleUpdateImages(files, folderId) {
@@ -113,19 +103,29 @@ export const setEvent = () => {
     const preview = document.getElementById('editProductPreview');
     preview.innerHTML = ''; // clear cũ
     const imageInput = document.getElementById('addImageInput')
+    imageInput.addEventListener('change', handleImageInputChange);
     imageInput.value = "";
 
     //set sự kiện click vào checkbox xóa (đảm bảo admin không chọn xóa được ảnh chính)
     document.querySelectorAll('#popup-edit .content-edit-product .edit-remove-img')
         .forEach(checkbox => {
             checkbox.addEventListener('change', () => {
-                if (!checkbox.checked) return;
                 const imageItem = checkbox.closest('.image-item');
+                const error = imageItem?.querySelector('.image-delete-error');
+                if (!checkbox.checked) {
+                    if (error) error.textContent = '';
+                    checkbox.setAttribute('aria-invalid', 'false');
+                    return;
+                }
                 if (imageItem) {
                     const radio = imageItem.querySelector('input[type="radio"][name="mainImage"]');
                     if (radio.checked) {
-                        alert("Ảnh chính của sản phẩm không thể bị xóa, vui lòng chọn lại ảnh chính và thử lại!")
                         checkbox.checked = false
+                        checkbox.setAttribute('aria-invalid', 'true');
+                        if (error) error.textContent = 'Không thể xóa ảnh đang được chọn làm ảnh chính.';
+                    } else {
+                        if (error) error.textContent = '';
+                        checkbox.setAttribute('aria-invalid', 'false');
                     }
                 }
             })
@@ -136,28 +136,32 @@ export const setEvent = () => {
         .forEach(radio => {
             radio.addEventListener('change', () => {
                 if (!radio.checked) return;
-                const imageItem = radio.closest('.image-item');
-                if (imageItem) {
-                    const checkbox = imageItem.querySelector('input[type="checkbox"][name="edit-remove-img"]');
-                    if (checkbox.checked) {
-                        checkbox.checked = false
-                    }
-                }
+                document.querySelectorAll('#popup-edit .content-edit-product .image-item')
+                    .forEach(imageItem => {
+                        const checkbox = imageItem.querySelector('input[type="checkbox"][name="edit-remove-img"]');
+                        const error = imageItem.querySelector('.image-delete-error');
+                        if (!checkbox) return;
+                        if (checkbox.checked) checkbox.checked = false;
+                        checkbox.setAttribute('aria-invalid', 'false');
+                        if (error) error.textContent = '';
+                    });
             })
         })
 }
 
 
 export const setEventConfirm = (prodId) => {
-    const btnSubmit = document.getElementById("submit-update-product");
-    const newBtnSubmit = btnSubmit.cloneNode(true);
-    btnSubmit.parentNode.replaceChild(newBtnSubmit, btnSubmit);
-    newBtnSubmit
-        .addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                //check các input có rỗng hay không
-                const isOk = validateProductForm()
+    const form = document.getElementById('editProductForm');
+    form.addEventListener('input', event => {
+        if (form.dataset.validationAttempted === 'true'
+            && event.target.matches('#name-product, #warranty, #short-desc, #long-desc')) {
+            validateProductForm(form);
+        }
+    });
+    form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                form.dataset.validationAttempted = 'true';
+                const isOk = validateProductForm(form);
                 if (!isOk) return;
                 const okConfirm = confirm("Bạn có đồng ý cập nhật lại thông tin sản phẩm không?")
                 if (!okConfirm) return;
@@ -224,11 +228,11 @@ export const setEventConfirm = (prodId) => {
                     //Tạo đối tượng json
                     const productData = {
                         id: prodId,
-                        active: document.getElementsByClassName('edit-isActive')[0].checked,
-                        name: document.getElementById('name-product').value.trim(),
-                        warrantyPeriod: parseInt(document.getElementById('warranty').value.trim()),
-                        subtitle: document.getElementById('short-desc').value.trim(),
-                        description: document.getElementById('long-desc').value.trim(),
+                        active: form.querySelector('.edit-isActive').checked,
+                        name: form.elements.namedItem('name-product').value.trim(),
+                        warrantyPeriod: parseInt(form.elements.namedItem('warranty').value.trim()),
+                        subtitle: form.elements.namedItem('short-desc').value.trim(),
+                        description: form.elements.namedItem('long-desc').value.trim(),
                         folderId: folderId,
                         newImages: imagesUpload, // Đây là mảng các URL từ Firebase,
                         removeUrls: removedUrls,
@@ -243,21 +247,23 @@ export const setEventConfirm = (prodId) => {
 
                     const resFinal = await res.json()
                     hideLoading()
-                    alert(`Thông báo: ${resFinal.message}`)
                     btnCancel.disabled = false
                     btnSubmit.textContent = 'Cập nhật'
                     btnSubmit.disabled = false
 
-                    const btnClose = document.getElementById('closeEdit');
-                    if (btnClose) btnClose.click();
-                    location.reload();
+                    if (resFinal.success) {
+                        const btnClose = document.getElementById('closeEdit');
+                        if (btnClose) btnClose.click();
+                        location.reload();
+                    } else {
+                        setFieldError(form, 'name-product', resFinal.message || 'Không thể cập nhật sản phẩm.');
+                    }
                 } catch (e) {
                     btnCancel.disabled = false
                     btnSubmit.textContent = 'Cập nhật'
                     btnSubmit.disabled = false
                     hideLoading()
-                    alert(`Thông báo: ${e}`)
+                    setFieldError(form, 'name-product', `Không thể cập nhật sản phẩm: ${e.message}`);
                 }
-            }
-        )
+            });
 }

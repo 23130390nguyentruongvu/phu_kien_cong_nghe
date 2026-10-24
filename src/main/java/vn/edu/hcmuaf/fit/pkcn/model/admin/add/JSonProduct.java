@@ -120,14 +120,20 @@ public class JSonProduct {
     }
 
     public void updatePriceAndStock() {
-        double minPrice = Double.MAX_VALUE, maxPrice = Double.MIN_VALUE;
+        if (variants == null || variants.isEmpty()) {
+            throw new IllegalArgumentException("Sản phẩm phải có ít nhất một biến thể");
+        }
+        BigDecimal minPrice = null;
+        BigDecimal maxPrice = null;
+        stock = 0;
         for (JSonProductVariant variant : variants) {
-            this.stock += variant.getStock();
-            minPrice = Math.min(minPrice, variant.getPrice().doubleValue());
-            maxPrice = Math.max(maxPrice, variant.getPrice().doubleValue());
+            BigDecimal price = variant.getPrice();
+            stock = Math.addExact(stock, variant.getStock());
+            if (minPrice == null || price.compareTo(minPrice) < 0) minPrice = price;
+            if (maxPrice == null || price.compareTo(maxPrice) > 0) maxPrice = price;
         }
 
-        this.maxPrice = new BigDecimal(maxPrice);
-        this.minPrice = new BigDecimal(minPrice);
+        this.maxPrice = maxPrice;
+        this.minPrice = minPrice;
     }
 }

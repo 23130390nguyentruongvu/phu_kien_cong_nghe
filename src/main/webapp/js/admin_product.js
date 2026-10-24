@@ -3,14 +3,6 @@ import {setEvent, setEventConfirm} from "./admin_product_edit.js";
 import {setupAddProductVar} from "./admin_product_add_variant.js";
 
 
-// Mở popup thêm sản phẩm
-document.querySelector('.head-edit .edit-product-add-prod').onclick = () => {
-    document.getElementById('popup-add-product').style.display = 'block';
-};
-document.getElementById('closeAddProd').onclick = () => {
-    document.getElementById('popup-add-product').style.display = 'none';
-};
-
 // Mở popup xem biến thể
 document.querySelectorAll('.edit-product-show-var').forEach(btn => {
     btn.addEventListener('click', async (e) => {
@@ -70,8 +62,11 @@ document.getElementById('closeEdit').addEventListener('click', () => {
     document.getElementById('popup-edit').style.display = 'none';
 });
 
-//thêm các url cho sản phẩm
-document.getElementById('addImageUrl').onclick = () => {
+//Thêm các URL ảnh vào form chỉnh sửa được tải động
+document.addEventListener('click', (event) => {
+    const addImageButton = event.target.closest('#addImageUrl');
+    if (!addImageButton) return;
+
     const list = document.getElementById('imageUrlList');
     const index = list.children.length;
 
@@ -83,10 +78,9 @@ document.getElementById('addImageUrl').onclick = () => {
     <button type="button" class="remove-url">Xóa</button>
   `;
     list.appendChild(div);
-};
+});
 
 document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('remove-url')) {
-        e.target.parentElement.remove();
-    }
+    const removeButton = e.target.closest('.remove-url');
+    if (removeButton) removeButton.parentElement.remove();
 });

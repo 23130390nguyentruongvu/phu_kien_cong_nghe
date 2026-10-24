@@ -74,14 +74,10 @@ Response: {
             response.getWriter().flush();
         } catch (Exception e) {
             e.printStackTrace();
-            Map<String, Object> respObj = new HashMap<>();
-            respObj.put("exists", false);
-            respObj.put("duplicateSKUs", new ArrayList<>());
-
-            //tạo response json
-            String jsonResponse = new Gson().toJson(respObj);
-            response.getWriter().write(jsonResponse);
-            response.getWriter().flush();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\":\"Không thể kiểm tra SKU lúc này\"}");
         }
     }
 }

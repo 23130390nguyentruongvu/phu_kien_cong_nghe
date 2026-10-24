@@ -1,4 +1,3 @@
-import {storage, ref, deleteObject} from "./firebase.js";
 import {setupEvent} from "./admin_product_edit_variant.js"
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
@@ -23,9 +22,9 @@ export async function deleteSkuImage(folderId, sku) {
     // Nếu không có SKU thì không cần xóa
     if (!sku) return {success: false, message: "Không tìm thấy mã SKU để xóa ảnh."};
 
-    const desertRef = ref(storage, `products/${folderId}/variants/${sku}`);
-
     try {
+        const {storage, ref, deleteObject} = await import("./firebase.js");
+        const desertRef = ref(storage, `products/${folderId}/variants/${sku}`);
         await deleteObject(desertRef);
         console.log(`Đã xóa ảnh SKU: ${sku} trên Firebase`);
         return {
@@ -69,9 +68,11 @@ export const setEventRemoveVariant = (sizeVariants, prodId) => {
         el.addEventListener("click", async function () {
 
             const id = this.dataset.id; // lấy product variant id
-            if (sizeVariants < 2) {
-                alert("Không thể xóa biến thể " + id + " khi sản phẩm chung chỉ có " + sizeVariants + " biến thể");
-            } else {
+        const message = document.getElementById('variant-action-message');
+        message.textContent = '';
+        if (sizeVariants < 2) {
+            message.textContent = `Không thể xóa biến thể ${id}: sản phẩm phải còn ít nhất một biến thể.`;
+        } else {
                 const isDelete = confirm("Bạn có chắc chắn muốn xóa biến thể mang mã: " + id + " không?")
                 if (isDelete) {
                     showLoading()
@@ -88,19 +89,19 @@ export const setEventRemoveVariant = (sizeVariants, prodId) => {
                             // Nếu DB xóa xong và trước đó có ảnh trên storage thì mới xóa Firebase
                             if (folderData.hasImageInStorage) {
                                 const deleteStorage = await deleteSkuImage(folderData.folderId, res.sku);
-                                alert(res.message + " và " + deleteStorage.message)
+                                message.textContent = `${res.message} ${deleteStorage.message}`;
                             } else
-                                alert(res.message);
+                                message.textContent = res.message;
                             // Reload lại danh sách biến thể sau khi xóa thành công
                             await showPopupVariants(prodId);
                         } else {
                             hideLoading()
-                            alert("Lỗi xóa DB: " + res.message);
+                            message.textContent = "Lỗi xóa DB: " + res.message;
                         }
                     } catch (err) {
                         console.error(err);
                         hideLoading()
-                        alert("Lỗi hệ thống: " + err.message);
+                        message.textContent = "Lỗi hệ thống: " + err.message;
                     } finally {
                         hideLoading()
                     }

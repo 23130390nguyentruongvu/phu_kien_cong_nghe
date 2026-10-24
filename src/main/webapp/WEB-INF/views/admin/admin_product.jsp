@@ -12,9 +12,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../../../css/admin_product.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/shared/nav_admin.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_product.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_product.css?v=7">
 
 </head>
 <body>
@@ -34,7 +33,9 @@
             </form>
         </div>
         <div class="edit-product head-edit">
-            <span class="edit-product-add-prod"><i class="fa-solid fa-circle-plus"></i></span>
+            <button type="button" class="edit-product-add-prod" aria-label="Thêm sản phẩm">
+                <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="board-res-product">
             <c:if test="${empty requestScope.products}">
@@ -94,15 +95,24 @@
     <div id="popup-add-product" class="popup">
         <div class="popup-content">
             <h2>Thêm sản phẩm mới</h2>
-            <form id="form-add-product" enctype="multipart/form-data" method="post">
-                <input id="add-prod-name" type="text" name="name" class="form-input" placeholder="Tên sản phẩm">
-                <br>
+            <form id="form-add-product" enctype="multipart/form-data" method="post" novalidate>
+                <label for="add-prod-name">Tên sản phẩm</label>
+                <input id="add-prod-name" type="text" name="name" class="form-input"
+                       maxlength="191" required placeholder="Nhập tên sản phẩm">
+                <span class="field-error" data-testid="add-product-name-error"
+                      data-error-for="add-prod-name" aria-live="polite"></span>
+
+                <label for="add-prod-warranty">Thời gian bảo hành (tháng)</label>
                 <input id="add-prod-warranty" type="number" name="warranty-period" class="form-input"
-                       placeholder="Thời gian bảo hành (tháng)">
-                <br>
-                <select id="add-prod-categoryId" class="form-input" name="categoryId">
+                       min="1" max="127" step="1" value="12" required>
+                <span class="field-error" data-testid="add-product-warranty-error"
+                      data-error-for="add-prod-warranty" aria-live="polite"></span>
+
+                <label for="add-prod-categoryId">Danh mục / Thể loại con</label>
+                <select id="add-prod-categoryId" class="form-input" name="categoryId" required>
+                    <option value="" selected>Chọn thể loại con</option>
                     <c:if test="${empty requestScope.categories}">
-                        <option value="">Chưa có thể loại nào</option>
+                        <option value="" disabled>Chưa có thể loại con nào</option>
                     </c:if>
                     <c:if test="${not empty requestScope.categories}">
                         <c:forEach var="category" items="${requestScope.categories}">
@@ -110,49 +120,100 @@
                         </c:forEach>
                     </c:if>
                 </select>
-                <br>
-                <textarea id="add-prod-subtitle" name="subtitle" class="form-input" placeholder="Mô tả ngắn"></textarea>
-                <br>
+                <span class="field-error" data-testid="add-product-category-error"
+                      data-error-for="add-prod-categoryId" aria-live="polite"></span>
+
+                <label for="add-prod-subtitle">Mô tả ngắn</label>
+                <textarea id="add-prod-subtitle" name="subtitle" class="form-input" maxlength="191"
+                          required placeholder="Nhập mô tả ngắn"></textarea>
+                <span class="field-error" data-testid="add-product-subtitle-error"
+                      data-error-for="add-prod-subtitle" aria-live="polite"></span>
+
+                <label for="add-prod-description">Mô tả chi tiết</label>
                 <textarea id="add-prod-description" name="description" class="form-input"
-                          placeholder="Mô tả dài"></textarea>
-                <br>
+                          required placeholder="Nhập mô tả chi tiết"></textarea>
+                <span class="field-error" data-testid="add-product-description-error"
+                      data-error-for="add-prod-description" aria-live="polite"></span>
+
                 <div class="wrap-status-product">
                     <label for="statusProduct">Hiện lên website</label>
                     <input type="checkbox" name="status" checked id="statusProduct">
                 </div>
-                <br>
 
                 <!-- Upload ảnh sản phẩm -->
-                <label>Ảnh sản phẩm:</label>
-                <input type="file" id="add-prod-productImages" name="productImages[]" multiple accept="image/*">
+                <label for="add-prod-productImages">Ảnh sản phẩm (chọn ít nhất 1 ảnh):</label>
+                <input type="file" id="add-prod-productImages" name="productImages[]" multiple
+                       accept="image/*" required>
                 <div id="productPreview"></div>
+                <span class="field-error" data-testid="add-product-images-error"
+                      data-error-for="add-prod-productImages" aria-live="polite"></span>
+                <span class="field-error" data-testid="add-product-main-image-error"
+                      data-error-for="add-prod-mainImage" aria-live="polite"></span>
 
                 <!-- Biến thể sản phẩm -->
                 <label>Danh sách các biến thể:</label>
                 <div id="variantList">
                     <div class="add-prod-variant-item variant-item">
-                        <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">
-                        <br>
-                        <input type="text" class="form-input" name="sku" placeholder="Mã SKU">
-                        <br>
-                        <input type="number" class="form-input" name="variantPrices" placeholder="Giá">
-                        <br>
-                        <input type="number" class="form-input" name="variantStocks" placeholder="Số lượng">
-                        <br>
-                        <input type="number" class="form-input" name="gram" placeholder="Trọng lượng">
-                        <br>
-                        <input type="text" class="form-input" name="color" placeholder="Màu sắc">
-                        <br>
-                        <input type="text" class="form-input" name="size" placeholder="Kích thước">
-                        <br>
+                        <label>Tên biến thể
+                            <input type="text" class="form-input" name="variantNames" maxlength="191"
+                                   minlength="3" required placeholder="Tên biến thể">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-name-error"
+                              data-error-for="variantNames" aria-live="polite"></span>
+                        <label>Mã SKU
+                            <input type="text" class="form-input" name="sku" maxlength="50"
+                                   minlength="2" required placeholder="Mã SKU">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-sku-error"
+                              data-error-for="sku" aria-live="polite"></span>
+                        <label>Giá biến thể
+                            <input type="number" class="form-input" name="variantPrices" min="0.01"
+                                   max="9999999999999.99" step="0.01" required placeholder="Giá">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-price-error"
+                              data-error-for="variantPrices" aria-live="polite"></span>
+                        <label>Số lượng tồn kho
+                            <input type="number" class="form-input" name="variantStocks" min="0"
+                                   max="2147483647" step="1" required placeholder="Số lượng">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-stock-error"
+                              data-error-for="variantStocks" aria-live="polite"></span>
+                        <label>Trọng lượng (gram)
+                            <input type="number" class="form-input" name="gram" min="1"
+                                   max="2147483647" step="1" required placeholder="Trọng lượng">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-gram-error"
+                              data-error-for="gram" aria-live="polite"></span>
+                        <label>Màu sắc
+                            <input type="text" class="form-input" name="color" maxlength="50"
+                                   minlength="2" required placeholder="Màu sắc">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-color-error"
+                              data-error-for="color" aria-live="polite"></span>
+                        <label>Kích thước
+                            <input type="text" class="form-input" name="size" maxlength="50"
+                                   required placeholder="Kích thước">
+                        </label>
+                        <span class="field-error" data-testid="add-variant-size-error"
+                              data-error-for="size" aria-live="polite"></span>
                         <!-- Chỉ cho phép chọn 1 ảnh biến thể -->
-                        <label>Ảnh biến thể:</label>
-                        <input type="file" name="add-prod-variantImages" accept="image/*">
+                        <label>Ảnh biến thể
+                            <input type="file" name="add-prod-variantImages" accept="image/*" required>
+                        </label>
                         <div class="variant-image-preview" style="margin-top: 5px;"></div>
+                        <span class="field-error" data-testid="add-variant-image-error"
+                              data-error-for="add-prod-variantImages" aria-live="polite"></span>
+                        <button type="button" class="removeVariant variant-remove-button">Xóa biến thể</button>
                     </div>
                 </div>
-                <br>
-                <button type="button" id="addVariantBtn">Thêm biến thể</button>
+                <span class="field-error" data-testid="add-variant-list-error"
+                      data-error-for="variantList" aria-live="polite"></span>
+                <section class="product-derived-preview" aria-live="polite">
+                    <strong>Giá cha:</strong> <span id="derived-min-price">—</span> –
+                    <span id="derived-max-price">—</span>
+                    <strong>Tổng tồn kho:</strong> <span id="derived-total-stock">0</span>
+                </section>
+                <button type="button" id="addVariantBtn" class="variant-add-button">Thêm biến thể</button>
                 <div class="wrap-button-cancel-submit">
                     <button id="submitAddProd" type="submit" class="submit">Thêm</button>
                     <button id="closeAddProd" type="button" class="close">Đóng</button>
@@ -179,72 +240,96 @@
             }
         }
 
-        //Set hiện ảnh cho biến thể đầu tiên
-        document.querySelectorAll('input[name="add-prod-variantImages"]').forEach(input => {
-            input.addEventListener('change', function () {
-                handleVariantImagePreview(this);
-            });
+        document.getElementById('variantList').addEventListener('change', event => {
+            if (event.target.matches('input[name="add-prod-variantImages"]')) {
+                handleVariantImagePreview(event.target);
+            }
         });
 
         // Hiển thị preview ảnh sản phẩm và chọn ảnh chính
         document.getElementById('add-prod-productImages').addEventListener('change', function (event) {
             const preview = document.getElementById('productPreview');
-            preview.innerHTML = ''; // clear cũ
+            preview.replaceChildren();
             Array.from(event.target.files).forEach((file, index) => {
+                const div = document.createElement('div');
+                div.classList.add('preview-item');
+                const image = document.createElement('img');
+                image.alt = 'Ảnh sản phẩm';
+                image.style.cssText = 'width:80px;height:80px;object-fit:cover;margin:5px;';
+                const radioLabel = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'add-prod-mainImage';
+                radio.value = String(index);
+                radio.checked = index === 0;
+                radioLabel.append(radio, ' Ảnh chính');
+                div.append(image, radioLabel);
+                preview.appendChild(div);
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const div = document.createElement('div');
-                    div.classList.add('preview-item');
-                    div.innerHTML = '\<' +
-                        'img src="' + e.target.result + '" alt="Ảnh sản phẩm" style="width:80px;height:80px;object-fit:cover;margin:5px;">\
-                         <br>\
-                        <input type="radio" name="add-prod-mainImage" value="' + index + '" ' + (index === 0 ? 'checked' : '') + '> Ảnh chính\
-';
-
-                    preview.appendChild(div);
+                    image.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             });
+            preview.dispatchEvent(new Event('change', {bubbles: true}));
         });
         document.getElementById('addVariantBtn').addEventListener('click', function () {
             const variantList = document.getElementById('variantList');
-
-            // Tạo một div mới cho biến thể
             const newVariant = document.createElement('div');
             newVariant.classList.add('add-prod-variant-item', 'variant-item');
-            newVariant.innerHTML = `\
-            <input type="text" class="form-input" name="variantNames" placeholder="Tên biến thể">\
-            <br>\
-            <input type="text" class="form-input" name="sku" placeholder="Mã SKU">\
-            <br>\
-            <input type="number" class="form-input" name="variantPrices" placeholder="Giá">\
-            <br>\
-            <input type="number" class="form-input" name="variantStocks" placeholder="Số lượng">\
-            <br>\
-            <input type="number" class="form-input" name="gram" placeholder="Trọng lượng">\
-            <br>\
-            <input type="text" class="form-input" name="color" placeholder="Màu sắc">\
-            <br>\
-            <input type="text" class="form-input" name="size" placeholder="Kích thước">\
-            <br>\
-            <label>Ảnh biến thể:</label>\
-            <input type="file" name="add-prod-variantImages" accept="image/*">\
-            <div class="variant-image-preview" style="margin-top: 5px;"></div>\
-            <button type="button" class="removeVariant">Xóa biến thể</button>\
-        `;
-
-            // Thêm vào danh sách
+            newVariant.innerHTML = `
+                <label>Tên biến thể
+                    <input type="text" class="form-input" name="variantNames" maxlength="191" minlength="3" required placeholder="Tên biến thể">
+                </label>
+                <span class="field-error" data-testid="add-variant-name-error"
+                      data-error-for="variantNames" aria-live="polite"></span>
+                <label>Mã SKU
+                    <input type="text" class="form-input" name="sku" maxlength="50" minlength="2" required placeholder="Mã SKU">
+                </label>
+                <span class="field-error" data-testid="add-variant-sku-error"
+                      data-error-for="sku" aria-live="polite"></span>
+                <label>Giá biến thể
+                    <input type="number" class="form-input" name="variantPrices" min="0.01" max="9999999999999.99" step="0.01" required placeholder="Giá">
+                </label>
+                <span class="field-error" data-testid="add-variant-price-error"
+                      data-error-for="variantPrices" aria-live="polite"></span>
+                <label>Số lượng tồn kho
+                    <input type="number" class="form-input" name="variantStocks" min="0" max="2147483647" step="1" required placeholder="Số lượng">
+                </label>
+                <span class="field-error" data-testid="add-variant-stock-error"
+                      data-error-for="variantStocks" aria-live="polite"></span>
+                <label>Trọng lượng (gram)
+                    <input type="number" class="form-input" name="gram" min="1" max="2147483647" step="1" required placeholder="Trọng lượng">
+                </label>
+                <span class="field-error" data-testid="add-variant-gram-error"
+                      data-error-for="gram" aria-live="polite"></span>
+                <label>Màu sắc
+                    <input type="text" class="form-input" name="color" maxlength="50" minlength="2" required placeholder="Màu sắc">
+                </label>
+                <span class="field-error" data-testid="add-variant-color-error"
+                      data-error-for="color" aria-live="polite"></span>
+                <label>Kích thước
+                    <input type="text" class="form-input" name="size" maxlength="50" required placeholder="Kích thước">
+                </label>
+                <span class="field-error" data-testid="add-variant-size-error"
+                      data-error-for="size" aria-live="polite"></span>
+                <label>Ảnh biến thể
+                    <input type="file" name="add-prod-variantImages" accept="image/*" required>
+                </label>
+                <div class="variant-image-preview" style="margin-top: 5px;"></div>
+                <span class="field-error" data-testid="add-variant-image-error"
+                      data-error-for="add-prod-variantImages" aria-live="polite"></span>
+                <button type="button" class="removeVariant variant-remove-button">Xóa biến thể</button>
+            `;
             variantList.appendChild(newVariant);
-
-            const fileInput = newVariant.querySelector('input[type="file"]');
-            fileInput.addEventListener('change', function () {
-                handleVariantImagePreview(this);
-            });
-
-            // Gắn sự kiện xóa
-            newVariant.querySelector('.removeVariant').addEventListener('click', function () {
-                variantList.removeChild(newVariant);
-            });
+            variantList.dispatchEvent(new Event('change', {bubbles: true}));
+        });
+        document.getElementById('variantList').addEventListener('click', event => {
+            const removeButton = event.target.closest('.removeVariant');
+            if (!removeButton) return;
+            removeButton.closest('.add-prod-variant-item').remove();
+            document.getElementById('variantList')
+                .dispatchEvent(new Event('change', {bubbles: true}));
         });
     </script>
 
@@ -270,6 +355,8 @@
                     </tbody>
                 </table>
             </div>
+            <div id="variant-action-message" class="field-error" data-testid="variant-action-message"
+                 role="status" aria-live="polite"></div>
             <button type="button" id="closeVariants">Đóng</button>
         </div>
     </div>
@@ -332,7 +419,7 @@
     <div id="popup-edit" class="popup">
         <div class="popup-content edit-product-content">
             <h2>Chỉnh sửa sản phẩm</h2>
-            <form id="editProductForm">
+            <form id="editProductForm" novalidate>
                 <div class="content-edit-product">
 
                 </div>
@@ -353,6 +440,7 @@
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
 
+<script src="${pageContext.request.contextPath}/js/admin_product_popup.js?v=1" defer></script>
 <script type="module" src="${pageContext.request.contextPath}/js/firebase_template.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>

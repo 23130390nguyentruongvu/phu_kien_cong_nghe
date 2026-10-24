@@ -1,4 +1,3 @@
-import {storage, ref, deleteObject, listAll} from "./firebase.js";
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
 document.querySelectorAll(".edit-product-remove").forEach(function (el) {
@@ -41,6 +40,7 @@ document.querySelectorAll(".edit-product-remove").forEach(function (el) {
 
 export async function deleteProductFolder(folderId) {
     try {
+        const {storage, ref, deleteObject, listAll} = await import("./firebase.js");
         //Lấy danh sách tất cả file trong folderId (main/ và variants/)
 
         const subFolders = ['main', 'variants'];
@@ -71,6 +71,7 @@ export const deleteImagesByUrls = async (urls) => {
     }
 
     try {
+        const {ref, deleteObject} = await import("./firebase.js");
         const deletePromises = urls.map(async (imageUrl) => {
             //đảm bảo url đấy phải có định dạng của storage, tránh lỗi
             if (imageUrl && imageUrl.includes("firebasestorage.googleapis.com")) {

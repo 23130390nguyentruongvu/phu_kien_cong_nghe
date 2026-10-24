@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class JSonProductVariant {
     private String name;
     private String sku;
-    private double price;
+    private BigDecimal price;
     private int stock;
     private double gram;
     private String color;
@@ -21,7 +21,7 @@ public class JSonProductVariant {
     }
 
     public BigDecimal getPrice() {
-        return new BigDecimal(price);
+        return price;
     }
 
     public int getStock() {
@@ -52,7 +52,7 @@ public class JSonProductVariant {
         this.sku = sku;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

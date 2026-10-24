@@ -2,50 +2,45 @@ import {uploadImageToFirebase} from "./admin_product_add.js";
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
 const validateVariantForm = (form) => {
-    const name = form.variantNames.value.trim();
-    const price = form.variantPrices.value.trim();
-    const stock = form.variantStocks.value.trim();
-    const gram = form.gram.value.trim();
-    const color = form.color.value.trim();
-    const size = form.size.value.trim();
+    const validate = (name, message) => {
+        const input = form.elements.namedItem(name);
+        const error = form.querySelector(`[data-error-for="${name}"]`);
+        input.setAttribute('aria-invalid', message ? 'true' : 'false');
+        input.classList.toggle('input-invalid', Boolean(message));
+        error.textContent = message;
+        return !message;
+    };
+    const name = form.elements.namedItem('variantNames').value.trim();
+    const priceText = form.elements.namedItem('variantPrices').value.trim();
+    const price = Number(priceText);
+    const stock = Number(form.elements.namedItem('variantStocks').value);
+    const gram = Number(form.elements.namedItem('gram').value);
+    const color = form.elements.namedItem('color').value.trim();
+    const size = form.elements.namedItem('size').value.trim();
+    const imageInput = form.elements.namedItem('editVariantImage');
+    const image = imageInput.files[0];
 
-    let errors = [];
-
-    // Kiểm tra tên biến thể
-    if (name.length < 3) {
-        errors.push("Tên biến thể phải có ít nhất 3 ký tự.");
-    }
-
-    // Kiểm tra giá
-    if (!price || isNaN(price) || Number(price) <= 0) {
-        errors.push("Giá phải là số dương.");
-    }
-
-    // Kiểm tra số lượng
-    if (!stock || isNaN(stock) || Number(stock) < 0) {
-        errors.push("Số lượng phải là số không âm.");
-    }
-
-    // Kiểm tra trọng lượng
-    if (!gram || isNaN(gram) || Number(gram) <= 0) {
-        errors.push("Trọng lượng phải là số dương.");
-    }
-
-    // Kiểm tra màu sắc
-    if (!color || color.length < 2) {
-        errors.push("Màu sắc phải có ít nhất 2 ký tự.");
-    }
-
-    // Kiểm tra kích thước
-    if (!size || size.length < 1) {
-        errors.push("Kích thước không được để trống.");
-    }
-
-    if (errors.length > 0) {
-        alert("Có lỗi:\n- " + errors.join("\n- "));
-        return false;
-    }
-    return true;
+    const valid = [
+        validate('variantNames', name.length < 3 ? 'Tên biến thể phải có ít nhất 3 ký tự.'
+            : name.length > 191 ? 'Tên biến thể tối đa 191 ký tự.' : ''),
+        validate('variantPrices', !/^\d+(?:\.\d{1,2})?$/.test(priceText) || !Number.isFinite(price)
+            || price <= 0 || price > 9999999999999.99
+            ? 'Giá phải lớn hơn 0 và có tối đa 2 chữ số thập phân.' : ''),
+        validate('variantStocks', !Number.isInteger(stock) || stock < 0 || stock > 2147483647
+            ? 'Tồn kho phải là số nguyên từ 0 trở lên.' : ''),
+        validate('gram', !Number.isInteger(gram) || gram <= 0 || gram > 2147483647
+            ? 'Trọng lượng phải là số nguyên lớn hơn 0 gram.' : ''),
+        validate('color', color.length < 2 ? 'Màu sắc phải có ít nhất 2 ký tự.'
+            : color.length > 50 ? 'Màu sắc tối đa 50 ký tự.' : ''),
+        validate('size', !size ? 'Kích thước không được để trống.'
+            : size.length > 50 ? 'Kích thước tối đa 50 ký tự.' : '')
+    ];
+    const imageError = image && !image.type.startsWith('image/') ? 'Tệp tải lên phải là ảnh.' : '';
+    imageInput.setAttribute('aria-invalid', imageError ? 'true' : 'false');
+    imageInput.classList.toggle('input-invalid', Boolean(imageError));
+    form.querySelector('[data-error-for="editVariantImage"]').textContent = imageError;
+    valid.push(!imageError);
+    return valid.every(Boolean);
 };
 
 export const setupEvent = (varId, prodId) => {
@@ -127,11 +122,17 @@ export const setupEvent = (varId, prodId) => {
     });
 
     //submit
-    submit.addEventListener('click', async (e) => {
+    const form = document.getElementById('editVariantForm');
+    form.addEventListener('input', () => {
+        if (form.dataset.validationAttempted === 'true') validateVariantForm(form);
+    });
+    form.addEventListener('change', () => {
+        if (form.dataset.validationAttempted === 'true') validateVariantForm(form);
+    });
+    form.addEventListener('submit', async (e) => {
         e.preventDefault()
         try {
-            const form = document.getElementById('editVariantForm')
-            //kiểm tra form validate
+            form.dataset.validationAttempted = 'true';
             if (!validateVariantForm(form)) return;
             if (!confirm(`Bạn có chắc muốn cập nhật lại dữ liệu cho biến thể mã ${varId} không?`)) return;
             submit.disabled = true
@@ -156,7 +157,9 @@ export const setupEvent = (varId, prodId) => {
 
                 const folderPath = `products/${folderId}/variants`
                 //ghi đè ảnh mới lên storage và lấy url download cho urlImage
-                urlImage = await uploadImageToFirebase(fileInput[0], folderPath, form.variantSku.value.trim())
+                urlImage = await uploadImageToFirebase(
+                    fileInput[0], folderPath, form.elements.namedItem('variantSku').value.trim()
+                )
             }
 
             const editVariant = {
@@ -182,7 +185,6 @@ export const setupEvent = (varId, prodId) => {
             const resultJson = await result.json()
 
             hideLoading()
-            alert(resultJson.message)
             submit.disabled = false
             submit.textContent = 'Chấp nhận'
             close.disabled = false
@@ -191,6 +193,8 @@ export const setupEvent = (varId, prodId) => {
                 close.click()
                 document.getElementById('closeVariants').click()
                 location.reload()
+            } else {
+                setVariantFormError(form, 'variantPrices', resultJson.message || 'Không thể cập nhật biến thể.');
             }
 
         } catch (e) {
@@ -198,7 +202,15 @@ export const setupEvent = (varId, prodId) => {
             submit.textContent = 'Chấp nhận'
             close.disabled = false
             hideLoading()
-            alert(`Lỗi: ${e}`)
+            setVariantFormError(form, 'variantPrices', `Không thể cập nhật biến thể: ${e.message}`);
         }
     });
+}
+
+function setVariantFormError(form, fieldName, message) {
+    const input = form.elements.namedItem(fieldName);
+    const error = form.querySelector(`[data-error-for="${fieldName}"]`);
+    input.setAttribute('aria-invalid', 'true');
+    input.classList.add('input-invalid');
+    error.textContent = message;
 }

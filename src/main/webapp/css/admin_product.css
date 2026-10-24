@@ -161,9 +161,24 @@
 }
 
 .edit-product-add-prod {
+    padding: 0;
+    border: 0;
+    background: transparent;
     color: green;
     margin: 2px;
     font-size: 32px;
+    cursor: pointer;
+}
+
+.edit-product-add-prod:hover,
+.edit-product-add-prod:focus-visible {
+    color: #067647;
+    transform: scale(1.08);
+}
+
+.edit-product-add-prod:focus-visible {
+    outline: 2px solid #067647;
+    outline-offset: 4px;
 }
 
 .edit-product-remove {
@@ -371,6 +386,155 @@
     width: 100%;
     height: 40px;
     margin: 5px;
+}
+
+#popup-add-product label {
+    display: block;
+    margin: 10px 5px 2px;
+    font-weight: 600;
+}
+
+#popup-add-product .wrap-status-product label {
+    display: inline;
+}
+
+#popup-add-product input[type="file"] {
+    display: block;
+    margin: 6px 5px;
+}
+
+#popup-add-product .field-error {
+    display: block;
+    min-height: 0;
+    margin: 0 5px 6px;
+    color: #b42318;
+    font-size: 13px;
+}
+
+#popup-add-product .field-error:not(:empty) {
+    min-height: 18px;
+}
+
+#popup-add-product .input-invalid {
+    border: 1px solid #b42318;
+    outline-color: #b42318;
+}
+
+#popup-edit .field-error,
+#popup-edit-variant .field-error {
+    display: block;
+    min-height: 0;
+    margin: 0 5px 6px;
+    color: #b42318;
+    font-size: 13px;
+}
+
+#popup-edit .field-error:not(:empty),
+#popup-edit-variant .field-error:not(:empty) {
+    min-height: 18px;
+}
+
+#popup-edit .input-invalid,
+#popup-edit-variant .input-invalid {
+    border: 1px solid #b42318;
+    outline-color: #b42318;
+}
+
+#editVariantForm input[readonly] {
+    background: #edf0f2;
+    color: #495057;
+    cursor: not-allowed;
+}
+
+#popup-variants .field-error:not(:empty) {
+    margin: 8px 0;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background: #f8d7da;
+    color: #842029;
+}
+
+#popup-add-product .product-derived-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 12px 5px;
+    padding: 10px;
+    border-radius: 6px;
+    background: #f3f6fa;
+}
+
+#popup-add-product .add-prod-variant-item {
+    margin: 14px 0;
+    padding: 12px;
+    border: 1px solid #d9e0e8;
+    border-radius: 8px;
+}
+
+#popup-add-product .variant-add-button,
+#popup-add-product .variant-remove-button,
+#popup-add-variant .wrap-button-cancel-submit button {
+    min-height: 40px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#popup-add-product .variant-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 5px 12px;
+    background: #1769aa;
+    color: #fff;
+}
+
+#popup-add-product .variant-add-button:hover {
+    background: #12558b;
+    box-shadow: 0 2px 6px rgba(23, 105, 170, 0.25);
+}
+
+#popup-add-product .variant-remove-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 5px 0;
+    background: #fff;
+    border: 1px solid #c62828;
+    color: #b42318;
+}
+
+#popup-add-product .variant-remove-button:hover {
+    background: #fff1f0;
+}
+
+#popup-add-variant .wrap-button-cancel-submit .submit {
+    background: #198754;
+    color: #fff;
+}
+
+#popup-add-variant .wrap-button-cancel-submit .submit:hover {
+    background: #146c43;
+}
+
+#popup-add-variant .wrap-button-cancel-submit .close {
+    background: #eef1f4;
+    color: #344054;
+}
+
+#popup-add-variant .wrap-button-cancel-submit .close:hover {
+    background: #dfe4ea;
+}
+
+#popup-add-product .variant-add-button:focus-visible,
+#popup-add-product .variant-remove-button:focus-visible,
+#popup-add-variant .wrap-button-cancel-submit button:focus-visible {
+    outline: 3px solid rgba(23, 105, 170, 0.35);
+    outline-offset: 2px;
 }
 
 #variantForm .form-input {

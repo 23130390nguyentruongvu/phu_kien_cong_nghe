@@ -489,12 +489,23 @@ public class ProductDao {
     }
 
     public boolean removeProduct(int prodId) {
-        String sql = """
-                DELETE 
-                FROM products
-                WHERE id = :prodId
-                """;
-        return jdbi.withHandle(handle -> handle.createUpdate(sql).bind("prodId", prodId).execute() > 0);
+        return jdbi.inTransaction(handle -> {
+            handle.createUpdate("""
+                    UPDATE order_details od
+                    JOIN product_variants pv ON pv.id = od.product_variant_id
+                    SET od.product_variant_id = NULL
+                    WHERE pv.product_id = :prodId
+                    """)
+                    .bind("prodId", prodId)
+                    .execute();
+
+            return handle.createUpdate("""
+                    DELETE FROM products
+                    WHERE id = :prodId
+                    """)
+                    .bind("prodId", prodId)
+                    .execute() > 0;
+        });
     }
 
     public int updateFolderIdWithTransaction(Handle handle, int prodId, String folderId) {
