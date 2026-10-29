@@ -79,15 +79,7 @@ public class OrderHistoryServlet extends HttpServlet {
                         continue;
                     }
 
-                    String formatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
-                    boolean isVerity = VerifySignature.verifySignature(
-                            userKeyDTO.getPublicKey(),
-                            orderSnapshot.getSignature(),
-                            formatData,
-                            userKeyDTO.getNameAlgorithm()
-                    );
-
-                    orderSnapshot.setVerify(isVerity);
+                    orderSnapshot.setVerify(verifyOrderSignature(orderSnapshot, userKeyDTO));
                 }
 
                 List<OrderSnapshot> res;
@@ -124,5 +116,29 @@ public class OrderHistoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    private boolean verifyOrderSignature(OrderSnapshot orderSnapshot, UserKeyDTO userKeyDTO) {
+        String signature = orderSnapshot.getSignature();
+        String algorithm = userKeyDTO.getNameAlgorithm();
+        String publicKey = userKeyDTO.getPublicKey();
+        Integer savedKeyId = orderSnapshot.getUserKeyId();
+
+        String formatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
+        if (VerifySignature.verifySignature(publicKey, signature, formatData, algorithm)) {
+            return true;
+        }
+
+        if (savedKeyId == null) {
+            return false;
+        }
+
+        try {
+            orderSnapshot.setUserKeyId(null);
+            String legacyFormatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
+            return VerifySignature.verifySignature(publicKey, signature, legacyFormatData, algorithm);
+        } finally {
+            orderSnapshot.setUserKeyId(savedKeyId);
+        }
     }
 }

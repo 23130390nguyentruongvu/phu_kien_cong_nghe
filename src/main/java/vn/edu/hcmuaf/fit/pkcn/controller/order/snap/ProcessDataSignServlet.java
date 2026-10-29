@@ -66,6 +66,7 @@ public class ProcessDataSignServlet extends HttpServlet {
             && !orderSnapshot.getStatusOrder().equals(OrderStatus.WAITING_RE_SIGN.getCode()))
                 throw new Exception("Đơn hàng này không ở trạng thái kí");
 
+            orderSnapshot.setUserKeyId(userKeyCurr.getId());
             String formatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
             String hashData = HashSHA256.SHA256(formatData);
 
@@ -139,6 +140,7 @@ public class ProcessDataSignServlet extends HttpServlet {
                     && !orderSnapshot.getStatusOrder().equals(OrderStatus.WAITING_RE_SIGN.getCode()))
                 throw new Exception("Đơn hàng này không ở trạng thái kí");
 
+            orderSnapshot.setUserKeyId(userKeyId);
             String formatData = OrderHashDataFormatter.buildOrderFormatForHash(orderSnapshot);
 
             boolean isVerify = VerifySignature.verifySignature(

@@ -441,7 +441,6 @@
 </script>
 
 <script src="${pageContext.request.contextPath}/js/admin_product_popup.js?v=1" defer></script>
-<script type="module" src="${pageContext.request.contextPath}/js/firebase_template.js"></script>
 
 <script type="module" src="${pageContext.request.contextPath}/js/admin_product_add.js"></script>
 
