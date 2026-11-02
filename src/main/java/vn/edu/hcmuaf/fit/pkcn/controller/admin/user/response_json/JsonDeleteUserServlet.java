@@ -45,7 +45,7 @@ public class JsonDeleteUserServlet extends HttpServlet {
             msg = isSuccess ? "Xóa user thành công!" : "Xóa user thất bại";
             if (isSuccess && user != null) {
                 try {
-                    AdminUserAvatarStorage.deleteIfManaged(user.getAvatar());
+                    AdminUserAvatarStorage.deleteIfManaged(user.getAvatar(), getServletContext());
                 } catch (IOException cleanupException) {
                     cleanupException.printStackTrace();
                 }

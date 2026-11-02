@@ -53,6 +53,8 @@ Desktop.ini
 
 src/main/webapp/uploads/*
 !src/main/webapp/uploads/.gitkeep
+src/main/webapp/images/user/*
+!src/main/webapp/images/user/.gitkeep
 
 *.tmp
 *.bak

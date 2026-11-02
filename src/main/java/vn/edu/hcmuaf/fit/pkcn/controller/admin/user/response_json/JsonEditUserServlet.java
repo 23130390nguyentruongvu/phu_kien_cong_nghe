@@ -40,7 +40,9 @@ public class JsonEditUserServlet extends HttpServlet {
             user.setUserId(userId);
             user.setRole(Integer.parseInt(request.getParameter("role")));
             user.setFullName(request.getParameter("name"));
-            savedAvatar = AdminUserAvatarStorage.save(request.getPart("fileAvatar"), request.getContextPath());
+            savedAvatar = AdminUserAvatarStorage.save(
+                    request.getPart("fileAvatar"), getServletContext(), request.getContextPath()
+            );
             user.setHasImage(savedAvatar != null);
             user.setUrl(savedAvatar);
             oldAvatar = existingUser.getAvatar();
@@ -55,12 +57,12 @@ public class JsonEditUserServlet extends HttpServlet {
             success = Boolean.TRUE.equals(res.get("success"));
             if (success && savedAvatar != null) {
                 try {
-                    AdminUserAvatarStorage.deleteIfManaged(oldAvatar);
+                    AdminUserAvatarStorage.deleteIfManaged(oldAvatar, getServletContext());
                 } catch (IOException cleanupException) {
                     cleanupException.printStackTrace();
                 }
             } else if (!success && savedAvatar != null) {
-                AdminUserAvatarStorage.deleteIfManaged(savedAvatar);
+                AdminUserAvatarStorage.deleteIfManaged(savedAvatar, getServletContext());
             }
 
             response.setContentType("application/json");
@@ -73,7 +75,7 @@ public class JsonEditUserServlet extends HttpServlet {
         } catch (Exception e) {
             if (savedAvatar != null && !success) {
                 try {
-                    AdminUserAvatarStorage.deleteIfManaged(savedAvatar);
+                    AdminUserAvatarStorage.deleteIfManaged(savedAvatar, getServletContext());
                 } catch (IOException cleanupException) {
                     e.addSuppressed(cleanupException);
                 }

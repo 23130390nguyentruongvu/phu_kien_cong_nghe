@@ -36,7 +36,9 @@ public class JsonAddUserServlet extends HttpServlet {
             user.setFullName(request.getParameter("name"));
             user.setPassword(request.getParameter("password"));
             user.setRole(Integer.parseInt(request.getParameter("role")));
-            savedAvatar = AdminUserAvatarStorage.save(request.getPart("avatar-file"), request.getContextPath());
+            savedAvatar = AdminUserAvatarStorage.save(
+                    request.getPart("avatar-file"), getServletContext(), request.getContextPath()
+            );
             user.setUrl(savedAvatar);
             if (userService.insertUser(user) == 0) throw new Exception("Không thể thêm user");
             success = true;
@@ -44,7 +46,7 @@ public class JsonAddUserServlet extends HttpServlet {
         } catch (Exception e) {
             if (!success && savedAvatar != null) {
                 try {
-                    AdminUserAvatarStorage.deleteIfManaged(savedAvatar);
+                    AdminUserAvatarStorage.deleteIfManaged(savedAvatar, getServletContext());
                 } catch (IOException cleanupException) {
                     e.addSuppressed(cleanupException);
                 }

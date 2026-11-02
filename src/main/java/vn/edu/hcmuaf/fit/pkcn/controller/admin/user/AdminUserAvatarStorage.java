@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.pkcn.controller.admin.user;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
@@ -9,15 +10,16 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 public final class AdminUserAvatarStorage {
-    private static final String AVATAR_URL_PREFIX = "/admin-user-avatars/";
-    private static final Path STORAGE_DIRECTORY = Path.of(
+    private static final String PROJECT_AVATAR_URL_PREFIX = "/images/user/";
+    private static final String LEGACY_AVATAR_URL_PREFIX = "/admin-user-avatars/";
+    private static final Path LEGACY_STORAGE_DIRECTORY = Path.of(
             System.getProperty("user.home"), "pkcn-uploads", "admin-users"
     ).toAbsolutePath().normalize();
 
     private AdminUserAvatarStorage() {
     }
 
-    public static String save(Part image, String contextPath) throws IOException {
+    public static String save(Part image, ServletContext servletContext, String contextPath) throws IOException {
         if (image == null || image.getSize() == 0) {
             return null;
         }
@@ -26,9 +28,10 @@ public final class AdminUserAvatarStorage {
         }
 
         String extension = detectImageExtension(image);
-        Files.createDirectories(STORAGE_DIRECTORY);
+        Path storageDirectory = getProjectStorageDirectory(servletContext);
+        Files.createDirectories(storageDirectory);
         String fileName = UUID.randomUUID() + extension;
-        Path destination = STORAGE_DIRECTORY.resolve(fileName);
+        Path destination = storageDirectory.resolve(fileName);
         try {
             try (InputStream input = image.getInputStream()) {
                 Files.copy(input, destination);
@@ -41,29 +44,63 @@ public final class AdminUserAvatarStorage {
             }
             throw e;
         }
-        return contextPath + AVATAR_URL_PREFIX + fileName;
+        return contextPath + PROJECT_AVATAR_URL_PREFIX + fileName;
     }
 
     public static Path findStoredAvatar(String fileName) {
-        if (fileName == null || !fileName.matches("[0-9a-fA-F-]{36}\\.(jpg|png|gif)")) {
+        if (!isValidFileName(fileName)) {
             return null;
         }
-        Path candidate = STORAGE_DIRECTORY.resolve(fileName).normalize();
-        return candidate.startsWith(STORAGE_DIRECTORY) ? candidate : null;
+        Path candidate = LEGACY_STORAGE_DIRECTORY.resolve(fileName).normalize();
+        return candidate.startsWith(LEGACY_STORAGE_DIRECTORY) ? candidate : null;
     }
 
-    public static void deleteIfManaged(String avatarUrl) throws IOException {
+    public static void deleteIfManaged(String avatarUrl, ServletContext servletContext) throws IOException {
         if (avatarUrl == null) {
             return;
         }
-        int prefixIndex = avatarUrl.lastIndexOf(AVATAR_URL_PREFIX);
-        if (prefixIndex < 0) {
+
+        int projectPrefixIndex = avatarUrl.lastIndexOf(PROJECT_AVATAR_URL_PREFIX);
+        if (projectPrefixIndex >= 0) {
+            String fileName = avatarUrl.substring(projectPrefixIndex + PROJECT_AVATAR_URL_PREFIX.length());
+            Path file = findProjectAvatar(fileName, servletContext);
+            if (file != null) {
+                Files.deleteIfExists(file);
+            }
             return;
         }
-        Path file = findStoredAvatar(avatarUrl.substring(prefixIndex + AVATAR_URL_PREFIX.length()));
+
+        int legacyPrefixIndex = avatarUrl.lastIndexOf(LEGACY_AVATAR_URL_PREFIX);
+        if (legacyPrefixIndex < 0) {
+            return;
+        }
+        Path file = findStoredAvatar(
+                avatarUrl.substring(legacyPrefixIndex + LEGACY_AVATAR_URL_PREFIX.length())
+        );
         if (file != null) {
             Files.deleteIfExists(file);
         }
+    }
+
+    private static Path findProjectAvatar(String fileName, ServletContext servletContext) throws IOException {
+        if (!isValidFileName(fileName)) {
+            return null;
+        }
+        Path storageDirectory = getProjectStorageDirectory(servletContext);
+        Path candidate = storageDirectory.resolve(fileName).normalize();
+        return candidate.startsWith(storageDirectory) ? candidate : null;
+    }
+
+    private static Path getProjectStorageDirectory(ServletContext servletContext) throws IOException {
+        String realPath = servletContext.getRealPath(PROJECT_AVATAR_URL_PREFIX);
+        if (realPath == null) {
+            throw new IOException("Không xác định được thư mục lưu avatar trong ứng dụng.");
+        }
+        return Path.of(realPath).toAbsolutePath().normalize();
+    }
+
+    private static boolean isValidFileName(String fileName) {
+        return fileName != null && fileName.matches("[0-9a-fA-F-]{36}\\.(jpg|png|gif)");
     }
 
     private static String detectImageExtension(Part image) throws IOException {

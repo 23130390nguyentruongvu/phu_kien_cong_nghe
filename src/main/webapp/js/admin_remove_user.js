@@ -9,13 +9,18 @@ document.querySelectorAll('.edit-user-remove').forEach(btn => {
             if (!confirm('Bạn có chắc muốn xóa người dùng này không?')) return;
             showLoading()
 
-            //Lấy folder id
-            const getFolderId = await fetch(contextPath + `/get-folder-id-user?userId=${userId}`);
-            const getFolderIdJson = await getFolderId.json()
+            const avatarUrl = btn.closest('tr').querySelector('.avatar-img').src
+            const isLocalAvatar = avatarUrl.includes('/images/user/')
+                || avatarUrl.includes('/admin-user-avatars/')
+            if (!isLocalAvatar) {
+                //Lấy folder id
+                const getFolderId = await fetch(contextPath + `/get-folder-id-user?userId=${userId}`);
+                const getFolderIdJson = await getFolderId.json()
 
-            if (getFolderIdJson.hasImageInStorage) {
-                const resDelete = await deleteImageByPath(`users/${getFolderIdJson.folderId}/${username}`)
-                if (!resDelete.success) throw new Error(resDelete.message)
+                if (getFolderIdJson.hasImageInStorage) {
+                    const resDelete = await deleteImageByPath(`users/${getFolderIdJson.folderId}/${username}`)
+                    if (!resDelete.success) throw new Error(resDelete.message)
+                }
             }
 
             const response = await fetch(contextPath + '/delete-user', {
