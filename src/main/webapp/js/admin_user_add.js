@@ -1,5 +1,20 @@
 import {hideLoading, showLoading} from "./overlay_processing.js";
-import {uploadImageToFirebase} from "./admin_user.js";
+
+const fetchAdminUserRequest = async (url, options = {}) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+    try {
+        return await fetch(url, {...options, signal: controller.signal});
+    } catch (error) {
+        if (controller.signal.aborted) {
+            throw new Error("Máy chủ không phản hồi sau 30 giây. Vui lòng kiểm tra kết nối cơ sở dữ liệu hoặc log máy chủ.");
+        }
+        throw error;
+    } finally {
+        clearTimeout(timeoutId);
+    }
+};
 
 const formUserValidate = (form) => {
     const errors = [];
@@ -69,46 +84,30 @@ export const setupEvent = (form) => {
             if (!formUserValidate(form)) return;
             showLoading()
             //check username hoặc email đã tồn tại hay dưới db chưa
-            const resCheck = await fetch(
-                contextPath + `/check-username-email?username=${form.userName.value.trim()}&email=${form.email.value.trim()}`
+            const checkParams = new URLSearchParams({
+                username: form.userName.value.trim(),
+                email: form.email.value.trim()
+            });
+            const resCheck = await fetchAdminUserRequest(
+                contextPath + `/check-username-email?${checkParams}`
             )
+            if (!resCheck.ok) throw new Error(`Không thể kiểm tra tài khoản (HTTP ${resCheck.status}).`)
             const resCheckJson = await resCheck.json()
 
             if (resCheckJson.email && resCheckJson.username) throw new Error('Email và username đã tồn tại')
             if (resCheckJson.email) throw new Error('email đã tồn tại')
             if (resCheckJson.username) throw new Error('username đã tồn tại')
 
-            let folderId
-            let urlDownload
+            const userAdd = new FormData(form);
 
-            //Check input file có ảnh không
-            const file = document.getElementById('addUserImage').files
-            const hasImage = file.length > 0
-            if (hasImage) {
-                //có ảnh và ta sẽ đi tạo folder id cho user này
-                folderId = self.crypto.randomUUID();
-                urlDownload = await uploadImageToFirebase(file[0], `users/${folderId}`, form.userName.value.trim())
-            }
-            const userAdd = {
-                folderId: folderId,
-                hasImage: hasImage,
-                url: urlDownload,
-                role: form.role.value.trim(),
-                password: form.password.value.trim(),
-                username: form.userName.value.trim(),
-                email: form.email.value.trim(),
-                fullName: form.name.value.trim()
-            }
-
-            const response = await fetch(contextPath + '/add-user', {
+            const response = await fetchAdminUserRequest(contextPath + '/add-user', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userAdd)
+                body: userAdd
             });
 
+            if (!response.ok) throw new Error(`Không thể thêm người dùng (HTTP ${response.status}).`)
             const responseJson = await response.json()
+            if (!responseJson.success) throw new Error(responseJson.message)
             alert(responseJson.message)
             document.getElementById('closeAddUser').click()
             location.reload()
