@@ -9,7 +9,7 @@
 <c:if test="${not empty requestScope.user}">
     <div class="popup-content">
         <h2>Chỉnh sửa thông tin người dùng</h2>
-        <form id="editUserForm" action="" method="post">
+        <form id="editUserForm" action="" method="post" enctype="multipart/form-data">
             <input type="hidden" id="edit-user-id" name="userId" value="${requestScope.user.id}">
 
             <label for="name-user">Tên người dùng:</label>
@@ -28,7 +28,8 @@
             <br>
             <br>
             <label for="file-avatar">Đổi Avatar:</label>
-            <input type="file" id="fileEditUser" name="fileAvatar" class="form-input" accept="image/*">
+            <input type="file" id="fileEditUser" name="fileAvatar" class="form-input"
+                   accept="image/jpeg,image/png,image/gif">
             <div id="editUserPreview"></div>
 
             <label for="role-edit">Vai trò:</label>

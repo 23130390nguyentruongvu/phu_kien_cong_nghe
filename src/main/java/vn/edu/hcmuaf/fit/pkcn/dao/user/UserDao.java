@@ -202,20 +202,17 @@ public class UserDao {
                 UPDATE users
                 SET role_id = :role,
                     full_name = :name,
-                    folder_id = :folderId,
                 """
                 +
                 updateUrl
                 + """
                 WHERE id = :userId
-                AND (:url IS NULL OR :url IS NOT NULL)
                 """;
         return handle.createUpdate(sql)
                 .bind("role", user.getRole())
                 .bind("name", user.getFullName())
                 .bind("url", user.getUrl())
                 .bind("userId", user.getUserId())
-                .bind("folderId", user.getFolderId())
                 .execute();
     }
 

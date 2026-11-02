@@ -1,4 +1,4 @@
-import {deleteImageByPath} from "./admin_user.js";
+import {deleteImageByPath} from "./admin_user.js?v=20261028-local-avatar";
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
 document.querySelectorAll('.edit-user-remove').forEach(btn => {

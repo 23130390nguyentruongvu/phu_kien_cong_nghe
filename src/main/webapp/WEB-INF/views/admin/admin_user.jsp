@@ -53,8 +53,7 @@
                             <td>${user.role == 2?'Customer':'Admin'}</td>
                             <td>${user.id}</td>
                             <td>
-                                <img class="avatar-img"
-                                     src="${user.avatar != null ? user.avatar : ''}" alt="Avatar">
+                                <img class="avatar-img" src="${user.avatar}" alt="Avatar">
                             </td>
                             <td>${user.fullName}</td>
                             <td>${user.userName}</td>
@@ -129,7 +128,8 @@
                 </div>
 
                 <label for="user-file">Chọn Avatar:</label>
-                <input type="file" id="addUserImage" name="avatar-file" class="form-input" accept="image/*">
+                <input type="file" id="addUserImage" name="avatar-file" class="form-input"
+                       accept="image/jpeg,image/png,image/gif">
                 <br>
                 <div id="addUserImagePreview"></div>
                 <br>
@@ -192,7 +192,7 @@
 <script>
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
-<script type="module" src="${pageContext.request.contextPath}/js/admin_user.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_user.js?v=20261028-local-avatar"></script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin_remove_user.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/js/admin_user_edit.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/js/admin_user_edit.js?v=20261028-local-avatar"></script>
 </html>

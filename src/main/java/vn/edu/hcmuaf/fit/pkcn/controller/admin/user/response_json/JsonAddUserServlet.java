@@ -5,22 +5,17 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
-import vn.edu.hcmuaf.fit.pkcn.dao.category.CategoryDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductImageDao;
-import vn.edu.hcmuaf.fit.pkcn.dao.product.ProductVariantDao;
+import vn.edu.hcmuaf.fit.pkcn.controller.admin.user.AdminUserAvatarStorage;
 import vn.edu.hcmuaf.fit.pkcn.model.admin.add.JsonAddUser;
-import vn.edu.hcmuaf.fit.pkcn.service.product.ProductService;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
-import vn.edu.hcmuaf.fit.pkcn.sort.product.SortProductImpl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(name = "JsonAddUserServlet", value = "/add-user")
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 6 * 1024 * 1024)
 public class JsonAddUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,19 +27,28 @@ public class JsonAddUserServlet extends HttpServlet {
         UserService userService = new UserService(JDBI.getJdbi());
         boolean success = false;
         String msg;
+        String savedAvatar = null;
 
         try {
-            StringBuilder sb = new StringBuilder();
-            BufferedReader reader = request.getReader();
-            String line;
-            while ((line = reader.readLine()) != null)
-                sb.append(line);
-            Gson gson = new Gson();
-            JsonAddUser user = gson.fromJson(sb.toString(), JsonAddUser.class);
+            JsonAddUser user = new JsonAddUser();
+            user.setUsername(request.getParameter("userName"));
+            user.setEmail(request.getParameter("email"));
+            user.setFullName(request.getParameter("name"));
+            user.setPassword(request.getParameter("password"));
+            user.setRole(Integer.parseInt(request.getParameter("role")));
+            savedAvatar = AdminUserAvatarStorage.save(request.getPart("avatar-file"), request.getContextPath());
+            user.setUrl(savedAvatar);
             if (userService.insertUser(user) == 0) throw new Exception("Không thể thêm user");
             success = true;
             msg = "Thêm user thành công";
         } catch (Exception e) {
+            if (!success && savedAvatar != null) {
+                try {
+                    AdminUserAvatarStorage.deleteIfManaged(savedAvatar);
+                } catch (IOException cleanupException) {
+                    e.addSuppressed(cleanupException);
+                }
+            }
             e.printStackTrace();
             msg = "lỗi: " + e.getMessage();
         }

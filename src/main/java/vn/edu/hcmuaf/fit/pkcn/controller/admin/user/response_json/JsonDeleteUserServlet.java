@@ -6,6 +6,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.pkcn.config.JDBI;
+import vn.edu.hcmuaf.fit.pkcn.controller.admin.user.AdminUserAvatarStorage;
+import vn.edu.hcmuaf.fit.pkcn.model.user.User;
 import vn.edu.hcmuaf.fit.pkcn.service.user.UserService;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class JsonDeleteUserServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("userId"));
             UserService userService = new UserService(JDBI.getJdbi());
+            User user = userService.getUserById(id);
 
             String uid = userService.getUid(id);
 
@@ -40,6 +43,13 @@ public class JsonDeleteUserServlet extends HttpServlet {
 
             isSuccess = userService.deleteUser(id);
             msg = isSuccess ? "Xóa user thành công!" : "Xóa user thất bại";
+            if (isSuccess && user != null) {
+                try {
+                    AdminUserAvatarStorage.deleteIfManaged(user.getAvatar());
+                } catch (IOException cleanupException) {
+                    cleanupException.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             msg = "Lỗi: " + e.getMessage();

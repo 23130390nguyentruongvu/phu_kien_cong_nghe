@@ -1,7 +1,6 @@
-import {uploadImageToFirebase} from "./admin_user.js";
 import {hideLoading, showLoading} from "./overlay_processing.js";
 
-const setupEventForPopup = (userId, userName, popup) => {
+const setupEventForPopup = (userId, popup) => {
     //sự kiện thêm ảnh, hiện ảnh lên preview, cho phép xóa ảnh preview
 
     const inputFile = document.getElementById("fileEditUser");
@@ -80,48 +79,22 @@ const setupEventForPopup = (userId, userName, popup) => {
             if (!confirm('Bạn có chắc chắn muốn cập nhật dữ liệu của người dùng này?')) return;
             showLoading()
 
-            //kiểm tra admin có thay đổi ảnh user không
-            const hasImage = form.fileAvatar.files.length > 0
-            let folderId
-            let urlDownload
-
-            if (hasImage) {
-                //get folder id
-                const requestFolderId = await fetch(contextPath + `/get-folder-id-user?userId=${userId}`)
-                const requestFolderIdJson = await requestFolderId.json()
-
-                folderId = requestFolderIdJson.folderId
-                if (!requestFolderIdJson.hasImageInStorage) {
-                    //k có folder id => ta sẽ đi tạo folder id cho user này
-                    folderId = self.crypto.randomUUID();
-                }
-                urlDownload = await uploadImageToFirebase(form.fileAvatar.files[0], `users/${folderId}`, userName)
-            }
-            const userEdit = {
-                userId: userId,
-                folderId: folderId,
-                hasImage: hasImage,
-                url: urlDownload,
-                role: form.role.value.trim(),
-                fullName: form.name.value.trim()
-            }
+            const userEdit = new FormData(form)
+            userEdit.set('userId', userId)
+            userEdit.set('role', form.role.value)
 
             const response = await fetch(contextPath + '/edit-user', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userEdit)
+                body: userEdit
             });
 
             const result = await response.json()
+            if (!result.success) throw new Error(result.message)
             alert(result.message)
             document.getElementById('closeEditUser').click()
             location.reload()
         } catch (e) {
-            alert(e.messages)
-            document.getElementById('closeEditUser').click()
-            location.reload()
+            alert(e.message)
         } finally {
             hideLoading()
         }
@@ -132,7 +105,6 @@ const setupEventForPopup = (userId, userName, popup) => {
 document.querySelectorAll('.edit-user-update').forEach(btn => {
     btn.addEventListener('click', async (e) => {
         const userId = btn.dataset.id;
-        const userName = btn.dataset.username
 
         //Mở popup edit
         const requestGetUser = await fetch(contextPath + `/get-user-edit?userId=${userId}`)
@@ -143,6 +115,6 @@ document.querySelectorAll('.edit-user-update').forEach(btn => {
         popupEdit.style.display = 'block'
 
         //setup ev
-        setupEventForPopup(userId, userName, popupEdit)
+        setupEventForPopup(userId, popupEdit)
     });
 });
