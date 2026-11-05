@@ -36,8 +36,12 @@ public class VoucherManagementServlet extends HttpServlet {
                     .mapToMap().list()) {
                 Map<String, Object> row = new HashMap<>(source);
                 int id = ((Number) row.get("id")).intValue();
-                row.put("start_date_input", formatDateTime(row.get("start_date")));
-                row.put("end_date_input", formatDateTime(row.get("end_date")));
+                Timestamp startDate = toTimestamp(row.get("start_date"));
+                Timestamp endDate = toTimestamp(row.get("end_date"));
+                row.put("start_date", startDate);
+                row.put("end_date", endDate);
+                row.put("start_date_input", formatDateTime(startDate));
+                row.put("end_date_input", formatDateTime(endDate));
                 row.put("category_ids", voucherService.getSelectedCategoryIds(handle, id));
                 row.put("product_ids", voucherService.getSelectedProductIds(handle, id));
                 rows.add(row);
@@ -311,5 +315,15 @@ public class VoucherManagementServlet extends HttpServlet {
             return dateTime.withSecond(0).withNano(0).toString();
         }
         return "";
+    }
+
+    private Timestamp toTimestamp(Object value) {
+        if (value instanceof Timestamp timestamp) {
+            return timestamp;
+        }
+        if (value instanceof LocalDateTime dateTime) {
+            return Timestamp.valueOf(dateTime);
+        }
+        throw new IllegalArgumentException("Kiểu dữ liệu ngày voucher không được hỗ trợ");
     }
 }
